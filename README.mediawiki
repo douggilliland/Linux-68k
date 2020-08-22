@@ -9,3 +9,4 @@
 == Useful Pages ==
 
 * [https://sourceware.org/binutils/docs/binutils/objcopy.html objcopy docs]
+* [https://github.com/douggilliland/Retro-Computers/blob/master/PC%20Tools/srecord/srecord-1.64.pdf srecord docs]
