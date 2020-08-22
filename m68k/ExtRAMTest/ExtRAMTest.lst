@@ -1,0 +1,41 @@
+68K GAS  ExtRAMTest.s 			page 1
+
+
+   1               	* Test External SRAM
+   2               	* External SRAM on the RETRO-EP4CE15 card goes from 0x300000 to 0x3FFFFF (1 MB)
+   3               	* External SRAM only supports 8-bit accesses
+   4               	* TUTOR14 uses SRAM from 0x000000 to 0x000800
+   5               	
+   6               	RAMSTART	= 0X300000
+   7               	RAMEND		= 0X3FFFFF
+   8               	
+   9               	* Code follows
+  10               	
+  11 0000 0000 0000 		.ORG    0x001000
+  11      0000 0000 
+  11      0000 0000 
+  11      0000 0000 
+  11      0000 0000 
+  12               	
+  13               	STARTTEST:
+  14 1000 23FC 0030 		MOVE.L  #0x00300000,A0
+  14      0000 0000 
+  14      0000 
+  15 100a 23FC 0000 		MOVE.L  #0X00000055,D0
+  15      0055 0000 
+  15      0000 
+  16 1014 13F9 0000 		MOVE.B	D0,(A0)
+  16      0000 0000 
+  16      0000 
+  17 101e 4E75      		RTS
+68K GAS  ExtRAMTest.s 			page 2
+
+
+DEFINED SYMBOLS
+        ExtRAMTest.s:6      *ABS*:0000000000300000 RAMSTART
+        ExtRAMTest.s:7      *ABS*:00000000003fffff RAMEND
+        ExtRAMTest.s:13     .text:0000000000001000 STARTTEST
+
+UNDEFINED SYMBOLS
+A0
+D0
