@@ -18,15 +18,12 @@
   11      0000 0000 
   12               	
   13               	STARTTEST:
-  14 1000 23FC 0030 		MOVE.L  #0x00300000,A0
-  14      0000 0000 
+  14 1000 207C 0030 		MOVE.L  #0x00300000,%A0
   14      0000 
-  15 100a 13FC 0055 		MOVE.B  #0x55,D0
-  15      0000 0000 
-  16 1012 13F9 0000 		MOVE.B	D0,(A0)
-  16      0000 0000 
-  16      0000 
-  17 101c 4E75      		RTS
+  15 1006 103C 0055 		MOVE.B  #0x55,%D0
+  16 100a 1080      		MOVE.B	%D0,(%A0)
+  17 100c 4E75      		RTS
+  18               		
 68K GAS  ExtRAMTest.s 			page 2
 
 
@@ -35,6 +32,4 @@ DEFINED SYMBOLS
         ExtRAMTest.s:7      *ABS*:00000000003fffff RAMEND
         ExtRAMTest.s:13     .text:0000000000001000 STARTTEST
 
-UNDEFINED SYMBOLS
-A0
-D0
+NO UNDEFINED SYMBOLS
