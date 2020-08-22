@@ -1,1 +1,9 @@
 == Linux-68k ==
+
+* Using a Linux (Mint) VirtualBox to develop code for the 68000 CPU.
+* Could not get file transfer to work to the Windows machine so transferring build through this repo
+** [https://github.com/douggilliland/Retro-Computers/tree/master/68000 Main 68000 repository]
+
+== Useful Pages ==
+
+* [https://sourceware.org/binutils/docs/binutils/objcopy.html objcopy docs]
