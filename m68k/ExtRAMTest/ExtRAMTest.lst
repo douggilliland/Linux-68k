@@ -22,8 +22,21 @@
   14      0000 
   15 1006 103C 0055 		MOVE.B  #0x55,%D0
   16 100a 1080      		MOVE.B	%D0,(%A0)
-  17 100c 4E75      		RTS
-  18               		
+  17 100c 4E71      	    NOP
+  18 100e 1210      	    MOVE.B	(%A0),%D1
+  19 1010 B200      	    CMP.B   %D0,%D1
+  20 1012 6600 0014 	    BNE     FAIL
+  21 1016 103C 00AA 		MOVE.B  #0xAA,%D0
+  22 101a 1080      		MOVE.B	%D0,(%A0)
+  23 101c 4E71      	    NOP
+  24 101e 1210      	    MOVE.B	(%A0),%D1
+  25 1020 B200      	    CMP.B   %D0,%D1
+  26 1022 6600 0004 	    BNE     FAIL
+  27 1026 4E71      	    NOP
+  28               	FAIL:
+  29 1028 4E71      	    NOP
+  30 102a 4E75      		RTS
+  31               		
 68K GAS  ExtRAMTest.s 			page 2
 
 
@@ -31,5 +44,6 @@ DEFINED SYMBOLS
         ExtRAMTest.s:6      *ABS*:0000000000300000 RAMSTART
         ExtRAMTest.s:7      *ABS*:00000000003fffff RAMEND
         ExtRAMTest.s:13     .text:0000000000001000 STARTTEST
+        ExtRAMTest.s:28     .text:0000000000001028 FAIL
 
 NO UNDEFINED SYMBOLS

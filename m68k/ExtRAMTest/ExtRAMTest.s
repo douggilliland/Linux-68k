@@ -14,5 +14,18 @@ STARTTEST:
 	MOVE.L  #0x00300000,%A0
 	MOVE.B  #0x55,%D0
 	MOVE.B	%D0,(%A0)
+    NOP
+    MOVE.B	(%A0),%D1
+    CMP.B   %D0,%D1
+    BNE     FAIL
+	MOVE.B  #0xAA,%D0
+	MOVE.B	%D0,(%A0)
+    NOP
+    MOVE.B	(%A0),%D1
+    CMP.B   %D0,%D1
+    BNE     FAIL
+    NOP
+FAIL:
+    NOP
 	RTS
 	
