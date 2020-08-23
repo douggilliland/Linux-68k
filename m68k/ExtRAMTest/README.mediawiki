@@ -1,0 +1,10 @@
+== ExtRAMTest ==
+
+* Test the External SRAM on the RETRO-EP4CE1card
+* The RETRO-EP4CE15 card has 1MB of External SRAM
+* External SRAM only supports 8-bit accesses
+* External SRAM goes from 0x300000 to 0x3FFFFF (1 MB)
+* Test checks the physical connections to the SRAM
+* Test does not exhaustively check the SRAM itself
+* Test takes several seconds with a 25 MHz 68000 CPU
+* TUTOR14 uses SRAM from 0x000000 to 0x000800
