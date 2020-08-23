@@ -27,29 +27,47 @@
   19 100c 4E71      	    NOP
   20 100e 1210      	    MOVE.B	(%A0),%D1
   21 1010 B200      	    CMP.B   %D0,%D1
-  22 1012 6600 0030 	    BNE     FAIL
+  22 1012 6600 0028 	    BNE     FAIL
   23 1016 103C 00AA 		MOVE.B  #0xAA,%D0
   24 101a 1080      		MOVE.B	%D0,(%A0)
   25 101c 4E71      	    NOP
   26 101e 1210      	    MOVE.B	(%A0),%D1
   27 1020 B200      	    CMP.B   %D0,%D1
-  28 1022 6600 0020 	    BNE     FAIL
-  29 1026 4E71      	    NOP
-  30 1028 43F9 0001 		LEA     ACIASTAT,%A1
-  30      0041 
-  31               	WAITRDY:
-  32 102e 1211      		MOVE.B	(%A1),%D1
-  33 1030 0201 0002 		ANDI.B	#0x2,%D1
-  34 1034 6700 FFF8 		BEQ		WAITRDY
-  35 1038 43F9 0001 		LEA     ACIADATA,%A1
-  35      0043 
-  36 103e 123C 004F 		MOVE.B	#'O',%D1
-  37 1042 1281      		MOVE.B	%D1,(%A1)
-  38               	FAIL:
-  39 1044 4E71      	    NOP
-  40 1046 4E75      		RTS
-  41               		
+  28 1022 6600 0018 	    BNE     FAIL
+  29 1026 4EBA 0022 	    JSR     WAITRDY
+  30 102a 123C 004F 		MOVE.B	#'O',%D1
+  31 102e 4EBA 002C 		JSR     OUTCHAR
+  32 1032 123C 004B 		MOVE.B	#'K',%D1
+  33 1036 4EBA 0024 		JSR     OUTCHAR
+  34 103a 4E75      	    RTS
+  35               	FAIL:
+  36 103c 4EBA 000C 	    JSR     WAITRDY
+  37 1040 123C 0046 		MOVE.B	#'F',%D1
+  38 1044 4EBA 0016 		JSR     OUTCHAR
+  39 1048 4E75      		RTS
+  40               	
+  41               	* WAIT FOR THE SERIAL PORT TO BE READY
+  42               	WAITRDY:
+  43 104a 43F9 0001 		LEA     ACIASTAT,%A1
+  43      0041 
+  44               	LOOPRDY:
+  45 1050 1211      		MOVE.B	(%A1),%D1
+  46 1052 0201 0002 		ANDI.B	#0x2,%D1
+  47 1056 6700 FFF8 		BEQ		LOOPRDY
+  48 105a 4E75      	    RTS
+  49               	
+  50               	* OUTPUT A CHARACTER IN D1 TO THE ACIA
+  51               	OUTCHAR:
 68K GAS  ExtRAMTest.s 			page 2
+
+
+  52 105c 43F9 0001 		LEA     ACIADATA,%A1
+  52      0043 
+  53 1062 1281      		MOVE.B	%D1,(%A1)
+  54 1064 4E75      	    RTS
+  55               	    
+  56               	
+68K GAS  ExtRAMTest.s 			page 3
 
 
 DEFINED SYMBOLS
@@ -58,7 +76,9 @@ DEFINED SYMBOLS
         ExtRAMTest.s:8      *ABS*:0000000000010041 ACIASTAT
         ExtRAMTest.s:9      *ABS*:0000000000010043 ACIADATA
         ExtRAMTest.s:15     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:38     .text:0000000000001044 FAIL
-        ExtRAMTest.s:31     .text:000000000000102e WAITRDY
+        ExtRAMTest.s:35     .text:000000000000103c FAIL
+        ExtRAMTest.s:42     .text:000000000000104a WAITRDY
+        ExtRAMTest.s:51     .text:000000000000105c OUTCHAR
+        ExtRAMTest.s:44     .text:0000000000001050 LOOPRDY
 
 NO UNDEFINED SYMBOLS
