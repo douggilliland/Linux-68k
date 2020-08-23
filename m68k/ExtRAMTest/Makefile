@@ -12,5 +12,6 @@ ExtRAMTest.rec: ExtRAMTest.o
 	rm ExtRAMTest.tmp
 
 clean:
-	$(RM) ExtRAMTest.lst ExtRAMTest.o ExtRAMTest.bin ExtRAMTest.rec ExtRAMTest.tmp
+	$(RM) ExtRAMTest.lst ExtRAMTest.o ExtRAMTest.bin ExtRAMTest.rec
+#	$(RM) ExtRAMTest.tmp
 
