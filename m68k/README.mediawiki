@@ -1,4 +1,4 @@
-== Linux-68k Assembly Language Source Code ==
+== Linux-68k Source Code ==
 
 * 68000 code builds
 ** ExtRAMTest - Test the 1MB External SRAM on the RETRO-EP4CE15 card
