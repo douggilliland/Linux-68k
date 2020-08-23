@@ -50,20 +50,33 @@ LOOPCHK:
     ADDI.B  #0x01,%D0
     BRA     LOOPCHK
 DONECHK:
-* PRINT 'OK'
+* PRINT 'Pass'
 	MOVE.B	#0x0A,%D0
 	JSR     OUTCHAR
 	MOVE.B	#0x0D,%D0
 	JSR     OUTCHAR
-	MOVE.B	#'O',%D0
+	MOVE.B	#'P',%D0
 	JSR     OUTCHAR
-	MOVE.B	#'K',%D0
+	MOVE.B	#'a',%D0
+	JSR     OUTCHAR
+	MOVE.B	#'s',%D0
+	JSR     OUTCHAR
+	MOVE.B	#'s',%D0
 	JSR     OUTCHAR
     RTS
 FAIL:
-* PRINT 'F'
-    JSR     WAITRDY
+* PRINT 'Fail'
+	MOVE.B	#0x0A,%D0
+	JSR     OUTCHAR
+	MOVE.B	#0x0D,%D0
+	JSR     OUTCHAR
 	MOVE.B	#'F',%D0
+	JSR     OUTCHAR
+	MOVE.B	#'a',%D0
+	JSR     OUTCHAR
+	MOVE.B	#'i',%D0
+	JSR     OUTCHAR
+	MOVE.B	#'l',%D0
 	JSR     OUTCHAR
 	RTS
 
