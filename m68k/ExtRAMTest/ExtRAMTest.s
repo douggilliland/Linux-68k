@@ -1,7 +1,11 @@
-* Test External SRAM
-* External SRAM on the RETRO-EP4CE15 card goes from 0x300000 to 0x3FFFFF (1 MB)
+* =======================================================================
+* Test the External SRAM on the RETRO-EP4CE15 card
+* The RETRO-EP4CE15 card has 1MB of External SRAM
 * External SRAM only supports 8-bit accesses
+* External SRAM goes from 0x300000 to 0x3FFFFF (1 MB)
+* Test is about checking the connections to the SRAM
 * TUTOR14 uses SRAM from 0x000000 to 0x000800
+* =======================================================================
 
 RAMSTART	= 0x300000
 RAMEND		= 0x3FFFFF
@@ -26,16 +30,43 @@ STARTTEST:
     MOVE.B	(%A0),%D1
     CMP.B   %D0,%D1
     BNE     FAIL
-* WRITE INCREMENTING PATTERN
+* CHECK UPPER 8 SRAM ADDRESS LINES (A12..A19 ON SRAM)
+* WRITE INCREMENTING VALUE EVERY 4096 BYTES
+    MOVE.B  #0X00,%D0
+	MOVE.L  #RAMSTART,%A0
+	MOVE.L  #RAMEND+1,%A1
+FILL4K:
+    MOVE.B  %D0,(%A0)
+    ADDI.L  #4096,A0
+    CMP.L   %A0,%A1
+    BGE.S   DONE4KFL
+    ADDI.B  #0x01,%D0
+    BRA     FILL4K
+DONE4KFL:
+    MOVE.B  #0X00,%D0
+	MOVE.L  #RAMSTART,%A0
+	MOVE.L  #RAMEND+1,%A1
+CHK4K:
+    MOVE.B  (%A0),%D1
+    CMP.B   %D0,%D1
+    BNE     FAIL
+    ADDI.B  #0x01,%D0
+    ADDI.L  #4096,A0
+    CMP.L   %A0,%A1
+    BGE.S   DONE4K
+    BRA     CHK4K
+DONE4K:
+* WRITE INCREMENTING PATTERN TO ALL THE SRAM
+* CHECKS BOTTOM 256 ADDRESSES AND ALL DATA LINES
     MOVE.B  #0X00,%D0
 	MOVE.L  #RAMSTART,%A0
 	MOVE.L  #RAMEND+1,%A1
 CHKBLKS:
     MOVE.B  %D0,(%A0)+
     CMP.L   %A0,%A1
-    BEQ     DONEFILL
+    BEQ.S   DONEFILL
     ADDI.B  #0x01,%D0
-    BRA     CHKBLKS
+    BRA.S   CHKBLKS
 DONEFILL:
 * READ BACK INCREMENTING PATTERN 
     MOVE.B  #0X00,%D0
@@ -46,9 +77,9 @@ LOOPCHK:
     CMP.B   %D0,%D1
     BNE     FAIL
     CMP.L   %A0,%A1
-    BEQ     DONECHK
+    BEQ.S   DONECHK
     ADDI.B  #0x01,%D0
-    BRA     LOOPCHK
+    BRA.S   LOOPCHK
 DONECHK:
 * PRINT 'Pass'
 	MOVE.B	#0x0A,%D0
@@ -82,7 +113,7 @@ FAIL:
 
 * OUTPUT A CHARACTER IN D0 TO THE ACIA
 OUTCHAR:
-    BSR     WAITRDY
+    BSR.S   WAITRDY
     LEA     ACIADATA,%A1
 	MOVE.B	%D0,(%A1)
     RTS
@@ -93,6 +124,6 @@ WAITRDY:
 LOOPRDY:
 	MOVE.B	(%A1),%D1
 	ANDI.B	#0x2,%D1
-	BEQ		LOOPRDY
+	BEQ.S   LOOPRDY
     RTS
 
