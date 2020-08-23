@@ -5,7 +5,7 @@
 * External SRAM goes from 0x300000 to 0x3FFFFF (1 MB)
 * Test checks the physical connections to the SRAM
 * Test does not exhaustively check the SRAM itself
-* Test takes several seconds with a 25 MHz 68000 CPU
+* Test takes 2.46 seconds with a 25 MHz 68000 CPU
 * TUTOR14 uses SRAM from 0x000000 to 0x000800
 * =======================================================================
 
