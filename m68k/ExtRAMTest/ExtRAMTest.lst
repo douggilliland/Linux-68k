@@ -8,42 +8,65 @@
    5               	
    6               	RAMSTART	= 0X300000
    7               	RAMEND		= 0X3FFFFF
-   8               	
-   9               	* Code follows
+   8               	ACIASTAT	= 0x010041
+   9               	ACIADATA	= 0x010043
   10               	
-  11 0000 0000 0000 		.ORG    0x001000
-  11      0000 0000 
-  11      0000 0000 
-  11      0000 0000 
-  11      0000 0000 
+  11               	* Code follows
   12               	
-  13               	STARTTEST:
-  14 1000 207C 0030 		MOVE.L  #0x00300000,%A0
-  14      0000 
-  15 1006 103C 0055 		MOVE.B  #0x55,%D0
-  16 100a 1080      		MOVE.B	%D0,(%A0)
-  17 100c 4E71      	    NOP
-  18 100e 1210      	    MOVE.B	(%A0),%D1
-  19 1010 B200      	    CMP.B   %D0,%D1
-  20 1012 6600 0014 	    BNE     FAIL
-  21 1016 103C 00AA 		MOVE.B  #0xAA,%D0
-  22 101a 1080      		MOVE.B	%D0,(%A0)
-  23 101c 4E71      	    NOP
-  24 101e 1210      	    MOVE.B	(%A0),%D1
-  25 1020 B200      	    CMP.B   %D0,%D1
-  26 1022 6600 0004 	    BNE     FAIL
-  27 1026 4E71      	    NOP
-  28               	FAIL:
-  29 1028 4E71      	    NOP
-  30 102a 4E75      		RTS
-  31               		
+  13 0000 0000 0000 		.ORG    0x001000
+  13      0000 0000 
+  13      0000 0000 
+  13      0000 0000 
+  13      0000 0000 
+  14               	
+  15               	STARTTEST:
+  16 1000 207C 0030 		MOVE.L  #0x00300000,%A0
+  16      0000 
+  17 1006 103C 0055 		MOVE.B  #0x55,%D0
+  18 100a 1080      		MOVE.B	%D0,(%A0)
+  19 100c 4E71      	    NOP
+  20 100e 1210      	    MOVE.B	(%A0),%D1
+  21 1010 B200      	    CMP.B   %D0,%D1
+  22 1012 6600 0048 	    BNE     FAIL
+  23 1016 103C 00AA 		MOVE.B  #0xAA,%D0
+  24 101a 1080      		MOVE.B	%D0,(%A0)
+  25 101c 4E71      	    NOP
+  26 101e 1210      	    MOVE.B	(%A0),%D1
+  27 1020 B200      	    CMP.B   %D0,%D1
+  28 1022 6600 0038 	    BNE     FAIL
+  29 1026 4E71      	    NOP
+  30 1028 43F9 0001 		LEA     ACIASTAT,%A1
+  30      0041 
+  31               	WAITRDY:
+  32 102e 13F9 0000 		MOVE.B	(A1),D1
+  32      0000 0000 
+  32      0000 
+  33 1038 0239 0001 		ANDI.B	#0x1,D1
+  33      0000 0000 
+  34 1040 6700 FFEC 		BEQ		WAITRDY
+  35 1044 43F9 0001 		LEA     ACIADATA,%A1
+  35      0043 
+  36 104a 13FC 004F 		MOVE.B	#'O',D1
+  36      0000 0000 
+  37 1052 13F9 0000 		MOVE.B	D1,(A1)
+  37      0000 0000 
+  37      0000 
+  38               	FAIL:
+  39 105c 4E71      	    NOP
+  40 105e 4E75      		RTS
+  41               		
 68K GAS  ExtRAMTest.s 			page 2
 
 
 DEFINED SYMBOLS
         ExtRAMTest.s:6      *ABS*:0000000000300000 RAMSTART
         ExtRAMTest.s:7      *ABS*:00000000003fffff RAMEND
-        ExtRAMTest.s:13     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:28     .text:0000000000001028 FAIL
+        ExtRAMTest.s:8      *ABS*:0000000000010041 ACIASTAT
+        ExtRAMTest.s:9      *ABS*:0000000000010043 ACIADATA
+        ExtRAMTest.s:15     .text:0000000000001000 STARTTEST
+        ExtRAMTest.s:38     .text:000000000000105c FAIL
+        ExtRAMTest.s:31     .text:000000000000102e WAITRDY
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+A1
+D1
