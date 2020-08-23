@@ -30,8 +30,8 @@ STARTTEST:
     MOVE.B  #0X00,%D0
 	MOVE.L  #0x00300000,%A0
 CHKBLKS:
-    MOVE.B  %D0,(%A0)
-    ADD.L   #0x00000001,%A0
+    MOVE.B  %D0,(%A0)+
+*    ADD.L   #0x00000001,%A0
     CMP.L   #0x00400000,%A0
     BEQ     DONEFILL
     ADDI.B  #0x01,%D0
