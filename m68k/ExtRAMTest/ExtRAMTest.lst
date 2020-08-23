@@ -27,13 +27,13 @@
   19 100c 4E71      	    NOP
   20 100e 1210      	    MOVE.B	(%A0),%D1
   21 1010 B200      	    CMP.B   %D0,%D1
-  22 1012 6600 006E 	    BNE     FAIL
+  22 1012 6600 007A 	    BNE     FAIL
   23 1016 103C 00AA 		MOVE.B  #0xAA,%D0
   24 101a 1080      		MOVE.B	%D0,(%A0)
   25 101c 4E71      	    NOP
   26 101e 1210      	    MOVE.B	(%A0),%D1
   27 1020 B200      	    CMP.B   %D0,%D1
-  28 1022 6600 005E 	    BNE     FAIL
+  28 1022 6600 006A 	    BNE     FAIL
   29               	* WRITE INCREMENTING PATTERN
   30 1026 103C 0000 	    MOVE.B  #0X00,%D0
   31 102a 207C 0030 		MOVE.L  #0x00300000,%A0
@@ -54,7 +54,7 @@
   43               	LOOPCHK:
   44 1050 1210      	    MOVE.B  (%A0),%D1
   45 1052 B200      	    CMP.B   %D0,%D1
-  46 1054 6600 002C 	    BNE     FAIL
+  46 1054 6600 0038 	    BNE     FAIL
   47 1058 5288      	    ADD.L   #0x00000001,%A0
   48 105a B1FC 0040 	    CMP.L   #0x00400000,%A0
   48      0000 
@@ -66,36 +66,40 @@
   51 1068 6000 FFE6 	    BRA     LOOPCHK
   52               	DONECHK:
   53               	* PRINT 'OK'
-  54 106c 4EBA 0022 	    JSR     WAITRDY
-  55 1070 103C 004F 		MOVE.B	#'O',%D0
-  56 1074 4EBA 002C 		JSR     OUTCHAR
-  57 1078 103C 004B 		MOVE.B	#'K',%D0
-  58 107c 4EBA 0024 		JSR     OUTCHAR
-  59 1080 4E75      	    RTS
-  60               	FAIL:
-  61               	* PRINT 'F'
-  62 1082 4EBA 000C 	    JSR     WAITRDY
-  63 1086 103C 0046 		MOVE.B	#'F',%D0
-  64 108a 4EBA 0016 		JSR     OUTCHAR
-  65 108e 4E75      		RTS
-  66               	
-  67               	* WAIT FOR THE SERIAL PORT TO BE READY
-  68               	WAITRDY:
-  69 1090 43F9 0001 		LEA     ACIASTAT,%A1
-  69      0041 
-  70               	LOOPRDY:
-  71 1096 1211      		MOVE.B	(%A1),%D1
-  72 1098 0201 0002 		ANDI.B	#0x2,%D1
-  73 109c 6700 FFF8 		BEQ		LOOPRDY
-  74 10a0 4E75      	    RTS
-  75               	
-  76               	* OUTPUT A CHARACTER IN D0 TO THE ACIA
-  77               	OUTCHAR:
-  78 10a2 43F9 0001 		LEA     ACIADATA,%A1
-  78      0043 
-  79 10a8 1280      		MOVE.B	%D0,(%A1)
-  80 10aa 4E75      	    RTS
-  81               	
+  54 106c 103C 000A 		MOVE.B	#0x0A,%D0
+  55 1070 4EBA 002A 		JSR     OUTCHAR
+  56 1074 103C 000D 		MOVE.B	#0x0D,%D0
+  57 1078 4EBA 0022 		JSR     OUTCHAR
+  58 107c 103C 004F 		MOVE.B	#'O',%D0
+  59 1080 4EBA 001A 		JSR     OUTCHAR
+  60 1084 103C 004B 		MOVE.B	#'K',%D0
+  61 1088 4EBA 0012 		JSR     OUTCHAR
+  62 108c 4E75      	    RTS
+  63               	FAIL:
+  64               	* PRINT 'F'
+  65 108e 4EBA 001A 	    JSR     WAITRDY
+  66 1092 103C 0046 		MOVE.B	#'F',%D0
+  67 1096 4EBA 0004 		JSR     OUTCHAR
+  68 109a 4E75      		RTS
+  69               	
+  70               	* OUTPUT A CHARACTER IN D0 TO THE ACIA
+  71               	OUTCHAR:
+  72 109c 6100 000C 	    BSR     WAITRDY
+  73 10a0 43F9 0001 	    LEA     ACIADATA,%A1
+  73      0043 
+  74 10a6 1280      		MOVE.B	%D0,(%A1)
+  75 10a8 4E75      	    RTS
+  76               	
+  77               	* WAIT FOR THE SERIAL PORT TO BE READY
+  78               	WAITRDY:
+  79 10aa 43F9 0001 		LEA     ACIASTAT,%A1
+  79      0041 
+  80               	LOOPRDY:
+  81 10b0 1211      		MOVE.B	(%A1),%D1
+  82 10b2 0201 0002 		ANDI.B	#0x2,%D1
+  83 10b6 6700 FFF8 		BEQ		LOOPRDY
+  84 10ba 4E75      	    RTS
+  85               	
 68K GAS  ExtRAMTest.s 			page 3
 
 
@@ -105,13 +109,13 @@ DEFINED SYMBOLS
         ExtRAMTest.s:8      *ABS*:0000000000010041 ACIASTAT
         ExtRAMTest.s:9      *ABS*:0000000000010043 ACIADATA
         ExtRAMTest.s:15     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:60     .text:0000000000001082 FAIL
+        ExtRAMTest.s:63     .text:000000000000108e FAIL
         ExtRAMTest.s:32     .text:0000000000001030 CHKBLKS
         ExtRAMTest.s:39     .text:0000000000001046 DONEFILL
         ExtRAMTest.s:43     .text:0000000000001050 LOOPCHK
         ExtRAMTest.s:52     .text:000000000000106c DONECHK
-        ExtRAMTest.s:68     .text:0000000000001090 WAITRDY
-        ExtRAMTest.s:77     .text:00000000000010a2 OUTCHAR
-        ExtRAMTest.s:70     .text:0000000000001096 LOOPRDY
+        ExtRAMTest.s:71     .text:000000000000109c OUTCHAR
+        ExtRAMTest.s:78     .text:00000000000010aa WAITRDY
+        ExtRAMTest.s:80     .text:00000000000010b0 LOOPRDY
 
 NO UNDEFINED SYMBOLS
