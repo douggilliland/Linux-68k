@@ -6,7 +6,7 @@
 * Test checks the physical connections to the SRAM
 * Test does not exhaustively check the SRAM itself
 * Test takes 2.46 seconds with a 25 MHz 68000 CPU
-* TUTOR14 uses SRAM from 0x000000 to 0x000800
+* TUTOR14 uses SRAM from 0x000000 to 0x0007FF
 * =======================================================================
 
 RAMSTART	= 0x300000

@@ -9,7 +9,7 @@ ExtRAMTest.bin: ExtRAMTest.o
 ExtRAMTest.rec: ExtRAMTest.o
 	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec ExtRAMTest.o ExtRAMTest.tmp
 	srec_cat ExtRAMTest.tmp --crop 0x1000 0x1fff -o ExtRAMTest.rec
-	rm ExtRAMTest.tmp
+#	rm ExtRAMTest.tmp
 
 clean:
 	$(RM) ExtRAMTest.lst ExtRAMTest.o ExtRAMTest.bin ExtRAMTest.rec
