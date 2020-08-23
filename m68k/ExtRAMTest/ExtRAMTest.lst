@@ -27,33 +27,31 @@
   19 100c 4E71      	    NOP
   20 100e 1210      	    MOVE.B	(%A0),%D1
   21 1010 B200      	    CMP.B   %D0,%D1
-  22 1012 6600 0048 	    BNE     FAIL
+  22 1012 6600 0040 	    BNE     FAIL
   23 1016 103C 00AA 		MOVE.B  #0xAA,%D0
   24 101a 1080      		MOVE.B	%D0,(%A0)
   25 101c 4E71      	    NOP
   26 101e 1210      	    MOVE.B	(%A0),%D1
   27 1020 B200      	    CMP.B   %D0,%D1
-  28 1022 6600 0038 	    BNE     FAIL
+  28 1022 6600 0030 	    BNE     FAIL
   29 1026 4E71      	    NOP
   30 1028 43F9 0001 		LEA     ACIASTAT,%A1
   30      0041 
   31               	WAITRDY:
-  32 102e 13F9 0000 		MOVE.B	(A1),D1
-  32      0000 0000 
+  32 102e 13D1 0000 		MOVE.B	(%A1),D1
   32      0000 
-  33 1038 0239 0002 		ANDI.B	#0x2,D1
+  33 1034 0239 0002 		ANDI.B	#0x2,D1
   33      0000 0000 
-  34 1040 6700 FFEC 		BEQ		WAITRDY
-  35 1044 43F9 0001 		LEA     ACIADATA,%A1
+  34 103c 6700 FFF0 		BEQ		WAITRDY
+  35 1040 43F9 0001 		LEA     ACIADATA,%A1
   35      0043 
-  36 104a 13FC 004F 		MOVE.B	#'O',D1
+  36 1046 13FC 004F 		MOVE.B	#'O',D1
   36      0000 0000 
-  37 1052 13F9 0000 		MOVE.B	D1,(A1)
-  37      0000 0000 
+  37 104e 12B9 0000 		MOVE.B	D1,(%A1)
   37      0000 
   38               	FAIL:
-  39 105c 4E71      	    NOP
-  40 105e 4E75      		RTS
+  39 1054 4E71      	    NOP
+  40 1056 4E75      		RTS
   41               		
 68K GAS  ExtRAMTest.s 			page 2
 
@@ -64,9 +62,8 @@ DEFINED SYMBOLS
         ExtRAMTest.s:8      *ABS*:0000000000010041 ACIASTAT
         ExtRAMTest.s:9      *ABS*:0000000000010043 ACIADATA
         ExtRAMTest.s:15     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:38     .text:000000000000105c FAIL
+        ExtRAMTest.s:38     .text:0000000000001054 FAIL
         ExtRAMTest.s:31     .text:000000000000102e WAITRDY
 
 UNDEFINED SYMBOLS
-A1
 D1
