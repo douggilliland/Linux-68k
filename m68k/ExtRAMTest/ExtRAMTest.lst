@@ -6,8 +6,8 @@
    3               	* External SRAM only supports 8-bit accesses
    4               	* TUTOR14 uses SRAM from 0x000000 to 0x000800
    5               	
-   6               	RAMSTART	= 0X300000
-   7               	RAMEND		= 0X3FFFFF
+   6               	RAMSTART	= 0x300000
+   7               	RAMEND		= 0x3FFFFF
    8               	ACIASTAT	= 0x010041
    9               	ACIADATA	= 0x010043
   10               	
@@ -20,98 +20,98 @@
   13      0000 0000 
   14               	* CHECK FIRST LOCATION BY WRITING/READING 0x55/0xAA
   15               	STARTTEST:
-  16 1000 207C 0030 		MOVE.L  #0x00300000,%A0
+  16 1000 207C 0030 		MOVE.L  #RAMSTART,%A0
   16      0000 
   17 1006 103C 0055 		MOVE.B  #0x55,%D0
   18 100a 1080      		MOVE.B	%D0,(%A0)
   19 100c 4E71      	    NOP
   20 100e 1210      	    MOVE.B	(%A0),%D1
   21 1010 B200      	    CMP.B   %D0,%D1
-  22 1012 6600 0088 	    BNE     FAIL
+  22 1012 6600 008A 	    BNE     FAIL
   23 1016 103C 00AA 		MOVE.B  #0xAA,%D0
   24 101a 1080      		MOVE.B	%D0,(%A0)
   25 101c 4E71      	    NOP
   26 101e 1210      	    MOVE.B	(%A0),%D1
   27 1020 B200      	    CMP.B   %D0,%D1
-  28 1022 6600 0078 	    BNE     FAIL
+  28 1022 6600 007A 	    BNE     FAIL
   29               	* WRITE INCREMENTING PATTERN
   30 1026 103C 0000 	    MOVE.B  #0X00,%D0
-  31 102a 207C 0030 		MOVE.L  #0x00300000,%A0
+  31 102a 207C 0030 		MOVE.L  #RAMSTART,%A0
   31      0000 
-  32               	CHKBLKS:
-  33 1030 10C0      	    MOVE.B  %D0,(%A0)+
-  34               	*    ADD.L   #0x00000001,%A0
-  35 1032 B1FC 0040 	    CMP.L   #0x00400000,%A0
-  35      0000 
-  36 1038 6700 000A 	    BEQ     DONEFILL
-  37 103c 0600 0001 	    ADDI.B  #0x01,%D0
-  38 1040 6000 FFEE 	    BRA     CHKBLKS
+  32 1030 227C 0040 		MOVE.L  #RAMEND+1,%A1
+  32      0000 
+  33               	CHKBLKS:
+  34 1036 10C0      	    MOVE.B  %D0,(%A0)+
+  35 1038 B3C8      	    CMP.L   %A0,%A1
+  36 103a 6700 000A 	    BEQ     DONEFILL
+  37 103e 0600 0001 	    ADDI.B  #0x01,%D0
+  38 1042 6000 FFF2 	    BRA     CHKBLKS
   39               	DONEFILL:
   40               	* READ BACK INCREMENTING PATTERN 
-  41 1044 103C 0000 	    MOVE.B  #0X00,%D0
-  42 1048 207C 0030 		MOVE.L  #0x00300000,%A0
+  41 1046 103C 0000 	    MOVE.B  #0X00,%D0
+  42 104a 207C 0030 		MOVE.L  #RAMSTART,%A0
   42      0000 
-  43               	LOOPCHK:
-  44 104e 1210      	    MOVE.B  (%A0),%D1
-  45 1050 B200      	    CMP.B   %D0,%D1
-  46 1052 6600 0048 	    BNE     FAIL
-  47 1056 5288      	    ADD.L   #0x00000001,%A0
-  48 1058 B1FC 0040 	    CMP.L   #0x00400000,%A0
-  48      0000 
+  43 1050 227C 0040 		MOVE.L  #RAMEND+1,%A1
+  43      0000 
+  44               	LOOPCHK:
+  45 1056 1218      	    MOVE.B  (%A0)+,%D1
+  46 1058 B200      	    CMP.B   %D0,%D1
+  47 105a 6600 0042 	    BNE     FAIL
+  48 105e B3C8      	    CMP.L   %A0,%A1
 68K GAS  ExtRAMTest.s 			page 2
 
 
-  49 105e 6700 000A 	    BEQ     DONECHK
-  50 1062 0600 0001 	    ADDI.B  #0x01,%D0
-  51 1066 6000 FFE6 	    BRA     LOOPCHK
+  49 1060 6700 000A 	    BEQ     DONECHK
+  50 1064 0600 0001 	    ADDI.B  #0x01,%D0
+  51 1068 6000 FFEC 	    BRA     LOOPCHK
   52               	DONECHK:
   53               	* PRINT 'Pass'
-  54 106a 103C 000A 		MOVE.B	#0x0A,%D0
-  55 106e 4EBA 005E 		JSR     OUTCHAR
-  56 1072 103C 000D 		MOVE.B	#0x0D,%D0
-  57 1076 4EBA 0056 		JSR     OUTCHAR
-  58 107a 103C 0050 		MOVE.B	#'P',%D0
-  59 107e 4EBA 004E 		JSR     OUTCHAR
-  60 1082 103C 0061 		MOVE.B	#'a',%D0
-  61 1086 4EBA 0046 		JSR     OUTCHAR
-  62 108a 103C 0073 		MOVE.B	#'s',%D0
-  63 108e 4EBA 003E 		JSR     OUTCHAR
-  64 1092 103C 0073 		MOVE.B	#'s',%D0
-  65 1096 4EBA 0036 		JSR     OUTCHAR
-  66 109a 4E75      	    RTS
+  54 106c 103C 000A 		MOVE.B	#0x0A,%D0
+  55 1070 4EBA 005E 		JSR     OUTCHAR
+  56 1074 103C 000D 		MOVE.B	#0x0D,%D0
+  57 1078 4EBA 0056 		JSR     OUTCHAR
+  58 107c 103C 0050 		MOVE.B	#'P',%D0
+  59 1080 4EBA 004E 		JSR     OUTCHAR
+  60 1084 103C 0061 		MOVE.B	#'a',%D0
+  61 1088 4EBA 0046 		JSR     OUTCHAR
+  62 108c 103C 0073 		MOVE.B	#'s',%D0
+  63 1090 4EBA 003E 		JSR     OUTCHAR
+  64 1094 103C 0073 		MOVE.B	#'s',%D0
+  65 1098 4EBA 0036 		JSR     OUTCHAR
+  66 109c 4E75      	    RTS
   67               	FAIL:
   68               	* PRINT 'Fail'
-  69 109c 103C 000A 		MOVE.B	#0x0A,%D0
-  70 10a0 4EBA 002C 		JSR     OUTCHAR
-  71 10a4 103C 000D 		MOVE.B	#0x0D,%D0
-  72 10a8 4EBA 0024 		JSR     OUTCHAR
-  73 10ac 103C 0046 		MOVE.B	#'F',%D0
-  74 10b0 4EBA 001C 		JSR     OUTCHAR
-  75 10b4 103C 0061 		MOVE.B	#'a',%D0
-  76 10b8 4EBA 0014 		JSR     OUTCHAR
-  77 10bc 103C 0069 		MOVE.B	#'i',%D0
-  78 10c0 4EBA 000C 		JSR     OUTCHAR
-  79 10c4 103C 006C 		MOVE.B	#'l',%D0
-  80 10c8 4EBA 0004 		JSR     OUTCHAR
-  81 10cc 4E75      		RTS
+  69 109e 103C 000A 		MOVE.B	#0x0A,%D0
+  70 10a2 4EBA 002C 		JSR     OUTCHAR
+  71 10a6 103C 000D 		MOVE.B	#0x0D,%D0
+  72 10aa 4EBA 0024 		JSR     OUTCHAR
+  73 10ae 103C 0046 		MOVE.B	#'F',%D0
+  74 10b2 4EBA 001C 		JSR     OUTCHAR
+  75 10b6 103C 0061 		MOVE.B	#'a',%D0
+  76 10ba 4EBA 0014 		JSR     OUTCHAR
+  77 10be 103C 0069 		MOVE.B	#'i',%D0
+  78 10c2 4EBA 000C 		JSR     OUTCHAR
+  79 10c6 103C 006C 		MOVE.B	#'l',%D0
+  80 10ca 4EBA 0004 		JSR     OUTCHAR
+  81 10ce 4E75      		RTS
   82               	
   83               	* OUTPUT A CHARACTER IN D0 TO THE ACIA
   84               	OUTCHAR:
-  85 10ce 6100 000C 	    BSR     WAITRDY
-  86 10d2 43F9 0001 	    LEA     ACIADATA,%A1
+  85 10d0 6100 000C 	    BSR     WAITRDY
+  86 10d4 43F9 0001 	    LEA     ACIADATA,%A1
   86      0043 
-  87 10d8 1280      		MOVE.B	%D0,(%A1)
-  88 10da 4E75      	    RTS
+  87 10da 1280      		MOVE.B	%D0,(%A1)
+  88 10dc 4E75      	    RTS
   89               	
   90               	* WAIT FOR THE SERIAL PORT TO BE READY
   91               	WAITRDY:
-  92 10dc 43F9 0001 		LEA     ACIASTAT,%A1
+  92 10de 43F9 0001 		LEA     ACIASTAT,%A1
   92      0041 
   93               	LOOPRDY:
-  94 10e2 1211      		MOVE.B	(%A1),%D1
-  95 10e4 0201 0002 		ANDI.B	#0x2,%D1
-  96 10e8 6700 FFF8 		BEQ		LOOPRDY
-  97 10ec 4E75      	    RTS
+  94 10e4 1211      		MOVE.B	(%A1),%D1
+  95 10e6 0201 0002 		ANDI.B	#0x2,%D1
+  96 10ea 6700 FFF8 		BEQ		LOOPRDY
+  97 10ee 4E75      	    RTS
   98               	
 68K GAS  ExtRAMTest.s 			page 3
 
@@ -122,13 +122,13 @@ DEFINED SYMBOLS
         ExtRAMTest.s:8      *ABS*:0000000000010041 ACIASTAT
         ExtRAMTest.s:9      *ABS*:0000000000010043 ACIADATA
         ExtRAMTest.s:15     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:67     .text:000000000000109c FAIL
-        ExtRAMTest.s:32     .text:0000000000001030 CHKBLKS
-        ExtRAMTest.s:39     .text:0000000000001044 DONEFILL
-        ExtRAMTest.s:43     .text:000000000000104e LOOPCHK
-        ExtRAMTest.s:52     .text:000000000000106a DONECHK
-        ExtRAMTest.s:84     .text:00000000000010ce OUTCHAR
-        ExtRAMTest.s:91     .text:00000000000010dc WAITRDY
-        ExtRAMTest.s:93     .text:00000000000010e2 LOOPRDY
+        ExtRAMTest.s:67     .text:000000000000109e FAIL
+        ExtRAMTest.s:33     .text:0000000000001036 CHKBLKS
+        ExtRAMTest.s:39     .text:0000000000001046 DONEFILL
+        ExtRAMTest.s:44     .text:0000000000001056 LOOPCHK
+        ExtRAMTest.s:52     .text:000000000000106c DONECHK
+        ExtRAMTest.s:84     .text:00000000000010d0 OUTCHAR
+        ExtRAMTest.s:91     .text:00000000000010de WAITRDY
+        ExtRAMTest.s:93     .text:00000000000010e4 LOOPRDY
 
 NO UNDEFINED SYMBOLS
