@@ -32,8 +32,8 @@ CHKBLKS:
     ADD.L   #0x00010000,%A0
     CMP.L   #0x00400000,%A0
     BEQ     DONEFILL
-    MOVE.B  D0,(%A0)
-    ADDI.B  #0x01,D0
+    MOVE.B  %D0,(%A0)
+    ADDI.B  #0x01,%D0
     BRA     CHKBLKS
 DONEFILL:
     MOVE.B  #0X01,%D0
