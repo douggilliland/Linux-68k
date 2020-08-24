@@ -23,4 +23,6 @@
 
 === MECB ===
 
+* [https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MecbManual.pdf MECB User Manual]
+
 <img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MECB-02.jpg"></img>
