@@ -1,6 +1,6 @@
 == Linux-68k ==
 
-* 68000 code builds
+* 68000 code Cross-Assembler/Compiler builds
 * Using a Linux (Mint) VirtualBox to develop code for the 68000 CPU.
 ** Could not get Shared Folder transfers to work to the Windows machine so transferring build through this repo
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000 Main 68000 repository]
