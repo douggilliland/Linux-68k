@@ -7,7 +7,7 @@
 * [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga Retro 68000 CPU in an FPGA Hackaday Project page]
 ** [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga/log/182141-building-tutor-with-gcc-toolchain Building TUTOR with GCC Toolchain]
 * [https://github.com/douggilliland/MultiComp/wiki 68000 FPGA] - MultiComp derivative - VHDL code
-* [http://land-boards.com/blwiki/index.php?title=RETRO-EP4CE15 RETRO-EP4CE15]
+* [http://land-boards.com/blwiki/index.php?title=RETRO-EP4CE15 RETRO-EP4CE15] - FPGA Wiki page
 
 == Useful Pages ==
 
