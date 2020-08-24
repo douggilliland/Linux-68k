@@ -4,7 +4,7 @@
 * Using a [https://linuxmint.com/ Linux (Mint)] [https://www.virtualbox.org/ VirtualBox] under Windows 10 to develop code for the 68000 CPU
 ** Could not get Shared Folder transfers to work to the Windows machine so transferring build through this repo
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000 Main 68000 repository]
-* [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga Retro 68000 CPU in an FPGA Hackaday Project page]
+* [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga Retro 68000 CPU in an FPGA] - Hackaday Project page
 ** [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga/log/182141-building-tutor-with-gcc-toolchain Building TUTOR with GCC Toolchain]
 * [https://github.com/douggilliland/MultiComp/wiki 68000 FPGA] - MultiComp derivative - VHDL code
 * [http://land-boards.com/blwiki/index.php?title=RETRO-EP4CE15 RETRO-EP4CE15] - FPGA Wiki page
