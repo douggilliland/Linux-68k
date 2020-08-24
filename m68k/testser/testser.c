@@ -1,13 +1,11 @@
 // testser.c
 
-#define ACIASTAT 0x010041
-#define ACIADATA 0x010043
+#define ACIASTAT (unsigned char *) 0x010041
+#define ACIADATA (unsigned char *) 0x010043
+#define TXRDYBIT 0x2
 
-void main(void)
+void _start(void)
 {
-	unsigned char aciaStat;
-	do
-		aciaStat = *(unsigned char *) ACIASTAT;
-	while ((aciaStat & 0x2) == 0x2);
-	*(unsigned char *) ACIADATA = 'X';
+	while ((*ACIASTAT & TXRDYBIT) == 0x0);
+	* ACIADATA = 'X';
 }
