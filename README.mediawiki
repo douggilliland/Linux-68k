@@ -20,3 +20,7 @@
 ** TS2 is the Teeside 68000 CPU build
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000/ReferenceDesigns/MECB MECB] Motorola Educational Computer Board
 * [https://franke.ms/cex GodBolt 68k C Compiler]
+
+=== MECB ===
+
+<img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MECB-02.jpg"></img>
