@@ -9,10 +9,13 @@
 // Prototypes
 void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
+void printCharToVDU(unsigned char);
+void printStringToVDU(const char *);
 
 void _start(void)
 {
-	printStringToACIA("Test String");
+	printStringToACIA("Test String 1");
+	printStringToVDU("Test String 2");
 }
 
 void printCharToACIA(unsigned char charToPrint)
@@ -26,4 +29,17 @@ void printStringToACIA(const char * strToPrint)
     int strOff = 0;
     while(strToPrint[strOff] != 0)
         printCharToACIA(strToPrint[strOff]);
+}
+
+void printCharToVDU(unsigned char charToPrint)
+{
+	while ((*VDUSTAT & TXRDYBIT) == 0x0);
+	* VDUDATA = charToPrint;
+}
+
+void printStringToVDU(const char * strToPrint)
+{
+    int strOff = 0;
+    while(strToPrint[strOff] != 0)
+        printCharToVDU(strToPrint[strOff]);
 }
