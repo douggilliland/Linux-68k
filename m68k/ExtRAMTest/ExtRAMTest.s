@@ -16,6 +16,9 @@ ACIADATA	= 0x010043
 
 TUTORSTART  = 0x008146
 
+CR			= 0x0D
+LF			= 0x0A
+
 * Code follows
 
 	.ORG    0x001000
@@ -150,9 +153,9 @@ LOOPCHK:
 DONECHK:
 
 * PRINT 'Pass'
-	MOVE.B	#0x0A,%D0
+	MOVE.B	#CR,%D0
 	JSR     OUTCHAR
-	MOVE.B	#0x0D,%D0
+	MOVE.B	#LF,%D0
 	JSR     OUTCHAR
 	MOVE.B	#'P',%D0
 	JSR     OUTCHAR
@@ -167,9 +170,9 @@ DONECHK:
 
 FAIL:
 * PRINT 'Fail'
-	MOVE.B	#0x0A,%D0
+	MOVE.B	#CR,%D0
 	JSR     OUTCHAR
-	MOVE.B	#0x0D,%D0
+	MOVE.B	#LF,%D0
 	JSR     OUTCHAR
 	MOVE.B	#'F',%D0
 	JSR     OUTCHAR
