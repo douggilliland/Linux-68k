@@ -19,231 +19,234 @@
   16               	
   17               	TUTORSTART  = 0x008146
   18               	
-  19               	* Code follows
-  20               	
-  21 0000 0000 0000 		.ORG    0x001000
-  21      0000 0000 
-  21      0000 0000 
-  21      0000 0000 
-  21      0000 0000 
-  22               	* CHECK FIRST LOCATION BY WRITING/READING 0x55/0xAA
-  23               	* VERY ROUGH CHECK OF DATA LINES
-  24               	* DATA LINES COULD STILL HAVE SHORTS BUT LESS LIKELY SINCE PINS ARE ADJACENT
-  25               	STARTTEST:
-  26 1000 207C 0030 		MOVE.L  #RAMSTART,%A0
-  26      0000 
-  27 1006 7055      		MOVEQ   #0x55,%D0
-  28 1008 1080      		MOVE.B	%D0,(%A0)
-  29 100a 1210      	    MOVE.B	(%A0),%D1
-  30 100c B200      	    CMP.B   %D0,%D1
-  31 100e 6600 0156 	    BNE.W   FAIL
-  32 1012 103C 00AA 		MOVE.B  #0xAA,%D0
-  33 1016 1080      		MOVE.B	%D0,(%A0)
-  34 1018 4E71      	    NOP
-  35 101a 1210      	    MOVE.B	(%A0),%D1
-  36 101c B200      	    CMP.B   %D0,%D1
-  37 101e 6600 0146 	    BNE.W   FAIL
-  38               	
-  39               	* BOUNCE A 1 ACROSS THE DATA LINES
-  40               	* THIS VERIFIES THERE ARE NO SHORTED DATA LINES
-  41               	* ADDRESS LINES COULD STILL HAVE SHORTS/OPENS
-  42               	BOUNCE1S:
-  43 1022 207C 0030 		MOVE.L  #RAMSTART,%A0
-  43      0000 
-  44 1028 7001      		MOVEQ   #0x01,%D0
-  45               	NEXTONE:
-  46 102a 1080      		MOVE.B	%D0,(%A0)
-  47 102c 1210      	    MOVE.B  (%A0),%D1
-  48 102e B200      	    CMP.B   %D0,%D1
-  49 1030 6600 0134 	    BNE.W   FAIL
-  50 1034 E380      	    ASL.L   #1,%D0
-  51 1036 0C00 0000 	    CMP.B   #0,%D0
+  19               	CR			= 0x0D
+  20               	LF			= 0x0A
+  21               	
+  22               	* Code follows
+  23               	
+  24 0000 0000 0000 		.ORG    0x001000
+  24      0000 0000 
+  24      0000 0000 
+  24      0000 0000 
+  24      0000 0000 
+  25               	* CHECK FIRST LOCATION BY WRITING/READING 0x55/0xAA
+  26               	* VERY ROUGH CHECK OF DATA LINES
+  27               	* DATA LINES COULD STILL HAVE SHORTS BUT LESS LIKELY SINCE PINS ARE ADJACENT
+  28               	STARTTEST:
+  29 1000 207C 0030 		MOVE.L  #RAMSTART,%A0
+  29      0000 
+  30 1006 7055      		MOVEQ   #0x55,%D0
+  31 1008 1080      		MOVE.B	%D0,(%A0)
+  32 100a 1210      	    MOVE.B	(%A0),%D1
+  33 100c B200      	    CMP.B   %D0,%D1
+  34 100e 6600 0156 	    BNE.W   FAIL
+  35 1012 103C 00AA 		MOVE.B  #0xAA,%D0
+  36 1016 1080      		MOVE.B	%D0,(%A0)
+  37 1018 4E71      	    NOP
+  38 101a 1210      	    MOVE.B	(%A0),%D1
+  39 101c B200      	    CMP.B   %D0,%D1
+  40 101e 6600 0146 	    BNE.W   FAIL
+  41               	
+  42               	* BOUNCE A 1 ACROSS THE DATA LINES
+  43               	* THIS VERIFIES THERE ARE NO SHORTED DATA LINES
+  44               	* ADDRESS LINES COULD STILL HAVE SHORTS/OPENS
+  45               	BOUNCE1S:
+  46 1022 207C 0030 		MOVE.L  #RAMSTART,%A0
+  46      0000 
+  47 1028 7001      		MOVEQ   #0x01,%D0
+  48               	NEXTONE:
+  49 102a 1080      		MOVE.B	%D0,(%A0)
+  50 102c 1210      	    MOVE.B  (%A0),%D1
+  51 102e B200      	    CMP.B   %D0,%D1
 68K GAS  ExtRAMTest.s 			page 2
 
 
-  52 103a 66EE      	    BNE.S   NEXTONE
-  53               	
-  54               	* BOUNCE A 0 ACROSS THE DATA LINES
-  55               	BOUNCE0S:
-  56 103c 207C 0030 		MOVE.L  #RAMSTART,%A0
-  56      0000 
-  57 1042 103C 00FE 		MOVE.B  #0xFE,%D0
-  58               	NEXTZERO:
-  59 1046 1080      		MOVE.B	%D0,(%A0)
-  60 1048 1210      	    MOVE.B  (%A0),%D1
-  61 104a B200      	    CMP.B   %D0,%D1
-  62 104c 6600 0118 	    BNE.W   FAIL
-  63 1050 E318      	    ROL.B   #0x1,%D0
-  64 1052 0C00 00FE 	    CMP.B   #0xFE,%D0
-  65 1056 66EE      	    BNE.S   NEXTZERO
-  66               	
-  67               	* CHECK THE UPPER 8 SRAM ADDRESS LINES (A12..A19 ON SRAM)
-  68               	* SINCE THERE ARE ONLY 8 DATA LINES THERE CAN ONLY BE 256 UNIQUE DATA PATTERNS
-  69               	* WRITE AN INCREMENTING VALUE EVERY 4096 BYTES AND VERIFY
-  70 1058 7000      	    MOVEQ   #0x0,%D0
-  71 105a 207C 0030 		MOVE.L  #RAMSTART,%A0
-  71      0000 
-  72 1060 227C 0040 		MOVE.L  #RAMEND+1,%A1
-  72      0000 
-  73               	FILL4K:
-  74 1066 1080      	    MOVE.B  %D0,(%A0)
-  75 1068 06B9 0000 	    ADDI.L  #4096,A0
-  75      1000 0000 
+  52 1030 6600 0134 	    BNE.W   FAIL
+  53 1034 E380      	    ASL.L   #1,%D0
+  54 1036 0C00 0000 	    CMP.B   #0,%D0
+  55 103a 66EE      	    BNE.S   NEXTONE
+  56               	
+  57               	* BOUNCE A 0 ACROSS THE DATA LINES
+  58               	BOUNCE0S:
+  59 103c 207C 0030 		MOVE.L  #RAMSTART,%A0
+  59      0000 
+  60 1042 103C 00FE 		MOVE.B  #0xFE,%D0
+  61               	NEXTZERO:
+  62 1046 1080      		MOVE.B	%D0,(%A0)
+  63 1048 1210      	    MOVE.B  (%A0),%D1
+  64 104a B200      	    CMP.B   %D0,%D1
+  65 104c 6600 0118 	    BNE.W   FAIL
+  66 1050 E318      	    ROL.B   #0x1,%D0
+  67 1052 0C00 00FE 	    CMP.B   #0xFE,%D0
+  68 1056 66EE      	    BNE.S   NEXTZERO
+  69               	
+  70               	* CHECK THE UPPER 8 SRAM ADDRESS LINES (A12..A19 ON SRAM)
+  71               	* SINCE THERE ARE ONLY 8 DATA LINES THERE CAN ONLY BE 256 UNIQUE DATA PATTERNS
+  72               	* WRITE AN INCREMENTING VALUE EVERY 4096 BYTES AND VERIFY
+  73 1058 7000      	    MOVEQ   #0x0,%D0
+  74 105a 207C 0030 		MOVE.L  #RAMSTART,%A0
+  74      0000 
+  75 1060 227C 0040 		MOVE.L  #RAMEND+1,%A1
   75      0000 
-  76 1072 B3C8      	    CMP.L   %A0,%A1
-  77 1074 6C06      	    BGE.S   DONE4KFL
-  78 1076 0600 0001 	    ADDI.B  #0x01,%D0
-  79 107a 60EA      	    BRA.S   FILL4K
-  80               	DONE4KFL:
-  81 107c 7000      	    MOVEQ   #0X00,%D0
-  82 107e 207C 0030 		MOVE.L  #RAMSTART,%A0
-  82      0000 
-  83 1084 227C 0040 		MOVE.L  #RAMEND+1,%A1
-  83      0000 
-  84               	CHK4K:
-  85 108a 1210      	    MOVE.B  (%A0),%D1
-  86 108c B200      	    CMP.B   %D0,%D1
-  87 108e 6600 00D6 	    BNE.W   FAIL
-  88 1092 0600 0001 	    ADDI.B  #0x01,%D0
-  89 1096 06B9 0000 	    ADDI.L  #4096,A0
-  89      1000 0000 
-  89      0000 
-  90 10a0 B3C8      	    CMP.L   %A0,%A1
-  91 10a2 6C02      	    BGE.S   DONE4K
-  92 10a4 60E4      	    BRA.S   CHK4K
-  93               	DONE4K:
-  94               	
-  95               	* CHECK NEXT 4 SRAM ADDRESS LINES (A8..A11 ON SRAM)
-  96               	* A12-A19 = 0
-  97               	* WRITE AN INCREMENTING VALUE EVERY 256 BYTES AND VERIFY
-  98               	* ONLY NEED 16 UNIQUE PATTERNS FOR 4 BITS
-  99 10a6 7000      	    MOVEQ   #0x0,%D0
+  76               	FILL4K:
+  77 1066 1080      	    MOVE.B  %D0,(%A0)
+  78 1068 06B9 0000 	    ADDI.L  #4096,A0
+  78      1000 0000 
+  78      0000 
+  79 1072 B3C8      	    CMP.L   %A0,%A1
+  80 1074 6C06      	    BGE.S   DONE4KFL
+  81 1076 0600 0001 	    ADDI.B  #0x01,%D0
+  82 107a 60EA      	    BRA.S   FILL4K
+  83               	DONE4KFL:
+  84 107c 7000      	    MOVEQ   #0X00,%D0
+  85 107e 207C 0030 		MOVE.L  #RAMSTART,%A0
+  85      0000 
+  86 1084 227C 0040 		MOVE.L  #RAMEND+1,%A1
+  86      0000 
+  87               	CHK4K:
+  88 108a 1210      	    MOVE.B  (%A0),%D1
+  89 108c B200      	    CMP.B   %D0,%D1
+  90 108e 6600 00D6 	    BNE.W   FAIL
+  91 1092 0600 0001 	    ADDI.B  #0x01,%D0
+  92 1096 06B9 0000 	    ADDI.L  #4096,A0
+  92      1000 0000 
+  92      0000 
+  93 10a0 B3C8      	    CMP.L   %A0,%A1
+  94 10a2 6C02      	    BGE.S   DONE4K
+  95 10a4 60E4      	    BRA.S   CHK4K
+  96               	DONE4K:
+  97               	
+  98               	* CHECK NEXT 4 SRAM ADDRESS LINES (A8..A11 ON SRAM)
+  99               	* A12-A19 = 0
 68K GAS  ExtRAMTest.s 			page 3
 
 
- 100 10a8 207C 0030 		MOVE.L  #RAMSTART,%A0
- 100      0000 
- 101 10ae 227C 0030 		MOVE.L  #RAMSTART+0x1000,%A1
- 101      1000 
- 102               	FILL256:
- 103 10b4 1080      	    MOVE.B  %D0,(%A0)
- 104 10b6 06B9 0000 	    ADDI.L  #256,A0
- 104      0100 0000 
- 104      0000 
- 105 10c0 B3C8      	    CMP.L   %A0,%A1
- 106 10c2 6C06      	    BGE.S   DONE256F
- 107 10c4 0600 0001 	    ADDI.B  #0x01,%D0
- 108 10c8 60EA      	    BRA.S   FILL256
- 109               	DONE256F:
- 110 10ca 7000      	    MOVEQ   #0X0,%D0
- 111 10cc 207C 0030 		MOVE.L  #RAMSTART,%A0
- 111      0000 
- 112 10d2 227C 0030 		MOVE.L  #RAMSTART+0x1000,%A1
- 112      1000 
- 113               	CHK256:
- 114 10d8 1210      	    MOVE.B  (%A0),%D1
- 115 10da B200      	    CMP.B   %D0,%D1
- 116 10dc 6600 0088 	    BNE.W   FAIL
- 117 10e0 0600 0001 	    ADDI.B  #0x01,%D0
- 118 10e4 06B9 0000 	    ADDI.L  #256,A0
- 118      0100 0000 
- 118      0000 
- 119 10ee B3C8      	    CMP.L   %A0,%A1
- 120 10f0 6C02      	    BGE.S   DONE256
- 121 10f2 60E4      	    BRA.S   CHK256
- 122               	DONE256:
- 123               	
- 124               	* WRITE INCREMENTING PATTERN TO ALL THE SRAM
- 125               	* CHECKS THE REMAINING BOTTOM ADDRESSES LINES
- 126               	* TOKEN EFFORT TO TOUCH ALL LOCATIONS
- 127               	* MAY NOT DETECT INDIVIDUAL STUCK AT HIGH OR LOW BITS INSIDE SRAM
- 128 10f4 7000      	    MOVEQ   #0x0,%D0
- 129 10f6 207C 0030 		MOVE.L  #RAMSTART,%A0
- 129      0000 
- 130 10fc 227C 0040 		MOVE.L  #RAMEND+1,%A1
- 130      0000 
- 131               	CHKALL:
- 132 1102 10C0      	    MOVE.B  %D0,(%A0)+
- 133 1104 B3C8      	    CMP.L   %A0,%A1
- 134 1106 6706      	    BEQ.S   DONEFILL
- 135 1108 0600 0001 	    ADDI.B  #0x01,%D0
- 136 110c 60F4      	    BRA.S   CHKALL
- 137               	DONEFILL:
- 138               	* READ BACK INCREMENTING PATTERN 
- 139 110e 7000      	    MOVEQ   #0x0,%D0
- 140 1110 207C 0030 		MOVE.L  #RAMSTART,%A0
- 140      0000 
- 141 1116 227C 0040 		MOVE.L  #RAMEND+1,%A1
- 141      0000 
- 142               	LOOPCHK:
- 143 111c 1218      	    MOVE.B  (%A0)+,%D1
- 144 111e B200      	    CMP.B   %D0,%D1
+ 100               	* WRITE AN INCREMENTING VALUE EVERY 256 BYTES AND VERIFY
+ 101               	* ONLY NEED 16 UNIQUE PATTERNS FOR 4 BITS
+ 102 10a6 7000      	    MOVEQ   #0x0,%D0
+ 103 10a8 207C 0030 		MOVE.L  #RAMSTART,%A0
+ 103      0000 
+ 104 10ae 227C 0030 		MOVE.L  #RAMSTART+0x1000,%A1
+ 104      1000 
+ 105               	FILL256:
+ 106 10b4 1080      	    MOVE.B  %D0,(%A0)
+ 107 10b6 06B9 0000 	    ADDI.L  #256,A0
+ 107      0100 0000 
+ 107      0000 
+ 108 10c0 B3C8      	    CMP.L   %A0,%A1
+ 109 10c2 6C06      	    BGE.S   DONE256F
+ 110 10c4 0600 0001 	    ADDI.B  #0x01,%D0
+ 111 10c8 60EA      	    BRA.S   FILL256
+ 112               	DONE256F:
+ 113 10ca 7000      	    MOVEQ   #0X0,%D0
+ 114 10cc 207C 0030 		MOVE.L  #RAMSTART,%A0
+ 114      0000 
+ 115 10d2 227C 0030 		MOVE.L  #RAMSTART+0x1000,%A1
+ 115      1000 
+ 116               	CHK256:
+ 117 10d8 1210      	    MOVE.B  (%A0),%D1
+ 118 10da B200      	    CMP.B   %D0,%D1
+ 119 10dc 6600 0088 	    BNE.W   FAIL
+ 120 10e0 0600 0001 	    ADDI.B  #0x01,%D0
+ 121 10e4 06B9 0000 	    ADDI.L  #256,A0
+ 121      0100 0000 
+ 121      0000 
+ 122 10ee B3C8      	    CMP.L   %A0,%A1
+ 123 10f0 6C02      	    BGE.S   DONE256
+ 124 10f2 60E4      	    BRA.S   CHK256
+ 125               	DONE256:
+ 126               	
+ 127               	* WRITE INCREMENTING PATTERN TO ALL THE SRAM
+ 128               	* CHECKS THE REMAINING BOTTOM ADDRESSES LINES
+ 129               	* TOKEN EFFORT TO TOUCH ALL LOCATIONS
+ 130               	* MAY NOT DETECT INDIVIDUAL STUCK AT HIGH OR LOW BITS INSIDE SRAM
+ 131 10f4 7000      	    MOVEQ   #0x0,%D0
+ 132 10f6 207C 0030 		MOVE.L  #RAMSTART,%A0
+ 132      0000 
+ 133 10fc 227C 0040 		MOVE.L  #RAMEND+1,%A1
+ 133      0000 
+ 134               	CHKALL:
+ 135 1102 10C0      	    MOVE.B  %D0,(%A0)+
+ 136 1104 B3C8      	    CMP.L   %A0,%A1
+ 137 1106 6706      	    BEQ.S   DONEFILL
+ 138 1108 0600 0001 	    ADDI.B  #0x01,%D0
+ 139 110c 60F4      	    BRA.S   CHKALL
+ 140               	DONEFILL:
+ 141               	* READ BACK INCREMENTING PATTERN 
+ 142 110e 7000      	    MOVEQ   #0x0,%D0
+ 143 1110 207C 0030 		MOVE.L  #RAMSTART,%A0
+ 143      0000 
+ 144 1116 227C 0040 		MOVE.L  #RAMEND+1,%A1
+ 144      0000 
 68K GAS  ExtRAMTest.s 			page 4
 
 
- 145 1120 6600 0044 	    BNE.W   FAIL
- 146 1124 B3C8      	    CMP.L   %A0,%A1
- 147 1126 6706      	    BEQ.S   DONECHK
- 148 1128 0600 0001 	    ADDI.B  #0x01,%D0
- 149 112c 60EE      	    BRA.S   LOOPCHK
- 150               	DONECHK:
- 151               	
- 152               	* PRINT 'Pass'
- 153 112e 103C 000A 		MOVE.B	#0x0A,%D0
- 154 1132 4EBA 006A 		JSR     OUTCHAR
- 155 1136 103C 000D 		MOVE.B	#0x0D,%D0
- 156 113a 4EBA 0062 		JSR     OUTCHAR
- 157 113e 103C 0050 		MOVE.B	#'P',%D0
- 158 1142 4EBA 005A 		JSR     OUTCHAR
- 159 1146 103C 0061 		MOVE.B	#'a',%D0
- 160 114a 4EBA 0052 		JSR     OUTCHAR
- 161 114e 103C 0073 		MOVE.B	#'s',%D0
- 162 1152 4EBA 004A 		JSR     OUTCHAR
- 163 1156 103C 0073 		MOVE.B	#'s',%D0
- 164 115a 4EBA 0042 		JSR     OUTCHAR
- 165 115e 207C 0000 	    MOVE.L	#TUTORSTART,%A0
- 165      8146 
- 166 1164 4ED0      	    JMP     (%A0)
- 167               	
- 168               	FAIL:
- 169               	* PRINT 'Fail'
- 170 1166 103C 000A 		MOVE.B	#0x0A,%D0
- 171 116a 4EBA 0032 		JSR     OUTCHAR
- 172 116e 103C 000D 		MOVE.B	#0x0D,%D0
- 173 1172 4EBA 002A 		JSR     OUTCHAR
- 174 1176 103C 0046 		MOVE.B	#'F',%D0
- 175 117a 4EBA 0022 		JSR     OUTCHAR
- 176 117e 103C 0061 		MOVE.B	#'a',%D0
- 177 1182 4EBA 001A 		JSR     OUTCHAR
- 178 1186 103C 0069 		MOVE.B	#'i',%D0
- 179 118a 4EBA 0012 		JSR     OUTCHAR
- 180 118e 103C 006C 		MOVE.B	#'l',%D0
- 181 1192 4EBA 000A 		JSR     OUTCHAR
- 182 1196 207C 0000 	    MOVE.L	#TUTORSTART,%A0
- 182      8146 
- 183 119c 4ED0      	    JMP     (%A0)
- 184               	
- 185               	* OUTPUT A CHARACTER IN D0 TO THE ACIA
- 186               	OUTCHAR:
- 187 119e 610A      	    BSR.S   WAITRDY
- 188 11a0 43F9 0001 	    LEA     ACIADATA,%A1
- 188      0043 
- 189 11a6 1280      		MOVE.B	%D0,(%A1)
- 190 11a8 4E75      	    RTS
- 191               	
- 192               	* WAIT FOR THE SERIAL PORT TO BE READY
- 193               	WAITRDY:
- 194 11aa 43F9 0001 		LEA     ACIASTAT,%A1
- 194      0041 
- 195               	LOOPRDY:
- 196 11b0 1211      		MOVE.B	(%A1),%D1
- 197 11b2 0201 0002 		ANDI.B	#0x2,%D1
+ 145               	LOOPCHK:
+ 146 111c 1218      	    MOVE.B  (%A0)+,%D1
+ 147 111e B200      	    CMP.B   %D0,%D1
+ 148 1120 6600 0044 	    BNE.W   FAIL
+ 149 1124 B3C8      	    CMP.L   %A0,%A1
+ 150 1126 6706      	    BEQ.S   DONECHK
+ 151 1128 0600 0001 	    ADDI.B  #0x01,%D0
+ 152 112c 60EE      	    BRA.S   LOOPCHK
+ 153               	DONECHK:
+ 154               	
+ 155               	* PRINT 'Pass'
+ 156 112e 103C 000D 		MOVE.B	#CR,%D0
+ 157 1132 4EBA 006A 		JSR     OUTCHAR
+ 158 1136 103C 000A 		MOVE.B	#LF,%D0
+ 159 113a 4EBA 0062 		JSR     OUTCHAR
+ 160 113e 103C 0050 		MOVE.B	#'P',%D0
+ 161 1142 4EBA 005A 		JSR     OUTCHAR
+ 162 1146 103C 0061 		MOVE.B	#'a',%D0
+ 163 114a 4EBA 0052 		JSR     OUTCHAR
+ 164 114e 103C 0073 		MOVE.B	#'s',%D0
+ 165 1152 4EBA 004A 		JSR     OUTCHAR
+ 166 1156 103C 0073 		MOVE.B	#'s',%D0
+ 167 115a 4EBA 0042 		JSR     OUTCHAR
+ 168 115e 207C 0000 	    MOVE.L	#TUTORSTART,%A0
+ 168      8146 
+ 169 1164 4ED0      	    JMP     (%A0)
+ 170               	
+ 171               	FAIL:
+ 172               	* PRINT 'Fail'
+ 173 1166 103C 000D 		MOVE.B	#CR,%D0
+ 174 116a 4EBA 0032 		JSR     OUTCHAR
+ 175 116e 103C 000A 		MOVE.B	#LF,%D0
+ 176 1172 4EBA 002A 		JSR     OUTCHAR
+ 177 1176 103C 0046 		MOVE.B	#'F',%D0
+ 178 117a 4EBA 0022 		JSR     OUTCHAR
+ 179 117e 103C 0061 		MOVE.B	#'a',%D0
+ 180 1182 4EBA 001A 		JSR     OUTCHAR
+ 181 1186 103C 0069 		MOVE.B	#'i',%D0
+ 182 118a 4EBA 0012 		JSR     OUTCHAR
+ 183 118e 103C 006C 		MOVE.B	#'l',%D0
+ 184 1192 4EBA 000A 		JSR     OUTCHAR
+ 185 1196 207C 0000 	    MOVE.L	#TUTORSTART,%A0
+ 185      8146 
+ 186 119c 4ED0      	    JMP     (%A0)
+ 187               	
+ 188               	* OUTPUT A CHARACTER IN D0 TO THE ACIA
+ 189               	OUTCHAR:
+ 190 119e 610A      	    BSR.S   WAITRDY
+ 191 11a0 43F9 0001 	    LEA     ACIADATA,%A1
+ 191      0043 
+ 192 11a6 1280      		MOVE.B	%D0,(%A1)
+ 193 11a8 4E75      	    RTS
+ 194               	
+ 195               	* WAIT FOR THE SERIAL PORT TO BE READY
+ 196               	WAITRDY:
+ 197 11aa 43F9 0001 		LEA     ACIASTAT,%A1
+ 197      0041 
 68K GAS  ExtRAMTest.s 			page 5
 
 
- 198 11b6 67F8      		BEQ.S   LOOPRDY
- 199 11b8 4E75      	    RTS
- 200               	
+ 198               	LOOPRDY:
+ 199 11b0 1211      		MOVE.B	(%A1),%D1
+ 200 11b2 0201 0002 		ANDI.B	#0x2,%D1
+ 201 11b6 67F8      		BEQ.S   LOOPRDY
+ 202 11b8 4E75      	    RTS
+ 203               	
 68K GAS  ExtRAMTest.s 			page 6
 
 
@@ -253,27 +256,29 @@ DEFINED SYMBOLS
         ExtRAMTest.s:14     *ABS*:0000000000010041 ACIASTAT
         ExtRAMTest.s:15     *ABS*:0000000000010043 ACIADATA
         ExtRAMTest.s:17     *ABS*:0000000000008146 TUTORSTART
-        ExtRAMTest.s:25     .text:0000000000001000 STARTTEST
-        ExtRAMTest.s:168    .text:0000000000001166 FAIL
-        ExtRAMTest.s:42     .text:0000000000001022 BOUNCE1S
-        ExtRAMTest.s:45     .text:000000000000102a NEXTONE
-        ExtRAMTest.s:55     .text:000000000000103c BOUNCE0S
-        ExtRAMTest.s:58     .text:0000000000001046 NEXTZERO
-        ExtRAMTest.s:73     .text:0000000000001066 FILL4K
-        ExtRAMTest.s:80     .text:000000000000107c DONE4KFL
-        ExtRAMTest.s:84     .text:000000000000108a CHK4K
-        ExtRAMTest.s:93     .text:00000000000010a6 DONE4K
-        ExtRAMTest.s:102    .text:00000000000010b4 FILL256
-        ExtRAMTest.s:109    .text:00000000000010ca DONE256F
-        ExtRAMTest.s:113    .text:00000000000010d8 CHK256
-        ExtRAMTest.s:122    .text:00000000000010f4 DONE256
-        ExtRAMTest.s:131    .text:0000000000001102 CHKALL
-        ExtRAMTest.s:137    .text:000000000000110e DONEFILL
-        ExtRAMTest.s:142    .text:000000000000111c LOOPCHK
-        ExtRAMTest.s:150    .text:000000000000112e DONECHK
-        ExtRAMTest.s:186    .text:000000000000119e OUTCHAR
-        ExtRAMTest.s:193    .text:00000000000011aa WAITRDY
-        ExtRAMTest.s:195    .text:00000000000011b0 LOOPRDY
+        ExtRAMTest.s:19     *ABS*:000000000000000d CR
+        ExtRAMTest.s:20     *ABS*:000000000000000a LF
+        ExtRAMTest.s:28     .text:0000000000001000 STARTTEST
+        ExtRAMTest.s:171    .text:0000000000001166 FAIL
+        ExtRAMTest.s:45     .text:0000000000001022 BOUNCE1S
+        ExtRAMTest.s:48     .text:000000000000102a NEXTONE
+        ExtRAMTest.s:58     .text:000000000000103c BOUNCE0S
+        ExtRAMTest.s:61     .text:0000000000001046 NEXTZERO
+        ExtRAMTest.s:76     .text:0000000000001066 FILL4K
+        ExtRAMTest.s:83     .text:000000000000107c DONE4KFL
+        ExtRAMTest.s:87     .text:000000000000108a CHK4K
+        ExtRAMTest.s:96     .text:00000000000010a6 DONE4K
+        ExtRAMTest.s:105    .text:00000000000010b4 FILL256
+        ExtRAMTest.s:112    .text:00000000000010ca DONE256F
+        ExtRAMTest.s:116    .text:00000000000010d8 CHK256
+        ExtRAMTest.s:125    .text:00000000000010f4 DONE256
+        ExtRAMTest.s:134    .text:0000000000001102 CHKALL
+        ExtRAMTest.s:140    .text:000000000000110e DONEFILL
+        ExtRAMTest.s:145    .text:000000000000111c LOOPCHK
+        ExtRAMTest.s:153    .text:000000000000112e DONECHK
+        ExtRAMTest.s:189    .text:000000000000119e OUTCHAR
+        ExtRAMTest.s:196    .text:00000000000011aa WAITRDY
+        ExtRAMTest.s:198    .text:00000000000011b0 LOOPRDY
 
 UNDEFINED SYMBOLS
 A0
