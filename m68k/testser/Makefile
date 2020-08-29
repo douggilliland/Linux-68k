@@ -12,9 +12,7 @@ testser.bin: testser.o
 testser.rec: testser.o
 	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec testser.o testser.tmp
 	srec_cat testser.tmp --crop 0x1000 0x1fff -o testser.rec
-#	rm testser.tmp
 
 clean:
 	$(RM) testser.s testser.o testser.bin testser.rec testser.lst
 	$(RM) testser.tmp
-
