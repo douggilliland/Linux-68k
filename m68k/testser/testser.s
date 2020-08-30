@@ -8,9 +8,9 @@
 	.string	"Test String 2"
 	.text
 	.align	2
-	.globl	_start
-	.type	_start, @function
-_start:
+	.globl	main
+	.type	main, @function
+main:
 	link.w %fp,#0
 	pea .LC0
 	jsr printStringToACIA
@@ -18,10 +18,10 @@ _start:
 	pea .LC1
 	jsr printStringToVDU
 	addq.l #4,%sp
-	nop
+	moveq #0,%d0
 	unlk %fp
 	rts
-	.size	_start, .-_start
+	.size	main, .-main
 	.align	2
 	.globl	printCharToACIA
 	.type	printCharToACIA, @function
@@ -31,7 +31,7 @@ printCharToACIA:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L3:
+.L4:
 	move.l #65601,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -39,7 +39,7 @@ printCharToACIA:
 	moveq #2,%d1
 	and.l %d1,%d0
 	tst.l %d0
-	jeq .L3
+	jeq .L4
 	move.l #65603,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -52,8 +52,8 @@ printCharToACIA:
 printStringToACIA:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L5
-.L6:
+	jra .L6
+.L7:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
@@ -63,13 +63,13 @@ printStringToACIA:
 	move.l %d0,-(%sp)
 	jsr printCharToACIA
 	addq.l #4,%sp
-.L5:
+.L6:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L6
+	jne .L7
 	nop
 	nop
 	unlk %fp
@@ -84,7 +84,7 @@ printCharToVDU:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L8:
+.L9:
 	move.l #65600,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -92,7 +92,7 @@ printCharToVDU:
 	moveq #2,%d1
 	and.l %d1,%d0
 	tst.l %d0
-	jeq .L8
+	jeq .L9
 	move.l #65602,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -105,8 +105,8 @@ printCharToVDU:
 printStringToVDU:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L10
-.L11:
+	jra .L11
+.L12:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
@@ -116,13 +116,13 @@ printStringToVDU:
 	move.l %d0,-(%sp)
 	jsr printCharToVDU
 	addq.l #4,%sp
-.L10:
+.L11:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L11
+	jne .L12
 	nop
 	nop
 	unlk %fp

@@ -12,10 +12,11 @@ void printStringToACIA(const char *);
 void printCharToVDU(unsigned char);
 void printStringToVDU(const char *);
 
-void _start(void)
+int main(void)
 {
 	printStringToACIA("Test String 1");
 	printStringToVDU("Test String 2");
+    return(0);
 }
 
 void printCharToACIA(unsigned char charToPrint)
