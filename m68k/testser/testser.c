@@ -25,7 +25,7 @@ int main(void)
 
 void printCharToACIA(unsigned char charToPrint)
 {
-	while ((*ACIASTAT & TXRDYBIT) == 0x0);
+	while ((*ACIASTAT & TXRDYBIT) != TXRDYBIT);
 	* ACIADATA = charToPrint;
 }
 
@@ -38,7 +38,7 @@ void printStringToACIA(const char * strToPrint)
 
 void printCharToVDU(unsigned char charToPrint)
 {
-	while ((*VDUSTAT & TXRDYBIT) == 0x0);
+	while ((*VDUSTAT & TXRDYBIT) != TXRDYBIT);
 	* VDUDATA = charToPrint;
 }
 
