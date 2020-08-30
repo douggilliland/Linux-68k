@@ -55,6 +55,9 @@ printStringToACIA:
 	jra .L6
 .L7:
 	move.l -4(%fp),%d0
+	move.l %d0,%d1
+	addq.l #1,%d1
+	move.l %d1,-4(%fp)
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
@@ -108,6 +111,9 @@ printStringToVDU:
 	jra .L11
 .L12:
 	move.l -4(%fp),%d0
+	move.l %d0,%d1
+	addq.l #1,%d1
+	move.l %d1,-4(%fp)
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0

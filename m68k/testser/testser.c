@@ -29,7 +29,7 @@ void printStringToACIA(const char * strToPrint)
 {
     int strOff = 0;
     while(strToPrint[strOff] != 0)
-        printCharToACIA(strToPrint[strOff]);
+        printCharToACIA(strToPrint[strOff++]);
 }
 
 void printCharToVDU(unsigned char charToPrint)
@@ -42,5 +42,5 @@ void printStringToVDU(const char * strToPrint)
 {
     int strOff = 0;
     while(strToPrint[strOff] != 0)
-        printCharToVDU(strToPrint[strOff]);
+        printCharToVDU(strToPrint[strOff++]);
 }
