@@ -3,9 +3,9 @@
 	.text
 	.section	.rodata
 .LC0:
-	.string	"Test String  for serial\n\r"
+	.string	"Test String to serial\n\r"
 .LC1:
-	.string	"Test String 2\n\r"
+	.string	"Test String to VDU\n\r"
 	.text
 	.align	2
 	.globl	main

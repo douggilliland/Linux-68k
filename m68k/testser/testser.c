@@ -16,8 +16,8 @@ int main(void)
 {
     asm("move.l #0x1000,%sp"); // Set up initial stack pointer
 
-	printStringToACIA("Test String  for serial\n\r");
-	printStringToVDU("Test String 2\n\r");
+	printStringToACIA("Test String to serial\n\r");
+	printStringToVDU("Test String to VDU\n\r");
     asm("move.b #228,%d7\n\t"
         "trap #14");
     return(0);

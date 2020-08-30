@@ -9,5 +9,5 @@ testser.s: testser.c
 	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -nostdlib -nodefaultlibs -m68000 -S testser.c
 
 clean:
-	$(RM) a.out testser.o testser.run testser.s
+	$(RM) a.out testser.o testser.run testser.s testser.lst
 	
