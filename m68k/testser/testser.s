@@ -49,8 +49,9 @@ printCharToACIA:
 	and.l #255,%d0
 	moveq #2,%d1
 	and.l %d1,%d0
-	tst.l %d0
-	jeq .L4
+	moveq #2,%d1
+	cmp.l %d0,%d1
+	jne .L4
 	move.l #65603,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -105,8 +106,9 @@ printCharToVDU:
 	and.l #255,%d0
 	moveq #2,%d1
 	and.l %d1,%d0
-	tst.l %d0
-	jeq .L9
+	moveq #2,%d1
+	cmp.l %d0,%d1
+	jne .L9
 	move.l #65602,%a0
 	move.b -2(%fp),(%a0)
 	nop
