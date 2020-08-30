@@ -14,8 +14,12 @@ void printStringToVDU(const char *);
 
 int main(void)
 {
-	printStringToACIA("Test String 1");
-	printStringToVDU("Test String 2");
+    asm("move.l #0x1000,%sp"); // Set up initial stack pointer
+
+	printStringToACIA("Test String  for serial\n\r");
+	printStringToVDU("Test String 2\n\r");
+    asm("move.b #228,%d7\n\t"
+        "trap #14");
     return(0);
 }
 

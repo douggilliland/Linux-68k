@@ -3,21 +3,32 @@
 	.text
 	.section	.rodata
 .LC0:
-	.string	"Test String 1"
+	.string	"Test String  for serial\n\r"
 .LC1:
-	.string	"Test String 2"
+	.string	"Test String 2\n\r"
 	.text
 	.align	2
 	.globl	main
 	.type	main, @function
 main:
 	link.w %fp,#0
+#APP
+| 17 "testser.c" 1
+	move.l #0x1000,%sp
+| 0 "" 2
+#NO_APP
 	pea .LC0
 	jsr printStringToACIA
 	addq.l #4,%sp
 	pea .LC1
 	jsr printStringToVDU
 	addq.l #4,%sp
+#APP
+| 21 "testser.c" 1
+	move.b #228,%d7
+	trap #14
+| 0 "" 2
+#NO_APP
 	moveq #0,%d0
 	unlk %fp
 	rts
