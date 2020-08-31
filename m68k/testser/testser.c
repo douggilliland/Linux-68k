@@ -4,13 +4,16 @@
 #define ACIADATA	(volatile unsigned char *) 0x010043
 #define VDUSTAT		(volatile unsigned char *) 0x010040
 #define VDUDATA		(volatile unsigned char *) 0x010042
-#define TXRDYBIT 0x2
+#define TXRDYBIT	0x2
+#define RXFULLBIT	0x1
 
 // Prototypes
 void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
+unsigned char getCharACIA(void);
 void printCharToVDU(unsigned char);
 void printStringToVDU(const char *);
+unsigned char getCharVDU(void);
 void wait(unsigned int waitTime);
 
 int main(void)
@@ -23,6 +26,18 @@ int main(void)
     asm("move.b #228,%d7\n\t"
         "trap #14");
     return(0);
+}
+
+unsigned char getCharVDU(void)
+{
+	while ((*VDUSTAT & RXFULLBIT) != RXFULLBIT);
+	return(* ACIADATA);
+}
+
+unsigned char getCharACIA(void);
+{
+	while ((*ACIASTAT & RXFULLBIT) != RXFULLBIT);
+	return(* VDUDATA);
 }
 
 void wait(unsigned int waitTime)
