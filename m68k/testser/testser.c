@@ -11,6 +11,7 @@ void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
 void printCharToVDU(unsigned char);
 void printStringToVDU(const char *);
+void wait(unsigned int waitTime);
 
 int main(void)
 {
@@ -18,9 +19,16 @@ int main(void)
 
 	printStringToACIA("Test String to serial\n\r");
 	printStringToVDU("Test String to VDU\n\r");
+    wait(10000);
     asm("move.b #228,%d7\n\t"
         "trap #14");
     return(0);
+}
+
+void wait(unsigned int waitTime)
+{
+    volatile unsigned int timeCount = 0;
+    for (timeCount = 0; timeCount < waitTime; timeCount++);
 }
 
 void printCharToACIA(unsigned char charToPrint)
