@@ -13,7 +13,7 @@
 main:
 	link.w %fp,#0
 #APP
-| 18 "testser.c" 1
+| 21 "testser.c" 1
 	move.l #0x1000,%sp
 | 0 "" 2
 #NO_APP
@@ -27,7 +27,7 @@ main:
 	jsr wait
 	addq.l #4,%sp
 #APP
-| 23 "testser.c" 1
+| 26 "testser.c" 1
 	move.b #228,%d7
 	trap #14
 | 0 "" 2
@@ -37,6 +37,48 @@ main:
 	rts
 	.size	main, .-main
 	.align	2
+	.globl	getCharVDU
+	.type	getCharVDU, @function
+getCharVDU:
+	link.w %fp,#0
+	nop
+.L4:
+	move.l #65600,%a0
+	move.b (%a0),%d0
+	move.b %d0,%d0
+	and.l #255,%d0
+	moveq #1,%d1
+	and.l %d1,%d0
+	moveq #1,%d1
+	cmp.l %d0,%d1
+	jne .L4
+	move.l #65603,%a0
+	move.b (%a0),%d0
+	unlk %fp
+	rts
+	.size	getCharVDU, .-getCharVDU
+	.align	2
+	.globl	getCharACIA
+	.type	getCharACIA, @function
+getCharACIA:
+	link.w %fp,#0
+	nop
+.L7:
+	move.l #65601,%a0
+	move.b (%a0),%d0
+	move.b %d0,%d0
+	and.l #255,%d0
+	moveq #1,%d1
+	and.l %d1,%d0
+	moveq #1,%d1
+	cmp.l %d0,%d1
+	jne .L7
+	move.l #65602,%a0
+	move.b (%a0),%d0
+	unlk %fp
+	rts
+	.size	getCharACIA, .-getCharACIA
+	.align	2
 	.globl	wait
 	.type	wait, @function
 wait:
@@ -45,15 +87,15 @@ wait:
 	move.l %d0,-4(%fp)
 	moveq #0,%d0
 	move.l %d0,-4(%fp)
-	jra .L4
-.L5:
+	jra .L10
+.L11:
 	move.l -4(%fp),%d0
 	addq.l #1,%d0
 	move.l %d0,-4(%fp)
-.L4:
+.L10:
 	move.l -4(%fp),%d0
 	cmp.l 8(%fp),%d0
-	jcs .L5
+	jcs .L11
 	nop
 	nop
 	unlk %fp
@@ -68,7 +110,7 @@ printCharToACIA:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L7:
+.L13:
 	move.l #65601,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -77,7 +119,7 @@ printCharToACIA:
 	and.l %d1,%d0
 	moveq #2,%d1
 	cmp.l %d0,%d1
-	jne .L7
+	jne .L13
 	move.l #65603,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -90,8 +132,8 @@ printCharToACIA:
 printStringToACIA:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L9
-.L10:
+	jra .L15
+.L16:
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
@@ -104,13 +146,13 @@ printStringToACIA:
 	move.l %d0,-(%sp)
 	jsr printCharToACIA
 	addq.l #4,%sp
-.L9:
+.L15:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L10
+	jne .L16
 	nop
 	nop
 	unlk %fp
@@ -125,7 +167,7 @@ printCharToVDU:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L12:
+.L18:
 	move.l #65600,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -134,7 +176,7 @@ printCharToVDU:
 	and.l %d1,%d0
 	moveq #2,%d1
 	cmp.l %d0,%d1
-	jne .L12
+	jne .L18
 	move.l #65602,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -147,8 +189,8 @@ printCharToVDU:
 printStringToVDU:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L14
-.L15:
+	jra .L20
+.L21:
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
@@ -161,13 +203,13 @@ printStringToVDU:
 	move.l %d0,-(%sp)
 	jsr printCharToVDU
 	addq.l #4,%sp
-.L14:
+.L20:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L15
+	jne .L21
 	nop
 	nop
 	unlk %fp

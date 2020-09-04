@@ -34,7 +34,7 @@ unsigned char getCharVDU(void)
 	return(* ACIADATA);
 }
 
-unsigned char getCharACIA(void);
+unsigned char getCharACIA(void)
 {
 	while ((*ACIASTAT & RXFULLBIT) != RXFULLBIT);
 	return(* VDUDATA);
