@@ -1,24 +1,15 @@
-// rectangles.c - Draws rectangles on the VGA screen
-// random size rectangles
-// combined with previous rectangle colors
-// scrolls screen vertically as well
-// scrolls on vert sync interrupt
-// very busy screen
-// bootloader leaves debug window up
-
 #include "vga.h"
-#include "ints.h"
+#include "interrupts.h"
 #include "uart.h"
 #include "board.h"
 
 short *FrameBuffer;
 
-extern short pen;		// no used in this function - set in draw
+extern short pen;
 extern void DrawIteration();
 
 static short framecount=0;
 
-// scrolls in vert blank
 void vblank_int()
 {
 	int yoff;
@@ -54,3 +45,4 @@ int main(int argc,char **argv)
 		DrawIteration();
 	}
 }
+

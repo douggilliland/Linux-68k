@@ -1,11 +1,11 @@
 ARCH	= 68000
-BASE	= /opt/m68k-elf/bin/m68k-elf
+BASE	= m68k-elf
 CC      = $(BASE)-gcc
 LD      = $(BASE)-gcc
 AS      = $(BASE)-as
 CP      = $(BASE)-objcopy
 DUMP    = $(BASE)-objdump
-VASM	= ../../../vasm/vasmm68k_mot
+VASM	= vasmm68k_mot
 
 # we use crt0.s from here
 STARTUP_DIR = ../../Firmware_Common
@@ -14,7 +14,7 @@ LIB_DIR = ../../Firmware_Common/klibc
 
 BUILD_DIR=m68k_obj
 
-STARTUP_SRC = $(STARTUP_DIR)/startup_app.s
+STARTUP_SRC = $(STARTUP_DIR)/startup_app.s $(STARTUP_DIR)/premain.s
 STARTUP_OBJ = $(patsubst $(STARTUP_DIR)/%.s,$(BUILD_DIR)/%.o,$(STARTUP_SRC))
 
 COMMON_SRC = uart.c small_printf.c
