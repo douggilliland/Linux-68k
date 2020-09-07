@@ -1,7 +1,7 @@
 
-//#include "minisoc_hardware.h"
+#include "minisoc_hardware.h"
 #include "board.h"
-#include "timer.h"
+//#include "timer.h"
 #include "ints.h"
 #include "ps2.h"
 #include "keyboard.h"
