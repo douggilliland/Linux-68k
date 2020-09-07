@@ -1,0 +1,3 @@
+End of code:	000006d6 g       .extra	00000000 _romend
+Start of BSS:	000006d4 g       .extra	00000000 __bss_start__
+End of BSS:	000006d6 g       .extra	00000000 __bss_end__
