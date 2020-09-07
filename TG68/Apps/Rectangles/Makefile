@@ -10,6 +10,7 @@ VASM	= ../../../vasm/vasmm68k_mot
 # we use crt0.s from here
 STARTUP_DIR = ../../Firmware_Common
 COMMON_DIR = ../../Firmware_Common
+LIB_DIR = ../../Firmware_Common/klibc
 
 BUILD_DIR=m68k_obj
 
