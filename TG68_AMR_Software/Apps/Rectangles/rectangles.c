@@ -37,7 +37,9 @@ int main(int argc,char **argv)
 	EnableInterrupts();
 
 	SetIntHandler(VGA_INT_VBLANK,&vblank_int);
-
+	
+	VGA_HideOverlay();
+	
 	while(1)
 	{
 		++c;
