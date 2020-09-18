@@ -31,7 +31,9 @@ void vblank_int()
 int main(int argc,char **argv)
 {
 	unsigned char *fbptr;
-	int c=0;	// color index
+	// int c=0;	// hex display value for debug
+
+	pen = 0xffff;
 
 	VGA_SetSprite();
 
@@ -44,8 +46,7 @@ int main(int argc,char **argv)
 	
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
-	c = 0xf000;
-	HW_BOARD(REG_HEX)=c;
+	// HW_BOARD(REG_HEX)=c // Hex Display
 	DrawIteration();
 	
 	while(1);
