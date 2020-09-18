@@ -34,7 +34,7 @@ int main(int argc,char **argv)
 {
 	unsigned char *fbptr;
 
-	pen = 0xf0f0;
+	pen = 0xffff;
 
 	// VGA_SetSprite();
 
