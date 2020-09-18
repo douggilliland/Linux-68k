@@ -34,9 +34,9 @@ int main(int argc,char **argv)
 	FrameBuffer=(short *)0x10000;
 	HW_VGA_L(FRAMEBUFFERPTR)=FrameBuffer;
 
-	EnableInterrupts();
+	//EnableInterrupts();
 
-	SetIntHandler(VGA_INT_VBLANK,&vblank_int);
+	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);
 	
 	VGA_HideOverlay();
 	
