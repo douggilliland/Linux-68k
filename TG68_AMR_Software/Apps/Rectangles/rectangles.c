@@ -10,6 +10,9 @@ extern void DrawIteration();
 
 static short framecount=0;
 
+// vblank_int() - Vertical blank interrupt
+// Scrolls screen up/down to limits in vblank
+
 void vblank_int()
 {
 	int yoff;
@@ -23,11 +26,12 @@ void vblank_int()
 	HW_VGA_L(FRAMEBUFFERPTR)=(unsigned long)(&FrameBuffer[yoff*640]);
 }
 
+// main() - called by bootloader
 
 int main(int argc,char **argv)
 {
 	unsigned char *fbptr;
-	int c=0;
+	int c=0;	// color index
 
 	VGA_SetSprite();
 
@@ -40,12 +44,15 @@ int main(int argc,char **argv)
 	
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
+	c = 0xffff;
+	HW_BOARD(REG_HEX)=c;
+	DrawIteration();
 	
-	while(1)
-	{
-		++c;
-		HW_BOARD(REG_HEX)=c;
-		DrawIteration();
-	}
+	while(1);
+//	{
+		//++c;
+		// HW_BOARD(REG_HEX)=c;
+		// DrawIteration();
+	// }
 }
 
