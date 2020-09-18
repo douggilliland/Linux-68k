@@ -7,6 +7,7 @@ short *FrameBuffer;
 
 extern short pen;
 extern void DrawIteration();
+extern void FillScreen();
 
 static short framecount=0;
 
@@ -47,6 +48,7 @@ int main(int argc,char **argv)
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
 	// HW_BOARD(REG_HEX)=c // Hex Display
+    FillScreen();
 	DrawIteration();
 	
 	while(1);
