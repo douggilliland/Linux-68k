@@ -44,7 +44,7 @@ int main(int argc,char **argv)
 	
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
-	c = 0xffff;
+	c = 0xffffffff;
 	HW_BOARD(REG_HEX)=c;
 	DrawIteration();
 	
