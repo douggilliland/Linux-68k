@@ -99,14 +99,13 @@ SingleRect
 	move.l	#100,d0		; start at 100,100
 	move.l	#100,d1
 	move.l	#300,d2		; rectanglle is 300,300
-	move.l	#300,d3
+	move.l	#800,d3
 	move.l	FrameBuffer,a0
 	jsr		DrawRectangle
 	movem.l	(a7)+,d1-d6
 	rts
 	
 DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
-;	move.w	RANDOMSEED+2,$810006 ; HEX display
 	movem.l	d1-d6,-(a7)
 	add.l	d1,d1
 	mulu	#FB_WIDTH,d1	; y offset
@@ -129,7 +128,6 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	beq	.even
 .wordxloop
 	move.w	(a0),d5
-;	add.l	#$00a000a0,d5
 	lsr.l	#1,d5
 	and.l	#%0111101111101111,d5	; Remove MSBs 4:5:4
 	add.w	d4,d5	
@@ -165,6 +163,9 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	movem.l	(a7)+,d1-d6
 	rts
 
+;
+; Clear the screen
+;
 	XDEF FillScreen
 FillScreen
 	movem.l	a0-a4/d1-d4,-(a7)

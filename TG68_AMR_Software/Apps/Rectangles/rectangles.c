@@ -33,9 +33,8 @@ void vblank_int()
 int main(int argc,char **argv)
 {
 	unsigned char *fbptr;
-	// int c=0;	// hex display value for debug
 
-	pen = 0xffff;
+	pen = 0xf0f0;
 
 	// VGA_SetSprite();
 
@@ -43,7 +42,6 @@ int main(int argc,char **argv)
 	HW_VGA_L(FRAMEBUFFERPTR)=FrameBuffer;
 
 	//EnableInterrupts();
-
 	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);
 	
 	// DGG - Hide the Bootloader text overlay window
