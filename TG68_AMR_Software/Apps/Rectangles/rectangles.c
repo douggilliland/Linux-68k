@@ -38,6 +38,7 @@ int main(int argc,char **argv)
 
 	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);
 	
+	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
 	
 	while(1)
