@@ -93,7 +93,18 @@ Random
 	movem.l	(a7)+,d1-d2
         rts
         
-
+	XDEF SingleRect
+SingleRect
+	movem.l	d1-d6,-(a7)
+	move.l	#100,d0		; start at 100,100
+	move.l	#100,d1
+	move.l	#300,d2		; rectanglle is 300,300
+	move.l	#300,d3
+	move.l	FrameBuffer,a0
+	jsr		DrawRectangle
+	movem.l	(a7)+,d1-d6
+	rts
+	
 DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 ;	move.w	RANDOMSEED+2,$810006 ; HEX display
 	movem.l	d1-d6,-(a7)
@@ -108,7 +119,7 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	
 	move.w	pen,d4
 	lsr.l	#1,d4
-	and.l	#%0111101111101111,d4	; Remove MSBs
+	and.l	#%0111101111101111,d4	; Remove MSBs 4:5:4
 	move.w	d4,d1
 	swap	d4
 	move.w	d1,d4	; duplicate words
@@ -120,7 +131,7 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	move.w	(a0),d5
 ;	add.l	#$00a000a0,d5
 	lsr.l	#1,d5
-	and.l	#%0111101111101111,d5	; Remove MSBs
+	and.l	#%0111101111101111,d5	; Remove MSBs 4:5:4
 	add.w	d4,d5	
 	move.w	d5,(a0)+
 	subq.w	#1,d1
@@ -140,7 +151,7 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	and.l	#$7bef7bef,d6	; Remove MSBs
 	add.l	d4,d5	
 	add.l	d4,d6	
-	move.l	d5,(a0)+
+	move.l	d5,(a0)+		; write 4 pixels for efficiency
 	move.l	d6,(a0)+
 	subq.w	#1,d1
 	bne	.longxloop

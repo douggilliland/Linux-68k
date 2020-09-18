@@ -8,6 +8,7 @@ short *FrameBuffer;
 extern short pen;
 extern void DrawIteration();
 extern void FillScreen();
+extern void SingleRect();
 
 static short framecount=0;
 
@@ -49,13 +50,14 @@ int main(int argc,char **argv)
 	VGA_HideOverlay();
 	// HW_BOARD(REG_HEX)=c // Hex Display
     FillScreen();
-	DrawIteration();
+//	DrawIteration();
+	SingleRect();
 	
-	while(1)
-	{
+	while(1);
+//	{
 		//++c;
 		// HW_BOARD(REG_HEX)=c;
-		DrawIteration();
-	}
+//		DrawIteration();
+//	}
 }
 
