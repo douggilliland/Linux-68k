@@ -154,7 +154,7 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	movem.l	(a7)+,d1-d6
 	rts
 
-
+	XDEF FillScreen
 FillScreen
 	movem.l	a0-a4/d1-d4,-(a7)
 	move.l	FrameBuffer,a0
