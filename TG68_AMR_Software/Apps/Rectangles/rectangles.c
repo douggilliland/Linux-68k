@@ -51,11 +51,11 @@ int main(int argc,char **argv)
     FillScreen();
 	DrawIteration();
 	
-	while(1);
-//	{
+	while(1)
+	{
 		//++c;
 		// HW_BOARD(REG_HEX)=c;
-		// DrawIteration();
-	// }
+		DrawIteration();
+	}
 }
 
