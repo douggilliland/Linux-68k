@@ -35,7 +35,7 @@ int main(int argc,char **argv)
 
 	VGA_SetSprite();
 
-	FrameBuffer=(short *)0x10000;
+	FrameBuffer=(short *)0xf000;
 	HW_VGA_L(FRAMEBUFFERPTR)=FrameBuffer;
 
 	//EnableInterrupts();
