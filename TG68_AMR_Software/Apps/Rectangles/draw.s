@@ -2,8 +2,8 @@
 
 FB_WIDTH equ 640
 FB_HEIGHT equ 960
-RANDOMSEED	dc.w	12345
-RANDOMSEED2	dc.w	6789
+RANDOMSEED	dc.w	56565
+RANDOMSEED2	dc.w	9876
 pen	dc.w	0
 
 	XDEF pen
@@ -61,8 +61,8 @@ Plot				; X: d0, y: d1
 
 
 Random
-	movem.l	d1-d2,-(a7)
-	move.l	#16807,d0
+		movem.l	d1-d2,-(a7)
+		move.l	#16807,d0
         move.l  d0,d2
         mulu    RANDOMSEED+2,d0
 
