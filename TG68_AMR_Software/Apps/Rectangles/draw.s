@@ -98,7 +98,7 @@ SingleRect
 	move.l	#100,d0		; start at 100,100
 	move.l	#100,d1
 	move.l	#300,d2		; rectanglle is 300,800
-	move.l	#800,d3
+	move.l	#300,d3
 	move.l	FrameBuffer,a0
 	jsr		DrawRectangle
 	movem.l	(a7)+,d1-d6

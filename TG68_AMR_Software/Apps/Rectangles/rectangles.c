@@ -47,8 +47,12 @@ int main(int argc,char **argv)
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
 	// HW_BOARD(REG_HEX)=c // Hex Display not supported on EP4 card
+	pen = 0x0000;           // Set pen color black
+
     FillScreen();       // Clear the screen
 //	DrawIteration();    // single draw
+	pen = 0xf800;           // Set pen color red
+
 	SingleRect();       // Draw  single rectangle
 	
 	while(1);           // loop forever
