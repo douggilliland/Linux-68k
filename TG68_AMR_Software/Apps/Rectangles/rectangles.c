@@ -3,18 +3,18 @@
 #include "uart.h"
 #include "board.h"
 
-short *FrameBuffer;     // pointer to the frame buffer
+short *FrameBuffer;             // pointer to the frame buffer
 
-extern short pen;
-extern void DrawIteration();
-extern void FillScreen();
-extern void SingleRect();
+extern short pen;               // 16 bit color
+extern void DrawIteration();    // Draw boxes
+extern void FillScreen();       // Fill the screen
+extern void SingleRect();       // Draw a single rectangle
+extern void VGA_HideOverlay();
 
-static short framecount=0;
+static short framecount = 0;    // Scrolling count
 
 // vblank_int() - Vertical blank interrupt
 // Scrolls screen up/down to limits in vblank
-
 void vblank_int()
 {
 	int yoff;
@@ -29,32 +29,32 @@ void vblank_int()
 }
 
 // main() - called by bootloader
-
+// 
 int main(int argc,char **argv)
 {
-	unsigned char *fbptr;
+	unsigned char *fbptr;   // frame buffer pointer
 
-	pen = 0xf9f0;
+	pen = 0xf9f0;           // Set pem color
 
-	// VGA_SetSprite();
+	// VGA_SetSprite();     //  Enable sprite
 
-	FrameBuffer=(short *)0xf000;
-	HW_VGA_L(FRAMEBUFFERPTR)=FrameBuffer;
+	FrameBuffer=(short *)0xf000;        // initialize frame buffer pointer
+	HW_VGA_L(FRAMEBUFFERPTR)=(unsigned long)FrameBuffer;   // HW register for frame buffer
 
-	//EnableInterrupts();
-	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);
+	//EnableInterrupts();       // initialize vertical interrupt
+	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);    // point to vblank rtn
 	
 	// DGG - Hide the Bootloader text overlay window
 	VGA_HideOverlay();
-	// HW_BOARD(REG_HEX)=c // Hex Display
-    FillScreen();
-//	DrawIteration();
-	SingleRect();
+	// HW_BOARD(REG_HEX)=c // Hex Display not supported on EP4 card
+    FillScreen();       // Clear the screen
+//	DrawIteration();    // single draw
+	SingleRect();       // Draw  single rectangle
 	
-	while(1);
+	while(1);           // loop forever
 //	{
-		//++c;
-		// HW_BOARD(REG_HEX)=c;
+//      ++c;
+//		HW_BOARD(REG_HEX)=c;
 //		DrawIteration();
 //	}
 }

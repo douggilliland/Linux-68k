@@ -46,8 +46,7 @@ DrawIteration
 	movem.l	(a7)+,a0-a6/d0-d7
 	rts
 
-
-
+; Plot
 Plot				; X: d0, y: d1
 	movem.l	a0/d0-d1,-(a7)
 	move.l	FrameBuffer,a0
@@ -59,7 +58,7 @@ Plot				; X: d0, y: d1
 	movem.l	(a7)+,a0/d0-d1
 	rts
 
-
+; Random number
 Random
 		movem.l	d1-d2,-(a7)
 		move.l	#16807,d0
