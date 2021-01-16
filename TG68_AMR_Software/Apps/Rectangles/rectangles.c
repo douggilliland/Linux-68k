@@ -3,7 +3,7 @@
 #include "uart.h"
 #include "board.h"
 
-short *FrameBuffer;
+short *FrameBuffer;     // pointer to the frame buffer
 
 extern short pen;
 extern void DrawIteration();
