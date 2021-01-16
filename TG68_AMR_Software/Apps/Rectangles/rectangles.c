@@ -34,7 +34,7 @@ int main(int argc,char **argv)
 {
 	unsigned char *fbptr;   // frame buffer pointer
 
-	pen = 0xf9f0;           // Set pem color
+	pen = 0xf800;           // Set pen color
 
 	// VGA_SetSprite();     //  Enable sprite
 
