@@ -96,7 +96,7 @@ SingleRect
 	movem.l	d1-d6,-(a7)
 	move.l	#100,d0		; start at 100,100
 	move.l	#100,d1
-	move.l	#300,d2		; rectanglle is 300,800
+	move.l	#300,d2		; rectangle is 300,800
 	move.l	#300,d3
 	move.l	FrameBuffer,a0
 	jsr		DrawRectangle
@@ -128,10 +128,10 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	
 	move.w	pen,d4
 	lsr.l	#1,d4
-	and.l	#%0111101111101111,d4	; Remove MSBs 4:5:4
+	and.l	#$7bef,d4	; Remove MSBs 4:5:4
 	move.w	d4,d1
 	swap	d4
-	move.w	d1,d4	; duplicate words
+	move.w	d1,d4		; duplicate words
 .yloop
 	move.l	d2,d1
 	and.w	#3,d1
@@ -139,7 +139,7 @@ DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 .wordxloop
 	move.w	(a0),d5
 	lsr.l	#1,d5
-	and.l	#%0111101111101111,d5	; Remove MSBs 4:5:4
+	and.l	#$7bef,d5	; Remove MSBs 4:5:4
 	add.w	d4,d5	
 	move.w	d5,(a0)+
 	subq.w	#1,d1

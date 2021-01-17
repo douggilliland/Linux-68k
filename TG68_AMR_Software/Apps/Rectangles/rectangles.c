@@ -61,7 +61,7 @@ int main(int argc,char **argv)
 	SingleRect2();		// Draw  single rectangle
 	
 	pen = 0x1234;       // Set initial pen color
-	while(1);           // loop forever
+	while(1)            // loop forever
 	{
 		// ++c;
 		// HW_BOARD(REG_HEX)=c;	 // Hex Display not supported on EP4 card
