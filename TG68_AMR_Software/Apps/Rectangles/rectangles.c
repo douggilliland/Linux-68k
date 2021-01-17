@@ -41,21 +41,21 @@ int main(int argc,char **argv)
 	FrameBuffer=(short *)0xf000;        // initialize frame buffer pointer
 	HW_VGA_L(FRAMEBUFFERPTR)=(unsigned long)FrameBuffer;   // HW register for frame buffer
 
-	//EnableInterrupts();       // initialize vertical interrupt
-	//SetIntHandler(VGA_INT_VBLANK,&vblank_int);    // point to vblank rtn
+	EnableInterrupts();       // initialize vertical interrupt
+	SetIntHandler(VGA_INT_VBLANK,&vblank_int);    // point to vblank rtn
 	
 	// DGG - Hide the Bootloader text overlay window
 	// VGA_HideOverlay();
 	// HW_BOARD(REG_HEX)=c // Hex Display not supported on EP4 card
 
-	pen = 0x0000;           // Set pen color black
-    FillScreen();       // Clear the screen
-	DrawIteration();    // single draw
-	pen = 0xf800;           // Set pen color red
+	pen = 0x0000;		// Set pen color black
+    FillScreen();		// Clear the screen
+	// DrawIteration();	// single draw
 
-	SingleRect();       // Draw  single rectangle
+	pen = 0xf800;		// Set pen color red
+	SingleRect();		// Draw  single rectangle
 	
-	pen = 0x0000;           // Set pen color black
+	pen = 0x1234;       // Set pen color
 	while(1);           // loop forever
 	{
 		// ++c;
