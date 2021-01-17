@@ -104,6 +104,18 @@ SingleRect
 	movem.l	(a7)+,d1-d6
 	rts
 	
+	XDEF SingleRect2
+SingleRect2
+	movem.l	d1-d6,-(a7)
+	move.l	#200,d0		; start at 200,300
+	move.l	#300,d1
+	move.l	#100,d2		; rectanglle is 100,100
+	move.l	#100,d3
+	move.l	FrameBuffer,a0
+	jsr		DrawRectangle
+	movem.l	(a7)+,d1-d6
+	rts
+	
 DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 	movem.l	d1-d6,-(a7)
 	add.l	d1,d1

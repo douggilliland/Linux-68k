@@ -9,6 +9,7 @@ extern short pen;               // 16 bit color
 extern void DrawIteration();    // Draw boxes
 extern void FillScreen();       // Fill the screen
 extern void SingleRect();       // Draw a single rectangle
+extern void SingleRect2();       // Draw a single rectangle
 extern void VGA_HideOverlay();
 
 static short framecount = 0;    // Scrolling count
@@ -53,8 +54,11 @@ int main(int argc,char **argv)
     FillScreen();		// Clear the screen
 	// DrawIteration();	// single draw
 
-	// pen = 0xf800;		// Set pen color red
-	// SingleRect();		// Draw  single rectangle
+	pen = 0xf800;		// Set pen color red
+	SingleRect();		// Draw  single rectangle
+	
+	pen = 0xf0f0;		// Set pen color
+	SingleRect2();		// Draw  single rectangle
 	
 	pen = 0x1234;       // Set initial pen color
 	while(1);           // loop forever
