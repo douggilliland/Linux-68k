@@ -9,7 +9,7 @@ pen	dc.w	0
 	XDEF pen
 	XDEF DrawIteration
 DrawIteration
-	movem.l	a0-6/d0-d7,-(a7)
+	movem.l	a0-a6/d0-d7,-(a7)
 	add.w	#1,pen
 	bsr	Random
 	move.l	d0,d3

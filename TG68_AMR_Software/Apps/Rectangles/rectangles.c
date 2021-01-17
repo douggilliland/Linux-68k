@@ -33,8 +33,9 @@ void vblank_int()
 int main(int argc,char **argv)
 {
 	unsigned char *fbptr;   // frame buffer pointer
+	// int c = 0;
 
-	pen = 0xf800;           // Set pen color
+	pen = 0xf800;           // Set pen color to red
 
 	// VGA_SetSprite();     //  Enable sprite
 
@@ -55,11 +56,11 @@ int main(int argc,char **argv)
 	pen = 0xf800;		// Set pen color red
 	SingleRect();		// Draw  single rectangle
 	
-	pen = 0x1234;       // Set pen color
+	pen = 0x1234;       // Set initial pen color
 	while(1);           // loop forever
 	{
 		// ++c;
-		// HW_BOARD(REG_HEX)=c;
+		// HW_BOARD(REG_HEX)=c;	 // Hex Display not supported on EP4 card
 		DrawIteration();
 	}
 }
