@@ -3,7 +3,6 @@
 FB_WIDTH equ 640
 FB_HEIGHT equ 960
 RANDOMSEED	dc.w	12345
-;RANDOMSEED2	dc.w	9876
 pen	dc.w	0
 
 	XDEF pen
@@ -109,8 +108,8 @@ SingleRect2
 	movem.l	d1-d6,-(a7)
 	move.l	#200,d0		; start at 200,300
 	move.l	#300,d1
-	move.l	#100,d2		; rectanglle is 100,100
-	move.l	#100,d3
+	move.l	#100,d2		; rectangle is 100,200
+	move.l	#200,d3
 	move.l	FrameBuffer,a0
 	jsr		DrawRectangle
 	movem.l	(a7)+,d1-d6
