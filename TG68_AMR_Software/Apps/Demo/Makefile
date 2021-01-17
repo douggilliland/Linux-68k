@@ -61,6 +61,7 @@ clean:
 	echo >>$@ -n "End of BSS:\t"
 	$(DUMP) -x $< | grep >>$@ __bss_end__
 	cat $@
+	cp MiniSOCDemo.sre boot.sre
 
 # Link - this produces an ELF binary.
 
