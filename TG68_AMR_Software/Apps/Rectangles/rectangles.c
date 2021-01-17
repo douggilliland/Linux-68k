@@ -38,7 +38,7 @@ int main(int argc,char **argv)
 
 	// VGA_SetSprite();     //  Enable sprite
 
-	FrameBuffer=(short *)0xf000;        // initialize frame buffer pointer
+	FrameBuffer=(short *)0x10000;        // initialize frame buffer pointer
 	HW_VGA_L(FRAMEBUFFERPTR)=(unsigned long)FrameBuffer;   // HW register for frame buffer
 
 	EnableInterrupts();       // initialize vertical interrupt
