@@ -53,8 +53,8 @@ int main(int argc,char **argv)
     FillScreen();		// Clear the screen
 	// DrawIteration();	// single draw
 
-	pen = 0xf800;		// Set pen color red
-	SingleRect();		// Draw  single rectangle
+	// pen = 0xf800;		// Set pen color red
+	// SingleRect();		// Draw  single rectangle
 	
 	pen = 0x1234;       // Set initial pen color
 	while(1);           // loop forever
