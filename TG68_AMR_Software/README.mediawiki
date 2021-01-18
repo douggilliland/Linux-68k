@@ -1,1 +1,2 @@
-https://github.com/douggilliland/Retro-Computers/tree/master/68000/TG68_AMR
+* [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TG68_AMR FPGA files for AMR build] - Master branch
+
