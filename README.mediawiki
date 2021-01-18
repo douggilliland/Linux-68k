@@ -13,8 +13,9 @@
 * [http://land-boards.com/blwiki/index.php?title=RETRO-EP4CE15 RETRO-EP4CE15] - FPGA Wiki page
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000/Dev%20Tools/GCC_m68k-elf-toolchain Instructions to build GCC cross tools]
 
-=== AMR Build ===
+=== TG68_AMR_Software ===
 
+* AMR Build
 * 68000 CPU
 * Frame Buffer
 
