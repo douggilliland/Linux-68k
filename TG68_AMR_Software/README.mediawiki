@@ -27,4 +27,8 @@
 
 === Bootloader_Firmware ===
 
+* Bootstrap code from SD card
+
 === Firmware_Common ===
+
+* C files - include files
