@@ -11,6 +11,14 @@
 
 === Apps ===
 
+==== Demo ====
+
+* Exercise screen modes
+** Switch between modes using function keys on keyboard
+* Load Image from SD Card
+* Hello World code
+* Draw a bunch of rectangles
+
 === Bootloader_Firmware ===
 
 === Firmware_Common ===
