@@ -5,6 +5,12 @@
 ** Could not get Shared Folder transfers to work to the Windows machine so transferring build through this repo
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000 Main 68000 repository]
 
+=== TG68_AMR_Software ===
+
+* AMR Build
+* 68000 CPU
+* Frame Buffer
+
 === TS2 Build ===
 
 * [https://hackaday.io/project/173678-retro-68000-cpu-in-an-fpga Retro 68000 CPU in an FPGA] - Hackaday Project page
@@ -19,12 +25,6 @@
 * [https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MecbManual.pdf MECB User Manual] - Contains Tutor operation instructions
 
 <img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MECB-02.jpg"></img>
-
-=== TG68_AMR_Software ===
-
-* AMR Build
-* 68000 CPU
-* Frame Buffer
 
 == Useful Pages ==
 
