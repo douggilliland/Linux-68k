@@ -478,7 +478,7 @@ int main(int argc,char *argv)
 				}
 				else
 					printf("Couldn't load test.img\n");
-				mainstate=MAIN_IDLE;
+				zA=MAIN_IDLE;
 				break;
 			case MAIN_MEMCHECK:
 				DoMemcheckCycle((unsigned int *)FrameBuffer);

@@ -1,6 +1,8 @@
-#include<stdio.h>
-#include<graphics.h>
- 
+#include <stdio.h>
+#include <graphics.h>
+
+// https://www.thecrazyprogrammer.com/2017/01/bresenhams-line-drawing-algorithm-c-c.html
+
 void drawline(int x0, int y0, int x1, int y1)
 {
     int dx, dy, p, x, y;
