@@ -350,8 +350,15 @@ int main(int argc,char *argv)
 	if(!SDCardInit())
 		tb_puts("  SD card error!\r\n");
 
-	tb_puts("Press F1 through F4 to change test mode.\r\n");
-	tb_puts("Press F5 through F9 to change screenmode.\r\n");
+	tb_puts("Press F1 to load Image.\r\n");
+	tb_puts("Press F2 for Memory Check.\r\n");
+	tb_puts("Press F3 for rectangles.\r\n");
+	tb_puts("Press F4 to run Dhrystone.\r\n");
+	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
+	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
+	tb_puts("Press F7 for 800x600 @ 52 Hz.\r\n");
+	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
+	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
 	tb_puts("Press F12 to toggle character overlay.\r\n");
 
 	enum mainstate_t mainstate=MAIN_DHRYSTONE;
