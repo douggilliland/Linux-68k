@@ -422,3 +422,9 @@ typedef struct record
 
 int Dhrystone();
 
+void Proc_2 (Int_Par_Ref);
+void Proc_3 (Ptr_Ref_Par);
+void Proc_4();
+void Proc_5();
+
+

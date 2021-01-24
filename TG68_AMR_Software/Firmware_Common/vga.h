@@ -53,7 +53,9 @@ enum VGA_ScreenModes {
 };
 
 void VGA_SetScreenMode(enum VGA_ScreenModes mode);
-
+void VGA_SetSprite();
+void VGA_ShowOverlay();
+void VGA_HideOverlay();
 void SetSprite();
 
 #endif
