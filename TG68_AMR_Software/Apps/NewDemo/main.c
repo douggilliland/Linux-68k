@@ -530,9 +530,9 @@ int main(int argc,char *argv)
 				HW_BOARD(REG_HEX)=pen;
 				break;
 			case RECTANGLE_ME:
-				makeRect(0,0,200,200,0xf800);
-				makeRect(100,100,300,300,0x07e0);
-				makeRect(200,200,400,400,0x001f);
+				makeRect(0,0,639,479,0xf800);
+				makeRect(0,0,639,479,0x07e0);
+				makeRect(0,0,639,479,0x001f);
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
