@@ -301,7 +301,7 @@ short SDCardInit()
 	}
 	return(0);
 }
-int makeRect(xS,yS,xE,yE);
+int makeRect(xS,yS,xE,yE)
 {
 	return xS+yS+xE,yE;
 }
