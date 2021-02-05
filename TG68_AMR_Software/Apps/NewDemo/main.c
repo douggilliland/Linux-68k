@@ -302,17 +302,18 @@ short SDCardInit()
 	return(0);
 }
 
-volatile unsigned int makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE)
+// makeRect(xS,yS,xE,yE,color) - Draw a rectangle
+
+void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
     int x,y;
     for (y = yS; y < yE; y += 1)
     {
         for (x = xS; x < xE; x += 1)
         {
-            *(FrameBuffer + x + (y*640)) = 1111;
+            *(FrameBuffer + x + (y*640)) = color;
         }
     }
-    return(xS+yS+xE+yE);
 }
 
 char printf_buffer[256];
@@ -518,7 +519,7 @@ int main(int argc,char *argv)
 				HW_BOARD(REG_HEX)=pen;
 				break;
 			case RECTANGLE_ME:
-				makeRect(0,0,300,300);
+				makeRect(0,0,300,300,0xf800);
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
