@@ -52,12 +52,13 @@ static void vblank_int()
 
 //	microseconds+=16667;	// Assumes 60HZ video mode.
 
-	if(framecount==959)
-		framecount=0;
-	if(framecount>=480)
-		yoff=959-framecount;
-	else
-		yoff=framecount;
+	// if(framecount==959)
+		// framecount=0;
+	// if(framecount>=480)
+		// yoff=959-framecount;
+	// else
+		// yoff=framecount;
+	yoff = 0;
 	HW_VGA_L(FRAMEBUFFERPTR)=(unsigned long)(&FrameBuffer[yoff*screenwidth]);
 
 	while(PS2MouseBytesReady()>=(3+mousemode))	// FIXME - institute some kind of timeout here to re-sync if sync lost.
