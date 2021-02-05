@@ -318,33 +318,58 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
     }
 }
 
+// void drawline(int x0, int y0, int x1, int y1, int color)
+// {
+    // int dx, dy, p, x, y;
+ 
+	// dx=x1-x0;
+	// dy=y1-y0;
+ 
+	// x=x0;
+	// y=y0;
+ 
+	// p=2*dy-dx;
+ 
+	// while(x<x1)
+	// {
+		// if(p>=0)
+		// {
+			// *(FrameBuffer + x + (y * 640)) = color;
+			// y=y+1;
+			// p=p+2*dy-2*dx;
+		// }
+		// else
+		// {
+			// *(FrameBuffer + x + (y * 640)) = color;
+			// p=p+2*dy;
+		// }
+		// x=x+1;
+	// }
+// }
+
 void drawline(int x0, int y0, int x1, int y1, int color)
 {
-    int dx, dy, p, x, y;
- 
-	dx=x1-x0;
-	dy=y1-y0;
- 
-	x=x0;
-	y=y0;
- 
-	p=2*dy-dx;
- 
-	while(x<x1)
-	{
-		if(p>=0)
-		{
-			*(FrameBuffer + x + (y * 640)) = color;
-			y=y+1;
-			p=p+2*dy-2*dx;
-		}
-		else
-		{
-			*(FrameBuffer + x + (y * 640)) = color;
-			p=p+2*dy;
-		}
-		x=x+1;
-	}
+	int dx, dy;
+	int temp, x, y;
+	dx = x1 - x0;
+    dy = y1 - y0;
+    x = x0;
+    y = y0;
+    temp = 2 * dy - dx;
+    while(x < x1)
+    {
+        if(temp < 0)
+        {
+            temp = temp + 2 * dy;
+        }
+        else
+        {
+            y = y + 1;
+            temp = temp + 2 * dy - 2 * dx;
+        }
+        *(FrameBuffer + x + (y * 640)) = color;
+        x++;
+      }
 }
 
 void spanLines()
@@ -579,6 +604,7 @@ int main(int argc,char *argv)
 				makeRect(0,0,639,479,0xf800);
 				makeRect(0,0,639,479,0x07e0);
 				makeRect(0,0,639,479,0x001f);
+				makeRect(0,0,639,479,0x0000);
 				spanLines();
 				break;
 			case MAIN_DHRYSTONE:
