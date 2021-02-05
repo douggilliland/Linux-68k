@@ -629,6 +629,9 @@ SDCardInit:
 	.globl	makeRect
 	.type	makeRect, @function
 makeRect:
+	move.l 4(%sp),%d0
+	move.l 8(%sp),%d0
+	move.l 12(%sp),%d0
 	move.l 16(%sp),%d0
 	rts
 	.size	makeRect, .-makeRect
@@ -770,141 +773,126 @@ main:
 	pea 3.w
 	jsr (%a2)
 	pea .LC10
-	move.l #tb_puts,%d7
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC11
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	jsr SDCardInit
 	lea (24,%sp),%sp
 	tst.w %d0
-	jeq .L278
+	jeq .L277
 .L167:
 	pea .LC13
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC14
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC15
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC16
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC17
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC18
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC19
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC20
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	lea (28,%sp),%sp
 	move.l #.LC21,(%sp)
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC22
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	addq.l #8,%sp
 	moveq #4,%d2
 	lea TestKey,%a2
-	lea VGA_SetScreenMode,%a6
+	move.l #VGA_SetScreenMode,%d6
+	move.l #.L202,%a6
 	moveq #46,%d5
 	add.l %sp,%d5
 	lea FileRead,%a5
-	move.l #FileNextSector,%d6
+	move.l #FileNextSector,%d7
 .L168:
 	pea 5.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L279
-.L169:
+	jne .L278
+.L170:
 	pea 6.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L280
-.L171:
+	jne .L279
+.L172:
 	pea 4.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L281
-.L173:
+	jne .L280
+.L174:
 	pea 12.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L282
-.L175:
+	jne .L281
+.L176:
 	pea 3.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L177
-.L181:
+	jne .L178
+.L182:
 	pea 11.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L283
-.L179:
+	jne .L282
+.L180:
 	pea 131.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L284
-.L183:
+	jne .L283
+.L184:
 	pea 10.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L285
-.L186:
+	jne .L284
+.L187:
 	pea 1.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L286
-.L189:
+	jne .L285
+.L190:
 	pea 9.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L287
+	jne .L286
 	pea 7.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L215
-.L196:
-	moveq #3,%d0
+	jne .L216
+.L197:
+	moveq #5,%d0
 	cmp.l %d2,%d0
-	jeq .L200
-	jcs .L201
-	moveq #1,%d1
-	cmp.l %d2,%d1
-	jeq .L202
-	moveq #2,%d0
-	cmp.l %d2,%d0
-	jne .L168
-	move.l FrameBuffer,-(%sp)
-	jsr DoMemcheckCycle
-	addq.l #4,%sp
-	pea 5.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L169
-	jra .L279
+	jcs .L217
+	move.l %d2,%d0
+	add.l %d0,%d0
+	move.w (%a6,%d0.l),%d0
+	jmp %pc@(2,%d0:w)
+	.balignw 2,0x284c
+	.swbeg	&6
+.L202:
+	.word .L217-.L202
+	.word .L206-.L202
+	.word .L205-.L202
+	.word .L204-.L202
+	.word .L203-.L202
+	.word .L201-.L202
 .L163:
 	lea puts,%a3
 	tst.w mousetimeout
@@ -921,267 +909,84 @@ main:
 	pea 3.w
 	jsr (%a2)
 	pea .LC10
-	move.l #tb_puts,%d7
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC11
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	jsr SDCardInit
 	lea (24,%sp),%sp
 	tst.w %d0
 	jne .L167
-	jra .L278
+	jra .L277
 .L286:
-	pea .LC30
-	jsr (%a3)
-	move.l #800,screenwidth
-	pea 4.w
-	jsr (%a6)
-	addq.l #8,%sp
-.L193:
-	pea 1.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L189
-	pea 1.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L193
-	jra .L189
-.L285:
-	pea .LC29
-	jsr (%a3)
-	move.l #768,screenwidth
-	pea 5.w
-	jsr (%a6)
-	addq.l #8,%sp
-.L190:
-	pea 10.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L186
-	pea 10.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L190
-	jra .L186
-.L284:
-	pea .LC28
-	jsr (%a3)
-	move.l #800,screenwidth
-	pea 3.w
-	jsr (%a6)
-	addq.l #8,%sp
-.L187:
-	pea 131.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L183
-	pea 131.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L187
-	jra .L183
-.L283:
-	pea .LC27
-	jsr (%a3)
-	move.l #320,screenwidth
-	pea 2.w
-	jsr (%a6)
-	addq.l #8,%sp
-.L184:
-	pea 11.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L179
-	pea 11.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L184
-	jra .L179
-.L177:
-	pea .LC26
-	jsr (%a3)
-	move.l #640,screenwidth
-	pea 1.w
-	jsr (%a6)
-	addq.l #8,%sp
-.L180:
-	pea 3.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L181
-	pea 3.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L180
-	jra .L181
-.L282:
-	pea .LC23
-	jsr (%a3)
-	addq.l #4,%sp
-.L176:
-	pea 12.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L176
-	moveq #4,%d2
-	pea 3.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L181
-	jra .L177
-.L281:
-	pea .LC25
-	jsr (%a3)
-	addq.l #4,%sp
-.L174:
-	pea 4.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L174
-	moveq #3,%d2
-	pea 12.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L175
-	jra .L282
-.L280:
-	pea .LC24
-	jsr (%a3)
-	addq.l #4,%sp
-.L172:
-	pea 6.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L172
-	moveq #2,%d2
-	pea 4.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L173
-	jra .L281
-.L279:
-	pea .LC23
-	jsr (%a3)
-	addq.l #4,%sp
-.L170:
-	pea 5.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L170
-	moveq #1,%d2
-	pea 6.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L171
-	jra .L280
-.L287:
 	pea .LC31
 	jsr (%a3)
 	addq.l #4,%sp
-.L194:
+.L195:
 	pea 9.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jne .L194
+	jne .L195
 	pea 7.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jeq .L266
-	moveq #5,%d2
-.L215:
-	pea .LC32
-	jsr (%a3)
-	move.w overlay.3004,%d0
-	not.w %d0
-	move.w %d0,overlay.3004
-	addq.l #4,%sp
-	jeq .L197
-	jsr VGA_HideOverlay
-.L199:
-	pea 7.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L196
-.L276:
-	pea 7.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L199
-	jra .L196
+	jne .L287
 .L201:
-	subq.l #4,%d2
-	jne .L266
+	moveq #5,%d2
+	pea 5.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L170
+	jra .L278
+.L203:
 	pea .LC35
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	jsr Dhrystone
 	move.l %d0,-(%sp)
 	pea .LC36
 	pea printf_buffer
 	jsr sprintf
 	pea printf_buffer
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	lea (20,%sp),%sp
 	moveq #3,%d2
 	pea 5.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jeq .L169
-	jra .L279
-.L266:
-	moveq #5,%d2
-	pea 5.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jeq .L169
-	jra .L279
-.L200:
+	jeq .L170
+	jra .L278
+.L204:
 	move.w MouseButtons,%d0
 	btst #0,%d0
-	jeq .L213
-	add.w #1024,pen
-.L213:
-	btst #1,%d0
 	jeq .L214
-	add.w #-1024,pen
+	add.w #1024,pen
 .L214:
+	btst #1,%d0
+	jeq .L215
+	add.w #-1024,pen
+.L215:
 	jsr DrawIteration
 	move.w pen,-2130706426
 	pea 5.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jeq .L169
-	jra .L279
-.L202:
+	jeq .L170
+	jra .L278
+.L205:
+	move.l FrameBuffer,-(%sp)
+	jsr DoMemcheckCycle
+	addq.l #4,%sp
+	pea 5.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L170
+	jra .L278
+.L206:
 	pea .LC33
 	move.l %d5,-(%sp)
 	jsr FileOpen
@@ -1191,15 +996,213 @@ main:
 	pea .LC34
 	jsr (%a3)
 	addq.l #4,%sp
-.L267:
 	moveq #0,%d2
-.L291:
 	pea 5.w
 	jsr (%a2)
 	addq.l #4,%sp
 	tst.w %d0
-	jeq .L169
+	jeq .L170
+	jra .L278
+.L285:
+	pea .LC30
+	jsr (%a3)
+	move.l #800,screenwidth
+	pea 4.w
+	move.l %d6,%a0
+	jsr (%a0)
+	addq.l #8,%sp
+.L194:
+	pea 1.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L190
+	pea 1.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L194
+	jra .L190
+.L284:
+	pea .LC29
+	jsr (%a3)
+	move.l #768,screenwidth
+	pea 5.w
+	move.l %d6,%a0
+	jsr (%a0)
+	addq.l #8,%sp
+.L191:
+	pea 10.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L187
+	pea 10.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L191
+	jra .L187
+.L283:
+	pea .LC28
+	jsr (%a3)
+	move.l #800,screenwidth
+	pea 3.w
+	move.l %d6,%a0
+	jsr (%a0)
+	addq.l #8,%sp
+.L188:
+	pea 131.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L184
+	pea 131.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L188
+	jra .L184
+.L282:
+	pea .LC27
+	jsr (%a3)
+	move.l #320,screenwidth
+	pea 2.w
+	move.l %d6,%a0
+	jsr (%a0)
+	addq.l #8,%sp
+.L185:
+	pea 11.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L180
+	pea 11.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L185
+	jra .L180
+.L178:
+	pea .LC26
+	jsr (%a3)
+	move.l #640,screenwidth
+	pea 1.w
+	move.l %d6,%a0
+	jsr (%a0)
+	addq.l #8,%sp
+.L181:
+	pea 3.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L182
+	pea 3.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L181
+	jra .L182
+.L281:
+	pea .LC23
+	jsr (%a3)
+	addq.l #4,%sp
+.L177:
+	pea 12.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L177
+	moveq #4,%d2
+	pea 3.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L182
+	jra .L178
+.L280:
+	pea .LC25
+	jsr (%a3)
+	addq.l #4,%sp
+.L175:
+	pea 4.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L175
+	moveq #3,%d2
+	pea 12.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L176
+	jra .L281
+.L279:
+	pea .LC24
+	jsr (%a3)
+	addq.l #4,%sp
+.L173:
+	pea 6.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L173
+	moveq #2,%d2
+	pea 4.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L174
+	jra .L280
+.L278:
+	pea .LC23
+	jsr (%a3)
+	addq.l #4,%sp
+.L171:
+	pea 5.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L171
+	moveq #1,%d2
+	pea 6.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L172
 	jra .L279
+.L287:
+	moveq #5,%d2
+.L216:
+	pea .LC32
+	jsr (%a3)
+	move.w overlay.3004,%d0
+	not.w %d0
+	move.w %d0,overlay.3004
+	addq.l #4,%sp
+	jeq .L198
+	jsr VGA_HideOverlay
+.L200:
+	pea 7.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L197
+.L276:
+	pea 7.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L200
+	jra .L197
+.L198:
+	jsr VGA_ShowOverlay
+	pea 7.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jne .L276
+	jra .L197
 .L288:
 	move.l FrameBuffer,%d4
 	move.l 70(%sp),%d0
@@ -1208,9 +1211,9 @@ main:
 	move.w %d0,%a4
 	moveq #0,%d3
 	moveq #6,%d2
-.L207:
+.L208:
 	cmp.l %a4,%d3
-	jge .L267
+	jge .L217
 	move.l %d4,-(%sp)
 	move.l %d5,-(%sp)
 	jsr (%a5)
@@ -1218,90 +1221,77 @@ main:
 	tst.b %d0
 	jne .L289
 	subq.l #1,%d2
-	jeq .L267
+	jeq .L217
 	moveq #3,%d0
 	cmp.l %d2,%d0
 	jeq .L290
 	cmp.l #2400,%d3
-	jne .L207
-.L277:
+	jne .L208
+.L217:
 	moveq #0,%d2
-	jra .L291
+	pea 5.w
+	jsr (%a2)
+	addq.l #4,%sp
+	tst.w %d0
+	jeq .L170
+	jra .L278
 .L290:
 	jsr SDCardInit
 	tst.w %d0
-	jeq .L267
+	jeq .L217
 	pea .LC33
 	move.l %d5,-(%sp)
 	jsr FileOpen
 	addq.l #8,%sp
 	tst.b %d0
-	jeq .L267
+	jeq .L217
 	cmp.l #2400,%d3
-	jne .L207
-	jra .L277
+	jne .L208
+	jra .L217
 .L289:
 	addq.l #1,%d3
 	move.l %d5,-(%sp)
-	move.l %d6,%a0
+	move.l %d7,%a0
 	jsr (%a0)
 	add.l #512,%d4
 	addq.l #4,%sp
 	cmp.l #2400,%d3
-	jne .L207
-	jra .L277
-.L197:
-	jsr VGA_ShowOverlay
-	pea 7.w
-	jsr (%a2)
-	addq.l #4,%sp
-	tst.w %d0
-	jne .L276
-	jra .L196
-.L278:
+	jne .L208
+	jra .L217
+.L277:
 	pea .LC12
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	addq.l #4,%sp
 	pea .LC13
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC14
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC15
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC16
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC17
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC18
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC19
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC20
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	lea (28,%sp),%sp
 	move.l #.LC21,(%sp)
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	pea .LC22
-	move.l %d7,%a0
-	jsr (%a0)
+	jsr tb_puts
 	addq.l #8,%sp
 	moveq #4,%d2
 	lea TestKey,%a2
-	lea VGA_SetScreenMode,%a6
+	move.l #VGA_SetScreenMode,%d6
+	move.l #.L202,%a6
 	moveq #46,%d5
 	add.l %sp,%d5
 	lea FileRead,%a5
-	move.l #FileNextSector,%d6
+	move.l #FileNextSector,%d7
 	jra .L168
 	.size	main, .-main
 	.local	mousemode.2861
