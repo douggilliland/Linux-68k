@@ -350,10 +350,12 @@ void drawline(int x0, int y0, int x1, int y1, int color)
 void spanLines()
 {
 	int y;
-	for (y = 0; y < 240; y++)
-		drawline(0,0,319,y,0xf800);
-	for (y = 240; y < 479; y++)
-		drawline(0,479,319,y,0x01e0);
+	for (y = 0; y < 480; y++)
+		drawline(0,0,639,y,0xf800);
+	for (y = 0; y < 480; y++)
+		drawline(0,0,639,y,0x01e0);
+	for (y = 0; y < 480; y++)
+		drawline(0,0,639,y,0x001f);
 }
 
 char printf_buffer[256];
