@@ -520,6 +520,8 @@ int main(int argc,char *argv)
 				break;
 			case RECTANGLE_ME:
 				makeRect(0,0,300,300,0xf800);
+				makeRect(100,100,200,400,0x07e0);
+				makeRect(200,80,400,900,0x001f);
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
