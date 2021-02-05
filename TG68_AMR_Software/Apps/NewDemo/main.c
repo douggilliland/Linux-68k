@@ -301,9 +301,18 @@ short SDCardInit()
 	}
 	return(0);
 }
+
 volatile unsigned int makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE)
 {
-	return xS+yS+xE,yE;
+    int x,y;
+    for (y = yS; y < yE; y += 1)
+    {
+        for (x = xS; x < xE; x += 1)
+        {
+            *(FrameBuffer + x + (y*640)) = 1111;
+        }
+    }
+    return(xS+yS+xE+yE);
 }
 
 char printf_buffer[256];

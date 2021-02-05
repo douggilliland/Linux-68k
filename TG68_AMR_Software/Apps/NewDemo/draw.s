@@ -93,6 +93,16 @@ Random
 	movem.l	(a7)+,d1-d2
         rts
         
+makeRectAsm:
+	move.l 4(%sp),%d0
+	move.l 8(%sp),%d0
+	move.l 12(%sp),%d0
+	move.l 16(%sp),%d0
+	move.l	FrameBuffer,a0
+	movem.l	d1-d6,-(a7)
+
+	movem.l	(a7)+,d1-d6
+	rts
 
 DrawRectangle	; d0: x, d1: y, d2: w, d3: h, a0: framebuffer
 ;	move.w	RANDOMSEED+2,$810006 ; HEX display
