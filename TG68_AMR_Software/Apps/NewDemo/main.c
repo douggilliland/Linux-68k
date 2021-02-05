@@ -373,6 +373,8 @@ int main(int argc,char *argv)
 	tb_puts("Press F7 for 800x600 @ 52 Hz.\r\n");
 	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
 	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
+	tb_puts("Press F10 for rectangle user code\r\n");
+	tb_puts("Press F11 for TBD\r\n");
 	tb_puts("Press F12 to toggle character overlay.\r\n");
 
 	enum mainstate_t mainstate=MAIN_DHRYSTONE;
@@ -456,6 +458,13 @@ int main(int argc,char *argv)
 			while(TestKey(KEY_F10))
 				;
 		}
+		if(TestKey(KEY_F11))
+		{
+			mainstate=RECTANGLE_ME;
+			puts("TBD\n");
+			while(TestKey(KEY_F11))
+				;
+		}
 		if(TestKey(KEY_F12))
 		{
 			static short overlay=0;
@@ -522,7 +531,7 @@ int main(int argc,char *argv)
 			case RECTANGLE_ME:
 				makeRect(0,0,300,300,0xf800);
 				makeRect(100,100,200,400,0x07e0);
-				makeRect(200,80,400,900,0x001f);
+				makeRect(200,80,400,500,0x001f);
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
