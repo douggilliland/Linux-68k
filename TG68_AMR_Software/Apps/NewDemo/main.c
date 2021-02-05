@@ -353,7 +353,7 @@ spanLines()
 	for (y = 0; y < 480; y++)
 		drawline(0,0,639,y,0xf800);
 	for (y = 0; y < 480; y++)
-		drawline(0,479,0,y,0x01e0);
+		drawline(0,479,639,y,0x01e0);
 }
 
 char printf_buffer[256];
