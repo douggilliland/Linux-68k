@@ -77,7 +77,7 @@ static void vblank_int()
 				MouseZ+=w4&15;
 		}
 		MouseButtons=w1;
-//		printf("%02x %02x %02x\n",w1,w2,w3);
+//		printf("%02x %02x %02x\n\r",w1,w2,w3);
 		if(w1 & (1<<5))
 			w3|=0xff00;
 		if(w1 & (1<<4))
@@ -134,7 +134,7 @@ static void mousetimer_int()
 {
 	if(HW_TIMER(REG_TIMER_CONTROL) & (1<<BIT_TIMER_TR5))
 		mousetimeout=1;
-//	puts("Timer int received\n");
+//	puts("Timer int received\n\r");
 }
 
 
@@ -158,7 +158,7 @@ void AddMemory()
 	size=1L<<HW_BOARD(REG_CAP_RAMSIZE);
 	size-=low;
 	size-=0x1000; // Leave room for the stack
-	printf("Heap_low: %lx, heap_size: %lx\n",low,size);
+	printf("Heap_low: %lx, heap_size: %lx\n\r",low,size);
 	malloc_add((void*)low,size);
 }
 
@@ -197,9 +197,9 @@ void PrintDirectory(void)
 		}
 
 		if (DirEntry[k].Attributes & ATTR_DIRECTORY) // mark directory with suffix
-			puts("<DIR>\n");
+			puts("<DIR>\n\r");
 		else
-			puts("\n");
+			puts("\n\r");
 	}
 }
 
@@ -237,13 +237,13 @@ void DoMemcheckCycle(unsigned int *p)
 			unsigned int k=lfsr&0xfffff;
 			if(p[j]!=w)
 			{
-				printf("Error at %x\n",w);
-				printf("expected %x, got %x\n",w,p[j]);
+				printf("Error at %x\n\r",w);
+				printf("expected %x, got %x\n\r",w,p[j]);
 			}
 			if(p[k]!=x)
 			{
-				printf("Error at %x\n",w);
-				printf("expected %x, got %x\n",w,p[j]);
+				printf("Error at %x\n\r",w);
+				printf("expected %x, got %x\n\r",w,p[j]);
 			}
 			CYCLE_LFSR;
 		}
@@ -272,13 +272,13 @@ void DoMemcheckCycle(unsigned int *p)
 			unsigned int k=lfsr&0xfffff;
 			if(p[j]!=(w^0xfffff))
 			{
-				printf("Error at %x\n",w);
-				printf("expected %x, got %x\n",w,p[j]);
+				printf("Error at %x\n\r",w);
+				printf("expected %x, got %x\n\r",w,p[j]);
 			}
 			if(p[k]!=(x^0xfffff))
 			{
-				printf("Error at %x\n",w);
-				printf("expected %x, got %x\n",w,p[j]);
+				printf("Error at %x\n\r",w);
+				printf("expected %x, got %x\n\r",w,p[j]);
 			}
 			CYCLE_LFSR;
 		}
@@ -288,14 +288,14 @@ void DoMemcheckCycle(unsigned int *p)
 
 short SDCardInit()
 {
-	puts("Initialising SD card\n");
+	puts("Initialising SD card\n\r");
 	if(spi_init())
 	{
 		FindDrive();
-		puts("FindDrive() returned\n");
+		puts("FindDrive() returned\n\r");
 
 		ChangeDirectory(DIRECTORY_ROOT);
-		puts("Changed directory\n");
+		puts("Changed directory\n\r");
 
 		ScanDirectory(SCAN_INIT, "*", 0);
 		return(1);
@@ -443,7 +443,7 @@ int main(int argc,char *argv)
 		; // Read the acknowledge byte
 
 	if(mousetimeout)
-		puts("Mouse timed out\n");
+		puts("Mouse timed out\n\r");
 
 	// Don't set the VBlank int handler until the mouse has been initialised.
 	SetIntHandler(VGA_INT_VBLANK,&vblank_int);
@@ -476,34 +476,34 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F1))
 		{
 			mainstate=MAIN_LOAD;
-			puts("Switching to image mode\n");
+			puts("Switching to image mode\n\r");
 			while(TestKey(KEY_F1))
 				;
 		}
 		if(TestKey(KEY_F2))
 		{
 			mainstate=MAIN_MEMCHECK;
-			puts("Switching to Memcheck mode\n");
+			puts("Switching to Memcheck mode\n\r");
 			while(TestKey(KEY_F2))
 				;
 		}
 		if(TestKey(KEY_F3))
 		{
 			mainstate=MAIN_RECTANGLES;
-			puts("Switching to Rectangles mode\n");
+			puts("Switching to Rectangles mode\n\r");
 			while(TestKey(KEY_F3))
 				;
 		}
 		if(TestKey(KEY_F4))
 		{
 			mainstate=MAIN_DHRYSTONE;
-			puts("Switching to image mode\n");
+			puts("Switching to image mode\n\r");
 			while(TestKey(KEY_F4))
 				;
 		}
 		if(TestKey(KEY_F5))
 		{
-			puts("640 x 480 @ 60Hz\n");
+			puts("640 x 480 @ 60Hz\n\r");
 			screenwidth=640;
 			VGA_SetScreenMode(MODE_640_480_60HZ);
 			while(TestKey(KEY_F5))
@@ -511,7 +511,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F6))
 		{
-			puts("320 x 480 @ 60Hz\n");
+			puts("320 x 480 @ 60Hz\n\r");
 			screenwidth=320;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
 			while(TestKey(KEY_F6))
@@ -519,7 +519,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F7))
 		{
-			puts("800 x 600 @ 52Hz\n");
+			puts("800 x 600 @ 52Hz\n\r");
 			screenwidth=800;
 			VGA_SetScreenMode(MODE_800_600_52HZ);
 			while(TestKey(KEY_F7))
@@ -527,7 +527,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F8))
 		{
-			puts("768 x 576 @ 57Hz\n");
+			puts("768 x 576 @ 57Hz\n\r");
 			screenwidth=768;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
 			while(TestKey(KEY_F8))
@@ -536,7 +536,7 @@ int main(int argc,char *argv)
 
 		if(TestKey(KEY_F9))
 		{
-			puts("800 x 600 @ 72HZ\n");
+			puts("800 x 600 @ 72HZ\n\r");
 			screenwidth=800;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
 			while(TestKey(KEY_F9))
@@ -546,21 +546,21 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F10))
 		{
 			mainstate=RECTANGLE_ME;
-			puts("Rectangle me\n");
+			puts("Graphics demo mode\n\r");
 			while(TestKey(KEY_F10))
 				;
 		}
 		if(TestKey(KEY_F11))
 		{
 			mainstate=RECTANGLE_ME;
-			puts("TBD\n");
+			puts("TBD\n\r");
 			while(TestKey(KEY_F11))
 				;
 		}
 		if(TestKey(KEY_F12))
 		{
 			static short overlay=0;
-			puts("Toggling overlay\n");
+			puts("Toggling overlay\n\r");
 			overlay=~overlay;
 			if(overlay)
 				VGA_HideOverlay();
@@ -606,7 +606,7 @@ int main(int argc,char *argv)
 					}
 				}
 				else
-					printf("Couldn't load test.img\n");
+					printf("Couldn't load test.img\n\r");
 				mainstate=MAIN_IDLE;
 				break;
 			case MAIN_MEMCHECK:
