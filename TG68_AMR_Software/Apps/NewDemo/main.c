@@ -386,7 +386,8 @@ void drawline(int x0, int y0, int x1, int y1, int color)
     y = y0;
 
     while(1){
-        plot(x, y);
+//        plot(x, y);
+		*(FrameBuffer + x + (y * 640)) = color;
         if((x == x1) && (y == y1)) break;
         e2 = 2 * err;
         if(e2 >= dy){ // step x
