@@ -1,35 +1,40 @@
 #include <stdio.h>
 #include <graphics.h>
 
+// Bresenham line drawing algorithm
+// Uses integer math to draw lines (no floating point)
 // https://www.thecrazyprogrammer.com/2017/01/bresenhams-line-drawing-algorithm-c-c.html
 
-void drawline(int x0, int y0, int x1, int y1)
+void drawline(int x0, int y0, int x1, int y1, int color)
 {
-    int dx, dy, p, x, y;
- 
-	dx=x1-x0;
-	dy=y1-y0;
- 
-	x=x0;
-	y=y0;
- 
-	p=2*dy-dx;
- 
-	while(x<x1)
+    int x, y;
+    int dx, dy;
+    int sx, sy;
+    int err, e2;
+
+    dx = x1 >= x0 ? x1 - x0 : x0 - x1;
+    dy = y1 >= y0 ? y0 - y1 : y1 - y0;
+    sx = x0 < x1 ? 1 : -1;
+    sy = y0 < y1 ? 1 : -1;
+    err = dx + dy;
+    x = x0;
+    y = y0;
+
+    while(1)
 	{
-		if(p>=0)
-		{
-			putpixel(x,y,7);
-			y=y+1;
-			p=p+2*dy-2*dx;
-		}
-		else
-		{
-			putpixel(x,y,7);
-			p=p+2*dy;
-		}
-		x=x+1;
-	}
+		// plot(x,y,color);
+		*(FrameBuffer + x + (y * 640)) = color;
+        if((x == x1) && (y == y1)) break;
+        e2 = 2 * err;
+        if(e2 >= dy){ // step x
+            err += dy;
+            x += sx;
+        }
+        if(e2 <= dx){ // step y
+            err += dx;
+            y += sy;
+        }
+    }
 }
  
 int main()
