@@ -307,49 +307,81 @@ short SDCardInit()
 
 void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
-    int x,y,yoff;
-    for (y = yS; y <= yE; y += 1)
-    {
+	int x,y,yoff;
+	for (y = yS; y <= yE; y += 1)
+	{
 		yoff = y * 640;
-        for (x = xS; x <= xE; x += 1)
-        {
-            *(FrameBuffer + x + yoff) = color;
-        }
-    }
+		for (x = xS; x <= xE; x += 1)
+		{
+			*(FrameBuffer + x + yoff) = color;
+		}
+	}
 }
+
+// Bresenham Line Drawing Algorithm
+// https://circuitcellar.com/cc-blog/bresenhams-algorithm/
 
 void drawline(int x0, int y0, int x1, int y1, int color)
 {
-    int x, y;
-    int dx, dy;
-    int sx, sy;
-    int err, e2;
+	int x, y;
+	int dx, dy;
+	int sx, sy;
+	int err, e2;
 
-    dx = x1 >= x0 ? x1 - x0 : x0 - x1;
-    dy = y1 >= y0 ? y0 - y1 : y1 - y0;
-    sx = x0 < x1 ? 1 : -1;
-    sy = y0 < y1 ? 1 : -1;
-    err = dx + dy;
-    x = x0;
-    y = y0;
+	dx = x1 >= x0 ? x1 - x0 : x0 - x1;
+	dy = y1 >= y0 ? y0 - y1 : y1 - y0;
+	sx = x0 < x1 ? 1 : -1;
+	sy = y0 < y1 ? 1 : -1;
+	err = dx + dy;
+	x = x0;
+	y = y0;
 
-    while(1)
+	while(1)
 	{
 		*(FrameBuffer + x + (y * 640)) = color;
-        if((x == x1) && (y == y1)) break;
-        e2 = 2 * err;
-        if(e2 >= dy){ // step x
-            err += dy;
-            x += sx;
-        }
-        if(e2 <= dx){ // step y
-            err += dx;
-            y += sy;
-        }
-    }
+		if((x == x1) && (y == y1)) break;
+		e2 = 2 * err;
+		if(e2 >= dy){ // step x
+			err += dy;
+			x += sx;
+		}
+		if(e2 <= dx){ // step y
+			err += dx;
+			y += sy;
+		}
+	}
 }
 
-void spanLines()
+// Code Fragment 4 - Circle drawing based on Bresenham
+// https://circuitcellar.com/cc-blog/bresenhams-algorithm/
+void drawCircle (int x0, int y0, int r, int color)
+{
+	int x, y;
+	int err, temp;
+
+	x = -r;
+	y = 0;
+	err = 2 - (2 * r);
+
+	do 
+	{
+		*(FrameBuffer + (x0 - x) + ((y0 + y) * 640)) = color;
+		*(FrameBuffer + (x0 - y) + ((y0 - x) * 640)) = color;
+		*(FrameBuffer + (x0 + x) + ((y0 - y) * 640)) = color;
+		*(FrameBuffer + (x0 + y) + ((y0 + x) * 640)) = color;
+		// plot(x0 - x, y0 + y);
+		// plot(x0 - y, y0 - x);
+		// plot(x0 + x, y0 - y);
+		// plot(x0 + y, y0 + x);
+		temp = err;
+		if(temp > x) err += ++x * 2 + 1;
+		if(temp <= y) err += ++y * 2 + 1;
+	} 
+	while (x < 0);
+}
+
+// Draw a bunch of lines
+void bunchOfLines()
 {
 	int y;
 	for (y = 0; y < 480; y++)
@@ -366,8 +398,19 @@ void spanLines()
 		drawline(0,479,639,y,0x001f);
 }
 
+// Draw a bunch of lines
+void bunchOfCircles()
+{
+	int y;
+	drawCircle(100,100,50,0xf800);
+	drawCircle(200,200,75,0x07e0);
+	drawCircle(300,300,88,y,0x001f);
+}
+
+// RFeserve space
 char printf_buffer[256];
 
+// The demo code
 int main(int argc,char *argv)
 {
 	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RECTANGLE_ME};
@@ -582,7 +625,8 @@ int main(int argc,char *argv)
 				makeRect(0,0,639,479,0x07e0);
 				makeRect(0,0,639,479,0x001f);
 				makeRect(0,0,639,479,0x0000);
-				spanLines();
+				bunchOfLines();
+				bunchOfCircles();
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
