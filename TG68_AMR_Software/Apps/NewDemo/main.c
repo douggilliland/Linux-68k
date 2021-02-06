@@ -348,7 +348,7 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 // }
 
 void drawline(int x0, int y0, int x1, int y1, int color)
-{
+/* {
 	int dx, dy;
 	int temp, x, y;
 	dx = x1 - x0;
@@ -370,8 +370,35 @@ void drawline(int x0, int y0, int x1, int y1, int color)
         *(FrameBuffer + x + (y * 640)) = color;
         x++;
       }
-}
+} */
+{
+    int x, y;
+    int dx, dy;
+    int sx, sy;
+    int err, e2;
 
+    dx = x1 >= x0 ? x1 - x0 : x0 - x1;
+    dy = y1 >= y0 ? y0 - y1 : y1 - y0;
+    sx = x0 < x1 ? 1 : -1;
+    sy = y0 < y1 ? 1 : -1;
+    err = dx + dy;
+    x = x0;
+    y = y0;
+
+    while(1){
+        plot(x, y);
+        if((x == x1) && (y == y1)) break;
+        e2 = 2 * err;
+        if(e2 >= dy){ // step x
+            err += dy;
+            x += sx;
+        }
+        if(e2 <= dx){ // step y
+            err += dx;
+            y += sy;
+        }
+    }
+}
 void spanLines()
 {
 	int y;
