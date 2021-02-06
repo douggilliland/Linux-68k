@@ -407,7 +407,7 @@ void bunchOfCircles()
 	drawCircle(300,300,88,0x001f);
 }
 
-// RFeserve space
+// Reserve space
 char printf_buffer[256];
 
 // The demo code
