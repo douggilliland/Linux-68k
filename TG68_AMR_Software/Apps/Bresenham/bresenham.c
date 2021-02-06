@@ -3,7 +3,7 @@
 
 // Bresenham line drawing algorithm
 // Uses integer math to draw lines (no floating point)
-// https://www.thecrazyprogrammer.com/2017/01/bresenhams-line-drawing-algorithm-c-c.html
+// https://circuitcellar.com/cc-blog/bresenhams-algorithm/
 
 void drawline(int x0, int y0, int x1, int y1, int color)
 {
