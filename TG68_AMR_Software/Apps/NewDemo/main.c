@@ -308,69 +308,17 @@ short SDCardInit()
 void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
     int x,y,yoff;
-    for (y = yS; y < yE; y += 1)
+    for (y = yS; y <= yE; y += 1)
     {
 		yoff = y * 640;
-        for (x = xS; x < xE; x += 1)
+        for (x = xS; x <= xE; x += 1)
         {
             *(FrameBuffer + x + yoff) = color;
         }
     }
 }
 
-// void drawline(int x0, int y0, int x1, int y1, int color)
-// {
-    // int dx, dy, p, x, y;
- 
-	// dx=x1-x0;
-	// dy=y1-y0;
- 
-	// x=x0;
-	// y=y0;
- 
-	// p=2*dy-dx;
- 
-	// while(x<x1)
-	// {
-		// if(p>=0)
-		// {
-			// *(FrameBuffer + x + (y * 640)) = color;
-			// y=y+1;
-			// p=p+2*dy-2*dx;
-		// }
-		// else
-		// {
-			// *(FrameBuffer + x + (y * 640)) = color;
-			// p=p+2*dy;
-		// }
-		// x=x+1;
-	// }
-// }
-
 void drawline(int x0, int y0, int x1, int y1, int color)
-/* {
-	int dx, dy;
-	int temp, x, y;
-	dx = x1 - x0;
-    dy = y1 - y0;
-    x = x0;
-    y = y0;
-    temp = 2 * dy - dx;
-    while(x < x1)
-    {
-        if(temp < 0)
-        {
-            temp = temp + 2 * dy;
-        }
-        else
-        {
-            y = y + 1;
-            temp = temp + 2 * dy - 2 * dx;
-        }
-        *(FrameBuffer + x + (y * 640)) = color;
-        x++;
-      }
-} */
 {
     int x, y;
     int dx, dy;
@@ -385,8 +333,8 @@ void drawline(int x0, int y0, int x1, int y1, int color)
     x = x0;
     y = y0;
 
-    while(1){
-//        plot(x, y);
+    while(1)
+	{
 		*(FrameBuffer + x + (y * 640)) = color;
         if((x == x1) && (y == y1)) break;
         e2 = 2 * err;
@@ -400,6 +348,7 @@ void drawline(int x0, int y0, int x1, int y1, int color)
         }
     }
 }
+
 void spanLines()
 {
 	int y;
