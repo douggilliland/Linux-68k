@@ -404,7 +404,7 @@ void bunchOfCircles()
 	int y;
 	drawCircle(100,100,50,0xf800);
 	drawCircle(200,200,75,0x07e0);
-	drawCircle(300,300,88,y,0x001f);
+	drawCircle(300,300,88,0x001f);
 }
 
 // RFeserve space
