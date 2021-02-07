@@ -312,7 +312,7 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 	int x,y,yoff;
 	for (y = yS; y <= yE; y += 1)
 	{
-		yoff = y * 640;
+		yoff = y * screenwidth;
 		for (x = xS; x <= xE; x += 1)
 		{
 			*(FrameBuffer + x + yoff) = color;
@@ -339,7 +339,7 @@ void drawline(int x0, int y0, int x1, int y1, int color)
 
 	while(1)
 	{
-		*(FrameBuffer + x + (y * 640)) = color;
+		*(FrameBuffer + x + (y * screenwidth)) = color;
 		if((x == x1) && (y == y1)) break;
 		e2 = 2 * err;
 		if(e2 >= dy){ // step x
@@ -366,10 +366,10 @@ void drawCircle (int x0, int y0, int r, int color)
 
 	do 
 	{
-		*(FrameBuffer + (x0 - x) + ((y0 + y) * 640)) = color;
-		*(FrameBuffer + (x0 - y) + ((y0 - x) * 640)) = color;
-		*(FrameBuffer + (x0 + x) + ((y0 - y) * 640)) = color;
-		*(FrameBuffer + (x0 + y) + ((y0 + x) * 640)) = color;
+		*(FrameBuffer + (x0 - x) + ((y0 + y) * screenwidth)) = color;
+		*(FrameBuffer + (x0 - y) + ((y0 - x) * screenwidth)) = color;
+		*(FrameBuffer + (x0 + x) + ((y0 - y) * screenwidth)) = color;
+		*(FrameBuffer + (x0 + y) + ((y0 + x) * screenwidth)) = color;
 		// plot(x0 - x, y0 + y);
 		// plot(x0 - y, y0 - x);
 		// plot(x0 + x, y0 - y);
