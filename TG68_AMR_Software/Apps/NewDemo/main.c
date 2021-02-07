@@ -425,7 +425,7 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RECTANGLE_ME};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,DO_F10_FNCS};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -557,16 +557,15 @@ int main(int argc,char *argv)
 
 		if(TestKey(KEY_F10))
 		{
-			mainstate=RECTANGLE_ME;
-			puts("Graphics demo mode\n\r");
+			mainstate=DO_F10_FNCS;
+			puts("Random rectangles\n\r");
 			while(TestKey(KEY_F10))
 				;
 		}
 		if(TestKey(KEY_F11))
 		{
 			mainstate=RANDOM_RECTANGLES;
-			sprintf(printf_buffer, " Random number %d\r\n",Random());
-			tb_puts(printf_buffer);			
+			puts("Random rectangles\n\r");
 			while(TestKey(KEY_F11))
 				;
 		}
@@ -632,7 +631,7 @@ int main(int argc,char *argv)
 //					pen-=0x400;
 				drawRandomRectangle();
 				break;
-			case RECTANGLE_ME:
+			case DO_F10_FNCS:
 //				makeRect(0,0,639,479,0xf800);
 //				makeRect(0,0,639,479,0x07e0);
 //				makeRect(0,0,639,479,0x001f);
