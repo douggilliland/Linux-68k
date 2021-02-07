@@ -20,7 +20,7 @@
 short *FrameBuffer;
 extern short pen;
 extern void DrawIteration();
-extern unsigned int Random();
+extern unsigned short Random();
 
 static short framecount=0;
 short MouseX=0,MouseY=0,MouseZ=0,MouseButtons=0;
