@@ -20,6 +20,7 @@
 short *FrameBuffer;
 extern short pen;
 extern void DrawIteration();
+extern unsigned int Random();
 
 static short framecount=0;
 short MouseX=0,MouseY=0,MouseZ=0,MouseButtons=0;
@@ -553,7 +554,8 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F11))
 		{
 			mainstate=RECTANGLE_ME;
-			puts("Random numbr %x\n\r".Random());
+			sprintf(printf_buffer, " Random number %d\r\n",Random());
+			tb_puts(printf_buffer);			
 			while(TestKey(KEY_F11))
 				;
 		}
