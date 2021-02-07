@@ -44,7 +44,7 @@ void SetHeartbeat()
 }
 
 int screenwidth=640;		// Initial screen width
-int screenheigth=480		// Initial screen heigth
+int screenheigth=480;		// Initial screen heigth
 
 static void vblank_int()
 {
