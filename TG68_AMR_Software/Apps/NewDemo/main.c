@@ -534,7 +534,7 @@ int main(int argc,char *argv)
 			screenwidth=768;
 			screenheigth=576;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
-			while(TestKey(KEY_F8));
+			while(TestKey(KEY_F7));
 		}
 		if(TestKey(KEY_F8))
 		{
@@ -542,13 +542,13 @@ int main(int argc,char *argv)
 			screenwidth=800;
 			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
-			while(TestKey(KEY_F9));
+			while(TestKey(KEY_F8));
 		}
 		if(TestKey(KEY_F9))
 		{
 			puts("Random circles\n\r");
 			mainstate = RANDOM_CIRCLES;
-			while(TestKey(KEY_F7));
+			while(TestKey(KEY_F9));
 		}
 		if(TestKey(KEY_F10))
 		{
@@ -628,14 +628,14 @@ int main(int argc,char *argv)
 			case MAIN_RECTANGLES:
 				drawRandomRectangle();
 				break;
+			case RANDOM_CIRCLES:
+				drawRandomCircle();
+				break;
 			case RANDOM_LINES:
 				drawRandomLine();
 				break;
 			case RANDOM_RECTANGLES:
 				drawRandomRectangle();
-				break;
-			case RANDOM_CIRCLES:
-				drawRandomCircle();
 				break;
 		}
 	}
