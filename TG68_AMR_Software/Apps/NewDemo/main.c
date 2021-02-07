@@ -133,7 +133,6 @@ static void vblank_int()
 	}
 }
 
-
 static void mousetimer_int()
 {
 	if(HW_TIMER(REG_TIMER_CONTROL) & (1<<BIT_TIMER_TR5))
@@ -478,9 +477,9 @@ int main(int argc,char *argv)
 	tb_puts("Press F4 to run Dhrystone.\r\n");
 	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
 	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
-	tb_puts("Press F7 for random circles\r\n");
-	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
-	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
+	tb_puts("Press F7 for 768x576 @ 57 Hz.\r\n");
+	tb_puts("Press F8 for 800x600 @ 72 Hz.\r\n");
+	tb_puts("Press F9 for random circles\r\n");
 	tb_puts("Press F10 for random lines\r\n");
 	tb_puts("Press F11 for random rectangles\r\n");
 	tb_puts("Press F12 to toggle character overlay.\r\n");
@@ -493,73 +492,64 @@ int main(int argc,char *argv)
 		{
 			mainstate=MAIN_LOAD;
 			puts("Switching to image mode\n\r");
-			while(TestKey(KEY_F1))
-				;
+			while(TestKey(KEY_F1));
 		}
 		if(TestKey(KEY_F2))
 		{
 			mainstate=MAIN_MEMCHECK;
 			puts("Switching to Memcheck mode\n\r");
-			while(TestKey(KEY_F2))
-				;
+			while(TestKey(KEY_F2));
 		}
 		if(TestKey(KEY_F3))
 		{
 			mainstate=MAIN_RECTANGLES;
 			puts("Switching to Rectangles mode\n\r");
-			while(TestKey(KEY_F3))
-				;
+			while(TestKey(KEY_F3));
 		}
 		if(TestKey(KEY_F4))
 		{
 			mainstate=MAIN_DHRYSTONE;
-			puts("Switching to image mode\n\r");
-			while(TestKey(KEY_F4))
-				;
+			puts("Dhrystone benchmark\n\r");
+			while(TestKey(KEY_F4));
 		}
 		if(TestKey(KEY_F5))
 		{
-			puts("640 x 480 @ 60Hz\n\r");
+			puts("640x480 @ 60Hz\n\r");
 			screenwidth=640;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_640_480_60HZ);
-			while(TestKey(KEY_F5))
-				;
+			while(TestKey(KEY_F5));
 		}
 		if(TestKey(KEY_F6))
 		{
-			puts("320 x 480 @ 60Hz\n\r");
+			puts("320x480 @ 60Hz\n\r");
 			screenwidth=320;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
-			while(TestKey(KEY_F6))
-				;
+			while(TestKey(KEY_F6));
 		}
 		if(TestKey(KEY_F7))
 		{
-			puts("Random circles\n\r");
-			mainstate = RANDOM_CIRCLES;
-			while(TestKey(KEY_F7));
-		}
-		if(TestKey(KEY_F8))
-		{
-			puts("768 x 576 @ 57Hz\n\r");
+			puts("768x576 @ 57Hz\n\r");
 			screenwidth=768;
 			screenheigth=576;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
-			while(TestKey(KEY_F8))
-				;
+			while(TestKey(KEY_F8));
 		}
-
-		if(TestKey(KEY_F9))
+		if(TestKey(KEY_F8))
 		{
-			puts("800 x 600 @ 72HZ\n\r");
+			puts("800x600 @ 72HZ\n\r");
 			screenwidth=800;
 			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
 			while(TestKey(KEY_F9));
 		}
-
+		if(TestKey(KEY_F9))
+		{
+			puts("Random circles\n\r");
+			mainstate = RANDOM_CIRCLES;
+			while(TestKey(KEY_F7));
+		}
 		if(TestKey(KEY_F10))
 		{
 			mainstate=RANDOM_LINES;
@@ -626,6 +616,15 @@ int main(int argc,char *argv)
 			case MAIN_MEMCHECK:
 				DoMemcheckCycle((unsigned int *)FrameBuffer);
 				break;
+			case MAIN_DHRYSTONE:
+				tb_puts("Running Dhrystone benchmark...\r\n");
+//				{
+				int result=Dhrystone();
+				sprintf(printf_buffer, "%d DMIPS\r\n",result);
+				tb_puts(printf_buffer);
+//				}
+				mainstate=MAIN_RECTANGLES;
+				break;
 			case MAIN_RECTANGLES:
 				drawRandomRectangle();
 				break;
@@ -638,16 +637,6 @@ int main(int argc,char *argv)
 			case RANDOM_CIRCLES:
 				drawRandomCircle();
 				break;
-			case MAIN_DHRYSTONE:
-				tb_puts("Running Dhrystone benchmark...\r\n");
-				{
-					int result=Dhrystone();
-					sprintf(printf_buffer, "%d DMIPS\r\n",result);
-					tb_puts(printf_buffer);
-				}
-				mainstate=MAIN_RECTANGLES;
-				break;
 		}
 	}
 }
-
