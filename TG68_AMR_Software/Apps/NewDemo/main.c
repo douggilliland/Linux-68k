@@ -408,13 +408,23 @@ void bunchOfCircles()
 	drawCircle(300,300,88,0x001f);
 }
 
+void doRandomStuff()
+{
+	int x0Random = Random() % 640;
+	int x1Random = Random() % 640;
+	int y0Random = Random() % 480;
+	int y1Random = Random() % 480;
+	int color = Random();
+	makeRect(x0Random, y0Random, x1Random, y1Random, color);
+}
+
 // Reserve space
 char printf_buffer[256];
 
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RECTANGLE_ME};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_STUFF,RECTANGLE_ME};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -553,7 +563,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F11))
 		{
-			mainstate=RECTANGLE_ME;
+			mainstate=RANDOM_STUFF;
 			sprintf(printf_buffer, " Random number %d\r\n",Random());
 			tb_puts(printf_buffer);			
 			while(TestKey(KEY_F11))
@@ -629,6 +639,9 @@ int main(int argc,char *argv)
 				makeRect(0,0,639,479,0x0000);
 				bunchOfLines();
 				bunchOfCircles();
+				break;
+			case RANDOM_STUFF:
+				doRandomStuff();
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
