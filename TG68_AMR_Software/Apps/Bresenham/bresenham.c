@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <graphics.h>
 
-// Bresenham line drawing algorithm
+// Bresenham line and circle drawing algorithms
 // Uses integer math to draw lines (no floating point)
 // https://circuitcellar.com/cc-blog/bresenhams-algorithm/
 
@@ -35,6 +35,34 @@ void drawline(int x0, int y0, int x1, int y1, int color)
             y += sy;
         }
     }
+}
+
+// Code Fragment 4 - Circle drawing based on Bresenham
+// https://circuitcellar.com/cc-blog/bresenhams-algorithm/
+void drawCircle (int x0, int y0, int r, int color)
+{
+	int x, y;
+	int err, temp;
+
+	x = -r;
+	y = 0;
+	err = 2 - (2 * r);
+
+	do 
+	{
+		*(FrameBuffer + (x0 - x) + ((y0 + y) * 640)) = color;
+		*(FrameBuffer + (x0 - y) + ((y0 - x) * 640)) = color;
+		*(FrameBuffer + (x0 + x) + ((y0 - y) * 640)) = color;
+		*(FrameBuffer + (x0 + y) + ((y0 + x) * 640)) = color;
+		// plot(x0 - x, y0 + y);
+		// plot(x0 - y, y0 - x);
+		// plot(x0 + x, y0 - y);
+		// plot(x0 + y, y0 + x);
+		temp = err;
+		if(temp > x) err += ++x * 2 + 1;
+		if(temp <= y) err += ++y * 2 + 1;
+	} 
+	while (x < 0);
 }
  
 int main()
