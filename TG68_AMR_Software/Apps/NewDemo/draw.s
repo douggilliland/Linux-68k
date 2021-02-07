@@ -62,7 +62,7 @@ Plot				; X: d0, y: d1
 
 Random
 	movem.l	d1-d2,-(a7)
-	move.l	#16807,d0
+	move.l	#16807,d0		; $41A7
         move.l  d0,d2
         mulu    RANDOMSEED+2,d0
 
