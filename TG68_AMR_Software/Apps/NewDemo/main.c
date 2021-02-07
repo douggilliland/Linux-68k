@@ -415,7 +415,8 @@ void doRandomStuff()
 	int y0Random = Random() % 480;
 	int y1Random = Random() % 480;
 	int color = Random();
-	makeRect(x0Random, y0Random, x1Random, y1Random, color);
+	if ((x0Random < x1Random) && (y0Random < y1Random))
+		makeRect(x0Random, y0Random, x1Random, y1Random, color);
 }
 
 // Reserve space
