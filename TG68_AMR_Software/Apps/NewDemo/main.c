@@ -1,5 +1,5 @@
+// Demo code
 
-//#include "minisoc_hardware.h"
 #include "board.h"
 #include "timer.h"
 #include "interrupts.h"
@@ -17,7 +17,9 @@
 
 #include "dhry.h"
 
-short *FrameBuffer;
+short *FrameBuffer;	// Frame Buffer pointer
+
+// Hooks to assembly code in draw.s
 extern short pen;
 extern void DrawIteration();
 extern unsigned short Random();
@@ -384,19 +386,12 @@ void drawCircle (int x0, int y0, int r, int color)
 // Draw a bunch of lines
 void bunchOfLines()
 {
-	int y;
-	for (y = 0; y < 480; y++)
-		drawline(0,0,639,y,0xf800);
-	for (y = 0; y < 480; y++)
-		drawline(0,0,639,y,0x07e0);
-	for (y = 0; y < 480; y++)
-		drawline(0,0,639,y,0x001f);
-	for (y = 0; y < 480; y++)
-		drawline(0,479,639,y,0xf800);
-	for (y = 0; y < 480; y++)
-		drawline(0,479,639,y,0x07e0);
-	for (y = 0; y < 480; y++)
-		drawline(0,479,639,y,0x001f);
+	int x0Random = Random() % 640;
+	int x1Random = Random() % 640;
+	int y0Random = Random() % 480;
+	int y1Random = Random() % 480;
+	int color = Random();
+	drawline(x0Random,y0Random,x1Random,y1Random,color);
 }
 
 // Draw a bunch of lines

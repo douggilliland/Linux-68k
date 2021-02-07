@@ -59,6 +59,7 @@ Plot				; X: d0, y: d1
 	movem.l	(a7)+,a0/d0-d1
 	rts
 
+	; unsigned short Random()
 	XDEF Random
 Random
 	movem.l	d1-d2,-(a7)
