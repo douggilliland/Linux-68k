@@ -474,7 +474,7 @@ int main(int argc,char *argv)
 	tb_puts("Press F3 for random rectangles.\r\n");
 	tb_puts("Press F4 to run Dhrystone.\r\n");
 	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
-	tb_puts("Press F6 for 320x240 @ 60 Hz.\r\n");
+	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
 	tb_puts("Press F7 for random circles\r\n");
 	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
 	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
@@ -525,9 +525,9 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F6))
 		{
-			puts("320 x 240 @ 60Hz\n\r");
+			puts("320 x 480 @ 60Hz\n\r");
 			screenwidth=320;
-			screenheigth=240;
+			screenheigth=480;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
 			while(TestKey(KEY_F6))
 				;
