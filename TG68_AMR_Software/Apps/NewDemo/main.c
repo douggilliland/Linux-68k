@@ -393,7 +393,7 @@ void drawRandomLine()
 }
 
 // Draw a bunch of lines
-void drawRandomCircles(void)
+void drawRandomCircle(void)
 {
 	int x0Random = Random() % screenwidth;
 	int y0Random = Random() % screenwidth;
@@ -418,8 +418,11 @@ void drawRandomRectangle()
 	int y0Random = Random() % screenheigth;
 	int y1Random = Random() % screenheigth;
 	int color = Random();
-	if ((x0Random < x1Random) && (y0Random < y1Random))
-		makeRect(x0Random, y0Random, x1Random, y1Random, color);
+	if (x0Random > x1Random)
+		return;
+	if (y0Random > y1Random)
+		return;
+	makeRect(x0Random, y0Random, x1Random, y1Random, color);
 }
 
 // Reserve space
@@ -633,7 +636,7 @@ int main(int argc,char *argv)
 				drawRandomRectangle();
 				break;
 			case RANDOM_CIRCLES:
-				drawRandomCircles();
+				drawRandomCircle();
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
