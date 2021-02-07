@@ -425,7 +425,7 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_STUFF,RECTANGLE_ME};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RECTANGLE_ME};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -564,7 +564,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F11))
 		{
-			mainstate=RANDOM_STUFF;
+			mainstate=RANDOM_RECTANGLES;
 			sprintf(printf_buffer, " Random number %d\r\n",Random());
 			tb_puts(printf_buffer);			
 			while(TestKey(KEY_F11))
@@ -633,14 +633,14 @@ int main(int argc,char *argv)
 				drawRandomRectangle();
 				break;
 			case RECTANGLE_ME:
-				makeRect(0,0,639,479,0xf800);
-				makeRect(0,0,639,479,0x07e0);
-				makeRect(0,0,639,479,0x001f);
-				makeRect(0,0,639,479,0x0000);
-				bunchOfLines();
-				bunchOfCircles();
+//				makeRect(0,0,639,479,0xf800);
+//				makeRect(0,0,639,479,0x07e0);
+//				makeRect(0,0,639,479,0x001f);
+//				makeRect(0,0,639,479,0x0000);
+//				bunchOfLines();
+//				bunchOfCircles();
 				break;
-			case RANDOM_STUFF:
+			case RANDOM_RECTANGLES:
 				drawRandomRectangle();
 				break;
 			case MAIN_DHRYSTONE:
