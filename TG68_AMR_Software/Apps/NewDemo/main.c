@@ -150,7 +150,6 @@ void SetMouseTimeout(int delay)
 	SetIntHandler(TIMER_INT,&mousetimer_int);
 }
 
-
 extern char heap_low;
 void AddMemory()
 {
@@ -308,7 +307,6 @@ short SDCardInit()
 }
 
 // makeRect(xS,yS,xE,yE,color) - Draw a rectangle
-
 void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
 	int x,y,yoff;
@@ -324,7 +322,6 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 
 // Bresenham Line Drawing Algorithm
 // https://circuitcellar.com/cc-blog/bresenhams-algorithm/
-
 void drawline(int x0, int y0, int x1, int y1, int color)
 {
 	int x, y;
@@ -413,6 +410,7 @@ void drawRandomCircles(void)
 	drawCircle(x0Random,y0Random,radius,color);
 }
 
+// drawRandomRectangle()
 void drawRandomRectangle()
 {
 	int x0Random = Random() % screenwidth;
@@ -451,13 +449,11 @@ int main(int argc,char *argv)
 
 	EnableInterrupts();
 
-	while(PS2MouseRead()>-1)
-		; // Drain the buffer;
+	while(PS2MouseRead()>-1); // Drain the buffer;
 	PS2MouseWrite(0xf4);
 
 	SetMouseTimeout(1000);
-	while(PS2MouseRead()!=0xfa && mousetimeout==0)
-		; // Read the acknowledge byte
+	while(PS2MouseRead()!=0xfa && mousetimeout==0); // Read the acknowledge byte
 
 	if(mousetimeout)
 		puts("Mouse timed out\n\r");
@@ -475,11 +471,11 @@ int main(int argc,char *argv)
 
 	tb_puts("Press F1 to load Image.\r\n");
 	tb_puts("Press F2 for Memory Check.\r\n");
-	tb_puts("Press F3 for rectangles.\r\n");
+	tb_puts("Press F3 for random rectangles.\r\n");
 	tb_puts("Press F4 to run Dhrystone.\r\n");
 	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
-	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
-	tb_puts("Press F7 TBD\r\n");
+	tb_puts("Press F6 for 320x240 @ 60 Hz.\r\n");
+	tb_puts("Press F7 for random circles\r\n");
 	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
 	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
 	tb_puts("Press F10 for random lines\r\n");
@@ -529,9 +525,9 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F6))
 		{
-			puts("320 x 480 @ 60Hz\n\r");
+			puts("320 x 240 @ 60Hz\n\r");
 			screenwidth=320;
-			screenheigth=480;
+			screenheigth=240;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
 			while(TestKey(KEY_F6))
 				;
@@ -558,14 +554,13 @@ int main(int argc,char *argv)
 			screenwidth=800;
 			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
-			while(TestKey(KEY_F9))
-				;
+			while(TestKey(KEY_F9));
 		}
 
 		if(TestKey(KEY_F10))
 		{
 			mainstate=RANDOM_LINES;
-			puts("Random rectangles\n\r");
+			puts("Random lines\n\r");
 			while(TestKey(KEY_F10));
 		}
 		if(TestKey(KEY_F11))
@@ -644,7 +639,6 @@ int main(int argc,char *argv)
 				tb_puts("Running Dhrystone benchmark...\r\n");
 				{
 					int result=Dhrystone();
-
 					sprintf(printf_buffer, "%d DMIPS\r\n",result);
 					tb_puts(printf_buffer);
 				}
