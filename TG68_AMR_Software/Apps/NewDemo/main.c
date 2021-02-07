@@ -384,7 +384,7 @@ void drawCircle (int x0, int y0, int r, int color)
 }
 
 // Draw a bunch of lines
-void bunchOfLines()
+void drawRandomLine()
 {
 	int x0Random = Random() % 640;
 	int x1Random = Random() % 640;
@@ -624,12 +624,7 @@ int main(int argc,char *argv)
 				drawRandomRectangle();
 				break;
 			case DO_F10_FNCS:
-//				makeRect(0,0,639,479,0xf800);
-//				makeRect(0,0,639,479,0x07e0);
-//				makeRect(0,0,639,479,0x001f);
-//				makeRect(0,0,639,479,0x0000);
-//				bunchOfLines();
-//				bunchOfCircles();
+				drawRandomLine();
 				break;
 			case RANDOM_RECTANGLE:
 				drawRandomRectangle();
