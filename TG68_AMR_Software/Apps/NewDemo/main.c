@@ -425,7 +425,7 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,DO_F10_FNCS};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLE,DO_F10_FNCS};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -559,15 +559,13 @@ int main(int argc,char *argv)
 		{
 			mainstate=DO_F10_FNCS;
 			puts("Random rectangles\n\r");
-			while(TestKey(KEY_F10))
-				;
+			while(TestKey(KEY_F10));
 		}
 		if(TestKey(KEY_F11))
 		{
-			mainstate=RANDOM_RECTANGLES;
+			mainstate=RANDOM_RECTANGLE;
 			puts("Random rectangles\n\r");
-			while(TestKey(KEY_F11))
-				;
+			while(TestKey(KEY_F11));
 		}
 		if(TestKey(KEY_F12))
 		{
@@ -578,8 +576,7 @@ int main(int argc,char *argv)
 				VGA_HideOverlay();
 			else
 				VGA_ShowOverlay();
-			while(TestKey(KEY_F12))
-				;
+			while(TestKey(KEY_F12));
 		}
 
 		// Main loop iteration.
@@ -639,7 +636,7 @@ int main(int argc,char *argv)
 //				bunchOfLines();
 //				bunchOfCircles();
 				break;
-			case RANDOM_RECTANGLES:
+			case RANDOM_RECTANGLE:
 				drawRandomRectangle();
 				break;
 			case MAIN_DHRYSTONE:
