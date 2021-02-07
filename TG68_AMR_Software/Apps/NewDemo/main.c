@@ -553,7 +553,7 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F11))
 		{
 			mainstate=RECTANGLE_ME;
-			puts("TBD\n\r");
+			puts("Random numbr %x\n\r".Random());
 			while(TestKey(KEY_F11))
 				;
 		}
