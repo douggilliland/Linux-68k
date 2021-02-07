@@ -408,7 +408,7 @@ void bunchOfCircles()
 	drawCircle(300,300,88,0x001f);
 }
 
-void doRandomStuff()
+void drawRandomRectangle()
 {
 	int x0Random = Random() % 640;
 	int x1Random = Random() % 640;
@@ -626,12 +626,11 @@ int main(int argc,char *argv)
 				DoMemcheckCycle((unsigned int *)FrameBuffer);
 				break;
 			case MAIN_RECTANGLES:
-				if(MouseButtons&1)
-					pen+=0x400;
-				if(MouseButtons&2)
-					pen-=0x400;
-				DrawIteration();
-				HW_BOARD(REG_HEX)=pen;
+//				if(MouseButtons&1)
+//					pen+=0x400;
+//				if(MouseButtons&2)
+//					pen-=0x400;
+				drawRandomRectangle();
 				break;
 			case RECTANGLE_ME:
 				makeRect(0,0,639,479,0xf800);
@@ -642,7 +641,7 @@ int main(int argc,char *argv)
 				bunchOfCircles();
 				break;
 			case RANDOM_STUFF:
-				doRandomStuff();
+				drawRandomRectangle();
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
