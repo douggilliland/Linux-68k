@@ -43,7 +43,8 @@ void SetHeartbeat()
 	SetIntHandler(TIMER_INT,&heartbeat_int);
 }
 
-int screenwidth=640;
+int screenwidth=640;		// Initial screen width
+int screenheigth=480		// Initial screen heigth
 
 static void vblank_int()
 {
@@ -386,29 +387,38 @@ void drawCircle (int x0, int y0, int r, int color)
 // Draw a bunch of lines
 void drawRandomLine()
 {
-	int x0Random = Random() % 640;
-	int x1Random = Random() % 640;
-	int y0Random = Random() % 480;
-	int y1Random = Random() % 480;
+	int x0Random = Random() % screenwidth;
+	int x1Random = Random() % screenwidth;
+	int y0Random = Random() % screenheigth;
+	int y1Random = Random() % screenheigth;
 	int color = Random();
 	drawline(x0Random,y0Random,x1Random,y1Random,color);
 }
 
 // Draw a bunch of lines
-void bunchOfCircles()
+void drawRandomCircles(void)
 {
-	int y;
-	drawCircle(100,100,50,0xf800);
-	drawCircle(200,200,75,0x07e0);
-	drawCircle(300,300,88,0x001f);
+	int x0Random = Random() % screenwidth;
+	int y0Random = Random() % screenwidth;
+	int radius = Random() % screenheigth;
+	int color = Random();
+	if ((x0Random - radius) < 0)
+		return;
+	if ((x0Random + radius) > screenwidth)
+		return;
+	if ((y0Random - radius) < 0)
+		return;
+	if ((y0Random + radius) > screenheigth)
+		return;
+	drawCircle(x0Random,y0Random,radius,color);
 }
 
 void drawRandomRectangle()
 {
-	int x0Random = Random() % 640;
-	int x1Random = Random() % 640;
-	int y0Random = Random() % 480;
-	int y1Random = Random() % 480;
+	int x0Random = Random() % screenwidth;
+	int x1Random = Random() % screenwidth;
+	int y0Random = Random() % screenheigth;
+	int y1Random = Random() % screenheigth;
 	int color = Random();
 	if ((x0Random < x1Random) && (y0Random < y1Random))
 		makeRect(x0Random, y0Random, x1Random, y1Random, color);
@@ -420,7 +430,7 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLE,DO_F10_FNCS};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RANDOM_LINES,RANDOM_CIRCLES};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -469,11 +479,11 @@ int main(int argc,char *argv)
 	tb_puts("Press F4 to run Dhrystone.\r\n");
 	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
 	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
-	tb_puts("Press F7 for 800x600 @ 52 Hz.\r\n");
+	tb_puts("Press F7 TBD\r\n");
 	tb_puts("Press F8 for 768x576 @ 57 Hz.\r\n");
 	tb_puts("Press F9 for 800x600 @ 72 Hz.\r\n");
-	tb_puts("Press F10 for rectangle user code\r\n");
-	tb_puts("Press F11 for TBD\r\n");
+	tb_puts("Press F10 for random lines\r\n");
+	tb_puts("Press F11 for random rectangles\r\n");
 	tb_puts("Press F12 to toggle character overlay.\r\n");
 
 	enum mainstate_t mainstate=MAIN_DHRYSTONE;
@@ -512,6 +522,7 @@ int main(int argc,char *argv)
 		{
 			puts("640 x 480 @ 60Hz\n\r");
 			screenwidth=640;
+			screenheigth=480;
 			VGA_SetScreenMode(MODE_640_480_60HZ);
 			while(TestKey(KEY_F5))
 				;
@@ -520,22 +531,22 @@ int main(int argc,char *argv)
 		{
 			puts("320 x 480 @ 60Hz\n\r");
 			screenwidth=320;
+			screenheigth=480;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
 			while(TestKey(KEY_F6))
 				;
 		}
 		if(TestKey(KEY_F7))
 		{
-			puts("800 x 600 @ 52Hz\n\r");
-			screenwidth=800;
-			VGA_SetScreenMode(MODE_800_600_52HZ);
-			while(TestKey(KEY_F7))
-				;
+			puts("Random circles\n\r");
+			mainstate = RANDOM_CIRCLES;
+			while(TestKey(KEY_F7));
 		}
 		if(TestKey(KEY_F8))
 		{
 			puts("768 x 576 @ 57Hz\n\r");
 			screenwidth=768;
+			screenheigth=576;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
 			while(TestKey(KEY_F8))
 				;
@@ -545,6 +556,7 @@ int main(int argc,char *argv)
 		{
 			puts("800 x 600 @ 72HZ\n\r");
 			screenwidth=800;
+			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
 			while(TestKey(KEY_F9))
 				;
@@ -552,13 +564,13 @@ int main(int argc,char *argv)
 
 		if(TestKey(KEY_F10))
 		{
-			mainstate=DO_F10_FNCS;
+			mainstate=RANDOM_LINES;
 			puts("Random rectangles\n\r");
 			while(TestKey(KEY_F10));
 		}
 		if(TestKey(KEY_F11))
 		{
-			mainstate=RANDOM_RECTANGLE;
+			mainstate=RANDOM_RECTANGLES;
 			puts("Random rectangles\n\r");
 			while(TestKey(KEY_F11));
 		}
@@ -617,17 +629,16 @@ int main(int argc,char *argv)
 				DoMemcheckCycle((unsigned int *)FrameBuffer);
 				break;
 			case MAIN_RECTANGLES:
-//				if(MouseButtons&1)
-//					pen+=0x400;
-//				if(MouseButtons&2)
-//					pen-=0x400;
 				drawRandomRectangle();
 				break;
-			case DO_F10_FNCS:
+			case RANDOM_LINES:
 				drawRandomLine();
 				break;
-			case RANDOM_RECTANGLE:
+			case RANDOM_RECTANGLES:
 				drawRandomRectangle();
+				break;
+			case RANDOM_CIRCLES:
+				drawRandomCircles();
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
