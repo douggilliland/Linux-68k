@@ -618,12 +618,9 @@ int main(int argc,char *argv)
 				break;
 			case MAIN_DHRYSTONE:
 				tb_puts("Running Dhrystone benchmark...\r\n");
-//				{
 				int result=Dhrystone();
 				sprintf(printf_buffer, "%d DMIPS\r\n",result);
 				tb_puts(printf_buffer);
-//				}
-//				mainstate=MAIN_RECTANGLES;
 				break;
 			case MAIN_RECTANGLES:
 				drawRandomRectangle();
