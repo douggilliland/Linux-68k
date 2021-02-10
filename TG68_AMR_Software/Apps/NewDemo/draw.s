@@ -4,11 +4,11 @@ FB_WIDTH equ 640
 FB_HEIGHT equ 960
 RANDOMSEED	dc.w	12345
 RANDOMSEED2	dc.w	6789
-pen	dc.w	0
+pen	dc.w	0				; short pen
 
-	XDEF pen
+	XDEF pen				
 	XDEF DrawIteration
-DrawIteration
+DrawIteration					; void DrawIteration();
 	movem.l	a0-6/d0-d7,-(a7)
 	add.w	#1,pen
 	bsr	Random
@@ -60,6 +60,7 @@ Plot				; X: d0, y: d1
 	rts
 
 	; unsigned short Random()
+	; return 16-bit random number
 	XDEF Random
 Random
 	movem.l	d1-d2,-(a7)
