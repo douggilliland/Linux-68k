@@ -152,6 +152,7 @@ void SetMouseTimeout(int delay)
 }
 
 extern char heap_low;
+// Allocate memory
 void AddMemory()
 {
 	size_t low;
@@ -454,14 +455,39 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RANDOM_LINES,MAIN_COLOR_RAMP,RANDOM_CIRCLES};
+	// State machine
+	enum mainstate_t
+	{
+		MAIN_IDLE,
+		MAIN_LOAD,
+		MAIN_MEMCHECK,
+		MAIN_RECTANGLES,
+		MAIN_DHRYSTONE,
+		RANDOM_RECTANGLES,
+		RANDOM_LINES,
+		MAIN_COLOR_RAMP,
+		RANDOM_CIRCLES
+	};
+	// File I/O pointer
 	fileTYPE file;
+
+	// Frame buffer pointer
 	unsigned char *fbptr;
+
+	// Default screen size matches default impage width
+	screenwidth=800;		// Initial screen width
+	screenheigth=600;		// Initial screen heigth
+
+	// Clear the text buffer
 	ClearTextBuffer();
 
+	// Set the baud rate
 	HW_UART(REG_UART_CLKDIV)=(1000*HW_BOARD(REG_CAP_CLOCKSPEED))/1152;
+
+	// Set up the hardware timer register
 	HW_TIMER(REG_TIMER_DIV0)=HW_BOARD(REG_CAP_CLOCKSPEED)*2; // Clocks 1 through 6 are now based on 100kHZ base clock.
 
+	// Memory allocation
 	AddMemory();
 
 	PS2Init();
@@ -516,6 +542,9 @@ int main(int argc,char *argv)
 		{
 			mainstate=MAIN_LOAD;
 			puts("Loading image\n\r");
+			screenwidth=640;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_640_480_60HZ);
 			while(TestKey(KEY_F1));
 		}
 		else if(TestKey(KEY_F2))
