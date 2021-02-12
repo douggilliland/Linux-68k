@@ -527,20 +527,21 @@ int main(int argc,char *argv)
 	// Set up the hardware sprite - mouse moves?
 	VGA_SetSprite();
 
+	// Malloc space for largest screen resolution
 	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
 	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
 	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
 
+	// clear the screen buffer
 	memset(FrameBuffer,0,sizeof(short)*640*960);
 
+	// interrupts for timers and vertical blanking
 	EnableInterrupts();
 
 	while(PS2MouseRead()>-1); // Drain the buffer;
 	PS2MouseWrite(0xf4);
-
 	SetMouseTimeout(1000);
 	while(PS2MouseRead()!=0xfa && mousetimeout==0); // Read the acknowledge byte
-
 	if(mousetimeout)
 		puts("Mouse timed out\n\r");
 
@@ -549,7 +550,7 @@ int main(int argc,char *argv)
 
 	SetHeartbeat();
 
-	tb_puts("\r\nWelcome to TG68MiniSOC, a minimal System-on-Chip,\r\nbuilt around Tobias Gubener's TG68k processor core.\r\n");
+	tb_puts("\r\nWelcome to TG68MiniSOC, a minimal System-on-Chip,\r\nbuilt around Tobias Gubener's TG68k processor core.\r\nAdapted from AMR code by Doug Gilliland\r\n");
 
 	tb_puts("Initializing SD card...\r\n");
 	if(!SDCardInit())
