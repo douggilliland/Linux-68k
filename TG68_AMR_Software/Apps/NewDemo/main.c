@@ -22,8 +22,8 @@
 short *FrameBuffer;	// Frame Buffer pointer
 
 // Hooks to assembly code in draw.s
-extern short pen;
-extern void DrawIteration();
+//extern short pen;
+//extern void DrawIteration();
 extern unsigned short Random();
 
 static short framecount=0;
