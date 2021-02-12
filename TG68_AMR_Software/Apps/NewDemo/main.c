@@ -449,6 +449,38 @@ void drawRandomRectangle()
 	makeRect(x0Random, y0Random, x1Random, y1Random, color);
 }
 
+void setScreenRes(enum VGA_ScreenModes mode)
+{
+	switch(mode)
+	{
+		case MODE_640_400_70HZ:
+			screenwidth=640;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_640_400_70HZ);
+			break;
+		case MODE_640_480_60HZ:
+			screenwidth=640;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_640_480_60HZ);
+			break;
+		case MODE_320_480_60HZ:
+			screenwidth=320;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_320_480_60HZ);
+			break;
+		case MODE_800_600_52HZ:
+			break;
+		case MODE_800_600_72HZ:
+			screenwidth=800;
+			screenheigth=600;
+			VGA_SetScreenMode(MODE_800_600_72HZ);
+			break;
+		case MODE_768_576_57HZ:
+			setScreenRes(MODE_768_576_57HZ);
+			break;
+	}
+}
+
 // Reserve space
 char printf_buffer[256];
 
@@ -477,6 +509,7 @@ int main(int argc,char *argv)
 	// Default screen size matches default impage width
 	screenwidth=800;		// Initial screen width
 	screenheigth=600;		// Initial screen heigth
+	VGA_SetScreenMode(MODE_800_600_72HZ);
 
 	// Clear the text buffer
 	ClearTextBuffer();
@@ -542,9 +575,7 @@ int main(int argc,char *argv)
 		{
 			mainstate=MAIN_LOAD;
 			puts("Loading image\n\r");
-			screenwidth=640;
-			screenheigth=480;
-			VGA_SetScreenMode(MODE_640_480_60HZ);
+			setScreenRes(MODE_640_480_60HZ);
 			while(TestKey(KEY_F1));
 		}
 		else if(TestKey(KEY_F2))
@@ -562,33 +593,25 @@ int main(int argc,char *argv)
 		else if(TestKey(KEY_F4))
 		{
 			puts("Screen res = 640x480 @ 60Hz\n\r");
-			screenwidth=640;
-			screenheigth=480;
-			VGA_SetScreenMode(MODE_640_480_60HZ);
+			setScreenRes(MODE_640_480_60HZ);
 			while(TestKey(KEY_F4));
 		}
 		else if(TestKey(KEY_F5))
 		{
 			puts("Screen res = 320x480 @ 60Hz\n\r");
-			screenwidth=320;
-			screenheigth=480;
-			VGA_SetScreenMode(MODE_320_480_60HZ);
+			setScreenRes(MODE_320_480_60HZ);
 			while(TestKey(KEY_F5));
 		}
 		else if(TestKey(KEY_F6))
 		{
 			puts("Screen res = 768x576 @ 57Hz\n\r");
-			screenwidth=768;
-			screenheigth=576;
-			VGA_SetScreenMode(MODE_768_576_57HZ);
+			setScreenRes(MODE_768_576_57HZ);
 			while(TestKey(KEY_F6));
 		}
 		else if(TestKey(KEY_F7))
 		{
 			puts("Screen res = 800x600 @ 72HZ\n\r");
-			screenwidth=800;
-			screenheigth=600;
-			VGA_SetScreenMode(MODE_800_600_72HZ);
+			setScreenRes(MODE_800_600_72HZ);
 			while(TestKey(KEY_F7));
 		}
 		else if(TestKey(KEY_F8))
