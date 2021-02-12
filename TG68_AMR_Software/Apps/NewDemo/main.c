@@ -409,6 +409,23 @@ void drawRandomCircle(void)
 	drawCircle(x0Random,y0Random,radius,color);
 }
 
+void plotPoint(int x, int y, int color)
+{
+	*(FrameBuffer + x + (y * screenwidth)) = color;
+}
+
+// drawColorRamp
+void drawColorRamp()
+{
+	unsigned short color;
+	unsigned short y;
+	unsigned short x;
+	for (y = 0; y < screenheigth; y += 1)
+		for (x = 0; x < screenwidth; x += 1)
+			plotPoint(x,y,color);
+			color++;
+}
+
 // drawRandomRectangle()
 void drawRandomRectangle()
 {
@@ -430,7 +447,7 @@ char printf_buffer[256];
 // The demo code
 int main(int argc,char *argv)
 {
-	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RANDOM_LINES,RANDOM_CIRCLES};
+	enum mainstate_t {MAIN_IDLE,MAIN_LOAD,MAIN_MEMCHECK,MAIN_RECTANGLES,MAIN_DHRYSTONE,RANDOM_RECTANGLES,RANDOM_LINES,MAIN_COLOR_RAMP,RANDOM_CIRCLES};
 	fileTYPE file;
 	unsigned char *fbptr;
 	ClearTextBuffer();
@@ -473,12 +490,12 @@ int main(int argc,char *argv)
 
 	tb_puts("Press F1 to load Image.\r\n");
 	tb_puts("Press F2 for Memory Check.\r\n");
-	tb_puts("Press F3 for random rectangles.\r\n");
-	tb_puts("Press F4 to run Dhrystone.\r\n");
-	tb_puts("Press F5 for 640x480 @ 60 Hz.\r\n");
-	tb_puts("Press F6 for 320x480 @ 60 Hz.\r\n");
-	tb_puts("Press F7 for 768x576 @ 57 Hz.\r\n");
-	tb_puts("Press F8 for 800x600 @ 72 Hz.\r\n");
+	tb_puts("Press F3 to run Dhrystone.\r\n");
+	tb_puts("Press F4 for 640x480 @ 60 Hz.\r\n");
+	tb_puts("Press F5 for 320x480 @ 60 Hz.\r\n");
+	tb_puts("Press F6 for 768x576 @ 57 Hz.\r\n");
+	tb_puts("Press F7 for 800x600 @ 72 Hz.\r\n");
+	tb_puts("Press F8 for color ramp.\r\n");
 	tb_puts("Press F9 for random circles\r\n");
 	tb_puts("Press F10 for random lines\r\n");
 	tb_puts("Press F11 for random rectangles\r\n");
@@ -500,51 +517,51 @@ int main(int argc,char *argv)
 			puts("Switching to Memcheck mode\n\r");
 			while(TestKey(KEY_F2));
 		}
-		if(TestKey(KEY_F3))
-		{
-			mainstate=MAIN_RECTANGLES;
-			puts("Switching to Rectangles mode\n\r");
-			while(TestKey(KEY_F3));
-		}
-		if(TestKey(KEY_F4))
+	if(TestKey(KEY_F3))
 		{
 			mainstate=MAIN_DHRYSTONE;
 			puts("Dhrystone benchmark\n\r");
-			while(TestKey(KEY_F4));
+			while(TestKey(KEY_F3));
 		}
-		if(TestKey(KEY_F5))
+		if(TestKey(KEY_F4))
 		{
 			puts("640x480 @ 60Hz\n\r");
 			screenwidth=640;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_640_480_60HZ);
-			while(TestKey(KEY_F5));
+			while(TestKey(KEY_F4));
 		}
-		if(TestKey(KEY_F6))
+		if(TestKey(KEY_F5))
 		{
 			puts("320x480 @ 60Hz\n\r");
 			screenwidth=320;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
-			while(TestKey(KEY_F6));
+			while(TestKey(KEY_F5));
 		}
-		if(TestKey(KEY_F7))
+		if(TestKey(KEY_F6))
 		{
 			puts("768x576 @ 57Hz\n\r");
 			screenwidth=768;
 			screenheigth=576;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
-			while(TestKey(KEY_F7));
+			while(TestKey(KEY_F6));
 		}
-		if(TestKey(KEY_F8))
+		if(TestKey(KEY_F7))
 		{
 			puts("800x600 @ 72HZ\n\r");
 			screenwidth=800;
 			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
+			while(TestKey(KEY_F7));
+		}
+		if(TestKey(KEY_F8))
+		{
+			mainstate=MAIN_COLOR_RAMP;
+			puts("Switching to Rectangles mode\n\r");
 			while(TestKey(KEY_F8));
 		}
-		if(TestKey(KEY_F9))
+			if(TestKey(KEY_F9))
 		{
 			puts("Random circles\n\r");
 			mainstate = RANDOM_CIRCLES;
@@ -625,6 +642,9 @@ int main(int argc,char *argv)
 				break;
 			case MAIN_RECTANGLES:
 				drawRandomRectangle();
+				break;
+			case MAIN_COLOR_RAMP:
+				drawColorRamp();
 				break;
 			case RANDOM_CIRCLES:
 				drawRandomCircle();
