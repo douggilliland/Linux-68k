@@ -409,11 +409,6 @@ void drawRandomCircle(void)
 	drawCircle(x0Random,y0Random,radius,color);
 }
 
-void plotPoint(unsigned short x, unsigned short y, unsigned short color)
-{
-	*(FrameBuffer + x + (y * screenwidth)) = color;
-}
-
 // drawColorRamp
 // 5 bits red, 6 bits green, 5 bits blue
 // 1111 1100 0000 0000
@@ -430,7 +425,7 @@ void drawColorRamp()
 	{
 		for (x = 0; x < screenwidth; x += 1)
 		{
-			plotPoint(x,y,color);
+			*(FrameBuffer + x + (y * screenwidth)) = color;
 			color += 0x0821;
 		}
 	}
