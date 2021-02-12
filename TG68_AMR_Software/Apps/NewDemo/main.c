@@ -409,7 +409,7 @@ void drawRandomCircle(void)
 	drawCircle(x0Random,y0Random,radius,color);
 }
 
-void plotPoint(int x, int y, int color)
+void plotPoint(unsigned short x, unsigned short y, unsigned short color)
 {
 	*(FrameBuffer + x + (y * screenwidth)) = color;
 }
