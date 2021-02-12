@@ -476,7 +476,9 @@ void setScreenRes(enum VGA_ScreenModes mode)
 			VGA_SetScreenMode(MODE_800_600_72HZ);
 			break;
 		case MODE_768_576_57HZ:
-			setScreenRes(MODE_768_576_57HZ);
+			screenwidth=768;
+			screenheigth=576;
+			VGA_SetScreenMode(MODE_768_576_57HZ);
 			break;
 	}
 }
@@ -556,6 +558,7 @@ int main(int argc,char *argv)
 	if(!SDCardInit())
 		tb_puts("  SD card error!\r\n");
 
+	// Print key mapping menu on the screen overlay
 	tb_puts("Press F1 to load Image.\r\n");
 	tb_puts("Press F2 for Memory Check.\r\n");
 	tb_puts("Press F3 to run Dhrystone.\r\n");
@@ -569,6 +572,7 @@ int main(int argc,char *argv)
 	tb_puts("Press F11 for random rectangles\r\n");
 	tb_puts("Press F12 to toggle character overlay.\r\n");
 
+	// Run the Dhrystone benchmark at power up
 	enum mainstate_t mainstate=MAIN_DHRYSTONE;
 
 	while(1)
