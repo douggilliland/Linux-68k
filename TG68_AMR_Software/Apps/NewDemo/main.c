@@ -423,12 +423,9 @@ void drawColorRamp()
 	unsigned short x;
 	for (y = 0; y < screenheigth; y += 1)
 	{
-		for (x = 0; x < screenwidth; x += 4)
+		for (x = 0; x < screenwidth; x += 1)
 		{
 			*(FrameBuffer + (y * screenwidth) + x) = color;
-			*(FrameBuffer + (y * screenwidth) + x + 1) = color;
-			*(FrameBuffer + (y * screenwidth) + x + 2) = color;
-			*(FrameBuffer + (y * screenwidth) + x + 3) = color;
 			color += 0x0001;
 		}
 	}
