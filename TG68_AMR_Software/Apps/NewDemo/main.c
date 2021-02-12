@@ -1,4 +1,6 @@
 // Demo code
+// Based on AMR example code with added functions
+//	draw rectangles, circles, lines, points
 
 #include "board.h"
 #include "timer.h"
@@ -516,19 +518,19 @@ int main(int argc,char *argv)
 			puts("Loading image\n\r");
 			while(TestKey(KEY_F1));
 		}
-		if(TestKey(KEY_F2))
+		else if(TestKey(KEY_F2))
 		{
 			mainstate=MAIN_MEMCHECK;
 			puts("Running Memcheck\n\r");
 			while(TestKey(KEY_F2));
 		}
-	if(TestKey(KEY_F3))
+		else if(TestKey(KEY_F3))
 		{
 			mainstate=MAIN_DHRYSTONE;
 			puts("Running Dhrystone benchmark\n\r");
 			while(TestKey(KEY_F3));
 		}
-		if(TestKey(KEY_F4))
+		else if(TestKey(KEY_F4))
 		{
 			puts("Screen res = 640x480 @ 60Hz\n\r");
 			screenwidth=640;
@@ -536,7 +538,7 @@ int main(int argc,char *argv)
 			VGA_SetScreenMode(MODE_640_480_60HZ);
 			while(TestKey(KEY_F4));
 		}
-		if(TestKey(KEY_F5))
+		else if(TestKey(KEY_F5))
 		{
 			puts("Screen res = 320x480 @ 60Hz\n\r");
 			screenwidth=320;
@@ -544,7 +546,7 @@ int main(int argc,char *argv)
 			VGA_SetScreenMode(MODE_320_480_60HZ);
 			while(TestKey(KEY_F5));
 		}
-		if(TestKey(KEY_F6))
+		else if(TestKey(KEY_F6))
 		{
 			puts("Screen res = 768x576 @ 57Hz\n\r");
 			screenwidth=768;
@@ -552,7 +554,7 @@ int main(int argc,char *argv)
 			VGA_SetScreenMode(MODE_768_576_57HZ);
 			while(TestKey(KEY_F6));
 		}
-		if(TestKey(KEY_F7))
+		else if(TestKey(KEY_F7))
 		{
 			puts("Screen res = 800x600 @ 72HZ\n\r");
 			screenwidth=800;
@@ -560,31 +562,31 @@ int main(int argc,char *argv)
 			VGA_SetScreenMode(MODE_800_600_72HZ);
 			while(TestKey(KEY_F7));
 		}
-		if(TestKey(KEY_F8))
+		else if(TestKey(KEY_F8))
 		{
 			mainstate=MAIN_COLOR_RAMP;
 			puts("Switching to color ramp mode\n\r");
 			while(TestKey(KEY_F8));
 		}
-			if(TestKey(KEY_F9))
+		else if(TestKey(KEY_F9))
 		{
 			puts("Drawing random circles\n\r");
 			mainstate = RANDOM_CIRCLES;
 			while(TestKey(KEY_F9));
 		}
-		if(TestKey(KEY_F10))
+		else if(TestKey(KEY_F10))
 		{
 			mainstate=RANDOM_LINES;
 			puts("Drawing random lines\n\r");
 			while(TestKey(KEY_F10));
 		}
-		if(TestKey(KEY_F11))
+		else if(TestKey(KEY_F11))
 		{
 			mainstate=RANDOM_RECTANGLES;
 			puts("Drawing random rectangles\n\r");
 			while(TestKey(KEY_F11));
 		}
-		if(TestKey(KEY_F12))
+		else if(TestKey(KEY_F12))
 		{
 			static short overlay=0;
 			puts("Toggling overlay\n\r");
@@ -663,3 +665,4 @@ int main(int argc,char *argv)
 		}
 	}
 }
+
