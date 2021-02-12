@@ -427,9 +427,13 @@ void drawColorRamp()
 	unsigned short y;
 	unsigned short x;
 	for (y = 0; y < screenheigth; y += 1)
+	{
 		for (x = 0; x < screenwidth; x += 1)
+		{
 			plotPoint(x,y,color);
 			color += 0x0821;
+		}
+	}
 }
 
 // drawRandomRectangle()
