@@ -507,9 +507,7 @@ int main(int argc,char *argv)
 	unsigned char *fbptr;
 
 	// Default screen size matches default impage width
-	screenwidth=800;		// Initial screen width
-	screenheigth=600;		// Initial screen heigth
-	VGA_SetScreenMode(MODE_800_600_72HZ);
+	setScreenRes(MODE_800_600_72HZ);
 
 	// Clear the text buffer
 	ClearTextBuffer();
