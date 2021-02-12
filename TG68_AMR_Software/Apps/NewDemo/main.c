@@ -518,10 +518,13 @@ int main(int argc,char *argv)
 	// Set up the hardware timer register
 	HW_TIMER(REG_TIMER_DIV0)=HW_BOARD(REG_CAP_CLOCKSPEED)*2; // Clocks 1 through 6 are now based on 100kHZ base clock.
 
-	// Memory allocation
+	// Memory allocation - 32MB on QMTECH card
 	AddMemory();
 
+	// Initialize keyboard and mouse
 	PS2Init();
+
+	// Set up the hardware sprite - mouse moves?
 	VGA_SetSprite();
 
 	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
