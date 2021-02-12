@@ -415,15 +415,21 @@ void plotPoint(int x, int y, int color)
 }
 
 // drawColorRamp
+// 5 bits red, 6 bits green, 5 bits blue
+// 1111 1100 0000 0000
+// 5432 1098 7654 3210
+// rrrr rggg gggb bbbb
+// 0000 1000 0010 0001
+// 0x0821
 void drawColorRamp()
 {
-	unsigned short color;
+	unsigned short color = 0x0821;
 	unsigned short y;
 	unsigned short x;
 	for (y = 0; y < screenheigth; y += 1)
 		for (x = 0; x < screenwidth; x += 1)
 			plotPoint(x,y,color);
-			color++;
+			color += 0x0821;
 }
 
 // drawRandomRectangle()
