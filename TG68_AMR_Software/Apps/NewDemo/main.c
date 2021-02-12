@@ -621,7 +621,7 @@ int main(int argc,char *argv)
 				int result=Dhrystone();
 				sprintf(printf_buffer, "%d DMIPS\r\n",result);
 				tb_puts(printf_buffer);
-				drawRandomRectangle();
+				mainstate = MAIN_RECTANGLES;
 				break;
 			case MAIN_RECTANGLES:
 				drawRandomRectangle();
