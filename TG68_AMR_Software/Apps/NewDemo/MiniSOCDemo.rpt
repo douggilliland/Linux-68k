@@ -1,3 +1,3 @@
-End of code:	0000cee8 g       .eh_frame	00000000 _romend
-Start of BSS:	00008624 g       .extra	00000000 __bss_start__
-End of BSS:	0000ccb8 g       .extra	00000000 __bss_end__
+End of code:	0000cf28 g       .eh_frame	00000000 _romend
+Start of BSS:	00008664 g       .extra	00000000 __bss_start__
+End of BSS:	0000ccf8 g       .extra	00000000 __bss_end__

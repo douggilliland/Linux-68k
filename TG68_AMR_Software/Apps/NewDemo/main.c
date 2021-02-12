@@ -513,24 +513,24 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F1))
 		{
 			mainstate=MAIN_LOAD;
-			puts("Switching to image mode\n\r");
+			puts("Loading image\n\r");
 			while(TestKey(KEY_F1));
 		}
 		if(TestKey(KEY_F2))
 		{
 			mainstate=MAIN_MEMCHECK;
-			puts("Switching to Memcheck mode\n\r");
+			puts("Running Memcheck\n\r");
 			while(TestKey(KEY_F2));
 		}
 	if(TestKey(KEY_F3))
 		{
 			mainstate=MAIN_DHRYSTONE;
-			puts("Dhrystone benchmark\n\r");
+			puts("Running Dhrystone benchmark\n\r");
 			while(TestKey(KEY_F3));
 		}
 		if(TestKey(KEY_F4))
 		{
-			puts("640x480 @ 60Hz\n\r");
+			puts("Screen res = 640x480 @ 60Hz\n\r");
 			screenwidth=640;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_640_480_60HZ);
@@ -538,7 +538,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F5))
 		{
-			puts("320x480 @ 60Hz\n\r");
+			puts("Screen res = 320x480 @ 60Hz\n\r");
 			screenwidth=320;
 			screenheigth=480;
 			VGA_SetScreenMode(MODE_320_480_60HZ);
@@ -546,7 +546,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F6))
 		{
-			puts("768x576 @ 57Hz\n\r");
+			puts("Screen res = 768x576 @ 57Hz\n\r");
 			screenwidth=768;
 			screenheigth=576;
 			VGA_SetScreenMode(MODE_768_576_57HZ);
@@ -554,7 +554,7 @@ int main(int argc,char *argv)
 		}
 		if(TestKey(KEY_F7))
 		{
-			puts("800x600 @ 72HZ\n\r");
+			puts("Screen res = 800x600 @ 72HZ\n\r");
 			screenwidth=800;
 			screenheigth=600;
 			VGA_SetScreenMode(MODE_800_600_72HZ);
@@ -563,25 +563,25 @@ int main(int argc,char *argv)
 		if(TestKey(KEY_F8))
 		{
 			mainstate=MAIN_COLOR_RAMP;
-			puts("Switching to Rectangles mode\n\r");
+			puts("Switching to color ramp mode\n\r");
 			while(TestKey(KEY_F8));
 		}
 			if(TestKey(KEY_F9))
 		{
-			puts("Random circles\n\r");
+			puts("Drawing random circles\n\r");
 			mainstate = RANDOM_CIRCLES;
 			while(TestKey(KEY_F9));
 		}
 		if(TestKey(KEY_F10))
 		{
 			mainstate=RANDOM_LINES;
-			puts("Random lines\n\r");
+			puts("Drawing random lines\n\r");
 			while(TestKey(KEY_F10));
 		}
 		if(TestKey(KEY_F11))
 		{
 			mainstate=RANDOM_RECTANGLES;
-			puts("Random rectangles\n\r");
+			puts("Drawing random rectangles\n\r");
 			while(TestKey(KEY_F11));
 		}
 		if(TestKey(KEY_F12))
