@@ -414,8 +414,8 @@ void drawRandomCircle(void)
 // 1111 1100 0000 0000
 // 5432 1098 7654 3210
 // rrrr rggg gggb bbbb
-// 0000 1000 0010 0001
-// 0x0821
+// 0000 1000 0100 0001
+// 0x0841
 void drawColorRamp()
 {
 	unsigned short color = 0x0841;
@@ -423,9 +423,12 @@ void drawColorRamp()
 	unsigned short x;
 	for (y = 0; y < screenheigth; y += 1)
 	{
-		for (x = 0; x < screenwidth; x += 1)
+		for (x = 0; x < screenwidth; x += 4)
 		{
 			*(FrameBuffer + (y * screenwidth) + x) = color;
+			*(FrameBuffer + (y * screenwidth) + x + 1) = color;
+			*(FrameBuffer + (y * screenwidth) + x + 2) = color;
+			*(FrameBuffer + (y * screenwidth) + x + 3) = color;
 			color += 0x0841;
 		}
 	}
