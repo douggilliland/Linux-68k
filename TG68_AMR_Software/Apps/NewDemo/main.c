@@ -425,7 +425,7 @@ void drawColorRamp()
 	{
 		for (x = 0; x < screenwidth; x += 1)
 		{
-			*(FrameBuffer + x + (y * screenwidth)) = color;
+			*(FrameBuffer + (y * screenwidth) + x) = color;
 			color += 0x0821;
 		}
 	}
