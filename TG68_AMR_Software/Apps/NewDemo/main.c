@@ -24,6 +24,8 @@ short *FrameBuffer;	// Frame Buffer pointer
 // Hooks to assembly code in draw.s
 //extern short pen;
 //extern void DrawIteration();
+extern void FillScreen();
+
 extern unsigned short Random();
 
 static short framecount=0;
@@ -582,12 +584,14 @@ int main(int argc,char *argv)
 			mainstate=MAIN_LOAD;
 			puts("Loading image\n\r");
 			setScreenRes(MODE_640_480_60HZ);
+			FillScreen();
 			while(TestKey(KEY_F1));
 		}
 		else if(TestKey(KEY_F2))
 		{
 			mainstate=MAIN_MEMCHECK;
 			puts("Running Memcheck\n\r");
+			FillScreen();
 			while(TestKey(KEY_F2));
 		}
 		else if(TestKey(KEY_F3))
@@ -600,12 +604,14 @@ int main(int argc,char *argv)
 		{
 			puts("Screen res = 640x480 @ 60Hz\n\r");
 			setScreenRes(MODE_640_480_60HZ);
+			FillScreen();
 			while(TestKey(KEY_F4));
 		}
 		else if(TestKey(KEY_F5))
 		{
 			puts("Screen res = 320x480 @ 60Hz\n\r");
 			setScreenRes(MODE_320_480_60HZ);
+			FillScreen();
 			while(TestKey(KEY_F5));
 		}
 		else if(TestKey(KEY_F6))
@@ -618,30 +624,35 @@ int main(int argc,char *argv)
 		{
 			puts("Screen res = 800x600 @ 72HZ\n\r");
 			setScreenRes(MODE_800_600_72HZ);
+			FillScreen();
 			while(TestKey(KEY_F7));
 		}
 		else if(TestKey(KEY_F8))
 		{
 			mainstate=MAIN_COLOR_RAMP;
 			puts("Switching to color ramp mode\n\r");
+			FillScreen();
 			while(TestKey(KEY_F8));
 		}
 		else if(TestKey(KEY_F9))
 		{
-			puts("Drawing random circles\n\r");
 			mainstate = RANDOM_CIRCLES;
+			puts("Drawing random circles\n\r");
+			FillScreen();
 			while(TestKey(KEY_F9));
 		}
 		else if(TestKey(KEY_F10))
 		{
 			mainstate=RANDOM_LINES;
 			puts("Drawing random lines\n\r");
+			FillScreen();
 			while(TestKey(KEY_F10));
 		}
 		else if(TestKey(KEY_F11))
 		{
 			mainstate=RANDOM_RECTANGLES;
 			puts("Drawing random rectangles\n\r");
+			FillScreen();
 			while(TestKey(KEY_F11));
 		}
 		else if(TestKey(KEY_F12))
