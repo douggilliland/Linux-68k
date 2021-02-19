@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <malloc.h>
  
 #define CELL(I,J) (field[size*(I)+(J)])
 #define ALIVE(I,J) t[size*(I)+(J)] = 1

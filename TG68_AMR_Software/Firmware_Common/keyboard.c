@@ -1,3 +1,5 @@
+// PS/2 keyboard code
+
 #include "keyboard.h"
 #include "ps2.h"
 #include "textbuffer.h"

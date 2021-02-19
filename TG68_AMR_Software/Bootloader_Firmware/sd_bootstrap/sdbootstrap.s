@@ -2,7 +2,8 @@
 * Program    : sdbootstrap
 * Written by : Alastair M. Robinson
 * Date       : 2012-06-23
-* Description: Program to bootstrap the TG68 project over RS232.  Receives an S-Record.
+* Description: Program bootstraps the TG68 project from the SD card.
+* 						 Program is in the forms of an S-Record.
 *              SD Card bootstrap code borrowed from the Chameleon Minimig port.
 *-----------------------------------------------------------
 
