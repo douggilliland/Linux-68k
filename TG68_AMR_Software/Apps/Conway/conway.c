@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     {
        op = *argv[1];
     } else {
-       op = 'b';
+       op = 'g';
     }
  
     switch ( op )
