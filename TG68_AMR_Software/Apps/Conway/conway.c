@@ -119,7 +119,7 @@ int main(int argc, char **argv)
         }
         return 0;
       default:
-        fprintf(stderr, "no CA for this\n");
+        puts("no CA for this\n");
         break;
     }
     return 1;
