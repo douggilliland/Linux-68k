@@ -1,3 +1,5 @@
+// https://rosettacode.org/wiki/Conway's_Game_of_Life/C
+
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
