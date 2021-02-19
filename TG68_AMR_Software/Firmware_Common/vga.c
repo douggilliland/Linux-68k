@@ -113,18 +113,18 @@ void VGA_SetScreenMode(enum VGA_ScreenModes mode)
 
 void VGA_SetSprite()
 {
-	HW_VGA_L(SP0PTR)=(unsigned long)StandardPointer;
+	HW_VGA_L(SP0PTR) = (unsigned long)StandardPointer;
 }
 
 void VGA_ShowOverlay()
 {
-	screenmode|=FLAG_VGA_CONTROL_OVERLAY;
-	HW_VGA(REG_VGA_CONTROL)=screenmode;
+	screenmode |= FLAG_VGA_CONTROL_OVERLAY;
+	HW_VGA(REG_VGA_CONTROL) = screenmode;
 }
 
 void VGA_HideOverlay()
 {
-	screenmode&=~FLAG_VGA_CONTROL_OVERLAY;
-	HW_VGA(REG_VGA_CONTROL)=screenmode;
+	screenmode &= ~FLAG_VGA_CONTROL_OVERLAY;
+	HW_VGA(REG_VGA_CONTROL) = screenmode;
 }
 
