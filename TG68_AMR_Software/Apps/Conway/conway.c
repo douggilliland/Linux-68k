@@ -113,6 +113,7 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 void dump_rectangles(const char *f, int size)
 {
 	int x,y;
+	tb_puts("(dump_rectangles): Reached function");
 	for (y=0; y < size; y++)
 	{
 		for (x=0; x < size; x++)
