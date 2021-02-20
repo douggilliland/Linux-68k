@@ -113,12 +113,13 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 void dump_rectangles(const char *f, int size)
 {
 	int x,y;
-	tb_puts("(dump_rectangles): Reached function");
+	printf("(dump_rectangles): Reached function");
 	for (y=0; y < size; y++)
 	{
-		tb_puts("(dump_rectangles): Y loop");
+		printf("(dump_rectangles): Y loop");
 		for (x=0; x < size; x++)
 		{
+			printf("(dump_rectangles): X loop");
 			if (f[(y*size)+x] == 0)
 				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0);
 			else
