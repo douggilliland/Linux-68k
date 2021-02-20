@@ -149,7 +149,7 @@ void dump_rectangles(const char *f, int size)
 			if (f[(y*size)+x] == 0)
 				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0);
 			else
-				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0xffff);
+				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,Random());
 		}
 	}
 }
