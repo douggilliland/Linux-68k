@@ -28,7 +28,7 @@ MAIN_PRJ = MiniSOCDemo
 MAIN_C_SRC=conway.c
 MAIN_C_OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o,$(MAIN_C_SRC))
 
-MAIN_S_SRC=spi_readsector.s
+MAIN_S_SRC=draw.s spi_readsector.s
 MAIN_S_OBJ = $(patsubst %.s,$(BUILD_DIR)/%.o,$(MAIN_S_SRC))
 
 MAIN_OBJ = $(COMMON_OBJ) $(MAIN_C_OBJ) $(MAIN_S_OBJ) $(LIB_OBJ)

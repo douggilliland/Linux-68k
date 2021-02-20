@@ -14,7 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
- 
+
+extern unsigned short Random();
+
 #define CELL(I,J) (field[size*(I)+(J)])
 #define ALIVE(I,J) t[size*(I)+(J)] = 1
 #define DEAD(I,J)  t[size*(I)+(J)] = 0
@@ -186,6 +188,7 @@ void setScreenRes(enum VGA_ScreenModes mode)
 	}
 }
 
+// initDisplay() - Puts together all the display initialization code
 void initDisplay(void)
 {
 	// Clear the text buffer
@@ -213,6 +216,8 @@ int main(int argc, char **argv)
 {
     int i;
     char *fa, *fb, *tt, op;
+		unsigned short randomX;
+		unsigned short randomY;
  
     op = 'g';
 	
@@ -236,9 +241,17 @@ int main(int argc, char **argv)
       case 'g':		// Glider
         for(i=0; i < (FIELD_SIZE*FIELD_SIZE) ; i++) field[i]=0;
         /* prepare the glider */
-                     SCELL(0, 1);
-                                  SCELL(1, 2);
-        SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
+        //            SCELL(0, 1);
+        //                          SCELL(1, 2);
+        //SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
+				// Put up 400 random cells
+				for (i=0; i < 400; i++)
+				{
+					randomX = Random() % 45;
+					randomY = Random() % 45;
+					SCELL(randomX, randomY);
+				}
+
         /* evolve */
         fa = field;
         fb = temp_field;
