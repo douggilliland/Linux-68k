@@ -209,8 +209,9 @@ int main(int argc, char **argv)
 	printf("Screen cleared\r\n");
 
 	// clear the screen buffer
-	// memset(FrameBuffer,0,sizeof(short)*800*600);
-	// tb_puts("Screen clear completed\r\n");
+	 memset(FrameBuffer,0,sizeof(short)*800*600);
+	 tb_puts("Screen clear completed\r\n");
+   VGA_HideOverlay();
 
     switch ( op )
     {
