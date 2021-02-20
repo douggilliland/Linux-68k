@@ -99,6 +99,11 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 {
 	int x,y,yoff;
 	printf("(makeRect): Got here\n\r");
+	printf("(makeRect): xS%d\n\r",xS);
+	printf("(makeRect): xE%d\n\r",xE);
+	printf("(makeRect): yS%d\n\r",yS);
+	printf("(makeRect): yE%d\n\r",yE);
+	printf("(makeRect): color`%d\n\r",color);
 	for (y = yS; y <= yE; y += 1)
 	{
 		yoff = y * screenwidth;
