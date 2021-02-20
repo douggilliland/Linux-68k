@@ -186,13 +186,8 @@ void setScreenRes(enum VGA_ScreenModes mode)
 	}
 }
 
-int main(int argc, char **argv)
+void initDisplay(void)
 {
-    int i;
-    char *fa, *fb, *tt, op;
- 
-    op = 'g';
-	
 	// Clear the text buffer
 	ClearTextBuffer();
 	tb_puts("Welcome to Conway's Game of Life\r\n");
@@ -212,6 +207,16 @@ int main(int argc, char **argv)
 	 memset(FrameBuffer,0,sizeof(short)*800*600);
 	 tb_puts("Screen clear completed\r\n");
    VGA_HideOverlay();
+}
+
+int main(int argc, char **argv)
+{
+    int i;
+    char *fa, *fb, *tt, op;
+ 
+    op = 'g';
+	
+	initDisplay();
 
     switch ( op )
     {
@@ -244,7 +249,7 @@ int main(int argc, char **argv)
            //tb_puts("Dumped frame to tb\r\n");
            dump_rectangles(fa, FIELD_SIZE);
            //tb_puts("Dumped frame to fb\r\n");
-		   evolve(fa, fb, FIELD_SIZE);
+		   		 evolve(fa, fb, FIELD_SIZE);
            tt = fb; fb = fa; fa = tt;
         }
         return 0;
