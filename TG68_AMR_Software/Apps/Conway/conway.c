@@ -20,8 +20,8 @@
 #define DEAD(I,J)  t[size*(I)+(J)] = 0
  
 unsigned short *FrameBuffer;	// Frame Buffer pointer
-int screenwidth=640;		// Initial screen width
-int screenheigth=480;		// Initial screen heigth
+int screenwidth=800;		// Initial screen width
+int screenheigth=600;		// Initial screen heigth
 
 #define BLINKER_SIZE 3
 #define BLINKER_GEN 3
