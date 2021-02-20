@@ -19,7 +19,7 @@
 #define ALIVE(I,J) t[size*(I)+(J)] = 1
 #define DEAD(I,J)  t[size*(I)+(J)] = 0
  
-short *FrameBuffer;	// Frame Buffer pointer
+unsigned short *FrameBuffer;	// Frame Buffer pointer
 int screenwidth=640;		// Initial screen width
 int screenheigth=480;		// Initial screen heigth
 
