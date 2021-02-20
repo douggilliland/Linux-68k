@@ -1,5 +1,7 @@
 == AMR 68000 CPU Build ==
 
+https://www.youtube.com/watch?v=ZfqK5EWPn_o
+
 <img src="http://land-boards.com/blwiki/images/0/03/P981-720px.jpg"></img>
 
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TG68_AMR FPGA files for AMR build] - Master branch
