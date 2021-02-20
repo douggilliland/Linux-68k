@@ -8,6 +8,25 @@
 #define ALIVE(I,J) t[size*(I)+(J)] = 1
 #define DEAD(I,J)  t[size*(I)+(J)] = 0
  
+short *FrameBuffer;	// Frame Buffer pointer
+
+#define BLINKER_SIZE 3
+#define BLINKER_GEN 3
+char small_blinker[] = {
+      0,0,0,
+      1,1,1,
+      0,0,0
+};
+char temp_blinker[BLINKER_SIZE*BLINKER_SIZE];
+ 
+#define FIELD_SIZE 45
+#define FIELD_GEN 175
+char field[FIELD_SIZE * FIELD_SIZE];
+char temp_field[FIELD_SIZE*FIELD_SIZE];
+ 
+/* set the cell i,j as alive */
+#define SCELL(I,J) field[FIELD_SIZE*(I)+(J)] = 1
+ 
 int count_alive(const char *field, int i, int j, int size)
 {
    int x, y, a=0;
@@ -50,23 +69,7 @@ void evolve(const char *field, char *t, int size)
       }
    }
 } 
-#define BLINKER_SIZE 3
-#define BLINKER_GEN 3
-char small_blinker[] = {
-      0,0,0,
-      1,1,1,
-      0,0,0
-};
-char temp_blinker[BLINKER_SIZE*BLINKER_SIZE];
- 
-#define FIELD_SIZE 45
-#define FIELD_GEN 175
-char field[FIELD_SIZE * FIELD_SIZE];
-char temp_field[FIELD_SIZE*FIELD_SIZE];
- 
-/* set the cell i,j as alive */
-#define SCELL(I,J) field[FIELD_SIZE*(I)+(J)] = 1
- 
+
 void dump_field(const char *f, int size)
 {
    int i;
@@ -77,12 +80,50 @@ void dump_field(const char *f, int size)
    }
    printf("\n");
 }
+
+#define cellSize 12
+
+void dump_rectangles(const char *f, int size)
+{
+	int x,y;
+	for (y=0; y < size; y++)
+	{
+		for (x=0; x < size; x++)
+		{
+			if (f[(y*size)+x] == 0)
+				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0);
+			else
+				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0xffff);
+		}
+	}
+}
  
+// makeRect(xS,yS,xE,yE,color) - Draw a rectangle
+void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
+{
+	int x,y,yoff;
+	for (y = yS; y <= yE; y += 1)
+	{
+		yoff = y * screenwidth;
+		for (x = xS; x <= xE; x += 1)
+		{
+			*(FrameBuffer + x + yoff) = color;
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
     int i;
     char *fa, *fb, *tt, op;
  
+	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
+	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
+	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
+
+	// clear the screen buffer
+	memset(FrameBuffer,0,sizeof(short)*640*960);
+
     /* fast and dirty selection option */
     if ( argc > 1 )
     {
