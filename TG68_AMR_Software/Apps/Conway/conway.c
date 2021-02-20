@@ -98,6 +98,7 @@ void dump_field(const char *f, int size)
 void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
 	int x,y,yoff;
+	printf("(makeRect): Got here\n\r");
 	for (y = yS; y <= yE; y += 1)
 	{
 		yoff = y * screenwidth;
