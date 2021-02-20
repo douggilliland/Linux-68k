@@ -83,6 +83,17 @@ void evolve(const char *field, char *t, int size)
    }
 } 
 
+void dump_field(const char *f, int size)
+{
+   int i;
+   for (i=0; i < (size*size); i++)
+   {
+      if ( (i % size) == 0 ) printf("\n");
+      printf("%c", f[i] ? 'X' : '.');
+   }
+   printf("\n");
+}
+
 // makeRect(xS,yS,xE,yE,color) - Draw a rectangle
 void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
 {
@@ -95,17 +106,6 @@ void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsign
 			*(FrameBuffer + x + yoff) = color;
 		}
 	}
-}
-
-void dump_field(const char *f, int size)
-{
-   int i;
-   for (i=0; i < (size*size); i++)
-   {
-      if ( (i % size) == 0 ) printf("\n");
-      printf("%c", f[i] ? 'X' : '.');
-   }
-   printf("\n");
 }
 
 #define cellSize 12
@@ -207,8 +207,9 @@ int main(int argc, char **argv)
         for (i=0; i < FIELD_GEN; i++)
         {
            dump_field(fa, FIELD_SIZE);
-           dump_rectangles(fa, BLINKER_SIZE);
-           evolve(fa, fb, FIELD_SIZE);
+           dump_rectangles(fa, FIELD_SIZE);
+           tb_puts("Dumped frame\r\n");
+		   evolve(fa, fb, FIELD_SIZE);
            tt = fb; fb = fa; fa = tt;
         }
         return 0;
