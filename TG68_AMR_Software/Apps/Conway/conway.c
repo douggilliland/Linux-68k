@@ -125,19 +125,45 @@ void dump_rectangles(const char *f, int size)
 	}
 }
  
+void setScreenRes(enum VGA_ScreenModes mode)
+{
+	switch(mode)
+	{
+		case MODE_640_400_70HZ:
+			screenwidth=640;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_640_400_70HZ);
+			break;
+		case MODE_640_480_60HZ:
+			screenwidth=640;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_640_480_60HZ);
+			break;
+		case MODE_320_480_60HZ:
+			screenwidth=320;
+			screenheigth=480;
+			VGA_SetScreenMode(MODE_320_480_60HZ);
+			break;
+		case MODE_800_600_52HZ:
+			break;
+		case MODE_800_600_72HZ:
+			screenwidth=800;
+			screenheigth=600;
+			VGA_SetScreenMode(MODE_800_600_72HZ);
+			break;
+		case MODE_768_576_57HZ:
+			screenwidth=768;
+			screenheigth=576;
+			VGA_SetScreenMode(MODE_768_576_57HZ);
+			break;
+	}
+}
+
 int main(int argc, char **argv)
 {
     int i;
     char *fa, *fb, *tt, op;
  
-	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
-	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
-	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
-	VGA_SetScreenMode(MODE_640_480_60HZ);
-
-	// clear the screen buffer
-	memset(FrameBuffer,0,sizeof(short)*640*960);
-
     /* fast and dirty selection option */
     if ( argc > 1 )
     {
@@ -145,7 +171,21 @@ int main(int argc, char **argv)
     } else {
        op = 'g';
     }
+	
+	// Clear the text buffer
+	ClearTextBuffer();
+	tb_puts("\r\nWelcome to Conway's Game of Life\r\n");
  
+	FrameBuffer=(short *)malloc(sizeof(short)*800*600+15);
+	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
+	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
+	setScreenRes(MODE_800_600_72HZ);
+	tb_puts("Screen setup completed\r\n");
+
+	// clear the screen buffer
+	memset(FrameBuffer,0,sizeof(short)*800*600);
+	tb_puts("Screen clear completed\r\n");
+
     switch ( op )
     {
       case 'B':
@@ -155,6 +195,7 @@ int main(int argc, char **argv)
         for(i=0; i< BLINKER_GEN; i++)
         {
            dump_field(fa, BLINKER_SIZE);
+           dump_rectangles(fa, BLINKER_SIZE);
            evolve(fa, fb, BLINKER_SIZE);
            tt = fb; fb = fa; fa = tt;
         }
