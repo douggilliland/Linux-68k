@@ -112,6 +112,7 @@ void makeRect(unsigned int xS, unsigned int yS, unsigned int xE, unsigned int yE
 			*(FrameBuffer + x + yoff) = color;
 		}
 	}
+	printf("(makeRect): completed\n\r");
 }
 
 #define cellSize 12
@@ -186,6 +187,7 @@ int main(int argc, char **argv)
 	setScreenRes(MODE_800_600_72HZ);
 	tb_puts("Screen setup completed\r\n");
 	makeRect(0,0,799,599,0);
+	printf("Screen cleared\r\n");
 
 	// clear the screen buffer
 	// memset(FrameBuffer,0,sizeof(short)*800*600);
