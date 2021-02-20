@@ -20,6 +20,8 @@
 #include "dhry.h"
 
 short *FrameBuffer;	// Frame Buffer pointer
+int screenwidth=640;		// Initial screen width
+int screenheigth=480;		// Initial screen heigth
 
 // Hooks to assembly code in draw.s
 //extern short pen;
@@ -47,9 +49,7 @@ void SetHeartbeat()
 	SetIntHandler(TIMER_INT,&heartbeat_int);
 }
 
-int screenwidth=640;		// Initial screen width
-int screenheigth=480;		// Initial screen heigth
-
+// vblank_int() - Vertical blanking interrupt
 static void vblank_int()
 {
 	static short mousemode=0;

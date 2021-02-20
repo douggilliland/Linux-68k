@@ -83,6 +83,22 @@ void evolve(const char *field, char *t, int size)
    }
 } 
 
+extern char heap_low;
+// Allocate memory
+void AddMemory()
+{
+	size_t low;
+	size_t size;
+	low=(size_t)&heap_low;
+	low+=15;
+	low&=0xfffffff0; // Align to SDRAM burst boundary
+	size=1L<<HW_BOARD(REG_CAP_RAMSIZE);
+	size-=low;
+	size-=0x1000; // Leave room for the stack
+	printf("Heap_low: %lx, heap_size: %lx\n\r",low,size);
+	malloc_add((void*)low,size);
+}
+
 void dump_field(const char *f, int size)
 {
    int i;
@@ -180,6 +196,9 @@ int main(int argc, char **argv)
 	// Clear the text buffer
 	ClearTextBuffer();
 	tb_puts("Welcome to Conway's Game of Life\r\n");
+
+	// Memory allocation - 32MB on QMTECH card
+	AddMemory();
 
 	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
 	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
