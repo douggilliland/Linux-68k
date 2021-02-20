@@ -169,16 +169,16 @@ int main(int argc, char **argv)
 	// Clear the text buffer
 	ClearTextBuffer();
 	tb_puts("Welcome to Conway's Game of Life\r\n");
- 
+
 	FrameBuffer=(short *)malloc(sizeof(short)*800*600+15);
 	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
 	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
 	setScreenRes(MODE_800_600_72HZ);
 	tb_puts("Screen setup completed\r\n");
 
-	// clear the screen buffer
-	memset(FrameBuffer,0,sizeof(short)*800*600);
-	tb_puts("Screen clear completed\r\n");
+	clear the screen buffer
+	// memset(FrameBuffer,0,sizeof(short)*800*600);
+	// tb_puts("Screen clear completed\r\n");
 
     switch ( op )
     {
