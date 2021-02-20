@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 	
 	// Clear the text buffer
 	ClearTextBuffer();
-	tb_puts("\r\nWelcome to Conway's Game of Life\r\n");
+	tb_puts("Welcome to Conway's Game of Life\r\n");
  
 	FrameBuffer=(short *)malloc(sizeof(short)*800*600+15);
 	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
@@ -213,6 +213,7 @@ int main(int argc, char **argv)
         for (i=0; i < FIELD_GEN; i++)
         {
            dump_field(fa, FIELD_SIZE);
+           dump_rectangles(fa, BLINKER_SIZE);
            evolve(fa, fb, FIELD_SIZE);
            tt = fb; fb = fa; fa = tt;
         }
