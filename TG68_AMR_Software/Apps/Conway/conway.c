@@ -1,5 +1,16 @@
 // https://rosettacode.org/wiki/Conway's_Game_of_Life/C
 
+#include "board.h"
+#include "timer.h"
+#include "interrupts.h"
+#include "ps2.h"
+#include "keyboard.h"
+#include "textbuffer.h"
+#include "spi.h"
+#include "fat.h"
+#include "uart.h"
+#include "vga.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
@@ -9,6 +20,8 @@
 #define DEAD(I,J)  t[size*(I)+(J)] = 0
  
 short *FrameBuffer;	// Frame Buffer pointer
+int screenwidth=640;		// Initial screen width
+int screenheigth=480;		// Initial screen heigth
 
 #define BLINKER_SIZE 3
 #define BLINKER_GEN 3
@@ -70,6 +83,20 @@ void evolve(const char *field, char *t, int size)
    }
 } 
 
+// makeRect(xS,yS,xE,yE,color) - Draw a rectangle
+void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
+{
+	int x,y,yoff;
+	for (y = yS; y <= yE; y += 1)
+	{
+		yoff = y * screenwidth;
+		for (x = xS; x <= xE; x += 1)
+		{
+			*(FrameBuffer + x + yoff) = color;
+		}
+	}
+}
+
 void dump_field(const char *f, int size)
 {
    int i;
@@ -98,20 +125,6 @@ void dump_rectangles(const char *f, int size)
 	}
 }
  
-// makeRect(xS,yS,xE,yE,color) - Draw a rectangle
-void makeRect(volatile unsigned int xS,volatile unsigned int yS, volatile unsigned int xE, volatile unsigned int yE, volatile unsigned int color)
-{
-	int x,y,yoff;
-	for (y = yS; y <= yE; y += 1)
-	{
-		yoff = y * screenwidth;
-		for (x = xS; x <= xE; x += 1)
-		{
-			*(FrameBuffer + x + yoff) = color;
-		}
-	}
-}
-
 int main(int argc, char **argv)
 {
     int i;
@@ -120,6 +133,7 @@ int main(int argc, char **argv)
 	FrameBuffer=(short *)malloc(sizeof(short)*640*960+15);
 	FrameBuffer=(short *)(((int)FrameBuffer+15)&~15); // Align to nearest 16 byte boundary.
 	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
+	VGA_SetScreenMode(MODE_640_480_60HZ);
 
 	// clear the screen buffer
 	memset(FrameBuffer,0,sizeof(short)*640*960);
