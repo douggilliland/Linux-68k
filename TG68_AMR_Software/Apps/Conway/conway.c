@@ -185,6 +185,7 @@ int main(int argc, char **argv)
 	HW_VGA_L(FRAMEBUFFERPTR) = (long unsigned int) FrameBuffer;
 	setScreenRes(MODE_800_600_72HZ);
 	tb_puts("Screen setup completed\r\n");
+	makeRect(0,0,799,599,0);
 
 	// clear the screen buffer
 	// memset(FrameBuffer,0,sizeof(short)*800*600);
