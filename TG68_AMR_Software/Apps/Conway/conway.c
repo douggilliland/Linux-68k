@@ -206,9 +206,11 @@ int main(int argc, char **argv)
         fb = temp_field;
         for (i=0; i < FIELD_GEN; i++)
         {
+           tb_puts("Dumping frame\r\n");
            dump_field(fa, FIELD_SIZE);
+           tb_puts("Dumped frame to tb\r\n");
            dump_rectangles(fa, FIELD_SIZE);
-           tb_puts("Dumped frame\r\n");
+           tb_puts("Dumped frame to fb\r\n");
 		   evolve(fa, fb, FIELD_SIZE);
            tt = fb; fb = fa; fa = tt;
         }
