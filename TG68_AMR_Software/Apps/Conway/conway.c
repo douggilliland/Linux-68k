@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 	setScreenRes(MODE_800_600_72HZ);
 	tb_puts("Screen setup completed\r\n");
 
-	clear the screen buffer
+	// clear the screen buffer
 	// memset(FrameBuffer,0,sizeof(short)*800*600);
 	// tb_puts("Screen clear completed\r\n");
 
