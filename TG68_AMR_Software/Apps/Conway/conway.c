@@ -114,12 +114,12 @@ void dump_field(const char *f, int size)
 void makeRect(unsigned int xS, unsigned int yS, unsigned int xE, unsigned int yE, unsigned int color)
 {
 	unsigned int x,y,yoff;
-	printf("(makeRect): Got here\n\r");
-	printf("(makeRect): xS=%d\n\r",xS);
-	printf("(makeRect): xE=%d\n\r",xE);
-	printf("(makeRect): yS=%d\n\r",yS);
-	printf("(makeRect): yE=%d\n\r",yE);
-	printf("(makeRect): color=%d\n\r",color);
+//	printf("(makeRect): Got here\n\r");
+//	printf("(makeRect): xS=%d\n\r",xS);
+//	printf("(makeRect): xE=%d\n\r",xE);
+//	printf("(makeRect): yS=%d\n\r",yS);
+//	printf("(makeRect): yE=%d\n\r",yE);
+//	printf("(makeRect): color=%d\n\r",color);
 	for (y = yS; y <= yE; y += 1)
 	{
 		yoff = y * screenwidth;
@@ -128,7 +128,7 @@ void makeRect(unsigned int xS, unsigned int yS, unsigned int xE, unsigned int yE
 			*(FrameBuffer + x + yoff) = color;
 		}
 	}
-	printf("(makeRect): completed\n\r");
+//	printf("(makeRect): completed\n\r");
 }
 
 #define cellSize 12
@@ -140,10 +140,10 @@ void dump_rectangles(const char *f, int size)
 	printf("(dump_rectangles): Reached function\n\r");
 	for (y=0; y < size; y++)
 	{
-		printf("(dump_rectangles): Y loop\n\r");
+		// printf("(dump_rectangles): Y loop\n\r");
 		for (x=0; x < size; x++)
 		{
-			printf("(dump_rectangles): X loop\n\r");
+			// printf("(dump_rectangles): X loop\n\r");
 			if (f[(y*size)+x] == 0)
 				makeRect(x*cellSize,y*cellSize,(x*cellSize)+cellSize-1,(y*cellSize)+cellSize-1,0);
 			else
