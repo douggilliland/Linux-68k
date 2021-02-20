@@ -164,13 +164,7 @@ int main(int argc, char **argv)
     int i;
     char *fa, *fb, *tt, op;
  
-    /* fast and dirty selection option */
-    if ( argc > 1 )
-    {
-       op = *argv[1];
-    } else {
-       op = 'g';
-    }
+    op = 'g';
 	
 	// Clear the text buffer
 	ClearTextBuffer();
@@ -188,18 +182,18 @@ int main(int argc, char **argv)
 
     switch ( op )
     {
-      case 'B':
-      case 'b':		// blinker test
-        fa = small_blinker;
-        fb = temp_blinker;
-        for(i=0; i< BLINKER_GEN; i++)
-        {
-           dump_field(fa, BLINKER_SIZE);
-           dump_rectangles(fa, BLINKER_SIZE);
-           evolve(fa, fb, BLINKER_SIZE);
-           tt = fb; fb = fa; fa = tt;
-        }
-        return 0;
+      // case 'B':
+      // case 'b':		// blinker test
+        // fa = small_blinker;
+        // fb = temp_blinker;
+        // for(i=0; i< BLINKER_GEN; i++)
+        // {
+           // dump_field(fa, BLINKER_SIZE);
+           // dump_rectangles(fa, BLINKER_SIZE);
+           // evolve(fa, fb, BLINKER_SIZE);
+           // tt = fb; fb = fa; fa = tt;
+        // }
+        // return 0;
       case 'G':
       case 'g':		// Glider
         for(i=0; i < (FIELD_SIZE*FIELD_SIZE) ; i++) field[i]=0;
