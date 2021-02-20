@@ -94,8 +94,7 @@ int main(int argc, char **argv)
     switch ( op )
     {
       case 'B':
-      case 'b':
-        /* blinker test */
+      case 'b':		// blinker test
         fa = small_blinker;
         fb = temp_blinker;
         for(i=0; i< BLINKER_GEN; i++)
@@ -106,7 +105,7 @@ int main(int argc, char **argv)
         }
         return 0;
       case 'G':
-      case 'g':
+      case 'g':		// Glider
         for(i=0; i < (FIELD_SIZE*FIELD_SIZE) ; i++) field[i]=0;
         /* prepare the glider */
                      SCELL(0, 1);
