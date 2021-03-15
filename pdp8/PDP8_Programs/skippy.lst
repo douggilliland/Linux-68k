@@ -1,0 +1,72 @@
+
+      / Test various skips rotates and AND instruction                    Page 1
+
+
+    1             / Test various skips rotates and AND instruction
+    2       0200  *200
+    3 00200 7300      CLA CLL
+    4 00201 1377      TAD (-1)
+    5 00202 7540      SMA SZA / skip if minus or zero
+    6 00203 7402      HLT
+    7 00204 7300      CLA CLL
+    8 00205 7540      SMA SZA / skip if minus or zero
+    9 00206 7402      HLT
+   10 00207 7201      CLA IAC 
+   11 00210 7540      SMA SZA
+   12 00211 5213      JMP .+2
+   13 00212 7402      HLT
+   14 00213 7300      CLA CLL
+   15 00214 7550      SPA SNA / skip if >0
+   16 00215 5217      JMP .+2
+   17 00216 7402      HLT
+   18 00217 7201      CLA IAC
+   19 00220 7550      SPA SNA 
+   20 00221 7402      HLT
+   21 00222 7240      CLA CMA
+   22 00223 7550      SPA SNA
+   23 00224 5226      JMP .+2
+   24 00225 7402      HLT
+   25 00226 7100      CLL
+   26 00227 7430      SZL
+   27 00230 7402      HLT
+   28 00231 7020      CML
+   29 00232 7420      SNL
+   30 00233 7402      HLT
+   31 00234 7300      CLA CLL
+   32 00235 1376      TAD (4001)
+   33 00236 7004      RAL
+   34 00237 7420      SNL         / link set so should skip
+   35 00240 7402      HLT
+   36 00241 7006      RTL     / value is 0012
+   37 00242 1375      TAD  (7766) / Make it zero
+   38 00243 7440      SZA
+   39 00244 7402      HLT
+   40 00245 7300      CLA CLL
+   41 00246 1376      TAD (4001)
+   42 00247 7010      RAR    / link set again
+   43 00250 7420      SNL
+   44 00251 7402      HLT
+   45 00252 7012      RTR    / value is 2400
+   46 00253 1374      TAD (5400) // Make it zero
+   47 00254 7440      SZA
+   48 00255 7402      HLT
+   49 00256 7300      CLA CLL
+   50 00257 1373      TAD (7700) // We need to test the and operation
+   51 00260 0372      AND (7070)
+   52 00261 1371      TAD (1000) // Make it zero
+   53 00262 7440      SZA
+   54 00263 7402      HLT
+   55 00264 7402      HLT    / should stop here
+      00371 1000
+      00372 7070
+
+      / Test various skips rotates and AND instruction                    Page 2
+
+
+      00373 7700
+      00374 5400
+      00375 7766
+      00376 4001
+      00377 7777
+
+      No detected errors

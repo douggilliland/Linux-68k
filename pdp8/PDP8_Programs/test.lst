@@ -1,0 +1,34 @@
+
+      *20                                                                 Page 1
+
+
+    1       0020  *20
+    2 00020 0000  foo, 0
+    3 00021 0000  bar, 0
+    4 00022 0000  bas, 0
+    5       0200  *200                            / Test program
+    6 00200 7200      cla
+    7 00201 1377      tad (0)
+    8 00202 4301      jms mask
+    9 00203 3020      dca foo
+   10 00204 7200      cla
+   11 00205 1376      tad (2)
+   12 00206 4301      jms mask
+   13 00207 3021      dca bar
+   14 00210 7402      hlt
+   15       0300  *300
+   16 00300 0000  mcnt,   0
+   17 00301 0000  mask,   0
+   18 00302 7140      cll cma            / complement without increment, clear the link
+   19 00303 3300      dca mcnt
+   20 00304 7201      cla iac        / load 1 into AC
+   21 00305 5307      jmp msk2
+   22 00306 7004  msk1,   ral        / rotate left
+   23             
+   24 00307 2300  msk2,   isz mcnt       / increment count, skip if zero
+   25 00310 5306      jmp msk1
+   26 00311 5701      jmp i mask
+      00376 0002
+      00377 0000
+
+      No detected errors

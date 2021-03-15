@@ -1,0 +1,115 @@
+
+      MUY=7405                                                            Page 1
+
+
+    1       7405  MUY=7405
+    2       7407  DVI=7407
+    3       0010  *10
+    4 00010 0000  auto,   0
+    5       0020  *20
+    6 00020 0010  a1, 10          / global variables
+    7 00021 0100  a2, 100
+    8 00022 1000  a3, 1000
+    9 00023 0000  a4, 0
+   10 00024 0000  cnt, 0
+   11 00025 0000  a5, 0
+   12 00026 0000  a6, 0
+   13 00027 0000  a7, 0
+   14 00030 0000  a8, 0
+   15             
+   16       0200  *200            / page 1
+   17 00200 7200      CLA
+   18 00201 1020      TAD     a1
+   19 00202 1021      TAD     a2  / a1+a2 in AC
+   20 00203 3022      DCA     a3  / a3 <= a1+a2
+   21 00204 1020      TAD     a1  / Now calculate a2-a1 and store in a4
+   22 00205 7041      CMA IAC     / -a1
+   23 00206 1021      TAD     a2
+   24 00207 3023      DCA     a4
+   25             / Clear 8 locations starting at lbl
+   26 00210 1377      TAD     (lbl-1)     / get value of lbl-1
+   27 00211 3010      DCA     auto
+   28 00212 1376      TAD     (-10)       / minus number of locations to fill
+   29 00213 3024      DCA     cnt
+   30 00214 3410  loop, DCA   I auto
+   31 00215 2024      ISZ     cnt
+   32 00216 5214      JMP     loop
+   33             / Store 1 left shifted by 3
+   34 00217 1177      TAD     [3]
+   35 00220 4775@     JMS     mask
+   36 00221 3025      DCA     a5
+   37             / Store 3 * 4 in a6
+   38 00222 1177      TAD     [3]
+   39 00223 4774@     JMS     mult
+   40 00224 3026      DCA     a6
+   41             / Divide 100001 by 10 decimal (overflows)
+   42 00225 1176      TAD     [3241]
+   43 00226 7421      MQL
+   44 00227 1175      TAD     [30]
+   45 00230 7407      DVI ; 12 
+      00231 0012
+   46 00232 7420      SNL     / link should be one
+   47 00233 7402      HLT
+   48             / Divide 100001 by 1000
+   49 00234 7200      CLA
+   50 00235 1176      TAD     [3241]
+   51 00236 7421      MQL
+   52 00237 1175      TAD     [30]
+   53 00240 7407      DVI ; 1750 
+      00241 1750
+   54 00242 7430      SZL     / link should be zero
+   55 00243 7402      HLT
+
+      MUY=7405                                                            Page 2
+
+
+   56 00244 3027      DCA     a7  / remainder is a 1
+   57 00245 7501      MQA
+   58 00246 3030      DCA     a8  / quotient is 100decimal, 144 octal
+   59             
+   60 00247 7402      HLT
+   61 00250 7402      HLT
+   62             
+      00374 0400
+      00375 0601
+      00376 7770
+      00377 0777
+   63       0400  *400
+   64 00400 0000  mult,   0               / Multiply subroutine AC by 4, product in AC
+   65 00401 7421      MQL                 / load into MQ
+   66 00402 7405      MUY ; 4             / multiply by 4
+      00403 0004
+   67 00404 7501      MQA                 / MQ -> AC
+   68 00405 5600      JMP I MULT
+   69                 
+   70       0600  *600
+   71 00600 0000  mcnt,   0
+   72 00601 0000  mask,   0
+   73 00602 7140      cll cma            / complement without increment, clear the link
+   74 00603 3200      dca mcnt
+   75 00604 7201      cla iac        / load 1 into AC
+   76 00605 5207      jmp msk2
+   77 00606 7004  msk1,   ral        / rotate left
+   78             
+   79 00607 2200  msk2,   isz mcnt       / increment count, skip if zero
+   80 00610 5206      jmp msk1
+   81 00611 5601      jmp i mask
+   82             
+   83             
+   84       0777  *777
+   85 00777 7777      7777;
+   86 01000 0001  lbl,    1;2;3;4;5;6;7;10;7777
+      01001 0002
+      01002 0003
+      01003 0004
+      01004 0005
+      01005 0006
+      01006 0007
+      01007 0010
+      01010 7777
+   87             
+      00175 0030
+      00176 3241
+      00177 0003
+
+      No detected errors
