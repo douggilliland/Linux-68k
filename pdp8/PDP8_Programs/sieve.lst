@@ -1,0 +1,211 @@
+
+      / Prime Number Program for EE432                                    Page 1
+
+
+    1             / Prime Number Program for EE432
+    2             / Author: Tom Almy
+    3             / To be used by the Cougar Team, Spring 2014
+    4             
+    5             / Constants:
+    6             decimal
+    7       0100  maxroot=64
+    8       1000  words=512
+    9             octal
+   10       7407  DVI=7407        / Code to generate divide instruction
+   11       7405  MUL=7405    / Code for multiply instruction
+   12             
+   13             
+   14       0010  *10
+   15 00010 0000  incval, 0       / For autoincrementing
+   16       0020  *20             / Our variables
+   17 00020 0000  checking, 0
+   18 00021 0000  multiple, 0
+   19 00022 0000  ii, 0
+   20 00023 0000  ptr, 0          / Calculated memory location and mask
+   21 00024 0000  memmask, 0
+   22       5000  *5000
+   23 05000 0000  sieve, 0        / Sieve is 512 words, so location 5000 to 5777
+   24             
+   25       0200  *200            / start of program
+   26 00200 7300  main,   CLA CLL
+   27 00201 6046          TLS     / Reset the TTY
+   28             
+   29             / Clear the array
+   30 00202 7200          CLA
+   31 00203 1377          TAD     (sieve-1)       / put address of array-1 in incval
+   32 00204 3010          DCA     incval
+   33 00205 1376          TAD     (-words)        / Put -size of array in i
+   34 00206 3022          DCA     ii
+   35 00207 3410  loop1,  DCA     I incval        / Store 0 in successive locations
+   36 00210 2022          ISZ     ii              / until end of array
+   37 00211 5207          JMP     loop1
+   38             
+   39             / Do the marking
+   40 00212 7305          CLA CLL IAC RAL         / 2
+   41 00213 3020          DCA     checking        / initialize checking variable
+   42 00214 7200  loop2,  CLA
+   43 00215 1020          TAD     checking        / get checking variable
+   44 00216 4775@         JMS     calcpm
+   45 00217 1423          TAD     I ptr           / get memory word
+   46 00220 0024          AND     memmask         / get the bit
+   47 00221 7440          SZA                     / skip if a prime
+   48 00222 5247          JMP     notprime
+   49 00223 7200          CLA                     / probably not needed
+   50 00224 1020          TAD     checking        / Initialize multiple
+   51 00225 3021          DCA     multiple
+   52 00226 7300  loop3,  CLA CLL
+   53 00227 1021          TAD     multiple
+   54 00230 1020          TAD     checking        / Go to multiple of prime
+   55 00231 7430          SZL                     / skip if not at end
+   56 00232 5247          JMP     notprime
+   57 00233 3021          DCA     multiple
+
+      / Prime Number Program for EE432                                    Page 2
+
+
+   58 00234 1021          TAD     multiple        / Find array location for multiple
+   59 00235 4775@         JMS     calcpm
+   60 00236 1024          TAD     memmask
+   61 00237 7040          CMA
+   62 00240 3024          DCA     memmask         / complement the mask
+   63 00241 1423          TAD     I ptr           / get value from memory
+   64 00242 7040          CMA                     / complement it
+   65 00243 0024          AND     memmask         / and and complement again to get OR
+   66 00244 7040          CMA
+   67 00245 3423          DCA     I ptr           / put it back
+   68 00246 5226          JMP     loop3           / go to next multiple
+   69             
+   70 00247 2020  notprime, ISZ   checking        / go to next value to check
+   71 00250 7300          CLA CLL
+   72 00251 1020          TAD     checking        / see if we have reached the end
+   73 00252 1374          TAD     (-MAXROOT)      / There will be a carry if we are done
+   74 00253 7420          SNL
+   75 00254 5214          JMP     loop2
+   76             
+   77             / Print out all the primes
+   78 00255 7305          CLA CLL IAC RAL         / 2
+   79 00256 3020          DCA     checking        / initialize checking variable
+   80 00257 1373      TAD (-12)
+   81 00260 3022      DCA ii          // values per line
+   82 00261 7200  loop4,  CLA
+   83 00262 1020          TAD     checking        / get value to check
+   84 00263 4775@         JMS     calcpm
+   85 00264 1423          TAD     I ptr           / get memory word
+   86 00265 0024          AND     memmask         / get the bit
+   87 00266 7440          SZA                     / skip if a prime
+   88 00267 5352          JMP     nextval
+   89 00270 7200          CLA
+   90 00271 1020          TAD     checking        / get the prime
+   91 00272 7421          MQL                     / into MQ
+   92             
+   93                     / Test value to avoid leading zeroes.
+   94 00273 7300          CLL CLA
+   95 00274 1020          TAD     checking
+   96 00275 1373          TAD     (-12)           / Compare to 10
+   97 00276 7420          SNL                     / skip if >= 10
+   98 00277 5331          JMP     LT10
+   99 00300 7300          CLL CLA
+  100 00301 1020          TAD     checking
+  101 00302 1372          TAD     (-144)          / Compare to 100
+  102 00303 7420          SNL
+  103 00304 5324          JMP     LT100
+  104 00305 7300          CLL CLA
+  105 00306 1020          TAD     checking
+  106 00307 1371          TAD     (-1750)         / Compare to 1000
+  107 00310 7420          SNL
+  108 00311 5317          JMP     LT1000
+  109             
+  110 00312 7607          CLA DVI ; 1750          / Divide by 1000
+      00313 1750
+  111 00314 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  112 00315 1370          TAD     ("0)
+  113 00316 4767@         JMS     putc
+
+      / Prime Number Program for EE432                                    Page 3
+
+
+  114 00317 7607  LT1000, CLA DVI ; 144           / Divide by 100
+      00320 0144
+  115 00321 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  116 00322 1370          TAD     ("0)
+  117 00323 4767@         JMS     putc
+  118 00324 7607  LT100,  CLA DVI ; 12            / Divide by 10
+      00325 0012
+  119 00326 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  120 00327 1370          TAD     ("0)
+  121 00330 4767@         JMS     putc
+  122 00331 7701  LT10,   CLA MQA                 / Get MQ
+  123 00332 1370          TAD     ("0)
+  124 00333 4767@         JMS     putc
+  125 00334 7200          CLA
+  126 00335 1366          TAD     (40)            / Space character
+  127 00336 4767@         JMS     putc
+  128 00337 2022      ISZ ii          / end of line?
+  129 00340 5352      JMP nextval     / branch if not
+  130 00341 7200      CLA
+  131 00342 1365      TAD (15)        / carriage return
+  132 00343 4767@     JMS putc
+  133 00344 7200      CLA
+  134 00345 1364      TAD (12)        / line feed
+  135 00346 4767@     JMS putc
+  136 00347 7200      CLA
+  137 00350 1373      TAD (-12)
+  138 00351 3022      DCA ii          // reset for another 8 values
+  139             
+  140 00352 2020  nextval, ISZ    checking        / go to the next value skip when finished
+  141 00353 5261          JMP     loop4
+  142 00354 7402          HLT
+  143             
+      00364 0012
+      00365 0015
+      00366 0040
+      00367 0424
+      00370 0260
+      00371 6030
+      00372 7634
+      00373 7766
+      00374 7700
+      00375 0400
+      00376 7000
+      00377 4777
+  144             PAGE
+  145             / SUBROUTINES
+  146 00400 0000  calcpm, 0       / Calculate ptr and memmask value
+  147 00401 3223          DCA     saveval
+  148 00402 1223          TAD     saveval
+  149 00403 7112          CLL RTR         / shift right 3 times
+  150 00404 7010          RAR
+  151 00405 0377          AND     (777)   / Mask to get displacement into array
+  152 00406 1376          TAD     (sieve) / Add starting address
+  153 00407 3023          DCA     ptr
+  154 00410 1223          TAD     saveval / get back starting value
+  155 00411 0375          AND     (7)     / Mask it to get index into word
+  156 00412 7140          CLL CMA         / complement without increment, clear link
+
+      / Prime Number Program for EE432                                    Page 4
+
+
+  157 00413 3223          DCA     saveval
+  158 00414 7201          CLA IAC         / load 1 into AC
+  159 00415 5217          JMP calcp2
+  160 00416 7004  calcp1, RAL             / rotate left
+  161 00417 2223  calcp2, ISZ     saveval / increment count and skip if zero
+  162 00420 5216          JMP     calcp1
+  163 00421 3024          DCA     memmask
+  164 00422 5600          JMP     I calcpm
+  165             
+  166 00423 0000  saveval, 0
+  167             
+  168 00424 0000  putc, 0         / Write character in AC to terminal
+  169 00425 0374      AND  (177)
+  170 00426 6041          TSF
+  171 00427 5226          JMP .-1
+  172 00430 6046          TLS
+  173 00431 5624          JMP I putc
+  174             
+      00574 0177
+      00575 0007
+      00576 5000
+      00577 0777
+
+      No detected errors
