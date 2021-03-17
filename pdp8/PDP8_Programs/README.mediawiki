@@ -4,4 +4,4 @@
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
-"[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
+* "[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
