@@ -6,5 +6,5 @@
 
 * MACRO8X Assembler breate .bin files
 * .bin files need to be converted to Altera Memory Initialization files (.MIF)
-* Use srec_cat toold in Windows to convert files
+* Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
 * "[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
