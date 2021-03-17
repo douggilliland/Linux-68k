@@ -4,4 +4,6 @@
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
+* MACRO8X Assembler breate .bin files
+* .bin files need to be converted to Altera Memory Initialization files (.MIF)
 * "[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
