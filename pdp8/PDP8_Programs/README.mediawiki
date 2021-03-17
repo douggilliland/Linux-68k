@@ -11,4 +11,4 @@
 
 == Runniong Programs ==
 
-* Programs start at 200
+* Programs start at 200 (octal)
