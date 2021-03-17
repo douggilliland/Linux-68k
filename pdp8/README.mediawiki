@@ -5,6 +5,6 @@
 ** Linux executable compiled with GCC
 ** Source code would not compile under Visual Studio
 
-== Example Code ==
+== PDP8_Programs - Example Code ==
 
 * From Tom Almy's PDP-8 book
