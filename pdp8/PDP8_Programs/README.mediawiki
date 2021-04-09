@@ -5,13 +5,26 @@
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 MACRO8X Assembler] creates .bin files
+** Run from Linux-68 Repo on VirtualBox
+** Command line
+
+<pre>
+../macro8x -x echo.pal
+
+</pre>
+
+* -x option Produces listing file with machine code (in octal)
+
 * .bin files need to be converted to Altera Memory Initialization files (.MIF)
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
 
 <pre>
-"[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
+"[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF 12
 
 </pre>
+
+* Didn't seem to produce the right code
+** .bin file did not match the listing file
 
 == Running Programs ==
 
