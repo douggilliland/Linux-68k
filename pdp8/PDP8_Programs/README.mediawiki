@@ -7,7 +7,11 @@
 * [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 MACRO8X Assembler] creates .bin files
 * .bin files need to be converted to Altera Memory Initialization files (.MIF)
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
-* "[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
+
+<pre>
+"[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -MIF
+
+</pre>
 
 == Running Programs ==
 
