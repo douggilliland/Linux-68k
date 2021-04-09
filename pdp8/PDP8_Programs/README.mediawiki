@@ -13,7 +13,7 @@
 
 </pre>
 
-* -x option Produces listing file with machine code (in octal)
+* -x [option produces listing file with machine code (in octal)]
 
 <pre>
       / Serial port test (echo)                                           Page 1
