@@ -87,7 +87,7 @@
     7 A      5  SAVED        22     23     25
 </pre>
 
-* .bin files need to be converted to Altera Memory Initialization files (.MIF)
+* .bin files need to be converted to Altera Memory Initialization files (.MIF) or Intel hex (.HEX) files
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
 
 <pre>
@@ -96,7 +96,8 @@
 </pre>
 
 * Didn't seem to produce the right code
-** .bin file did not match the listing file
+** .bin file did not match the listing file when viewed in HxD
+** Not 12 bit wide (was default 8 bits)
 
 <pre>
 -- http://srecord.sourceforge.net/
