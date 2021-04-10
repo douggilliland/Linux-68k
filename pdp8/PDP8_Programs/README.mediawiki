@@ -2,90 +2,78 @@
 
 * From Tom Almy's PDP-8 book [https://www.amazon.com/PDP-8-Class-Project-Resoling-Machine-ebook/dp/B07KY5RCJ7/ref=sr_1_1?dchild=1&keywords=tom+almy+pdp-8&qid=1615991822&sr=8-1 The PDP-8 Class Project: Resoling An Old Machine]
 
-== Convert Binary Output to Altera Memory Initialization File ==
+== Build PDP-8 Assembler ==
 
-* [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 MACRO8X Assembler] creates .bin files
-** Run from Linux-68 Repo on VirtualBox
-** Command line
+Notes from the Source code
+
+* This program has been built and successfully executed on:
+** Linux (80486 CPU) using gcc
+** RS/6000 (AIX 3.2.5)
+** Borland C++ version 3.1 (large memory model)
+** Borland C++ version 4.52 (large memory model) with no modifications to the source code.
+** On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
+* Command line to compile assembler
 
 <pre>
-../macro8x -x echo.pal
+gcc macro8x.c
+</pre>
+
+* macro8x.c source compiled on VirtualBox running Linux Mint without error
+
+== Compile test.pal ==
+
+<pre>
+../macro8x -x test.pal
 
 </pre>
 
 * -x [option produces listing file with machine code (in octal)]
+* test.lst file
 
 <pre>
-      / Serial port test (echo)                                           Page 1
+    1       0020  *20
+    2 00020 0000  foo, 0
+    3 00021 0000  bar, 0
+    4 00022 0000  bas, 0
+    5       0200  *200                            / Test program
+    6 00200 7200      cla
+    7 00201 1377      tad (0)
+    8 00202 4301      jms mask
+    9 00203 3020      dca foo
+   10 00204 7200      cla
+   11 00205 1376      tad (2)
+   12 00206 4301      jms mask
+   13 00207 3021      dca bar
+   14 00210 7402      hlt
+   15       0300  *300
+   16 00300 0000  mcnt,   0
+   17 00301 0000  mask,   0
+   18 00302 7140      cll cma            / complement without increment, clear the link
+   19 00303 3300      dca mcnt
+   20 00304 7201      cla iac        / load 1 into AC
+   21 00305 5307      jmp msk2
+   22 00306 7004  msk1,   ral        / rotate left
+   23             
+   24 00307 2300  msk2,   isz mcnt       / increment count, skip if zero
+   25 00310 5306      jmp msk1
+   26 00311 5701      jmp i mask
+      00376 0002
+      00377 0000
 
-
-    1             / Serial port test (echo)
-    2       0010  *10
-    3 00010 0000  linep, 0
-    4       0020  *20
-    5 00020 0000  saved, 0
-    6 00021 0000  count, 0
-    7       0400  *400        / Line stored here
-    8 00400 0000  line, 0
-    9       0200  *200
-   10 00200 7200      CLA / Initialize
-   11 00201 6046      TLS
-   12 00202 7200  newl, CLA
-   13 00203 1377      TAD (line-1)
-   14 00204 3010      DCA linep
-   15 00205 6031  newc, KSF
-   16 00206 5205      JMP .-1
-   17 00207 6036      KRB         / Get the character
-   18 00210 0376      AND (177)   / Get rid of parity bit
-   19 00211 6041      TSF
-   20 00212 5211      JMP .-1
-   21 00213 6046      TLS         / Echo it
-   22 00214 3020      DCA saved   / save a copy
-   23 00215 1020      TAD saved
-   24 00216 3410      DCA I linep / store it away
-   25 00217 1020      TAD saved
-   26 00220 1375      TAD (-15)   / CR character?
-   27 00221 7440      SZA         / finished line if so
-   28 00222 5205      JMP newc
-   29 00223 1374      TAD (12)    / Echo line feed as well
-   30 00224 6041      TSF
-   31 00225 5224      JMP .-1
-   32 00226 6046      TLS
-   33             / Now echo the line
-   34 00227 7200      CLA
-   35 00230 1373      TAD (-line)
-   36 00231 1010      TAD linep   / get number of characters
-   37 00232 7040      CMA         / minus the number
-   38 00233 3021      DCA count
-   39 00234 1377      TAD (line-1) / reset starting address
-   40 00235 3010      DCA linep
-   41 00236 7200  echoc, CLA
-   42 00237 1410      TAD I linep / get character
-   43 00240 6041      TSF
-   44 00241 5240      JMP .-1
-   45 00242 6046      TLS
-   46 00243 2021      ISZ count
-   47 00244 5236      JMP echoc
-   48 00245 7200      CLA
-   49 00246 1374      TAD (12)
-   50 00247 6041      TSF
-   51 00250 5247      JMP .-1
-   52 00251 6046      TLS
-   53 00252 5202      JMP newl
-      00373 7400
-      00374 0012
-      00375 7763
-      00376 0177
-                                                                 Cross Reference
-
-    1 A      6  COUNT        38     46
-    2 A     41  ECHOC        47
-    3 A      8  LINE         13     35     39
-    4 A      3  LINEP        14     24     36     40     42
-    5 A     15  NEWC         28
-    6 A     12  NEWL         53
-    7 A      5  SAVED        22     23     25
 </pre>
+
+=== Check assembler output ===
+
+* macro8x didn't produce the right code
+** .bin file did not match the listing file when viewed in HxD
+
+<img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/test_bin_in_HxD.PNG"></img>
+
+== Convert Binary Output to Altera Memory Initialization File ==
+
+* Run from Linux-68 Repo on VirtualBox running Linux Mint
+** Command line
+
 
 * .bin files need to be converted to Altera Memory Initialization files (.MIF) or Intel hex (.HEX) files
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
@@ -95,9 +83,7 @@
 
 </pre>
 
-* Didn't seem to produce the right code
-** .bin file did not match the listing file when viewed in HxD
-** Not 12 bit wide (was default 8 bits)
+* Not 12 bit wide (was default 8 bits)
 
 <pre>
 -- http://srecord.sourceforge.net/
