@@ -52,8 +52,7 @@ gcc macro8x.c
 * 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
 * Offset is at unexpected location
 * Bit order is backwards
-* Two most significant are not used
-* Two least significant are not used
+* Two most significant are not used in each byte
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
