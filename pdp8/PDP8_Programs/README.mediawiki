@@ -21,7 +21,7 @@ gcc macro8x.c
 
 === Check assembler output ===
 
-* macro8x didn't seem to produce the right code
+* macro8x didn't produce the right code
 ** .bin file did not match the listing file when viewed in HxD
 
 == Convert Binary Output to Altera Memory Initialization File ==
