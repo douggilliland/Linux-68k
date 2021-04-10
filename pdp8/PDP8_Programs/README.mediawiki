@@ -18,7 +18,7 @@ Notes from the Source code
 gcc macro8x.c
 </pre>
 
-* macro8x.c source compiled on VirtualBox running Linux Mint without error
+* [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c source] compiled on VirtualBox running Linux Mint without error
 
 == Compile iset.pal ==
 
