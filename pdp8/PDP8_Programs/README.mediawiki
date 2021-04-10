@@ -54,7 +54,7 @@ gcc macro8x.c
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
-* Run from Linux-68 Repo on VirtualBox running Linux Mint
+* Run from [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 Linux-68k] Repo on VirtualBox running Linux Mint
 ** Command line
 
 
