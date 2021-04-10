@@ -19,15 +19,7 @@ gcc macro8x.c
 
 * macro8x.c source compiled on VirtualBox running Linux Mint without error
 
-=== Check assembler output ===
-
-* macro8x didn't produce the right code
-** .bin file did not match the listing file when viewed in HxD
-
-== Convert Binary Output to Altera Memory Initialization File ==
-
-* Run from Linux-68 Repo on VirtualBox running Linux Mint
-** Command line
+== Compile test.pal ==
 
 <pre>
 ../macro8x -x test.pal
@@ -35,7 +27,7 @@ gcc macro8x.c
 </pre>
 
 * -x [option produces listing file with machine code (in octal)]
-* test.lst
+* test.lst file
 
 <pre>
     1       0020  *20
@@ -68,6 +60,17 @@ gcc macro8x.c
       00377 0000
 
 </pre>
+
+=== Check assembler output ===
+
+* macro8x didn't produce the right code
+** .bin file did not match the listing file when viewed in HxD
+
+== Convert Binary Output to Altera Memory Initialization File ==
+
+* Run from Linux-68 Repo on VirtualBox running Linux Mint
+** Command line
+
 
 * .bin files need to be converted to Altera Memory Initialization files (.MIF) or Intel hex (.HEX) files
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
