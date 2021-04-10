@@ -51,14 +51,13 @@ gcc macro8x.c
 
 * 7000 oct * 4 = 3800 which matches the bib file at offset
 * Offset is at unexpected location
-* Not sure if big or little ended output
+* Bit order is backwards
+* Two most significant are not used
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * Run from [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 Linux-68k] Repo on VirtualBox running Linux Mint
 ** Command line
-
-
 * .bin files need to be converted to Altera Memory Initialization files (.MIF) or Intel hex (.HEX) files
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
 
