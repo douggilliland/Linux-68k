@@ -17,6 +17,9 @@
 gcc macro8x.c
 </pre>
 
+* Didn't seem to produce the right code
+** .bin file did not match the listing file when viewed in HxD
+
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * Run from Linux-68 Repo on VirtualBox running Linux Mint
@@ -109,9 +112,7 @@ gcc macro8x.c
 
 </pre>
 
-* Didn't seem to produce the right code
-** .bin file did not match the listing file when viewed in HxD
-** Not 12 bit wide (was default 8 bits)
+* Not 12 bit wide (was default 8 bits)
 
 <pre>
 -- http://srecord.sourceforge.net/
