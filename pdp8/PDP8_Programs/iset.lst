@@ -6,6 +6,7 @@
     2 00200 7000          NOP
     3 00201 5200          JMP .-1
     4 00202 7200          CLA
-    5             
+    5 00203 6041    TSF
+    6             
 
       No detected errors

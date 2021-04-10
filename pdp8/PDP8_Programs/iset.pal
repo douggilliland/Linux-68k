@@ -2,4 +2,5 @@
 	NOP
 	JMP .-1
 	CLA
+  TSF
 
