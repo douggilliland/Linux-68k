@@ -43,6 +43,9 @@ gcc macro8x.c
       No detected errors
 </pre>
 
+* 0x30 0x21 maps to 60(oct) 41(oct)
+** 6041 (oct) = 0x0c21
+
 === Check assembler output ===
 
 * macro8x didn't produce the right code
