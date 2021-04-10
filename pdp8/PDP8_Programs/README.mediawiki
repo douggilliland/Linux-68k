@@ -29,7 +29,7 @@ gcc macro8x.c
 ** Command line
 
 <pre>
-../macro8x -x echo.pal
+../macro8x -x test.pal
 
 </pre>
 
