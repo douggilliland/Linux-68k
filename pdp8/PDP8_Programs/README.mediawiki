@@ -48,6 +48,10 @@ gcc macro8x.c
 
 <img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
 
+* 7000 oct * 4 = 3800 which matches the bib file at offset
+* Offset is at unexpected location
+* Not sure if big or little ended output
+
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * Run from Linux-68 Repo on VirtualBox running Linux Mint
