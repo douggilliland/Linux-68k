@@ -6,7 +6,12 @@
 
 * [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 MACRO8X Assembler] creates .bin files
 ** macro8x.c source was compiled on VirtualBox running Linux Mint
-** Run from Linux-68 Repo on VirtualBox running Linux Mint
+
+<pre>
+gcc macro8x.c
+</pre>
+
+* Run from Linux-68 Repo on VirtualBox running Linux Mint
 ** Command line
 
 <pre>
