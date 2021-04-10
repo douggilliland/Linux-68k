@@ -53,6 +53,7 @@ gcc macro8x.c
 * Offset is at unexpected location
 * Bit order is backwards
 * Two most significant are not used
+* Two least significant are not used
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
