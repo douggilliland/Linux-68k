@@ -32,3 +32,14 @@
       00377 0000
 
       No detected errors
+
+      *20                                                                 Page 2
+                                                                 Cross Reference
+
+    1 A      3  BAR          13
+    2 A      4  BAS     
+    3 A      2  FOO           9
+    4 A     17  MASK          8     12     26
+    5 A     16  MCNT         19     24
+    6 A     22  MSK1         25
+    7 A     24  MSK2         21
