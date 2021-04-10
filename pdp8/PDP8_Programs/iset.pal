@@ -1,4 +1,4 @@
 *200
-	nop
-	nop
+	NOP
+	JMP .-1
 
