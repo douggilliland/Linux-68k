@@ -4,13 +4,14 @@
 
 == Build PDP-8 Assembler ==
 
-* Notes from the Source code
-** This program has been built and successfully executed on:
-*** Linux (80486 CPU) using gcc
-*** RS/6000 (AIX 3.2.5)
-*** Borland C++ version 3.1 (large memory model)
-*** Borland C++ version 4.52 (large memory model) with no modifications to the source code.
-*** On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
+Notes from the Source code
+
+* This program has been built and successfully executed on:
+** Linux (80486 CPU) using gcc
+** RS/6000 (AIX 3.2.5)
+** Borland C++ version 3.1 (large memory model)
+** Borland C++ version 4.52 (large memory model) with no modifications to the source code.
+** On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
 * Command line to compile assembler
 
 <pre>
