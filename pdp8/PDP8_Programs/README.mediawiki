@@ -31,12 +31,13 @@ gcc macro8x.c
 * iset.lst file
 
 <pre>
-      *200                                                                Page 1
-
-
+      *200
+      
     1       0200  *200
-    2 00200 7000          nop
-    3             
+    2 00200 7000          NOP
+    3 00201 5200          JMP .-1
+    4 00202 7200          CLA
+    5             
 
       No detected errors
 </pre>
@@ -48,16 +49,16 @@ gcc macro8x.c
 
 <img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
 
-* 7000 oct * 4 = 3800 which matches the bib file at offset
+* 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
 * Offset is at unexpected location
-* Not sure if big or little ended output
+* Bit order is backwards
+* Two most significant are not used
+* Two least significant are not used
 
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * Run from [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 Linux-68k] Repo on VirtualBox running Linux Mint
 ** Command line
-
-
 * .bin files need to be converted to Altera Memory Initialization files (.MIF) or Intel hex (.HEX) files
 * Use [https://github.com/douggilliland/Retro-Computers/tree/master/PC%20Tools/srecord srec_cat tool] in Windows to convert files
 
