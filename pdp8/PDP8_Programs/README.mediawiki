@@ -16,7 +16,7 @@
 gcc macro8x.c
 </pre>
 
-* macro8x.c source was compiled on VirtualBox running Linux Mint without error
+* macro8x.c source compiled on VirtualBox running Linux Mint without error
 ** Command line to compile assembler
 
 === Check assembler output ===
