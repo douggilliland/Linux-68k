@@ -31,12 +31,13 @@ gcc macro8x.c
 * iset.lst file
 
 <pre>
-      *200                                                                Page 1
-
-
+      *200
+      
     1       0200  *200
-    2 00200 7000          nop
-    3             
+    2 00200 7000          NOP
+    3 00201 5200          JMP .-1
+    4 00202 7200          CLA
+    5             
 
       No detected errors
 </pre>
