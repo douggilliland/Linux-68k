@@ -129,4 +129,4 @@ END;
 
 == Running Programs ==
 
-* Programs start at 200 (octal)
+* Programs start at 200 (octal) = 0x80 (hex)
