@@ -11,12 +11,13 @@
 *** Borland C++ version 3.1 (large memory model)
 *** Borland C++ version 4.52 (large memory model) with no modifications to the source code.
 *** On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
-* macro8x.c source was compiled on VirtualBox running Linux Mint without error
-** Command line to compile assembler
 
 <pre>
 gcc macro8x.c
 </pre>
+
+* macro8x.c source was compiled on VirtualBox running Linux Mint without error
+** Command line to compile assembler
 
 === Check assembler output ===
 
