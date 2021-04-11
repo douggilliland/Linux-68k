@@ -4,7 +4,7 @@
 
 == Build PDP-8 Assembler ==
 
-Notes from the Source code
+Notes from [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c] Source code
 
 * This program has been built and successfully executed on:
 ** Linux (80486 CPU) using gcc
@@ -18,7 +18,7 @@ Notes from the Source code
 gcc macro8x.c
 </pre>
 
-* [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c source] compiled on VirtualBox running Linux Mint without error
+* macro8x.c source compiled on VirtualBox running Linux Mint without error
 
 == Compile iset.pal using macro8x ==
 
@@ -28,8 +28,7 @@ gcc macro8x.c
 </pre>
 
 * -x [option produces listing file with machine code (in octal)]
-* iset.lst file
-
+* iset.lst file contents
 <pre>
       *200                                                                Page 1
 
@@ -43,19 +42,18 @@ gcc macro8x.c
 
       No detected errors
 </pre>
-
 * 0x30 0x21 maps to 60(oct) 41(oct)
 ** 6041 (oct) = 0x0c21
 
 === Check assembler output ===
 
-* macro8x didn't produce the right code
+* macro8x output has issues
 ** .bin file did not match the listing file when viewed in HxD
-* 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
-* Not 12 bit wide (was default 8 bits)
-* Offset is at unexpected location
-* Bit order is backwards
-* Two most significant are not used in each byte
+** 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
+** Not 12 bit wide (was default 8 bits)
+** Offset is at unexpected location
+** Bit order is backwards
+** Two most significant are not used in each byte
 
 == Utility ==
 
