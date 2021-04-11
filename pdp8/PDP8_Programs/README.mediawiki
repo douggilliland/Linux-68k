@@ -62,7 +62,7 @@ gcc macro8x.c
 == Utility ==
 
 * Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility
-** Converts binary file to Altera Memory Initialization file
+** Converts binary file from macro8x to Altera Memory Initialization file
 ** Runs under Python 3
 * Run shuffleBits.py
 ** Runs under DOS Command Prompt window
