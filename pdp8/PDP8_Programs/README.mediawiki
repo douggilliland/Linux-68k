@@ -21,6 +21,7 @@ gcc macro8x.c
 * macro8x.c source compiled
 ** VirtualBox running Linux Mint
 ** Without error
+** macro8x.c would not compile under VisualStudio
 
 == Compile iset.pal using macro8x ==
 
