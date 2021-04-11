@@ -4,7 +4,7 @@
 
 == Build PDP-8 Assembler ==
 
-Notes from [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c] Source code
+Notes from [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c] source code
 
 * This program has been built and successfully executed on:
 ** Linux (80486 CPU) using gcc
