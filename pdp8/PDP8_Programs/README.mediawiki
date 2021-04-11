@@ -12,7 +12,7 @@ This program has been built and successfully executed on:
    Borland C++ version 3.1 (large memory model)
    Borland C++ version 4.52 (large memory model) with no modifications to the source code.
    On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
-<pre>
+</pre>
 * Command line to compile assembler
 <pre>
 gcc macro8x.c
