@@ -59,7 +59,7 @@ gcc macro8x.c
 ** Two most significant are not used in each byte
 ** Offset is at unexpected location
 
-== Utility ==
+== MIF Utility ==
 
 * Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility
 ** Converts binary file from macro8x to Altera Memory Initialization file
