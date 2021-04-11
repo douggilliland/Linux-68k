@@ -31,8 +31,9 @@ gcc macro8x.c
 * iset.lst file
 
 <pre>
-      *200
-      
+      *200                                                                Page 1
+
+
     1       0200  *200
     2 00200 7000          NOP
     3 00201 5200          JMP .-1
@@ -50,9 +51,6 @@ gcc macro8x.c
 
 * macro8x didn't produce the right code
 ** .bin file did not match the listing file when viewed in HxD
-
-<img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
-
 * 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
 * Not 12 bit wide (was default 8 bits)
 * Offset is at unexpected location
@@ -99,6 +97,8 @@ END;
 
 * Copy from command screen to .mif file
 * Load under Quartus II
+
+<img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
 
 == Running Programs ==
 
