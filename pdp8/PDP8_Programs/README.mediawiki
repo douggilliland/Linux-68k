@@ -24,14 +24,8 @@ gcc macro8x.c
 ** macro8x.c would not compile under VisualStudio
 
 == Compile iset.pal using macro8x ==
-
-<pre>
-../macro8x -x iset.pal
-
-</pre>
-
-* -x [option produces listing file with machine code (in octal)]
-* iset.lst file contents
+* Wrote short instruction set test code
+** iset.lst file contents
 <pre>
       *200                                                                Page 1
 
@@ -45,27 +39,33 @@ gcc macro8x.c
 
       No detected errors
 </pre>
-* 0x30 0x21 maps to 60(oct) 41(oct)
-** 6041 (oct) = 0x0c21
+* Compiled using:
+<pre>
+../macro8x -x iset.pal
 
-=== Check assembler output ===
+</pre>
 
-* macro8x output has issues
+* -x [option produces listing file with machine code (in octal)]
+
+=== Check/verify assembler output ===
+
+* macro8x output had issues
 ** .bin file did not match the listing file when viewed in HxD
 ** 7000 oct * 4 = 3800 which matches the bits file at offset 0xf2,0xf1
-** Not 12 bit wide (was default 8 bits)
-** Offset is at unexpected location
+** Not 12 bit wide (was default 2 bytes of 8 bits)
 ** Bit order is backwards?
 ** Two most significant are not used in each byte
+** Offset is at unexpected location
 
 == Utility ==
 
 * Run srec_cat to create C array output from binary file
 <pre>
-"[PATH_TO_SREC_FOLDER]\srec_cat.exe" class3a.bin -Binary -o class3a.mif -C-Array
+"[PATH_TO_SREC_FOLDER]\srec_cat.exe" iset.bin -Binary -o iset.c -C-Array
 
 </pre>
-* Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility to 
+* Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility
+** Runs under Python 3
 * Paste array to front of shuffleBits.py
 * Run shuffleBits.py - output goes to screen
 
@@ -97,7 +97,8 @@ END;
 </pre>
 
 * Copy from command screen to .mif file
-* Load under Quartus II
+* Load MIF file under Quartus II
+* Result
 
 <img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
 
