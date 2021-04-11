@@ -24,7 +24,12 @@ gcc macro8x.c
 
 == Compile iset.pal using macro8x ==
 * Wrote short instruction set test code
-** iset.lst file contents
+* Compiled using:
+<pre>
+../macro8x -x iset.pal
+
+</pre>
+* iset.lst file contents
 <pre>
       *200                                                                Page 1
 
@@ -37,11 +42,6 @@ gcc macro8x.c
     6             
 
       No detected errors
-</pre>
-* Compiled using:
-<pre>
-../macro8x -x iset.pal
-
 </pre>
 
 * -x [option produces listing file with machine code (in octal)]
