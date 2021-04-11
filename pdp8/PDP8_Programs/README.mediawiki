@@ -62,7 +62,7 @@ gcc macro8x.c
 == MIF Creation Utility ==
 
 * Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility
-** Converts binary file from macro8x to Altera Memory Initialization file
+** Converts binary file from macro8x output binary file to Altera Memory Initialization file
 ** Runs under Python 3
 ** Runs under DOS Command Prompt window
 * Run shuffleBits.py
