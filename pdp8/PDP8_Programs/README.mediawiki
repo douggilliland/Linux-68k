@@ -20,7 +20,7 @@ gcc macro8x.c
 
 * [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c source] compiled on VirtualBox running Linux Mint without error
 
-== Compile iset.pal Using macro8x ==
+== Compile iset.pal using macro8x ==
 
 <pre>
 ../macro8x -x iset.pal
