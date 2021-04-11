@@ -18,10 +18,9 @@ Notes from [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.
 gcc macro8x.c
 </pre>
 
-* macro8x.c source compiled
-** VirtualBox running Linux Mint
+* macro8x.c would not compile under VisualStudio
+* macro8x.c source compiled under VirtualBox running Linux Mint
 ** Without error
-** macro8x.c would not compile under VisualStudio
 
 == Compile iset.pal using macro8x ==
 * Wrote short instruction set test code
