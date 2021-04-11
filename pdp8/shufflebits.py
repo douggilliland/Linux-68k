@@ -38,13 +38,13 @@ print('DEPTH = '+ str(len(theList))  +';')
 print('WIDTH = 12;')
 print('ADDRESS_RADIX = DECIMAL;')
 print('DATA_RADIX = OCTAL;')
-print('CONTEXT BEGIN')
+print('CONTENT BEGIN')
 lineCount = 0
 addrCount = 0
 for cell in theList:
 	if lineCount == 0:
-		outVal = str(addrCount) + ': '
-		print outVal,
+		outVal = str(addrCount) + ':'
+		print(outVal,end='')
 	lineCount += 1
 	addrCount += 1	
 	newCell	= ''
@@ -56,12 +56,10 @@ for cell in theList:
 		newCell = '00' + cell
 	elif len(cell) == 1:
 		newCell = '000' + cell
-	print newCell,
+	print(' ' + newCell,end='')
 	if lineCount == 8:
 		lineCount = 0
-		print ';'
-	else:
-		print ' ',
-print ';\nEND;'
+		print(';')
+print(';\nEND;')
 
 
