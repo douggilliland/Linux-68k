@@ -70,7 +70,7 @@ python shufflebits.py iset.bin
 
 </pre>
 * Run shuffleBits.py
-** Runs under DOS C ommand Prompt window
+** Runs under DOS Command Prompt window
 ** Output goes to screen
 
 <pre>
