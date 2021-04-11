@@ -58,6 +58,15 @@ gcc macro8x.c
 * Bit order is backwards
 * Two most significant are not used in each byte
 
+== Utility ==
+
+* Run srec_cat to create C array output from binary file
+* Wrote [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/shufflebits.py shuffleBits.py] utility to 
+* Paste array to front of shuffleBits.py
+* Run shuffleBits.py - output goes to screen
+* Copy from command screen to .mif file
+* Load under Quartus II
+
 == Convert Binary Output to Altera Memory Initialization File ==
 
 * Run from [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 Linux-68k] Repo on VirtualBox running Linux Mint
