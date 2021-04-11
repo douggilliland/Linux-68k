@@ -26,7 +26,8 @@ gcc macro8x.c
 ** Without error
 
 == Compile iset.pal using macro8x ==
-* Wrote short instruction set test code
+
+* Wrote short instruction set test code (iset.pal)
 * Compiled using:
 <pre>
 ../macro8x -x iset.pal
