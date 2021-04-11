@@ -97,7 +97,7 @@ END;
 
 * Copy from command screen to .mif file
 * Load MIF file under Quartus II
-* Result
+* Result in Memory Content Editor
 
 <img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
 
