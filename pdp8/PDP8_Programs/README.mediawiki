@@ -105,7 +105,7 @@ END;
 * Copy from command screen to .mif file
 * Load MIF file under Quartus II
 
-<img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
+<img src="https://github.com/douggilliland/Linux-68k/blob/master/pdp8/Load_MIF_File_in_Quartus.PNG?raw=true"></img>
 
 * Result in Quartus Memory Content Editor
 
