@@ -70,7 +70,7 @@ gcc macro8x.c
 * Command line
 
 <pre>
-python shufflebits.py iset.bin > iset.mif
+python ../shufflebits.py iset.bin > iset.mif
 
 </pre>
 
