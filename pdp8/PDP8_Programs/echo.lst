@@ -12,13 +12,13 @@
     8 00400 0000  line, 0
     9       0200  *200
    10 00200 7200      CLA / Initialize
-   11 00201 6046      TLS
+   11 00201 6046      TLS / TLS Teleprinter Load and start
    12 00202 7200  newl, CLA
    13 00203 1377      TAD (line-1)
    14 00204 3010      DCA linep
    15 00205 6031  newc, KSF
    16 00206 5205      JMP .-1
-   17 00207 6036      KRB         / Get the character
+   17 00207 6036      KRB         / Keyboard Read and begin next read
    18 00210 0376      AND (177)   / Get rid of parity bit
    19 00211 6041      TSF
    20 00212 5211      JMP .-1
