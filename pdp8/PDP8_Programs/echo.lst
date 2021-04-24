@@ -66,3 +66,14 @@
       00377 0377
 
       No detected errors
+
+      / Serial port test (echo)                                           Page 3
+                                                                 Cross Reference
+
+    1 A      6  COUNT        38     46
+    2 A     41  ECHOC        47
+    3 A      8  LINE         13     35     39
+    4 A      3  LINEP        14     24     36     40     42
+    5 A     15  NEWC         28
+    6 A     12  NEWL         53
+    7 A      5  SAVED        22     23     25
