@@ -3,66 +3,67 @@
 
 
     1             / Serial port test (echo)
-    2       0010  *10
-    3 00010 0000  linep, 0
-    4       0020  *20
-    5 00020 0000  saved, 0
-    6 00021 0000  count, 0
-    7       0400  *400        / Line stored here
-    8 00400 0000  line, 0
-    9       0200  *200
-   10 00200 7200      CLA / Initialize
-   11 00201 6046      TLS / TLS Teleprinter Load and start
-   12 00202 7200  newl, CLA
-   13 00203 1377      TAD (line-1)
-   14 00204 3010      DCA linep
-   15 00205 6031  newc, KSF
-   16 00206 5205      JMP .-1
-   17 00207 6036      KRB         / Keyboard Read and begin next read
-   18 00210 0376      AND (177)   / Get rid of parity bit
-   19 00211 6041      TSF
-   20 00212 5211      JMP .-1
-   21 00213 6046      TLS         / Echo it
-   22 00214 3020      DCA saved   / save a copy
-   23 00215 1020      TAD saved
-   24 00216 3410      DCA I linep / store it away
-   25 00217 1020      TAD saved
-   26 00220 1375      TAD (-15)   / CR character?
-   27 00221 7440      SZA         / finished line if so
-   28 00222 5205      JMP newc
-   29 00223 1374      TAD (12)    / Echo line feed as well
-   30 00224 6041      TSF
-   31 00225 5224      JMP .-1
-   32 00226 6046      TLS
-   33             / Now echo the line
-   34 00227 7200      CLA
-   35 00230 1373      TAD (-line)
-   36 00231 1010      TAD linep   / get number of characters
-   37 00232 7040      CMA         / minus the number
-   38 00233 3021      DCA count
-   39 00234 1377      TAD (line-1) / reset starting address
-   40 00235 3010      DCA linep
-   41 00236 7200  echoc, CLA
-   42 00237 1410      TAD I linep / get character
-   43 00240 6041      TSF
-   44 00241 5240      JMP .-1
-   45 00242 6046      TLS
-   46 00243 2021      ISZ count
-   47 00244 5236      JMP echoc
-   48 00245 7200      CLA
-   49 00246 1374      TAD (12)
-   50 00247 6041      TSF
-   51 00250 5247      JMP .-1
-   52 00251 6046      TLS
-   53 00252 5202      JMP newl
+    2             / http://homepage.divms.uiowa.edu/~jones/pdp8/man/tty.html
+    3       0010  *10
+    4 00010 0000  linep, 0
+    5       0020  *20
+    6 00020 0000  saved, 0
+    7 00021 0000  count, 0
+    8       0400  *400             / Line stored here
+    9 00400 0000  line, 0
+   10       0200  *200
+   11 00200 7200      CLA          / Clear Accumulator
+   12 00201 6046      TLS          / Teleprinter Load and start
+   13 00202 7200  newl, CLA        / Clear Accumulator
+   14 00203 1377      TAD (line-1)
+   15 00204 3010      DCA linep
+   16 00205 6031  newc, KSF
+   17 00206 5205      JMP .-1
+   18 00207 6036      KRB          / Keyboard Read and begin next read
+   19 00210 0376      AND (177)    / Get rid of parity bit
+   20 00211 6041      TSF          / Teleprinter Skip if Flag
+   21 00212 5211      JMP .-1
+   22 00213 6046      TLS          / Teleprinter Load and start (Echo it)
+   23 00214 3020      DCA saved    / save a copy
+   24 00215 1020      TAD saved
+   25 00216 3410      DCA I linep  / store it away
+   26 00217 1020      TAD saved
+   27 00220 1375      TAD (-15)    / CR character?
+   28 00221 7440      SZA          / finished line if so - Skip next instruction if Zero Accumulator
+   29 00222 5205      JMP newc
+   30 00223 1374      TAD (12)     / Echo line feed as well
+   31 00224 6041      TSF          / Teleprinter Skip if Flag
+   32 00225 5224      JMP .-1
+   33 00226 6046      TLS          / Teleprinter Load and start (Echo it)
+   34             / Now echo the line
+   35 00227 7200      CLA          / Clear Accumulator
+   36 00230 1373      TAD (-line)
+   37 00231 1010      TAD linep    / get number of characters
+   38 00232 7040      CMA          / minus the number
+   39 00233 3021      DCA count
+   40 00234 1377      TAD (line-1) / reset starting address
+   41 00235 3010      DCA linep
+   42 00236 7200  echoc, CLA       / Clear Accumulator
+   43 00237 1410      TAD I linep  / get character
+   44 00240 6041      TSF          / Teleprinter Skip if Flag
+   45 00241 5240      JMP .-1
+   46 00242 6046      TLS          / Teleprinter Load and start
+   47 00243 2021      ISZ count    / Increment and store
+   48 00244 5236      JMP echoc
+   49 00245 7200      CLA          / Clear Accumulator
+   50 00246 1374      TAD (12)
+   51 00247 6041      TSF          / Teleprinter Skip if Flag
+   52 00250 5247      JMP .-1
+   53 00251 6046      TLS          / Teleprinter Load and start
+   54 00252 5202      JMP newl
       00373 7400
       00374 0012
       00375 7763
-      00376 0177
 
       / Serial port test (echo)                                           Page 2
 
 
+      00376 0177
       00377 0377
 
       No detected errors
@@ -70,10 +71,10 @@
       / Serial port test (echo)                                           Page 3
                                                                  Cross Reference
 
-    1 A      6  COUNT        38     46
-    2 A     41  ECHOC        47
-    3 A      8  LINE         13     35     39
-    4 A      3  LINEP        14     24     36     40     42
-    5 A     15  NEWC         28
-    6 A     12  NEWL         53
-    7 A      5  SAVED        22     23     25
+    1 A      7  COUNT        39     47
+    2 A     42  ECHOC        48
+    3 A      9  LINE         14     36     40
+    4 A      4  LINEP        15     25     37     41     43
+    5 A     16  NEWC         29
+    6 A     13  NEWL         54
+    7 A      6  SAVED        23     24     26
