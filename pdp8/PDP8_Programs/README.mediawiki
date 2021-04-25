@@ -106,11 +106,11 @@ END;
 * Copy from command screen to .mif file
 * Load MIF file under Quartus II
 
-<img src="https://github.com/douggilliland/Linux-68k/blob/master/pdp8/Load_MIF_File_in_Quartus.PNG?raw=true"></img>
+<img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/PDP-8/PDP8_Book(Almy)/docs/Load_MIF_File_in_Quartus.PNG"></img>
 
 * Result in Quartus Memory Content Editor
 
-<img src="https://raw.githubusercontent.com/douggilliland/Linux-68k/master/pdp8/iset_bin_in_HxD.PNG"></img>
+<img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/PDP-8/PDP8_Book(Almy)/docs/iset_bin_in_MemContentsEditor.PNG"></img>
 
 == Running Programs ==
 
