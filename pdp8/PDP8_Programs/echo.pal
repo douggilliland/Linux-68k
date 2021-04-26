@@ -13,7 +13,7 @@ line, 0
 newl, CLA        / Clear Accumulator
     TAD (line-1)
     DCA linep
-newc, KSF
+newc, KSF		/ Keyboard Skip if Flag
     JMP .-1
     KRB          / Keyboard Read and begin next read
     AND (177)    / Get rid of parity bit
