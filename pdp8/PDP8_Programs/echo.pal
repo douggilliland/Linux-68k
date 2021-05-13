@@ -5,15 +5,15 @@ linep, 0
 *20
 saved, 0
 count, 0
-*400             / Line stored here
+*400             / Line stored here at address 400 oct
 line, 0
 *200
     CLA          / Clear Accumulator
     TLS          / Teleprinter Load and start
 newl, CLA        / Clear Accumulator
-    TAD (line-1)
+    TAD (line-1) / Load Acumulator
     DCA linep
-newc, KSF		/ Keyboard Skip if Flag
+newc, KSF		/ Keyboard Skip if Flag (input data is ready)
     JMP .-1
     KRB          / Keyboard Read and begin next read
     AND (177)    / Get rid of parity bit

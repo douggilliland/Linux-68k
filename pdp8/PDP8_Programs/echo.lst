@@ -17,8 +17,8 @@
    13 00202 7200  newl, CLA        / Clear Accumulator
    14 00203 1377      TAD (line-1)
    15 00204 3010      DCA linep
-   16 00205 6031  newc, KSF
-   17 00206 5205      JMP .-1
+   16 00205 6031  newc, KSF		   / Keyboard Skip if Flag (input data is ready)
+   17 00206 5205      JMP .-1	   / 
    18 00207 6036      KRB          / Keyboard Read and begin next read
    19 00210 0376      AND (177)    / Get rid of parity bit
    20 00211 6041      TSF          / Teleprinter Skip if Flag
