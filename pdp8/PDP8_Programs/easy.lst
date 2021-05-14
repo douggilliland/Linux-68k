@@ -1,0 +1,17 @@
+
+      *10                                                                 Page 1
+
+
+    1       0010  *10
+    2 00010 0000  linep, 0
+    3       0200  *200
+    4 00200 2010          ISZ     linep
+    5 00201 5200          JMP     .-1
+    6 00202 5200          JMP     .-2
+    7                     
+      No detected errors
+
+      *10                                                                 Page 2
+                                                                 Cross Reference
+
+    1 A      2  LINEP         4
