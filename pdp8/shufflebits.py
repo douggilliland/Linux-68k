@@ -1,11 +1,13 @@
 # shuffleBits - Convert PDP-8 binary file to MIF file
 #	Read in the binary file creates by macro8x assembler
 #	Write out the Altera formatted Memory Initialization (.MIF) file to the command prompt window
+# Run from windows with python ../shufflebits.py iset.bin > iset.mif
+# Run from Linux with python3 ../shufflebits.py iset.bin > iset.mif
 
 import sys
 
-print('argv',sys.argv)
-print('count',len(sys.argv))
+# print('argv',sys.argv)
+# print('count',len(sys.argv))
 inFileName = sys.argv[1]
 
 binList = []
