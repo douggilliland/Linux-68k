@@ -1,0 +1,7 @@
+*10
+linep, 0
+*200
+	ISZ	linep
+	JMP	.-1
+	JMP	.-2
+	
