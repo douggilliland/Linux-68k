@@ -1,0 +1,114 @@
+-- Copyright (C) 2020  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
+-- and other software and tools, and any partner logic 
+-- functions, and any output files from any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel FPGA IP License Agreement, or other applicable license
+-- agreement, including, without limitation, that your use is for
+-- the sole purpose of programming logic devices manufactured by
+-- Intel and sold by Intel or its authorized distributors.  Please
+-- refer to the applicable agreement for further details, at
+-- https://fpgasoftware.intel.com/eula.
+
+-- Quartus Prime generated Memory Initialization File (.mif)
+
+WIDTH=12;
+DEPTH=4096;
+
+ADDRESS_RADIX=HEX;
+DATA_RADIX=BIN;
+
+CONTENT BEGIN
+	0000  :   000000000000;
+	[0001..0002]  :   000000111011;
+	0003  :   000001101100;
+	0004  :   000001101001;
+	0005  :   000001110101;
+	[0006..0007]  :   000000110110;
+	0008  :   000001010111;
+	[0009..000F]  :   000000000000;
+	0010  :   000001100101;
+	[0011..0036]  :   000000000000;
+	[0037..0039]  :   000000110111;
+	[003A..003C]  :   000000111000;
+	[003D..003F]  :   000001101000;
+	[0040..0042]  :   000001100111;
+	[0043..0045]  :   000001100010;
+	0046  :   000001101101;
+	0047  :   000000100000;
+	0048  :   000001110100;
+	0049  :   000001100101;
+	004A  :   000001110011;
+	004B  :   000001110100;
+	004C  :   000001101001;
+	004D  :   000001101110;
+	004E  :   000001100111;
+	[004F..0050]  :   000000100000;
+	0051  :   000001110100;
+	0052  :   000001100101;
+	0053  :   000001110011;
+	0054  :   000001110100;
+	0055  :   000000100000;
+	0056  :   000001101101;
+	0057  :   000001100101;
+	[0058..007F]  :   000000000000;
+	0080  :   111010000000;
+	0081  :   110000100110;
+	0082  :   111010000000;
+	0083  :   001011111111;
+	0084  :   011000001000;
+	0085  :   110000011001;
+	0086  :   101010000101;
+	0087  :   110000011110;
+	0088  :   000011111110;
+	0089  :   110000100001;
+	008A  :   101010001001;
+	008B  :   110000100110;
+	008C  :   011000010000;
+	008D  :   001000010000;
+	008E  :   011100001000;
+	008F  :   001000010000;
+	0090  :   001011111101;
+	0091  :   111100100000;
+	0092  :   101010000101;
+	0093  :   001011111100;
+	0094  :   110000100001;
+	0095  :   101010010100;
+	0096  :   110000100110;
+	0097  :   111010000000;
+	0098  :   001011111011;
+	0099  :   001000001000;
+	009A  :   111000100000;
+	009B  :   011000010001;
+	009C  :   001011111111;
+	009D  :   011000001000;
+	009E  :   111010000000;
+	009F  :   001100001000;
+	00A0  :   110000100001;
+	00A1  :   101010100000;
+	00A2  :   110000100110;
+	00A3  :   010000010001;
+	00A4  :   101010011110;
+	00A5  :   111010000000;
+	00A6  :   001011111100;
+	00A7  :   110000100001;
+	00A8  :   101010100111;
+	00A9  :   110000100110;
+	00AA  :   101010000010;
+	00AB  :   000011111011;
+	00AC  :   111100000000;
+	00AD  :   000000001010;
+	00AE  :   111111110011;
+	00AF  :   000001111111;
+	00B0  :   000011111111;
+	[00B1..00FA]  :   000000000000;
+	00FB  :   111100000000;
+	00FC  :   000000001010;
+	00FD  :   111111110011;
+	00FE  :   000001111111;
+	00FF  :   000011111111;
+	[0100..0FFF]  :   000000000000;
+END;
