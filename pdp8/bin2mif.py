@@ -61,7 +61,9 @@ while pairOffset < len(binList):
 		addressOffset = getAddrVal(binList[pairOffset],binList[pairOffset+1])
 		pairOffset += 2
 	else:
-		outArray[addressOffset] = getDataVal(binList[pairOffset],binList[pairOffset+1])
+		outVal = getDataVal(binList[pairOffset],binList[pairOffset+1])
+		outArray[addressOffset] = outVal
+		print('wrote',outVal,'to address',addressOffset)
 		addressOffset += 1
 		pairOffset += 2
 
