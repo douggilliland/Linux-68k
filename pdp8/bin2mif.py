@@ -14,8 +14,8 @@ def readBinaryFile(inFileName):
 	"""
 	inBinList = []
 	with open(inFileName, "rb") as f:
-		inBinList = f.read()
-	# print(binList)
+		inBinList = list(f.read())
+	print('input file len', len(inBinList))
 	return inBinList
 
 def fillOutArray():
