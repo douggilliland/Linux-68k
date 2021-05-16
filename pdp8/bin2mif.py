@@ -3,8 +3,9 @@
 # DEC bin file format
 #	http://www.bitsavers.org/www.computer.museum.uq.edu.au/pdf/DEC-08-LBAA-D%20Binary%20Loader.pdf
 # Write out the Altera formatted Memory Initialization (.MIF) file to the command prompt window
-# Run from windows with python ../bin2mif.py iset.bin > iset.mif
-# Run from Linux with python3 ../bin2mif.py iset.bin > iset.mif
+# Redirect with > 
+# Run from windows with python ../bin2mif.py easy.bin > easy.mif
+# Run from Linux with python3 ../bin2mif.py easy.bin > easy.mif
 
 import sys
 
