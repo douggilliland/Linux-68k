@@ -16,6 +16,7 @@ Please consider purchasing Tom's book. It's inexpensive ($7) and helpful.
 * bin2mif.py
 ** Convert DEC BIN (binary) file to Altera Memory Initialization file (MIF)
 <pre>python ..\bin2mif_2.py skippy.bin > skippy.mif</pre>
+* [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/bin2mif.py bin2mif.py]
 
 == PDP8_Programs - Example Code ==
 
