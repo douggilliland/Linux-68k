@@ -1,6 +1,6 @@
 == PDP-8 Software ==
 
-* MACR08X - PDP-8 Macro Assembler
+* MACRO8X - PDP-8 Macro Assembler
 ** [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c Source code] and Linux executable
 ** Linux executable compiled with GCC
 ** Source code would not compile under Visual Studio
