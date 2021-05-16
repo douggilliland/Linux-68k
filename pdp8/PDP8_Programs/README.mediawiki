@@ -6,7 +6,7 @@
 
 == Build PDP-8 Assembler Tool ==
 
-* Assembler [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c] generates binary files from PDP-8 Assembly Language files
+* Assembler [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c macro8x.c] generates DEC BIN (binary) files from PDP-8 Assembly Language files
 * Notes from macro8x.c source code
 <pre>
 This program has been built and successfully executed on:
