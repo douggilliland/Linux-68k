@@ -63,7 +63,7 @@ while pairOffset < len(binList):
 	else:
 		outVal = getDataVal(binList[pairOffset],binList[pairOffset+1])
 		outArray[addressOffset] = outVal
-		print('wrote',outVal,'to address',addressOffset)
+		# print('wrote',outVal,'to address',addressOffset)
 		addressOffset += 1
 		pairOffset += 2
 
