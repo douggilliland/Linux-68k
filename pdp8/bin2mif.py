@@ -12,9 +12,9 @@ import sys
 def readBinaryFile(inFileName):
 	""" 
 	"""
-	inBinList = []
+	# inBinList = []
 	with open(inFileName, "rb") as f:
-		inBinList = list(f.read())
+		inBinList = f.read()
 	print('input file len', len(inBinList))
 	return inBinList
 
