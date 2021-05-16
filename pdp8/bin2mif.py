@@ -53,6 +53,7 @@ outArray = fillOutArray()
 
 # Ignore header
 pairOffset = 0
+addressOffset = 0
 while pairOffset < len(binList):
 	if binList[pairOffset] & 0x80:
 		pairOffset += 1
