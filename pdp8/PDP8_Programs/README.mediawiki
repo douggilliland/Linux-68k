@@ -16,7 +16,7 @@ This program has been built and successfully executed on:
    Borland C++ version 4.52 (large memory model) with no modifications to the source code.
    On UNIX type systems, store the the program as the pal command and on PC type systems, store it as pal.exe
 </pre>
-* Command line to compile assembler
+* Linux Command line to compile assembler
 <pre>
 gcc macro8x.c
 </pre>
@@ -26,8 +26,9 @@ gcc macro8x.c
 
 == Compile easy.pal using macro8x ==
 
-* Wrote short instruction set test code (easy.pal)
-* Compiled using:
+* Wrote short test code (easy.pal)
+** Increments memory address which can be viewed from the In System Memory Contents Editor in Quartus II
+* Compile easy.pal code using:
 <pre>
 ../macro8x -x easy.pal
 
