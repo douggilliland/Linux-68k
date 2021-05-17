@@ -57,6 +57,10 @@ if inFileName.upper()[-4:] != '.BIN':
 outFileName = inFileName[:-4] + '.mif'
 print('Output file:',outFileName)
 binList = readBinaryFile(inFileName)
+if binList[0] != 0x80:
+	assert False,'Expected 0x80 leader at the start of the file'
+if binList[-1] != 0x80:
+	assert False,'Expected 0x80 leader at the end of the file'
 outArray = fillOutArray()
 
 # Ignore header
