@@ -1,0 +1,40 @@
+
+      *10                   / Set current assembly origin to address      Page 1
+
+
+    1       0010  *10                   / Set current assembly origin to address 10,
+    2 00010 0207  STPTR,    STRNG-1     / An auto-increment register (one of eight at 10-17)
+    3             
+    4       0200  *200                  / Set current assembly origin to program text area
+    5 00200 7300  HELLO,  CLA CLL       / Clear AC and Link again (needed when we loop back from tls)
+    6 00201 1410                  TAD I Z STPTR / Get next character, indirect via PRE-auto-increment address
+    7 00202 7450                  SNA           / Skip if non-zero (not end of string)
+    8 00203 7402                  HLT           / Else halt on zero (end of string)
+    9 00204 6046                  TLS           / Output the character in the AC to the teleprinter
+   10 00205 6041                  TSF           / Skip if teleprinter ready for character
+   11 00206 5205                  JMP .-1       / Else jump back and try again
+   12 00207 5200                  JMP HELLO     / Jump back for the next character
+   13             
+   14 00210 0310  STRNG,  310           / H
+   15 00211 0345                  345           / e
+   16 00212 0354                  354           / l
+   17 00213 0354                  354           / l
+   18 00214 0357                  357           / o
+   19 00215 0254                  254           /,
+   20 00216 0240                  240           / (space)
+   21 00217 0367                  367           / w
+   22 00220 0357                  357           / o
+   23 00221 0362                  362           / r
+   24 00222 0354                  354           / l
+   25 00223 0344                  344           / d
+   26 00224 0241                  241           / !
+   27 00225 0000                  0             / End of string
+
+      No detected errors
+
+      *10                   / Set current assembly origin to address      Page 2
+                                                                 Cross Reference
+
+    1 A      5  HELLO        12
+    2 A      2  STPTR         6
+    3 A     14  STRNG         2      2
