@@ -23,6 +23,6 @@ STRNG,  110           / H
 		162           / r
 		154           / l
 		144           / d
-		241           / !
+		041           / !
 		0             / End of string
 $HELLO                /DEFAULT TERMINATOR
