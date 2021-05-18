@@ -1,0 +1,56 @@
+
+This software is copyrighted as per the individual source modules.
+Where no copyright is given, the following applies:
+
+	(C) Copyright 2002 by 1230599 Ontario Inc., dba PARSE Softare Devices
+	All rights reserved.  Use subject to terms in LICENSE file.
+
+This software may be used for non-commercial applications without restriction.
+Redistribution must occur without charge, and the distribution must be intact
+and include all copyright notices and LICENSE files.  A charge may be made
+for distribution to cover media and shipping only.
+
+This license is incompatible with the GNU-GPL and therefore GPL source cannot be
+combined with this source.  Other licenses may or may not be compatible; you
+assume full responsibility for license compliance.
+
+To use this software in a commercial product, please contact:
+
+	licensing@parse.com
+
+Licensing fees are generally a direct function of the amount of work that went
+into a particular product; the advantage to you is that you get the product 
+immediately, for approximately the same cost as it would cost you to hire someone
+to develop it, and you have the ability to evaluate it under the terms of the
+non-commercial use (above).
+
+There is no warranty with this software, expressed or implied.  Neither the
+author, 1230599 Ontario Inc., nor anyone connected in any way with the development
+or distribution of this software may be held liable for any losses, not limited
+to consequential or direct, however caused.
+
+For any further information, please contact us at:
+
+	1230599 Ontario Inc
+	dba PARSE Software Devices
+	278 Equestrian Drive
+	Kanata, ON K2M 1C5
+	CANADA
+	+1 613 599 8316 (voice)
+	+1 877 727 7379 (toll free North America)
+	+1 613 599 8317 (fax)
+
+In case this address or contact information changes, you can always get the latest
+contact information from the following URL:
+
+	http://www.parse.com
+
+PARSE Software Devices is an established research and development organization,
+specializing in realtime and embedded systems architecture and software
+development.  We are also the publishers of the "Getting Started with QNX(R) 4"
+and "Getting Started with QNX(R) Neutrino(R) 2" (Momentics(R)) books.  As well,
+we have a video training course available to help you get started with QNX(R)
+Neutrino(R) (Momentics(R)).  Please see our website for more information.
+
+All trademarks and registered trademarks mentioned belong to their respective
+owners.
