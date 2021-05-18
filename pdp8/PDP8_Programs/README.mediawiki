@@ -108,3 +108,5 @@ python ../bin2mif.py easy.bin > easy.mif
 == Running Programs ==
 
 * Programs start at 200 (octal) = 0x80 (hex)
+* Serial port is 9600,n,8,1
+
