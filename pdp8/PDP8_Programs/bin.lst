@@ -144,3 +144,35 @@
   130       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
   131 07777 5307          JMP     BBEGIN          /START BINARY LOADER
       No detected errors
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 4
+                                                                 Cross Reference
+
+    1 A    112  BASEMB       71     95    116
+    2 A     84  BAUTO   
+    3 A     79  BBEGIN      131
+    4 A    120  BCHAR        41     48     61     62     89
+    5 A    102  BCHEX   
+    6 A    122  BCHKSM       73     86    104
+    7 A     32  BEGG         45     47     84     93
+    8 A     33  BEGG1        39     52
+    9 A     86  BEGO        105
+   10 A     71  BEND         94
+   11 A     65  BFMASK       49
+   12 A     41  BGOOD        36
+   13 A     73  BIPZP1  
+   14 A     96  BLODIT       88
+   15 A    121  BMTEM        51     83     87
+   16 A     49  BN300        42
+   17 A     80  BN7600       43
+   18 A     66  BNCDF        50     82
+   19 A     74  BNHLT        34
+   20 A     36  BNLINE  
+   21 A     57  BNREAD       33     63     91
+   22 A    123  BWORD1       90    102    113
+   23 A    124  BWORD2       92    103    115
+   24 A     18  KCCIOT       79     79
+   25 A     17  KRBIOT       60     60
+   26 A     19  KRSIOT  
+   27 A     16  KSFIOT       58     58
+   28 A    128  RORG         98     99    101

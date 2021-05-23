@@ -42,3 +42,17 @@
    38 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
 
       No detected errors
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 2
+                                                                 Cross Reference
+
+    1 A     22  BEG          37
+    2 A     16  HSR          19     37
+    3 A     36  HSRC         19
+    4 A     19  HSRF         29
+    5 A     14  KCCIOT       22     22
+    6 A     13  KRBIOT       25     25
+    7 A     15  KRSIOT       33     33
+    8 A     12  KSFIOT       23     23     31     31
+    9 A     38  TEMP         35     36
+   10 A     23  TTYC         19     24     29
