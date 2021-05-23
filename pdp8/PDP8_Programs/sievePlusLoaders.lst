@@ -211,231 +211,238 @@
   180             /       I/O INSTRUCTIONS USED.  COMMENT OUT ALL BUT ONE VERSION
   181             
   182             /       TTY INPUT
-  183             /KSFIOT= KSF
-  184             /KRBIOT= KRB
-  185             /KCCIOT= KCC
-  186             /KRSIOT= KRS
+  183       6031  KSFIOT= KSF
+  184       6036  KRBIOT= KRB
+  185       6032  KCCIOT= KCC
+  186       6034  KRSIOT= KRS
   187             
   188             /       HIGH SPEED READER INPUT
-  189       6011  KSFIOT= RSF
-  190       6016  KRBIOT= RFC RRB
-  191       6014  KCCIOT= RFC
-  192       6012  KRSIOT= RRB
+  189             /KSFIOT= RSF
+  190             /KRBIOT= RFC RRB
+  191             /KCCIOT= RFC
+  192             /KRSIOT= RRB
   193             
+  194             //////////////////////////////////////////////////////////////////////
+  195             / BIN loader starts here
+  196             //////////////////////////////////////////////////////////////////////
+  197             
       00574 0177
       00575 0007
       00576 5000
       00577 0777
-  194       7647  * 7647  /HISTORICAL STARTING LOCATION MAY BE AS LOW AS 7625
-  195                     /RANGE 07600-07642 AVAILABLE FOR DISK BOOT ROUTINE
-  196             
-  197             /       /       /       /       /       /       /       /
-  198             /       ROUTINE TO GET AND DECODE FRAME OF TAPE
-  199             /       SKIPS NEXT INSTRUCTION IF DATA OR ORIGIN WORD
-  200             /       RETURN DIRECTLY IF LEADER
-  201             /       PROCESS ORIGIN SETTING AND GET NEXT FRAME
-  202             /       ON RETURN, AC=0 ALWAYS
-  203             /       WHAT A KLUGE!
-  204             
-  205 07647 0000  BEGG,   .-.                     /HISTORICAL NAME
-  206 07650 4272  BEGG1,  JMS     BNREAD          /GET A FRAME
-  207 07651 1306          TAD     BNHLT /(7402)   /TEST FOR ERROR (HIGH BITS)
-  208 07652 7750          SPA SNA CLA             /SKIP IF (FRAME+7402) > 0
-  209 07653 5256  BNLINE, JMP     BGOOD           /JUMP IF NO
+  198       7647  * 7647  /HISTORICAL STARTING LOCATION MAY BE AS LOW AS 7625
+  199                     /RANGE 07600-07642 AVAILABLE FOR DISK BOOT ROUTINE
+  200             
+  201             /       /       /       /       /       /       /       /
+  202             /       ROUTINE TO GET AND DECODE FRAME OF TAPE
+  203             /       SKIPS NEXT INSTRUCTION IF DATA OR ORIGIN WORD
+  204             /       RETURN DIRECTLY IF LEADER
+  205             /       PROCESS ORIGIN SETTING AND GET NEXT FRAME
+  206             /       ON RETURN, AC=0 ALWAYS
+  207             /       WHAT A KLUGE!
+  208             
+  209 07647 0000  BEGG,   .-.                     /HISTORICAL NAME
 
       / Prime Number Program for EE432                                    Page 5
 
 
-  210             /                               /
-  211 07654 7402          HLT                     /HERE IF ERROR
-  212 07655 5250          JMP     BEGG1           /GET MORE CHARACTERS
-  213             
-  214 07656 1351  BGOOD,  TAD     BCHAR           /\
-  215 07657 0266          AND     BN300  /(300)   / \
-  216 07660 1310          TAD     BN7600 /(-200)  /  >BUMP RETURN IF DATA
-  217 07661 7510          SPA                     / /             OR ORIGIN
-  218 07662 2247          ISZ     BEGG            //
-  219 07663 7750          SPA SNA CLA             /RETURN IF NOT FIELD SETTING
-  220 07664 5647          JMP I   BEGG            /RETURN IF LEADER, SKIP RETURN
-  221 07665 1351          TAD     BCHAR           /\           IF DATA OR ORIGIN
-  222 07666 0301  BN300,  AND     BFMASK /(70)    / \
-  223 07667 1302          TAD     BNCDF  /(CDF)   /  >PROCESS FIELD SETTINGS
-  224 07670 3352          DCA     BMTEM           / /
-  225 07671 5250          JMP     BEGG1           //
-  226             
-  227             /       /       /       /       /       /       /       /
-  228             /       ROUTINE TO GET ONE FRAME TO AC AND BCHAR
-  229             
-  230 07672 0000  BNREAD, .-.
-  231 07673 6011          KSFIOT
-  232 07674 5273          JMP     .-1             /WAIT FOR INPUT
-  233 07675 6016          KRBIOT
-  234 07676 3351          DCA     BCHAR           /SAVE FRAME
-  235 07677 1351          TAD     BCHAR           /GET IT BACK
-  236 07700 5672          JMP I   BNREAD          /RETURN
-  237             
-  238 07701 0070  BFMASK, 70                      /HARMLESS AND
-  239 07702 6201  BNCDF,  CDF     00              /CDF CONSTANT
-  240             
-  241             /       /       /       /       /       /       /       /
-  242             /       PROCESS END OF TAPE
-  243             
-  244 07703 4342  BEND,   JMS     BASEMB          /GOT TRAILER, DO LAST WORD
-  245 07704 7041          CIA                     /INVERT FOR CHECKSUM COMPARISON
-  246 07705 1353  BIPZP1, TAD     BCHKSM
-  247 07706 7402  BNHLT,  HLT                     /AC EQUALS ZERO IF NO ERRORS
-  248             
-  249             /       /       /       /       /       /       /       /
-  250             /       MAIN PROGRAM
-  251             
-  252 07707 6014  BBEGIN, KCCIOT                  /START OF PROGRAM
-  253 07710 7600  BN7600, 7600                    /GROUP 2 CLA USED AS CONSTANT
-  254 07711 6214          RDF                     /\
-  255 07712 1302          TAD     BNCDF /(CDF)    / >SETUP INITIAL LOADING FIELD
-  256 07713 3352          DCA     BMTEM           //
-  257 07714 4247  BAUTO,  JMS     BEGG            /GET A FRAME
-  258 07715 5314          JMP     .-1             /IGNORE LEADER
-  259 07716 3353  BEGO,   DCA     BCHKSM          /ZERO OR ADD TO CHECKSUM
-  260 07717 1352          TAD     BMTEM           /SET UP
-  261 07720 3330          DCA     BLODIT          /DESIRED FIELD
-  262 07721 1351          TAD     BCHAR           /SAVE AS
-  263 07722 3354          DCA     BWORD1          /FIRST FRAME
-  264 07723 4272          JMS     BNREAD          /GET NEXT
-  265 07724 3355          DCA     BWORD2          /SAVE AS SECOND FRAME
-  266 07725 4247          JMS     BEGG            /GET NEXT FRAME
+  210 07650 4272  BEGG1,  JMS     BNREAD          /GET A FRAME
+  211 07651 1306          TAD     BNHLT /(7402)   /TEST FOR ERROR (HIGH BITS)
+  212 07652 7750          SPA SNA CLA             /SKIP IF (FRAME+7402) > 0
+  213 07653 5256  BNLINE, JMP     BGOOD           /JUMP IF NO
+  214             /                               /
+  215 07654 7402          HLT                     /HERE IF ERROR
+  216 07655 5250          JMP     BEGG1           /GET MORE CHARACTERS
+  217             
+  218 07656 1351  BGOOD,  TAD     BCHAR           /\
+  219 07657 0266          AND     BN300  /(300)   / \
+  220 07660 1310          TAD     BN7600 /(-200)  /  >BUMP RETURN IF DATA
+  221 07661 7510          SPA                     / /             OR ORIGIN
+  222 07662 2247          ISZ     BEGG            //
+  223 07663 7750          SPA SNA CLA             /RETURN IF NOT FIELD SETTING
+  224 07664 5647          JMP I   BEGG            /RETURN IF LEADER, SKIP RETURN
+  225 07665 1351          TAD     BCHAR           /\           IF DATA OR ORIGIN
+  226 07666 0301  BN300,  AND     BFMASK /(70)    / \
+  227 07667 1302          TAD     BNCDF  /(CDF)   /  >PROCESS FIELD SETTINGS
+  228 07670 3352          DCA     BMTEM           / /
+  229 07671 5250          JMP     BEGG1           //
+  230             
+  231             /       /       /       /       /       /       /       /
+  232             /       ROUTINE TO GET ONE FRAME TO AC AND BCHAR
+  233             
+  234 07672 0000  BNREAD, .-.
+  235 07673 6031          KSFIOT
+  236 07674 5273          JMP     .-1             /WAIT FOR INPUT
+  237 07675 6036          KRBIOT
+  238 07676 3351          DCA     BCHAR           /SAVE FRAME
+  239 07677 1351          TAD     BCHAR           /GET IT BACK
+  240 07700 5672          JMP I   BNREAD          /RETURN
+  241             
+  242 07701 0070  BFMASK, 70                      /HARMLESS AND
+  243 07702 6201  BNCDF,  CDF     00              /CDF CONSTANT
+  244             
+  245             /       /       /       /       /       /       /       /
+  246             /       PROCESS END OF TAPE
+  247             
+  248 07703 4342  BEND,   JMS     BASEMB          /GOT TRAILER, DO LAST WORD
+  249 07704 7041          CIA                     /INVERT FOR CHECKSUM COMPARISON
+  250 07705 1353  BIPZP1, TAD     BCHKSM
+  251 07706 7402  BNHLT,  HLT                     /AC EQUALS ZERO IF NO ERRORS
+  252             
+  253             /       /       /       /       /       /       /       /
+  254             /       MAIN PROGRAM
+  255             
+  256 07707 6032  BBEGIN, KCCIOT                  /START OF PROGRAM
+  257 07710 7600  BN7600, 7600                    /GROUP 2 CLA USED AS CONSTANT
+  258 07711 6214          RDF                     /\
+  259 07712 1302          TAD     BNCDF /(CDF)    / >SETUP INITIAL LOADING FIELD
+  260 07713 3352          DCA     BMTEM           //
+  261 07714 4247  BAUTO,  JMS     BEGG            /GET A FRAME
+  262 07715 5314          JMP     .-1             /IGNORE LEADER
+  263 07716 3353  BEGO,   DCA     BCHKSM          /ZERO OR ADD TO CHECKSUM
+  264 07717 1352          TAD     BMTEM           /SET UP
+  265 07720 3330          DCA     BLODIT          /DESIRED FIELD
+  266 07721 1351          TAD     BCHAR           /SAVE AS
 
       / Prime Number Program for EE432                                    Page 6
 
 
-  267 07726 5303          JMP     BEND            /TRAILER, GO FINISH UP
-  268 07727 4342          JMS     BASEMB          /
-  269 07730 7402  BLODIT, HLT                     /CDF INTO LOADING FIELD
-  270 07731 7420          SNL                     /SKIP IF ORIGIN SETTING
-  271 07732 3776          DCA I   RORG            /STORE THE WORD IF DATA
-  272 07733 2376          ISZ     RORG            /PUSH POINTER
-  273 07734 7430          SZL                     /NOP NOT NEEDED; SKIP IF ORIGIN
-  274 07735 3376          DCA     RORG            /SAVE ORIGIN
-  275 07736 1354  BCHEX,  TAD     BWORD1          /NOT RICE, CORN OR WHEAT
-  276 07737 1355          TAD     BWORD2          /ADD LATEST WORDS
-  277 07740 1353          TAD     BCHKSM          /AND CHECKSUM
-  278 07741 5316          JMP     BEGO            /ACCUMULATE AND DO NEXT
-  279             
-  280             /       /       /       /       /       /       /       /
-  281             /       ASSEMBLE A WORD FROM 2 FRAMES
-  282             /       AC = 0 ON ENTRY, AC = ASSEMBLED WORD ON EXIT
-  283             /       LINK = ORIGIN SETTING BIT ON EXIT
-  284             
-  285 07742 0000  BASEMB, .-.
-  286 07743 1354          TAD     BWORD1          /GET FIRST FRAME
-  287 07744 7106          CLL RTL;RTL;RTL         /SHIFT LEFT 6
+  267 07722 3354          DCA     BWORD1          /FIRST FRAME
+  268 07723 4272          JMS     BNREAD          /GET NEXT
+  269 07724 3355          DCA     BWORD2          /SAVE AS SECOND FRAME
+  270 07725 4247          JMS     BEGG            /GET NEXT FRAME
+  271 07726 5303          JMP     BEND            /TRAILER, GO FINISH UP
+  272 07727 4342          JMS     BASEMB          /
+  273 07730 7402  BLODIT, HLT                     /CDF INTO LOADING FIELD
+  274 07731 7420          SNL                     /SKIP IF ORIGIN SETTING
+  275 07732 3776          DCA I   RORG            /STORE THE WORD IF DATA
+  276 07733 2376          ISZ     RORG            /PUSH POINTER
+  277 07734 7430          SZL                     /NOP NOT NEEDED; SKIP IF ORIGIN
+  278 07735 3376          DCA     RORG            /SAVE ORIGIN
+  279 07736 1354  BCHEX,  TAD     BWORD1          /NOT RICE, CORN OR WHEAT
+  280 07737 1355          TAD     BWORD2          /ADD LATEST WORDS
+  281 07740 1353          TAD     BCHKSM          /AND CHECKSUM
+  282 07741 5316          JMP     BEGO            /ACCUMULATE AND DO NEXT
+  283             
+  284             /       /       /       /       /       /       /       /
+  285             /       ASSEMBLE A WORD FROM 2 FRAMES
+  286             /       AC = 0 ON ENTRY, AC = ASSEMBLED WORD ON EXIT
+  287             /       LINK = ORIGIN SETTING BIT ON EXIT
+  288             
+  289 07742 0000  BASEMB, .-.
+  290 07743 1354          TAD     BWORD1          /GET FIRST FRAME
+  291 07744 7106          CLL RTL;RTL;RTL         /SHIFT LEFT 6
       07745 7006
       07746 7006
-  288 07747 1355          TAD     BWORD2          /ADD ON SECOND FRAME
-  289 07750 5742          JMP I   BASEMB          /RETURN
-  290             
-  291             /       /       /       /       /       /       /       /
-  292             
-  293 07751 0000  BCHAR,  .-.                     /INPUT BUFFER
-  294 07752 0000  BMTEM,  .-.                     /FIELD TEMPORARY
-  295 07753 0000  BCHKSM, .-.                     /CHECKSUM
-  296 07754 0000  BWORD1, .-.                     /FRAME 1 TEMPORARY
-  297 07755 0000  BWORD2, .-.                     /FRAME 2 TEMPORARY
-  298             
-  299             /       THE RIM LOADER FOLLOWS IN 7756-7775
-  300             
-  301       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
+  292 07747 1355          TAD     BWORD2          /ADD ON SECOND FRAME
+  293 07750 5742          JMP I   BASEMB          /RETURN
+  294             
+  295             /       /       /       /       /       /       /       /
+  296             
+  297 07751 0000  BCHAR,  .-.                     /INPUT BUFFER
+  298 07752 0000  BMTEM,  .-.                     /FIELD TEMPORARY
+  299 07753 0000  BCHKSM, .-.                     /CHECKSUM
+  300 07754 0000  BWORD1, .-.                     /FRAME 1 TEMPORARY
+  301 07755 0000  BWORD2, .-.                     /FRAME 2 TEMPORARY
   302             
-  303       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
-  304 07777 5307          JMP     BBEGIN          /START BINARY LOADER
-  305                             
-  306             / https://homepage.divms.uiowa.edu/~jones/pdp8/
-  307             /       RIM LOADERS FOR PAPER TAPE INPUT
-  308             
-  309             /UNCOMMENT FOLLOWING FOR TTY INPUT
-  310             /KSFIOT= KSF
-  311             /KRBIOT= KRB
-  312             /KCCIOT= KCC
-  313             /KRSIOT= KRS
-  314             /HSR=    0
+  303             //////////////////////////////////////////////////////////////////////
+  304             / THE RIM LOADER FOLLOWS IN 7756-7775
+  305             //////////////////////////////////////////////////////////////////////
+  306             
+  307             
+  308       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
+  309             
+  310       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
+  311 07777 5307          JMP     BBEGIN          /START BINARY LOADER
+  312                             
+  313             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+  314             /       RIM LOADERS FOR PAPER TAPE INPUT
   315             
-  316             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
-  317       6011  KSFIOT= RSF
-  318       6016  KRBIOT= RRB RFC
-  319       6014  KCCIOT= RFC
-  320       6016  KRSIOT= RRB RFC
-  321       0001  HSR=    1
+  316             /UNCOMMENT FOLLOWING FOR TTY INPUT
+  317       6031  KSFIOT= KSF
+  318       6036  KRBIOT= KRB
+  319       6032  KCCIOT= KCC
+  320       6034  KRSIOT= KRS
+  321       0000  HSR=    0
 
       / Prime Number Program for EE432                                    Page 7
 
 
   322             
-  323             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
-  324       0015  HSRF=   HSRC-TTYC^HSR
-  325             
-  326       7756  *7756
-  327 07756 6014  BEG,    KCCIOT          / INITIALIZE READER
-  328 07757 6011  TTYC,   KSFIOT          / AWAIT INPUT
-  329 07760 5357          JMP     TTYC
-  330 07761 6016          KRBIOT          / GET A CHARACTER
-  331 07762 7106          CLL RTL
-  332 07763 7006          RTL
-  333 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
-  334 07765 5374          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
-  335 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
-  336 07767 6011          KSFIOT          / AWAIT INPUT
-  337 07770 5367          JMP     .-1     
-  338 07771 6016          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
-  339 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
-  340 07773 3776          DCA I   TEMP    / STORE DATA
-  341 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
-  342 07775 5357          JMP     BEG+HSR / GO GET NEXT DATA WORD
-  343 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
-  344             
+  323             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
+  324             /KSFIOT= RSF
+  325             /KRBIOT= RRB RFC
+  326             /KCCIOT= RFC
+  327             /KRSIOT= RRB RFC
+  328             /HSR=    1
+  329             
+  330             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
+  331       0000  HSRF=   HSRC-TTYC^HSR
+  332             
+  333       7756  *7756
+  334 07756 6032  BEG,    KCCIOT          / INITIALIZE READER
+  335 07757 6031  TTYC,   KSFIOT          / AWAIT INPUT
+  336 07760 5357          JMP     TTYC
+  337 07761 6036          KRBIOT          / GET A CHARACTER
+  338 07762 7106          CLL RTL
+  339 07763 7006          RTL
+  340 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
+  341 07765 5357          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
+  342 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
+  343 07767 6031          KSFIOT          / AWAIT INPUT
+  344 07770 5367          JMP     .-1     
+  345 07771 6034          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
+  346 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
+  347 07773 3776          DCA I   TEMP    / STORE DATA
+  348 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
+  349 07775 5356          JMP     BEG+HSR / GO GET NEXT DATA WORD
+  350 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
+  351             
 
       No detected errors
 
       / Prime Number Program for EE432                                    Page 8
                                                                  Cross Reference
 
-    1 A    285  BASEMB      244    268    289
-    2 A    257  BAUTO   
-    3 A    252  BBEGIN      304
-    4 A    293  BCHAR       214    221    234    235    262
-    5 A    275  BCHEX   
-    6 A    295  BCHKSM      246    259    277
-    7 A    327  BEG         342
-    8 A    205  BEGG        218    220    257    266
-    9 A    206  BEGG1       212    225
-   10 A    259  BEGO        278
-   11 A    244  BEND        267
-   12 A    238  BFMASK      222
-   13 A    214  BGOOD       209
-   14 A    246  BIPZP1  
-   15 A    269  BLODIT      261
-   16 A    294  BMTEM       224    256    260
-   17 A    222  BN300       215
-   18 A    253  BN7600      216
-   19 A    239  BNCDF       223    255
-   20 A    247  BNHLT       207
-   21 A    209  BNLINE  
-   22 A    230  BNREAD      206    236    264
-   23 A    296  BWORD1      263    275    286
-   24 A    297  BWORD2      265    276    288
+    1 A    289  BASEMB      248    272    293
+    2 A    261  BAUTO   
+    3 A    256  BBEGIN      311
+    4 A    297  BCHAR       218    225    238    239    266
+    5 A    279  BCHEX   
+    6 A    299  BCHKSM      250    263    281
+    7 A    334  BEG         349
+    8 A    209  BEGG        222    224    261    270
+    9 A    210  BEGG1       216    229
+   10 A    263  BEGO        282
+   11 A    248  BEND        271
+   12 A    242  BFMASK      226
+   13 A    218  BGOOD       213
+   14 A    250  BIPZP1  
+   15 A    273  BLODIT      265
+   16 A    298  BMTEM       228    260    264
+   17 A    226  BN300       219
+   18 A    257  BN7600      220
+   19 A    243  BNCDF       227    259
+   20 A    251  BNHLT       211
+   21 A    213  BNLINE  
+   22 A    234  BNREAD      210    240    268
+   23 A    300  BWORD1      267    279    290
+   24 A    301  BWORD2      269    280    292
    25 A    160  CALCP1      162
    26 A    161  CALCP2      159
    27 A    146  CALCPM       44     59     84    164
    28 A     17  CHECKI       41     43     50     54     70     72     79     83
    29                        90     95    100    105    140
    30 A     10  DVI         110    114    118
-   31 A    321  HSR         324    342
-   32 A    341  HSRC        324
-   33 A    324  HSRF        334
+   31 A    321  HSR         331    349
+   32 A    348  HSRC        331
+   33 A    331  HSRF        341
    34 A     19  II           34     36     81    128    138
    35 A     15  INCVAL       32     35
-   36 A    319  KCCIOT      252    252    327    327
-   37 A    318  KRBIOT      233    233    330    330
-   38 A    320  KRSIOT      338    338
-   39 A    317  KSFIOT      231    231    328    328    336    336
+   36 A    319  KCCIOT      256    256    334    334
+   37 A    318  KRBIOT      237    237    337    337
+   38 A    320  KRSIOT      345    345
+   39 A    317  KSFIOT      235    235    335    335    343    343
    40 A     35  LOOP1        37
    41 A     42  LOOP2        75
    42 A     52  LOOP3        68
@@ -452,13 +459,13 @@
    53 A     70  NOTPRI       48     56
    54 A     20  PTR          45     63     67     85    153
    55 A    168  PUTC        113    117    121    124    127    132    135    173
-   56 A    301  RORG        271    272    274
+   56 A    308  RORG        275    276    278
    57 A    166  SAVEVA      147    148    154    157    161
 
       / Prime Number Program for EE432                                    Page 9
                                                                  Cross Reference
 
    58 A     23  SIEVE        31    152
-   59 A    343  TEMP        340    341
-   60 A    328  TTYC        324    329    334
+   59 A    350  TEMP        347    348
+   60 A    335  TTYC        331    336    341
    61 A      8  WORDS        33
