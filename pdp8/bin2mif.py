@@ -75,7 +75,7 @@ while pairOffset < len(binList):
 	else:
 		outVal = getDataVal(binList[pairOffset],binList[pairOffset+1])
 		if addressOffset > 4095:
-			errStr = 'Output address error, address = ' + str(addressOffset) + ' checksum?'
+			errStr = 'Output address error, address = ' + str(addressOffset) + ' probably the checksum?'
 			print(errStr)
 		else:
 			outArray[addressOffset] = outVal
