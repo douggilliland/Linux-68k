@@ -1,0 +1,146 @@
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 1
+
+
+    1             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+    2             /       PAPER TAPE BINARY AND RIM LOADERS FOR PAPER TAPE INPUT
+    3             /       BASED ON CODE PLACED IN PUBLIC DOMAIN BY C. J. LASNER
+    4             /       DERIVED BY CJL FROM DEC'S BIN LOADERS FOR USE IN P?S/8
+    5             /       MODIFIED FOR STAND-ALONE USE BY D. W. JONES
+    6             
+    7             /       I/O INSTRUCTIONS USED.  COMMENT OUT ALL BUT ONE VERSION
+    8             
+    9             /       TTY INPUT
+   10             /KSFIOT= KSF
+   11             /KRBIOT= KRB
+   12             /KCCIOT= KCC
+   13             /KRSIOT= KRS
+   14             
+   15             /       HIGH SPEED READER INPUT
+   16       6011  KSFIOT= RSF
+   17       6016  KRBIOT= RFC RRB
+   18       6014  KCCIOT= RFC
+   19       6012  KRSIOT= RRB
+   20             
+   21       7647  * 7647  /HISTORICAL STARTING LOCATION MAY BE AS LOW AS 7625
+   22                     /RANGE 07600-07642 AVAILABLE FOR DISK BOOT ROUTINE
+   23             
+   24             /       /       /       /       /       /       /       /
+   25             /       ROUTINE TO GET AND DECODE FRAME OF TAPE
+   26             /       SKIPS NEXT INSTRUCTION IF DATA OR ORIGIN WORD
+   27             /       RETURN DIRECTLY IF LEADER
+   28             /       PROCESS ORIGIN SETTING AND GET NEXT FRAME
+   29             /       ON RETURN, AC=0 ALWAYS
+   30             /       WHAT A KLUGE!
+   31             
+   32 07647 0000  BEGG,   .-.                     /HISTORICAL NAME
+   33 07650 4272  BEGG1,  JMS     BNREAD          /GET A FRAME
+   34 07651 1306          TAD     BNHLT /(7402)   /TEST FOR ERROR (HIGH BITS)
+   35 07652 7750          SPA SNA CLA             /SKIP IF (FRAME+7402) > 0
+   36 07653 5256  BNLINE, JMP     BGOOD           /JUMP IF NO
+   37             /                               /
+   38 07654 7402          HLT                     /HERE IF ERROR
+   39 07655 5250          JMP     BEGG1           /GET MORE CHARACTERS
+   40             
+   41 07656 1351  BGOOD,  TAD     BCHAR           /\
+   42 07657 0266          AND     BN300  /(300)   / \
+   43 07660 1310          TAD     BN7600 /(-200)  /  >BUMP RETURN IF DATA
+   44 07661 7510          SPA                     / /             OR ORIGIN
+   45 07662 2247          ISZ     BEGG            //
+   46 07663 7750          SPA SNA CLA             /RETURN IF NOT FIELD SETTING
+   47 07664 5647          JMP I   BEGG            /RETURN IF LEADER, SKIP RETURN
+   48 07665 1351          TAD     BCHAR           /\           IF DATA OR ORIGIN
+   49 07666 0301  BN300,  AND     BFMASK /(70)    / \
+   50 07667 1302          TAD     BNCDF  /(CDF)   /  >PROCESS FIELD SETTINGS
+   51 07670 3352          DCA     BMTEM           / /
+   52 07671 5250          JMP     BEGG1           //
+   53             
+   54             /       /       /       /       /       /       /       /
+   55             /       ROUTINE TO GET ONE FRAME TO AC AND BCHAR
+   56             
+   57 07672 0000  BNREAD, .-.
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 2
+
+
+   58 07673 6011          KSFIOT
+   59 07674 5273          JMP     .-1             /WAIT FOR INPUT
+   60 07675 6016          KRBIOT
+   61 07676 3351          DCA     BCHAR           /SAVE FRAME
+   62 07677 1351          TAD     BCHAR           /GET IT BACK
+   63 07700 5672          JMP I   BNREAD          /RETURN
+   64             
+   65 07701 0070  BFMASK, 70                      /HARMLESS AND
+   66 07702 6201  BNCDF,  CDF     00              /CDF CONSTANT
+   67             
+   68             /       /       /       /       /       /       /       /
+   69             /       PROCESS END OF TAPE
+   70             
+   71 07703 4342  BEND,   JMS     BASEMB          /GOT TRAILER, DO LAST WORD
+   72 07704 7041          CIA                     /INVERT FOR CHECKSUM COMPARISON
+   73 07705 1353  BIPZP1, TAD     BCHKSM
+   74 07706 7402  BNHLT,  HLT                     /AC EQUALS ZERO IF NO ERRORS
+   75             
+   76             /       /       /       /       /       /       /       /
+   77             /       MAIN PROGRAM
+   78             
+   79 07707 6014  BBEGIN, KCCIOT                  /START OF PROGRAM
+   80 07710 7600  BN7600, 7600                    /GROUP 2 CLA USED AS CONSTANT
+   81 07711 6214          RDF                     /\
+   82 07712 1302          TAD     BNCDF /(CDF)    / >SETUP INITIAL LOADING FIELD
+   83 07713 3352          DCA     BMTEM           //
+   84 07714 4247  BAUTO,  JMS     BEGG            /GET A FRAME
+   85 07715 5314          JMP     .-1             /IGNORE LEADER
+   86 07716 3353  BEGO,   DCA     BCHKSM          /ZERO OR ADD TO CHECKSUM
+   87 07717 1352          TAD     BMTEM           /SET UP
+   88 07720 3330          DCA     BLODIT          /DESIRED FIELD
+   89 07721 1351          TAD     BCHAR           /SAVE AS
+   90 07722 3354          DCA     BWORD1          /FIRST FRAME
+   91 07723 4272          JMS     BNREAD          /GET NEXT
+   92 07724 3355          DCA     BWORD2          /SAVE AS SECOND FRAME
+   93 07725 4247          JMS     BEGG            /GET NEXT FRAME
+   94 07726 5303          JMP     BEND            /TRAILER, GO FINISH UP
+   95 07727 4342          JMS     BASEMB          /
+   96 07730 7402  BLODIT, HLT                     /CDF INTO LOADING FIELD
+   97 07731 7420          SNL                     /SKIP IF ORIGIN SETTING
+   98 07732 3776          DCA I   RORG            /STORE THE WORD IF DATA
+   99 07733 2376          ISZ     RORG            /PUSH POINTER
+  100 07734 7430          SZL                     /NOP NOT NEEDED; SKIP IF ORIGIN
+  101 07735 3376          DCA     RORG            /SAVE ORIGIN
+  102 07736 1354  BCHEX,  TAD     BWORD1          /NOT RICE, CORN OR WHEAT
+  103 07737 1355          TAD     BWORD2          /ADD LATEST WORDS
+  104 07740 1353          TAD     BCHKSM          /AND CHECKSUM
+  105 07741 5316          JMP     BEGO            /ACCUMULATE AND DO NEXT
+  106             
+  107             /       /       /       /       /       /       /       /
+  108             /       ASSEMBLE A WORD FROM 2 FRAMES
+  109             /       AC = 0 ON ENTRY, AC = ASSEMBLED WORD ON EXIT
+  110             /       LINK = ORIGIN SETTING BIT ON EXIT
+  111             
+  112 07742 0000  BASEMB, .-.
+  113 07743 1354          TAD     BWORD1          /GET FIRST FRAME
+  114 07744 7106          CLL RTL;RTL;RTL         /SHIFT LEFT 6
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 3
+
+
+      07745 7006
+      07746 7006
+  115 07747 1355          TAD     BWORD2          /ADD ON SECOND FRAME
+  116 07750 5742          JMP I   BASEMB          /RETURN
+  117             
+  118             /       /       /       /       /       /       /       /
+  119             
+  120 07751 0000  BCHAR,  .-.                     /INPUT BUFFER
+  121 07752 0000  BMTEM,  .-.                     /FIELD TEMPORARY
+  122 07753 0000  BCHKSM, .-.                     /CHECKSUM
+  123 07754 0000  BWORD1, .-.                     /FRAME 1 TEMPORARY
+  124 07755 0000  BWORD2, .-.                     /FRAME 2 TEMPORARY
+  125             
+  126             /       THE RIM LOADER FOLLOWS IN 7756-7775
+  127             
+  128       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
+  129             
+  130       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
+  131 07777 5307          JMP     BBEGIN          /START BINARY LOADER
+      No detected errors

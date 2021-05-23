@@ -1,0 +1,44 @@
+
+      / https://homepage.divms.uiowa.edu/~jones/pdp8/                     Page 1
+
+
+    1             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+    2             /       RIM LOADERS FOR PAPER TAPE INPUT
+    3             
+    4             /UNCOMMENT FOLLOWING FOR TTY INPUT
+    5             /KSFIOT= KSF
+    6             /KRBIOT= KRB
+    7             /KCCIOT= KCC
+    8             /KRSIOT= KRS
+    9             /HSR=    0
+   10             
+   11             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
+   12       6011  KSFIOT= RSF
+   13       6016  KRBIOT= RRB RFC
+   14       6014  KCCIOT= RFC
+   15       6016  KRSIOT= RRB RFC
+   16       0001  HSR=    1
+   17             
+   18             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
+   19       0015  HSRF=   HSRC-TTYC^HSR
+   20             
+   21       7756  *7756
+   22 07756 6014  BEG,    KCCIOT          / INITIALIZE READER
+   23 07757 6011  TTYC,   KSFIOT          / AWAIT INPUT
+   24 07760 5357          JMP     TTYC
+   25 07761 6016          KRBIOT          / GET A CHARACTER
+   26 07762 7106          CLL RTL
+   27 07763 7006          RTL
+   28 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
+   29 07765 5374          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
+   30 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
+   31 07767 6011          KSFIOT          / AWAIT INPUT
+   32 07770 5367          JMP     .-1     
+   33 07771 6016          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
+   34 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
+   35 07773 3776          DCA I   TEMP    / STORE DATA
+   36 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
+   37 07775 5357          JMP     BEG+HSR / GO GET NEXT DATA WORD
+   38 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
+
+      No detected errors
