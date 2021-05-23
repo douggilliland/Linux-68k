@@ -1,0 +1,464 @@
+
+      / Prime Number Program for EE432                                    Page 1
+
+
+    1             / Prime Number Program for EE432
+    2             / Author: Tom Almy
+    3             / To be used by the Cougar Team, Spring 2014
+    4             
+    5             / Constants:
+    6             decimal
+    7       0100  maxroot=64
+    8       1000  words=512
+    9             octal
+   10       7407  DVI=7407        / Code to generate divide instruction
+   11       7405  MUL=7405    / Code for multiply instruction
+   12             
+   13             
+   14       0010  *10
+   15 00010 0000  incval, 0       / For autoincrementing
+   16       0020  *20             / Our variables
+   17 00020 0000  checking, 0
+   18 00021 0000  multiple, 0
+   19 00022 0000  ii, 0
+   20 00023 0000  ptr, 0          / Calculated memory location and mask
+   21 00024 0000  memmask, 0
+   22       5000  *5000
+   23 05000 0000  sieve, 0        / Sieve is 512 words, so location 5000 to 5777
+   24             
+   25       0200  *200            / start of program
+   26 00200 7300  main,   CLA CLL
+   27 00201 6046          TLS     / Reset the TTY
+   28             
+   29             / Clear the array
+   30 00202 7200          CLA
+   31 00203 1377          TAD     (sieve-1)       / put address of array-1 in incval
+   32 00204 3010          DCA     incval
+   33 00205 1376          TAD     (-words)        / Put -size of array in i
+   34 00206 3022          DCA     ii
+   35 00207 3410  loop1,  DCA     I incval        / Store 0 in successive locations
+   36 00210 2022          ISZ     ii              / until end of array
+   37 00211 5207          JMP     loop1
+   38             
+   39             / Do the marking
+   40 00212 7305          CLA CLL IAC RAL         / 2
+   41 00213 3020          DCA     checking        / initialize checking variable
+   42 00214 7200  loop2,  CLA
+   43 00215 1020          TAD     checking        / get checking variable
+   44 00216 4775@         JMS     calcpm
+   45 00217 1423          TAD     I ptr           / get memory word
+   46 00220 0024          AND     memmask         / get the bit
+   47 00221 7440          SZA                     / skip if a prime
+   48 00222 5247          JMP     notprime
+   49 00223 7200          CLA                     / probably not needed
+   50 00224 1020          TAD     checking        / Initialize multiple
+   51 00225 3021          DCA     multiple
+   52 00226 7300  loop3,  CLA CLL
+   53 00227 1021          TAD     multiple
+   54 00230 1020          TAD     checking        / Go to multiple of prime
+   55 00231 7430          SZL                     / skip if not at end
+   56 00232 5247          JMP     notprime
+   57 00233 3021          DCA     multiple
+
+      / Prime Number Program for EE432                                    Page 2
+
+
+   58 00234 1021          TAD     multiple        / Find array location for multiple
+   59 00235 4775@         JMS     calcpm
+   60 00236 1024          TAD     memmask
+   61 00237 7040          CMA
+   62 00240 3024          DCA     memmask         / complement the mask
+   63 00241 1423          TAD     I ptr           / get value from memory
+   64 00242 7040          CMA                     / complement it
+   65 00243 0024          AND     memmask         / and and complement again to get OR
+   66 00244 7040          CMA
+   67 00245 3423          DCA     I ptr           / put it back
+   68 00246 5226          JMP     loop3           / go to next multiple
+   69             
+   70 00247 2020  notprime, ISZ   checking        / go to next value to check
+   71 00250 7300          CLA CLL
+   72 00251 1020          TAD     checking        / see if we have reached the end
+   73 00252 1374          TAD     (-MAXROOT)      / There will be a carry if we are done
+   74 00253 7420          SNL
+   75 00254 5214          JMP     loop2
+   76             
+   77             / Print out all the primes
+   78 00255 7305          CLA CLL IAC RAL         / 2
+   79 00256 3020          DCA     checking        / initialize checking variable
+   80 00257 1373      TAD (-12)
+   81 00260 3022      DCA ii          // values per line
+   82 00261 7200  loop4,  CLA
+   83 00262 1020          TAD     checking        / get value to check
+   84 00263 4775@         JMS     calcpm
+   85 00264 1423          TAD     I ptr           / get memory word
+   86 00265 0024          AND     memmask         / get the bit
+   87 00266 7440          SZA                     / skip if a prime
+   88 00267 5352          JMP     nextval
+   89 00270 7200          CLA
+   90 00271 1020          TAD     checking        / get the prime
+   91 00272 7421          MQL                     / into MQ
+   92             
+   93                     / Test value to avoid leading zeroes.
+   94 00273 7300          CLL CLA
+   95 00274 1020          TAD     checking
+   96 00275 1373          TAD     (-12)           / Compare to 10
+   97 00276 7420          SNL                     / skip if >= 10
+   98 00277 5331          JMP     LT10
+   99 00300 7300          CLL CLA
+  100 00301 1020          TAD     checking
+  101 00302 1372          TAD     (-144)          / Compare to 100
+  102 00303 7420          SNL
+  103 00304 5324          JMP     LT100
+  104 00305 7300          CLL CLA
+  105 00306 1020          TAD     checking
+  106 00307 1371          TAD     (-1750)         / Compare to 1000
+  107 00310 7420          SNL
+  108 00311 5317          JMP     LT1000
+  109             
+  110 00312 7607          CLA DVI ; 1750          / Divide by 1000
+      00313 1750
+  111 00314 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  112 00315 1370          TAD     ("0)
+  113 00316 4767@         JMS     putc
+
+      / Prime Number Program for EE432                                    Page 3
+
+
+  114 00317 7607  LT1000, CLA DVI ; 144           / Divide by 100
+      00320 0144
+  115 00321 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  116 00322 1370          TAD     ("0)
+  117 00323 4767@         JMS     putc
+  118 00324 7607  LT100,  CLA DVI ; 12            / Divide by 10
+      00325 0012
+  119 00326 7521          MQA MQL                 / remainder to MQ, quotient in AC
+  120 00327 1370          TAD     ("0)
+  121 00330 4767@         JMS     putc
+  122 00331 7701  LT10,   CLA MQA                 / Get MQ
+  123 00332 1370          TAD     ("0)
+  124 00333 4767@         JMS     putc
+  125 00334 7200          CLA
+  126 00335 1366          TAD     (40)            / Space character
+  127 00336 4767@         JMS     putc
+  128 00337 2022      ISZ ii          / end of line?
+  129 00340 5352      JMP nextval     / branch if not
+  130 00341 7200      CLA
+  131 00342 1365      TAD (15)        / carriage return
+  132 00343 4767@     JMS putc
+  133 00344 7200      CLA
+  134 00345 1364      TAD (12)        / line feed
+  135 00346 4767@     JMS putc
+  136 00347 7200      CLA
+  137 00350 1373      TAD (-12)
+  138 00351 3022      DCA ii          // reset for another 8 values
+  139             
+  140 00352 2020  nextval, ISZ    checking        / go to the next value skip when finished
+  141 00353 5261          JMP     loop4
+  142 00354 7402          HLT
+  143             
+      00364 0012
+      00365 0015
+      00366 0040
+      00367 0424
+      00370 0260
+      00371 6030
+      00372 7634
+      00373 7766
+      00374 7700
+      00375 0400
+      00376 7000
+      00377 4777
+  144             PAGE
+  145             / SUBROUTINES
+  146 00400 0000  calcpm, 0       / Calculate ptr and memmask value
+  147 00401 3223          DCA     saveval
+  148 00402 1223          TAD     saveval
+  149 00403 7112          CLL RTR         / shift right 3 times
+  150 00404 7010          RAR
+  151 00405 0377          AND     (777)   / Mask to get displacement into array
+  152 00406 1376          TAD     (sieve) / Add starting address
+  153 00407 3023          DCA     ptr
+  154 00410 1223          TAD     saveval / get back starting value
+  155 00411 0375          AND     (7)     / Mask it to get index into word
+  156 00412 7140          CLL CMA         / complement without increment, clear link
+
+      / Prime Number Program for EE432                                    Page 4
+
+
+  157 00413 3223          DCA     saveval
+  158 00414 7201          CLA IAC         / load 1 into AC
+  159 00415 5217          JMP calcp2
+  160 00416 7004  calcp1, RAL             / rotate left
+  161 00417 2223  calcp2, ISZ     saveval / increment count and skip if zero
+  162 00420 5216          JMP     calcp1
+  163 00421 3024          DCA     memmask
+  164 00422 5600          JMP     I calcpm
+  165             
+  166 00423 0000  saveval, 0
+  167             
+  168 00424 0000  putc, 0         / Write character in AC to terminal
+  169 00425 0374      AND  (177)
+  170 00426 6041          TSF
+  171 00427 5226          JMP .-1
+  172 00430 6046          TLS
+  173 00431 5624          JMP I putc
+  174             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+  175             /       PAPER TAPE BINARY AND RIM LOADERS FOR PAPER TAPE INPUT
+  176             /       BASED ON CODE PLACED IN PUBLIC DOMAIN BY C. J. LASNER
+  177             /       DERIVED BY CJL FROM DEC'S BIN LOADERS FOR USE IN P?S/8
+  178             /       MODIFIED FOR STAND-ALONE USE BY D. W. JONES
+  179             
+  180             /       I/O INSTRUCTIONS USED.  COMMENT OUT ALL BUT ONE VERSION
+  181             
+  182             /       TTY INPUT
+  183             /KSFIOT= KSF
+  184             /KRBIOT= KRB
+  185             /KCCIOT= KCC
+  186             /KRSIOT= KRS
+  187             
+  188             /       HIGH SPEED READER INPUT
+  189       6011  KSFIOT= RSF
+  190       6016  KRBIOT= RFC RRB
+  191       6014  KCCIOT= RFC
+  192       6012  KRSIOT= RRB
+  193             
+      00574 0177
+      00575 0007
+      00576 5000
+      00577 0777
+  194       7647  * 7647  /HISTORICAL STARTING LOCATION MAY BE AS LOW AS 7625
+  195                     /RANGE 07600-07642 AVAILABLE FOR DISK BOOT ROUTINE
+  196             
+  197             /       /       /       /       /       /       /       /
+  198             /       ROUTINE TO GET AND DECODE FRAME OF TAPE
+  199             /       SKIPS NEXT INSTRUCTION IF DATA OR ORIGIN WORD
+  200             /       RETURN DIRECTLY IF LEADER
+  201             /       PROCESS ORIGIN SETTING AND GET NEXT FRAME
+  202             /       ON RETURN, AC=0 ALWAYS
+  203             /       WHAT A KLUGE!
+  204             
+  205 07647 0000  BEGG,   .-.                     /HISTORICAL NAME
+  206 07650 4272  BEGG1,  JMS     BNREAD          /GET A FRAME
+  207 07651 1306          TAD     BNHLT /(7402)   /TEST FOR ERROR (HIGH BITS)
+  208 07652 7750          SPA SNA CLA             /SKIP IF (FRAME+7402) > 0
+  209 07653 5256  BNLINE, JMP     BGOOD           /JUMP IF NO
+
+      / Prime Number Program for EE432                                    Page 5
+
+
+  210             /                               /
+  211 07654 7402          HLT                     /HERE IF ERROR
+  212 07655 5250          JMP     BEGG1           /GET MORE CHARACTERS
+  213             
+  214 07656 1351  BGOOD,  TAD     BCHAR           /\
+  215 07657 0266          AND     BN300  /(300)   / \
+  216 07660 1310          TAD     BN7600 /(-200)  /  >BUMP RETURN IF DATA
+  217 07661 7510          SPA                     / /             OR ORIGIN
+  218 07662 2247          ISZ     BEGG            //
+  219 07663 7750          SPA SNA CLA             /RETURN IF NOT FIELD SETTING
+  220 07664 5647          JMP I   BEGG            /RETURN IF LEADER, SKIP RETURN
+  221 07665 1351          TAD     BCHAR           /\           IF DATA OR ORIGIN
+  222 07666 0301  BN300,  AND     BFMASK /(70)    / \
+  223 07667 1302          TAD     BNCDF  /(CDF)   /  >PROCESS FIELD SETTINGS
+  224 07670 3352          DCA     BMTEM           / /
+  225 07671 5250          JMP     BEGG1           //
+  226             
+  227             /       /       /       /       /       /       /       /
+  228             /       ROUTINE TO GET ONE FRAME TO AC AND BCHAR
+  229             
+  230 07672 0000  BNREAD, .-.
+  231 07673 6011          KSFIOT
+  232 07674 5273          JMP     .-1             /WAIT FOR INPUT
+  233 07675 6016          KRBIOT
+  234 07676 3351          DCA     BCHAR           /SAVE FRAME
+  235 07677 1351          TAD     BCHAR           /GET IT BACK
+  236 07700 5672          JMP I   BNREAD          /RETURN
+  237             
+  238 07701 0070  BFMASK, 70                      /HARMLESS AND
+  239 07702 6201  BNCDF,  CDF     00              /CDF CONSTANT
+  240             
+  241             /       /       /       /       /       /       /       /
+  242             /       PROCESS END OF TAPE
+  243             
+  244 07703 4342  BEND,   JMS     BASEMB          /GOT TRAILER, DO LAST WORD
+  245 07704 7041          CIA                     /INVERT FOR CHECKSUM COMPARISON
+  246 07705 1353  BIPZP1, TAD     BCHKSM
+  247 07706 7402  BNHLT,  HLT                     /AC EQUALS ZERO IF NO ERRORS
+  248             
+  249             /       /       /       /       /       /       /       /
+  250             /       MAIN PROGRAM
+  251             
+  252 07707 6014  BBEGIN, KCCIOT                  /START OF PROGRAM
+  253 07710 7600  BN7600, 7600                    /GROUP 2 CLA USED AS CONSTANT
+  254 07711 6214          RDF                     /\
+  255 07712 1302          TAD     BNCDF /(CDF)    / >SETUP INITIAL LOADING FIELD
+  256 07713 3352          DCA     BMTEM           //
+  257 07714 4247  BAUTO,  JMS     BEGG            /GET A FRAME
+  258 07715 5314          JMP     .-1             /IGNORE LEADER
+  259 07716 3353  BEGO,   DCA     BCHKSM          /ZERO OR ADD TO CHECKSUM
+  260 07717 1352          TAD     BMTEM           /SET UP
+  261 07720 3330          DCA     BLODIT          /DESIRED FIELD
+  262 07721 1351          TAD     BCHAR           /SAVE AS
+  263 07722 3354          DCA     BWORD1          /FIRST FRAME
+  264 07723 4272          JMS     BNREAD          /GET NEXT
+  265 07724 3355          DCA     BWORD2          /SAVE AS SECOND FRAME
+  266 07725 4247          JMS     BEGG            /GET NEXT FRAME
+
+      / Prime Number Program for EE432                                    Page 6
+
+
+  267 07726 5303          JMP     BEND            /TRAILER, GO FINISH UP
+  268 07727 4342          JMS     BASEMB          /
+  269 07730 7402  BLODIT, HLT                     /CDF INTO LOADING FIELD
+  270 07731 7420          SNL                     /SKIP IF ORIGIN SETTING
+  271 07732 3776          DCA I   RORG            /STORE THE WORD IF DATA
+  272 07733 2376          ISZ     RORG            /PUSH POINTER
+  273 07734 7430          SZL                     /NOP NOT NEEDED; SKIP IF ORIGIN
+  274 07735 3376          DCA     RORG            /SAVE ORIGIN
+  275 07736 1354  BCHEX,  TAD     BWORD1          /NOT RICE, CORN OR WHEAT
+  276 07737 1355          TAD     BWORD2          /ADD LATEST WORDS
+  277 07740 1353          TAD     BCHKSM          /AND CHECKSUM
+  278 07741 5316          JMP     BEGO            /ACCUMULATE AND DO NEXT
+  279             
+  280             /       /       /       /       /       /       /       /
+  281             /       ASSEMBLE A WORD FROM 2 FRAMES
+  282             /       AC = 0 ON ENTRY, AC = ASSEMBLED WORD ON EXIT
+  283             /       LINK = ORIGIN SETTING BIT ON EXIT
+  284             
+  285 07742 0000  BASEMB, .-.
+  286 07743 1354          TAD     BWORD1          /GET FIRST FRAME
+  287 07744 7106          CLL RTL;RTL;RTL         /SHIFT LEFT 6
+      07745 7006
+      07746 7006
+  288 07747 1355          TAD     BWORD2          /ADD ON SECOND FRAME
+  289 07750 5742          JMP I   BASEMB          /RETURN
+  290             
+  291             /       /       /       /       /       /       /       /
+  292             
+  293 07751 0000  BCHAR,  .-.                     /INPUT BUFFER
+  294 07752 0000  BMTEM,  .-.                     /FIELD TEMPORARY
+  295 07753 0000  BCHKSM, .-.                     /CHECKSUM
+  296 07754 0000  BWORD1, .-.                     /FRAME 1 TEMPORARY
+  297 07755 0000  BWORD2, .-.                     /FRAME 2 TEMPORARY
+  298             
+  299             /       THE RIM LOADER FOLLOWS IN 7756-7775
+  300             
+  301       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
+  302             
+  303       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
+  304 07777 5307          JMP     BBEGIN          /START BINARY LOADER
+  305                             
+  306             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+  307             /       RIM LOADERS FOR PAPER TAPE INPUT
+  308             
+  309             /UNCOMMENT FOLLOWING FOR TTY INPUT
+  310             /KSFIOT= KSF
+  311             /KRBIOT= KRB
+  312             /KCCIOT= KCC
+  313             /KRSIOT= KRS
+  314             /HSR=    0
+  315             
+  316             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
+  317       6011  KSFIOT= RSF
+  318       6016  KRBIOT= RRB RFC
+  319       6014  KCCIOT= RFC
+  320       6016  KRSIOT= RRB RFC
+  321       0001  HSR=    1
+
+      / Prime Number Program for EE432                                    Page 7
+
+
+  322             
+  323             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
+  324       0015  HSRF=   HSRC-TTYC^HSR
+  325             
+  326       7756  *7756
+  327 07756 6014  BEG,    KCCIOT          / INITIALIZE READER
+  328 07757 6011  TTYC,   KSFIOT          / AWAIT INPUT
+  329 07760 5357          JMP     TTYC
+  330 07761 6016          KRBIOT          / GET A CHARACTER
+  331 07762 7106          CLL RTL
+  332 07763 7006          RTL
+  333 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
+  334 07765 5374          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
+  335 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
+  336 07767 6011          KSFIOT          / AWAIT INPUT
+  337 07770 5367          JMP     .-1     
+  338 07771 6016          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
+  339 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
+  340 07773 3776          DCA I   TEMP    / STORE DATA
+  341 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
+  342 07775 5357          JMP     BEG+HSR / GO GET NEXT DATA WORD
+  343 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
+  344             
+
+      No detected errors
+
+      / Prime Number Program for EE432                                    Page 8
+                                                                 Cross Reference
+
+    1 A    285  BASEMB      244    268    289
+    2 A    257  BAUTO   
+    3 A    252  BBEGIN      304
+    4 A    293  BCHAR       214    221    234    235    262
+    5 A    275  BCHEX   
+    6 A    295  BCHKSM      246    259    277
+    7 A    327  BEG         342
+    8 A    205  BEGG        218    220    257    266
+    9 A    206  BEGG1       212    225
+   10 A    259  BEGO        278
+   11 A    244  BEND        267
+   12 A    238  BFMASK      222
+   13 A    214  BGOOD       209
+   14 A    246  BIPZP1  
+   15 A    269  BLODIT      261
+   16 A    294  BMTEM       224    256    260
+   17 A    222  BN300       215
+   18 A    253  BN7600      216
+   19 A    239  BNCDF       223    255
+   20 A    247  BNHLT       207
+   21 A    209  BNLINE  
+   22 A    230  BNREAD      206    236    264
+   23 A    296  BWORD1      263    275    286
+   24 A    297  BWORD2      265    276    288
+   25 A    160  CALCP1      162
+   26 A    161  CALCP2      159
+   27 A    146  CALCPM       44     59     84    164
+   28 A     17  CHECKI       41     43     50     54     70     72     79     83
+   29                        90     95    100    105    140
+   30 A     10  DVI         110    114    118
+   31 A    321  HSR         324    342
+   32 A    341  HSRC        324
+   33 A    324  HSRF        334
+   34 A     19  II           34     36     81    128    138
+   35 A     15  INCVAL       32     35
+   36 A    319  KCCIOT      252    252    327    327
+   37 A    318  KRBIOT      233    233    330    330
+   38 A    320  KRSIOT      338    338
+   39 A    317  KSFIOT      231    231    328    328    336    336
+   40 A     35  LOOP1        37
+   41 A     42  LOOP2        75
+   42 A     52  LOOP3        68
+   43 A     82  LOOP4       141
+   44 A    122  LT10         98
+   45 A    118  LT100       103
+   46 A    114  LT1000      108
+   47 A     26  MAIN    
+   48 A      7  MAXROO       73
+   49 A     21  MEMMAS       46     60     62     65     86    163
+   50 A     11  MUL     
+   51 A     18  MULTIP       51     53     57     58
+   52 A    140  NEXTVA       88    129
+   53 A     70  NOTPRI       48     56
+   54 A     20  PTR          45     63     67     85    153
+   55 A    168  PUTC        113    117    121    124    127    132    135    173
+   56 A    301  RORG        271    272    274
+   57 A    166  SAVEVA      147    148    154    157    161
+
+      / Prime Number Program for EE432                                    Page 9
+                                                                 Cross Reference
+
+   58 A     23  SIEVE        31    152
+   59 A    343  TEMP        340    341
+   60 A    328  TTYC        324    329    334
+   61 A      8  WORDS        33
