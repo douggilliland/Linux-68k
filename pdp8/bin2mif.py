@@ -74,6 +74,9 @@ while pairOffset < len(binList):
 		pairOffset += 2
 	else:
 		outVal = getDataVal(binList[pairOffset],binList[pairOffset+1])
+		if addressOffset > 4095:
+			errStr = 'Output address error, address = ' + str(addressOffset)
+			assert False,
 		outArray[addressOffset] = outVal
 		# print('wrote',outVal,'to address',addressOffset)
 		addressOffset += 1
