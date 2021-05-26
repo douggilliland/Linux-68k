@@ -305,10 +305,6 @@ BWORD2, .-.			/FRAME 2 TEMPORARY
 //////////////////////////////////////////////////////////////////////
 
 
-RORG=	7776			/USED BY RIM AND BIN FOR ORIGIN
-
-* 7777	/ FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
-        JMP     BBEGIN          /START BINARY LOADER
 		
 / https://homepage.divms.uiowa.edu/~jones/pdp8/
 /	RIM LOADERS FOR PAPER TAPE INPUT
@@ -349,4 +345,8 @@ HSRC,	DCA	TEMP	/ SET ADDRESS OF NEXT DATA WORD
 	JMP	BEG+HSR	/ GO GET NEXT DATA WORD
 TEMP,	.-.		/ ADDRESS OF NEXT DATA WORD
 
+RORG=	7776			/USED BY RIM AND BIN FOR ORIGIN
+
+* 7777	/ FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
+        JMP     BBEGIN          /START BINARY LOADER
 $main
