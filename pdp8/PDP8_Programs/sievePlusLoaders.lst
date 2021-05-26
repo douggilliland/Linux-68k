@@ -350,54 +350,54 @@
   305             //////////////////////////////////////////////////////////////////////
   306             
   307             
-  308       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
-  309             
-  310       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
-  311 07777 5307          JMP     BBEGIN          /START BINARY LOADER
-  312                             
-  313             / https://homepage.divms.uiowa.edu/~jones/pdp8/
-  314             /       RIM LOADERS FOR PAPER TAPE INPUT
-  315             
-  316             /UNCOMMENT FOLLOWING FOR TTY INPUT
-  317       6031  KSFIOT= KSF
-  318       6036  KRBIOT= KRB
-  319       6032  KCCIOT= KCC
-  320       6034  KRSIOT= KRS
-  321       0000  HSR=    0
+  308                             
+  309             / https://homepage.divms.uiowa.edu/~jones/pdp8/
+  310             /       RIM LOADERS FOR PAPER TAPE INPUT
+  311             
+  312             /UNCOMMENT FOLLOWING FOR TTY INPUT
+  313       6031  KSFIOT= KSF
+  314       6036  KRBIOT= KRB
+  315       6032  KCCIOT= KCC
+  316       6034  KRSIOT= KRS
+  317       0000  HSR=    0
+  318             
+  319             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
+  320             /KSFIOT= RSF
+  321             /KRBIOT= RRB RFC
 
       / Prime Number Program for EE432                                    Page 7
 
 
-  322             
-  323             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
-  324             /KSFIOT= RSF
-  325             /KRBIOT= RRB RFC
-  326             /KCCIOT= RFC
-  327             /KRSIOT= RRB RFC
-  328             /HSR=    1
-  329             
-  330             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
-  331       0000  HSRF=   HSRC-TTYC^HSR
-  332             
-  333       7756  *7756
-  334 07756 6032  BEG,    KCCIOT          / INITIALIZE READER
-  335 07757 6031  TTYC,   KSFIOT          / AWAIT INPUT
-  336 07760 5357          JMP     TTYC
-  337 07761 6036          KRBIOT          / GET A CHARACTER
-  338 07762 7106          CLL RTL
-  339 07763 7006          RTL
-  340 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
-  341 07765 5357          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
-  342 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
-  343 07767 6031          KSFIOT          / AWAIT INPUT
-  344 07770 5367          JMP     .-1     
-  345 07771 6034          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
-  346 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
-  347 07773 3776          DCA I   TEMP    / STORE DATA
-  348 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
-  349 07775 5356          JMP     BEG+HSR / GO GET NEXT DATA WORD
-  350 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
-  351             
+  322             /KCCIOT= RFC
+  323             /KRSIOT= RRB RFC
+  324             /HSR=    1
+  325             
+  326             / FIXUP TO CHANGE BRANCH TARGET FROM TTYC TO HSRC
+  327       0000  HSRF=   HSRC-TTYC^HSR
+  328             
+  329       7756  *7756
+  330 07756 6032  BEG,    KCCIOT          / INITIALIZE READER
+  331 07757 6031  TTYC,   KSFIOT          / AWAIT INPUT
+  332 07760 5357          JMP     TTYC
+  333 07761 6036          KRBIOT          / GET A CHARACTER
+  334 07762 7106          CLL RTL
+  335 07763 7006          RTL
+  336 07764 7510          SPA             / SKIP IF HIGH BIT OF 8 BIT CHAR RESET
+  337 07765 5357          JMP     TTYC+HSRF       / ELSE LOOP (SKIPPING LEADER)
+  338 07766 7006          RTL             / 6 BIT CHAR IN AC[0-5], LINK=BIT 7
+  339 07767 6031          KSFIOT          / AWAIT INPUT
+  340 07770 5367          JMP     .-1     
+  341 07771 6034          KRSIOT          / OR 6 BIT CHAR INTO AC[6-12]
+  342 07772 7420          SNL             / SKIP NEXT IF BIT 7 OF CHAR 1 WAS SET
+  343 07773 3776          DCA I   TEMP    / STORE DATA
+  344 07774 3376  HSRC,   DCA     TEMP    / SET ADDRESS OF NEXT DATA WORD
+  345 07775 5356          JMP     BEG+HSR / GO GET NEXT DATA WORD
+  346 07776 0000  TEMP,   .-.             / ADDRESS OF NEXT DATA WORD
+  347             
+  348       7776  RORG=   7776                    /USED BY RIM AND BIN FOR ORIGIN
+  349             
+  350       7777  * 7777  / FINAL WORD OF CORE (AFTER RIM) JUMPS TO BIN
+  351 07777 5307          JMP     BBEGIN          /START BINARY LOADER
 
       No detected errors
 
@@ -406,11 +406,11 @@
 
     1 A    289  BASEMB      248    272    293
     2 A    261  BAUTO   
-    3 A    256  BBEGIN      311
+    3 A    256  BBEGIN      351
     4 A    297  BCHAR       218    225    238    239    266
     5 A    279  BCHEX   
     6 A    299  BCHKSM      250    263    281
-    7 A    334  BEG         349
+    7 A    330  BEG         345
     8 A    209  BEGG        222    224    261    270
     9 A    210  BEGG1       216    229
    10 A    263  BEGO        282
@@ -434,15 +434,15 @@
    28 A     17  CHECKI       41     43     50     54     70     72     79     83
    29                        90     95    100    105    140
    30 A     10  DVI         110    114    118
-   31 A    321  HSR         331    349
-   32 A    348  HSRC        331
-   33 A    331  HSRF        341
+   31 A    317  HSR         327    345
+   32 A    344  HSRC        327
+   33 A    327  HSRF        337
    34 A     19  II           34     36     81    128    138
    35 A     15  INCVAL       32     35
-   36 A    319  KCCIOT      256    256    334    334
-   37 A    318  KRBIOT      237    237    337    337
-   38 A    320  KRSIOT      345    345
-   39 A    317  KSFIOT      235    235    335    335    343    343
+   36 A    315  KCCIOT      256    256    330    330
+   37 A    314  KRBIOT      237    237    333    333
+   38 A    316  KRSIOT      341    341
+   39 A    313  KSFIOT      235    235    331    331    339    339
    40 A     35  LOOP1        37
    41 A     42  LOOP2        75
    42 A     52  LOOP3        68
@@ -459,13 +459,13 @@
    53 A     70  NOTPRI       48     56
    54 A     20  PTR          45     63     67     85    153
    55 A    168  PUTC        113    117    121    124    127    132    135    173
-   56 A    308  RORG        275    276    278
+   56 A    348  RORG        275    276    278
    57 A    166  SAVEVA      147    148    154    157    161
 
       / Prime Number Program for EE432                                    Page 9
                                                                  Cross Reference
 
    58 A     23  SIEVE        31    152
-   59 A    350  TEMP        347    348
-   60 A    335  TTYC        331    336    341
+   59 A    346  TEMP        343    344
+   60 A    331  TTYC        327    332    337
    61 A      8  WORDS        33
