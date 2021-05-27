@@ -92,22 +92,27 @@ outStr = 'DEPTH = '+ str(len(outArray)) + ';'
 outList.append(outStr)
 outStr = ''
 outList.append('WIDTH = 12;')
-outList.append('ADDRESS_RADIX = DECIMAL;')
+outList.append('ADDRESS_RADIX = OCTAL;')
 outList.append('DATA_RADIX = OCTAL;')
 outList.append('CONTENT BEGIN')
 lineCount = 0
 addrCount = 0
 for cell in outArray:
 	if lineCount == 0:
-		if len(str(addrCount)) == 4:
-			outVal = str(addrCount) + ':'
-		elif len(str(addrCount)) == 3:
-			outVal = '0' + str(addrCount) + ':'
-		elif len(str(addrCount)) == 2:
-			outVal = '00' + str(addrCount) + ':'
-		elif len(str(addrCount)) == 1:
-			outVal = '000' + str(addrCount) + ':'
-		outStr += outVal
+		# if len(str(addrCount)) == 4:
+			# outVal = str(addrCount) + ':'
+		# elif len(str(addrCount)) == 3:
+			# outVal = '0' + str(addrCount) + ':'
+		# elif len(str(addrCount)) == 2:
+			# outVal = '00' + str(addrCount) + ':'
+		# elif len(str(addrCount)) == 1:
+			# outVal = '000' + str(addrCount) + ':'
+		# outStr += outVal
+		outStr += str((addrCount >> 9) & 7)
+		outStr += str((addrCount >> 6) & 7)
+		outStr += str((addrCount >> 3) & 7)
+		outStr += str(addrCount & 7)
+		outStr += ':'
 	lineCount += 1
 	addrCount += 1	
 	newCell	= ''
