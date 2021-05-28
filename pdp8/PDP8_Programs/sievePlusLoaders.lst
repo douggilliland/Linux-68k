@@ -59,10 +59,6 @@
    55 00231 7430          SZL                     / skip if not at end
    56 00232 5247          JMP     notprime
    57 00233 3021          DCA     multiple
-
-      / Prime Number Program for EE432                                    Page 2
-
-
    58 00234 1021          TAD     multiple        / Find array location for multiple
    59 00235 4775@         JMS     calcpm
    60 00236 1024          TAD     memmask
@@ -120,10 +116,6 @@
   111 00314 7521          MQA MQL                 / remainder to MQ, quotient in AC
   112 00315 1370          TAD     ("0)
   113 00316 4767@         JMS     putc
-
-      / Prime Number Program for EE432                                    Page 3
-
-
   114 00317 7607  LT1000, CLA DVI ; 144           / Divide by 100
       00320 0144
   115 00321 7521          MQA MQL                 / remainder to MQ, quotient in AC
@@ -181,10 +173,6 @@
   154 00410 1223          TAD     saveval / get back starting value
   155 00411 0375          AND     (7)     / Mask it to get index into word
   156 00412 7140          CLL CMA         / complement without increment, clear link
-
-      / Prime Number Program for EE432                                    Page 4
-
-
   157 00413 3223          DCA     saveval
   158 00414 7201          CLA IAC         / load 1 into AC
   159 00415 5217          JMP calcp2
@@ -242,10 +230,6 @@
   207             /       WHAT A KLUGE!
   208             
   209 07647 0000  BEGG,   .-.                     /HISTORICAL NAME
-
-      / Prime Number Program for EE432                                    Page 5
-
-
   210 07650 4272  BEGG1,  JMS     BNREAD          /GET A FRAME
   211 07651 1306          TAD     BNHLT /(7402)   /TEST FOR ERROR (HIGH BITS)
   212 07652 7750          SPA SNA CLA             /SKIP IF (FRAME+7402) > 0
@@ -303,10 +287,6 @@
   264 07717 1352          TAD     BMTEM           /SET UP
   265 07720 3330          DCA     BLODIT          /DESIRED FIELD
   266 07721 1351          TAD     BCHAR           /SAVE AS
-
-      / Prime Number Program for EE432                                    Page 6
-
-
   267 07722 3354          DCA     BWORD1          /FIRST FRAME
   268 07723 4272          JMS     BNREAD          /GET NEXT
   269 07724 3355          DCA     BWORD2          /SAVE AS SECOND FRAME
@@ -364,10 +344,6 @@
   319             /UNCOMMENT FOLLOWING FOR HIGH SPEED READER INPUT
   320             /KSFIOT= RSF
   321             /KRBIOT= RRB RFC
-
-      / Prime Number Program for EE432                                    Page 7
-
-
   322             /KCCIOT= RFC
   323             /KRSIOT= RRB RFC
   324             /HSR=    1
@@ -400,8 +376,6 @@
   351 07777 5307          JMP     BBEGIN          /START BINARY LOADER
 
       No detected errors
-
-      / Prime Number Program for EE432                                    Page 8
                                                                  Cross Reference
 
     1 A    289  BASEMB      248    272    293
