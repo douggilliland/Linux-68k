@@ -220,55 +220,57 @@ int main(int argc, char **argv)
 		unsigned short randomY;
  
     op = 'g';
-	
-	initDisplay();
+	while(1)
+	{	
+		initDisplay();
 
-    switch ( op )
-    {
-      // case 'B':
-      // case 'b':		// blinker test
-        // fa = small_blinker;
-        // fb = temp_blinker;
-        // for(i=0; i< BLINKER_GEN; i++)
-        // {
-           // dump_field(fa, BLINKER_SIZE);
-           // dump_rectangles(fa, BLINKER_SIZE);
-           // evolve(fa, fb, BLINKER_SIZE);
-           // tt = fb; fb = fa; fa = tt;
-        // }
-        // return 0;
-      case 'G':
-      case 'g':		// Glider
-        for(i=0; i < (FIELD_SIZE*FIELD_SIZE) ; i++) field[i]=0;
-        /* prepare the glider */
-        //            SCELL(0, 1);
-        //                          SCELL(1, 2);
-        //SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
-				// Put up 400 random cells
-				for (i=0; i < 500; i++)
-				{
-					randomX = Random() % 45;
-					randomY = Random() % 45;
-					SCELL(randomX, randomY);
-				}
+		  switch ( op )
+		  {
+		    // case 'B':
+		    // case 'b':		// blinker test
+		      // fa = small_blinker;
+		      // fb = temp_blinker;
+		      // for(i=0; i< BLINKER_GEN; i++)
+		      // {
+		         // dump_field(fa, BLINKER_SIZE);
+		         // dump_rectangles(fa, BLINKER_SIZE);
+		         // evolve(fa, fb, BLINKER_SIZE);
+		         // tt = fb; fb = fa; fa = tt;
+		      // }
+		      // return 0;
+		    case 'G':
+		    case 'g':		// Glider
+		      for(i=0; i < (FIELD_SIZE*FIELD_SIZE) ; i++) field[i]=0;
+		      /* prepare the glider */
+		      //            SCELL(0, 1);
+		      //                          SCELL(1, 2);
+		      //SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
+					// Put up 400 random cells
+					for (i=0; i < 500; i++)
+					{
+						randomX = Random() % 45;
+						randomY = Random() % 45;
+						SCELL(randomX, randomY);
+					}
 
-        /* evolve */
-        fa = field;
-        fb = temp_field;
-        for (i=0; i < FIELD_GEN; i++)
-        {
-           //tb_puts("Dumping frame\r\n");
-           //dump_field(fa, FIELD_SIZE);
-           //tb_puts("Dumped frame to tb\r\n");
-           dump_rectangles(fa, FIELD_SIZE);
-           //tb_puts("Dumped frame to fb\r\n");
-		   		 evolve(fa, fb, FIELD_SIZE);
-           tt = fb; fb = fa; fa = tt;
-        }
-        return 0;
-      default:
-        puts("no CA for this\n");
-        break;
-    }
+		      /* evolve */
+		      fa = field;
+		      fb = temp_field;
+		      for (i=0; i < FIELD_GEN; i++)
+		      {
+		         //tb_puts("Dumping frame\r\n");
+		         //dump_field(fa, FIELD_SIZE);
+		         //tb_puts("Dumped frame to tb\r\n");
+		         dump_rectangles(fa, FIELD_SIZE);
+		         //tb_puts("Dumped frame to fb\r\n");
+				 		 evolve(fa, fb, FIELD_SIZE);
+		         tt = fb; fb = fa; fa = tt;
+		      }
+		      return 0;
+		    default:
+		      puts("no CA for this\n");
+		      break;
+		  }
+	}
     return 1;
 }
