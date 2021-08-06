@@ -245,7 +245,7 @@ int main(int argc, char **argv)
         //                          SCELL(1, 2);
         //SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
 				// Put up 400 random cells
-				for (i=0; i < 1000; i++)
+				for (i=0; i < 10000; i++)
 				{
 					randomX = Random() % 45;
 					randomY = Random() % 45;
