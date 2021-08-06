@@ -35,7 +35,7 @@ char small_blinker[] = {
 char temp_blinker[BLINKER_SIZE*BLINKER_SIZE];
  
 #define FIELD_SIZE 45
-#define FIELD_GEN 175
+#define FIELD_GEN 100
 char field[FIELD_SIZE * FIELD_SIZE];
 char temp_field[FIELD_SIZE*FIELD_SIZE];
  
@@ -245,7 +245,7 @@ int main(int argc, char **argv)
         //                          SCELL(1, 2);
         //SCELL(2, 0); SCELL(2, 1); SCELL(2, 2);
 				// Put up 400 random cells
-				for (i=0; i < 5000; i++)
+				for (i=0; i < 500; i++)
 				{
 					randomX = Random() % 45;
 					randomY = Random() % 45;
