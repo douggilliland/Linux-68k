@@ -19,7 +19,7 @@
 main:
 	link.w %fp,#0
 #APP
-| 57 "SDCard.c" 1
+| 59 "SDCard.c" 1
 	move.l #0x1000,%sp
 | 0 "" 2
 #NO_APP
@@ -39,12 +39,12 @@ main:
 	pea .LC3
 	jsr printStringToVDU
 	addq.l #4,%sp
-	jsr readSDBlockToBuffer
+	jsr readSDBlockToRAMBuffer
 	pea .LC4
 	jsr printStringToVDU
 	addq.l #4,%sp
 #APP
-| 67 "SDCard.c" 1
+| 70 "SDCard.c" 1
 	move.b #228,%d7
 	trap #14
 | 0 "" 2
@@ -54,9 +54,9 @@ main:
 	rts
 	.size	main, .-main
 	.align	2
-	.globl	readSDBlockToBuffer
-	.type	readSDBlockToBuffer, @function
-readSDBlockToBuffer:
+	.globl	readSDBlockToRAMBuffer
+	.type	readSDBlockToRAMBuffer, @function
+readSDBlockToRAMBuffer:
 	link.w %fp,#-8
 	move.w #512,-2(%fp)
 	move.l #57344,-6(%fp)
@@ -84,7 +84,7 @@ readSDBlockToBuffer:
 	nop
 	unlk %fp
 	rts
-	.size	readSDBlockToBuffer, .-readSDBlockToBuffer
+	.size	readSDBlockToRAMBuffer, .-readSDBlockToRAMBuffer
 	.align	2
 	.globl	write_SD_LBA
 	.type	write_SD_LBA, @function
@@ -147,29 +147,6 @@ wait_Until_SD_CMD_Done:
 	rts
 	.size	wait_Until_SD_CMD_Done, .-wait_Until_SD_CMD_Done
 	.align	2
-	.globl	waitUART
-	.type	waitUART, @function
-waitUART:
-	link.w %fp,#-4
-	moveq #0,%d0
-	move.l %d0,-4(%fp)
-	moveq #0,%d0
-	move.l %d0,-4(%fp)
-	jra .L14
-.L15:
-	move.l -4(%fp),%d0
-	addq.l #1,%d0
-	move.l %d0,-4(%fp)
-.L14:
-	move.l -4(%fp),%d0
-	cmp.l 8(%fp),%d0
-	jcs .L15
-	nop
-	nop
-	unlk %fp
-	rts
-	.size	waitUART, .-waitUART
-	.align	2
 	.globl	printCharToACIA
 	.type	printCharToACIA, @function
 printCharToACIA:
@@ -178,7 +155,7 @@ printCharToACIA:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L17:
+.L14:
 	move.l #65601,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -187,7 +164,7 @@ printCharToACIA:
 	and.l %d1,%d0
 	moveq #2,%d1
 	cmp.l %d0,%d1
-	jne .L17
+	jne .L14
 	move.l #65603,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -200,8 +177,8 @@ printCharToACIA:
 printStringToACIA:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L19
-.L20:
+	jra .L16
+.L17:
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
@@ -214,13 +191,13 @@ printStringToACIA:
 	move.l %d0,-(%sp)
 	jsr printCharToACIA
 	addq.l #4,%sp
-.L19:
+.L16:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L20
+	jne .L17
 	nop
 	nop
 	unlk %fp
@@ -235,7 +212,7 @@ printCharToVDU:
 	move.b %d0,%d0
 	move.b %d0,-2(%fp)
 	nop
-.L22:
+.L19:
 	move.l #65600,%a0
 	move.b (%a0),%d0
 	move.b %d0,%d0
@@ -244,7 +221,7 @@ printCharToVDU:
 	and.l %d1,%d0
 	moveq #2,%d1
 	cmp.l %d0,%d1
-	jne .L22
+	jne .L19
 	move.l #65602,%a0
 	move.b -2(%fp),(%a0)
 	nop
@@ -257,8 +234,8 @@ printCharToVDU:
 printStringToVDU:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L24
-.L25:
+	jra .L21
+.L22:
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
@@ -271,16 +248,39 @@ printStringToVDU:
 	move.l %d0,-(%sp)
 	jsr printCharToVDU
 	addq.l #4,%sp
-.L24:
+.L21:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L25
+	jne .L22
 	nop
 	nop
 	unlk %fp
 	rts
 	.size	printStringToVDU, .-printStringToVDU
+	.align	2
+	.globl	waitLoop
+	.type	waitLoop, @function
+waitLoop:
+	link.w %fp,#-4
+	moveq #0,%d0
+	move.l %d0,-4(%fp)
+	moveq #0,%d0
+	move.l %d0,-4(%fp)
+	jra .L24
+.L25:
+	move.l -4(%fp),%d0
+	addq.l #1,%d0
+	move.l %d0,-4(%fp)
+.L24:
+	move.l -4(%fp),%d0
+	cmp.l 8(%fp),%d0
+	jcs .L25
+	nop
+	nop
+	unlk %fp
+	rts
+	.size	waitLoop, .-waitLoop
 	.ident	"GCC: (GNU) 9.3.1 20200817"
