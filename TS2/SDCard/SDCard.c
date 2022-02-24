@@ -170,7 +170,7 @@ void printStringToVDU(const char * strToPrint)
 
 // waitLoop(unsigned long waitTime)
 // Software timing loop
-void waitLoop(unsigned int waitTime)
+void waitLoop(unsigned long waitTime)
 {
 	volatile unsigned long timeCount = 0;
 	for (timeCount = 0; timeCount < waitTime; timeCount++);
