@@ -46,12 +46,13 @@ void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
 void printCharToVDU(unsigned char);
 void printStringToVDU(const char *);
-void waitUART(unsigned int waitTime);
+void waitLoop(unsigned int waitTime);
 void wait_Until_SD_CMD_Done(void);
 void write_SD_LBA(unsigned long);
 void readSDBlockToBuffer(void);
 void wait_Until_SD_Char_RD_Rdy(void);
 
+// main() - Read first block from the SD card
 int main(void)
 {
 	asm("move.l #0x1000,%sp"); // Set up initial stack pointer
@@ -69,6 +70,7 @@ int main(void)
 	return(0);
 }
 
+// readSDBlockToBuffer() - Read a block to a buffer
 void readSDBlockToBuffer(void)
 {
 	unsigned short loopCount = 512;
@@ -85,6 +87,9 @@ void readSDBlockToBuffer(void)
 	}
 }
 
+// write_SD_LBA(unsigned long lba)
+// lba - Logical Block Address
+// Set the Logical Block Address (LBA)
 void write_SD_LBA(unsigned long lba)
 {
 	unsigned char lba0, lba1, lba2;
@@ -96,6 +101,8 @@ void write_SD_LBA(unsigned long lba)
 	* SD_LBA2_REG = lba2;
 }
 
+// wait_Until_SD_Char_RD_Rdy()
+// Wait until the SD Card read data is present
 void wait_Until_SD_Char_RD_Rdy(void)
 {
 	unsigned char charStat;
@@ -106,6 +113,8 @@ void wait_Until_SD_Char_RD_Rdy(void)
 	}
 }
 
+// wait_Until_SD_CMD_Done()
+// Wait for card ready before doing any reading
 void wait_Until_SD_CMD_Done(void)
 {
 	unsigned char charStat;
@@ -116,7 +125,8 @@ void wait_Until_SD_CMD_Done(void)
 	}
 }
 
-void waitUART(unsigned int waitTime)
+
+void waitLoop(unsigned int waitTime)
 {
 	volatile unsigned int timeCount = 0;
 	for (timeCount = 0; timeCount < waitTime; timeCount++);
