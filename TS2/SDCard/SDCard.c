@@ -6,14 +6,14 @@
 #define VDUDATA		(volatile unsigned char *) 0x010042
 #define ACIA_TXRDYBIT 0x2
 
-// SD Card
+// SD Card Memory Map
 #define SD_SDDATA_REG	(volatile unsigned char *) 0x010051
 #define SD_STATUS_REG	(volatile unsigned char *) 0x010053
 #define SD_CMD_REG		(volatile unsigned char *) 0x010053
 #define SD_LBA0_REG		(volatile unsigned char *) 0x010055
 #define SD_LBA1_REG		(volatile unsigned char *) 0x010057
 #define SD_LBA2_REG		(volatile unsigned char *) 0x010059
-// SD Card Status Reg
+// SD Card Status Reg Bits
 #define SD_WR_RDY		0X80
 #define SD_RD_RDY		0X40
 #define SD_BLK_BUSY		0X20
@@ -41,7 +41,7 @@
 --	 Write byte to SDDATA
 */
 
-// Prototypes
+// Function prototypes
 void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
 void printCharToVDU(unsigned char);
@@ -49,10 +49,10 @@ void printStringToVDU(const char *);
 void waitLoop(unsigned int waitTime);
 void wait_Until_SD_CMD_Done(void);
 void write_SD_LBA(unsigned long);
-void readSDBlockToBuffer(void);
+void readSDBlockToRAMBuffer(void);
 void wait_Until_SD_Char_RD_Rdy(void);
 
-// main() - Read first block from the SD card
+// main() - Read first block from the SD card into SRAM
 int main(void)
 {
 	asm("move.l #0x1000,%sp"); // Set up initial stack pointer
@@ -63,15 +63,18 @@ int main(void)
 	printStringToVDU("Writing LBA = 0\n\r");
 	write_SD_LBA(0);
 	printStringToVDU("Reading block\n\r");
-	readSDBlockToBuffer();
+	readSDBlockToRAMBuffer();
 	printStringToVDU("Block was read to 0xE000\n\r");
 	asm("move.b #228,%d7\n\t"
 		"trap #14");
 	return(0);
 }
 
-// readSDBlockToBuffer() - Read a block to a buffer
-void readSDBlockToBuffer(void)
+// readSDBlockToRAMBuffer()
+// Read a block to a buffer
+// Buffer is at BUFFER_START
+// Length is 512 bytes
+void readSDBlockToRAMBuffer(void)
 {
 	unsigned short loopCount = 512;
 	unsigned char readSDChar;
@@ -125,19 +128,26 @@ void wait_Until_SD_CMD_Done(void)
 	}
 }
 
-
+// waitLoop(unsigned int waitTime)
+// Software timing loop
 void waitLoop(unsigned int waitTime)
 {
 	volatile unsigned int timeCount = 0;
 	for (timeCount = 0; timeCount < waitTime; timeCount++);
 }
 
+// printCharToACIA(unsigned char charToPrint)
+// Print a character to the ACIA
+// charToPrint - The character to send out
 void printCharToACIA(unsigned char charToPrint)
 {
 	while ((*ACIASTAT & ACIA_TXRDYBIT) != ACIA_TXRDYBIT);
 	* ACIADATA = charToPrint;
 }
 
+// printStringToACIA(const char * strToPrint)
+// Send a string out through the ACIA
+// strToPrint - The string to send out
 void printStringToACIA(const char * strToPrint)
 {
 	int strOff = 0;
@@ -145,12 +155,18 @@ void printStringToACIA(const char * strToPrint)
 		printCharToACIA(strToPrint[strOff++]);
 }
 
+// void printCharToVDU(unsigned char charToPrint)
+// Print a character to the VDU
+// charToPrint - The character to send out
 void printCharToVDU(unsigned char charToPrint)
 {
 	while ((*VDUSTAT & ACIA_TXRDYBIT) != ACIA_TXRDYBIT);
 	* VDUDATA = charToPrint;
 }
 
+// printStringToVDU(const char * strToPrint)
+// Send a string out through the VDU
+// strToPrint - The string to send out to the VDU
 void printStringToVDU(const char * strToPrint)
 {
 	int strOff = 0;
