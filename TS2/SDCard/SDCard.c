@@ -1,5 +1,6 @@
 // SDCard.c
 
+// ACIA and VDU interfaces
 #define ACIASTAT	(volatile unsigned char *) 0x010041
 #define ACIADATA	(volatile unsigned char *) 0x010043
 #define VDUSTAT		(volatile unsigned char *) 0x010040
@@ -46,11 +47,11 @@ void printCharToACIA(unsigned char);
 void printStringToACIA(const char *);
 void printCharToVDU(unsigned char);
 void printStringToVDU(const char *);
-void waitLoop(unsigned int waitTime);
 void wait_Until_SD_CMD_Done(void);
 void write_SD_LBA(unsigned long);
 void readSDBlockToRAMBuffer(void);
 void wait_Until_SD_Char_RD_Rdy(void);
+void waitLoop(unsigned long waitTime);
 
 // main() - Read first block from the SD card into SRAM
 int main(void)
@@ -65,8 +66,9 @@ int main(void)
 	printStringToVDU("Reading block\n\r");
 	readSDBlockToRAMBuffer();
 	printStringToVDU("Block was read to 0xE000\n\r");
+	
 	asm("move.b #228,%d7\n\t"
-		"trap #14");
+		"trap #14");			// Return to TUTOR monitor
 	return(0);
 }
 
@@ -128,14 +130,6 @@ void wait_Until_SD_CMD_Done(void)
 	}
 }
 
-// waitLoop(unsigned int waitTime)
-// Software timing loop
-void waitLoop(unsigned int waitTime)
-{
-	volatile unsigned int timeCount = 0;
-	for (timeCount = 0; timeCount < waitTime; timeCount++);
-}
-
 // printCharToACIA(unsigned char charToPrint)
 // Print a character to the ACIA
 // charToPrint - The character to send out
@@ -172,4 +166,12 @@ void printStringToVDU(const char * strToPrint)
 	int strOff = 0;
 	while(strToPrint[strOff] != 0)
 		printCharToVDU(strToPrint[strOff++]);
+}
+
+// waitLoop(unsigned long waitTime)
+// Software timing loop
+void waitLoop(unsigned int waitTime)
+{
+	volatile unsigned long timeCount = 0;
+	for (timeCount = 0; timeCount < waitTime; timeCount++);
 }
