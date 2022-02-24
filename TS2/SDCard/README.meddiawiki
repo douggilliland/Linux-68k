@@ -1,0 +1,26 @@
+== SD Card ==
+
+* Code reads SD Card to RAM
+* Runs on MultiComp In A Box platform
+
+== Build Environment ==
+
+* gcc built as a cross-compiler for the 68k platform
+* Build the code using the provided make file. It gets linked at address $2000
+* To load it into the TUTOR monitor you can run the command "LO2" and then send the run file to the serial port
+* On a Windows desktop system use puTTY to copy/paste .run file
+
+== Running Program ==
+
+* You can now run the program from TUTOR using GO 2000
+* Output should look like the following:
+
+<pre>
+TUTOR  1.3 > GO 2000
+PHYSICAL ADDRESS=00002000
+Waiting on SD Card ready
+SD Card is ready
+Writing LBA = 0
+Reading block
+Block was read to 0xE000
+</pre>
