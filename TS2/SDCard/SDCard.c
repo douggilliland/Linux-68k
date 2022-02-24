@@ -69,8 +69,6 @@ int main(void)
 	return(0);
 }
 
-void 
-
 void readSDBlockToBuffer(void)
 {
 	unsigned short loopCount = 512;
