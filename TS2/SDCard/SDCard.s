@@ -58,21 +58,25 @@ main:
 	.type	readSDBlockToBuffer, @function
 readSDBlockToBuffer:
 	link.w %fp,#-8
-	move.w #512,-6(%fp)
-	move.l #57344,-4(%fp)
+	move.w #512,-2(%fp)
+	move.l #57344,-6(%fp)
 	jra .L4
 .L5:
 	jsr wait_Until_SD_Char_RD_Rdy
 	move.l #65617,%a0
 	move.b (%a0),-7(%fp)
-	move.l -4(%fp),%d0
+	move.l -6(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
-	move.l %d1,-4(%fp)
+	move.l %d1,-6(%fp)
 	move.l %d0,%a0
 	move.b -7(%fp),(%a0)
+	move.w -2(%fp),%d0
+	move.w %d0,%d1
+	subq.w #1,%d1
+	move.w %d1,-2(%fp)
 .L4:
-	tst.w -6(%fp)
+	tst.w -2(%fp)
 	jne .L5
 	nop
 	nop
