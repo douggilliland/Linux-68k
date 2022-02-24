@@ -3,6 +3,7 @@
 * 68000 code builds
 ** ExtRAMTest - Test the 1MB External SRAM on the RETRO-EP4CE15 card
 ** tutor - Tutor 1.3 Machine language monitor for the 68000 TS2 design
+** SDCard - Test SD Card reads
 
 == Useful Pages ==
 
