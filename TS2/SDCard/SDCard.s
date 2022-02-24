@@ -60,6 +60,8 @@ readSDBlockToBuffer:
 	link.w %fp,#-8
 	move.w #512,-2(%fp)
 	move.l #57344,-6(%fp)
+	move.l #65619,%a0
+	move.b #0,(%a0)
 	jra .L4
 .L5:
 	jsr wait_Until_SD_Char_RD_Rdy
