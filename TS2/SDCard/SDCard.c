@@ -80,6 +80,7 @@ void readSDBlockToBuffer(void)
 		wait_Until_SD_Char_RD_Rdy();
 		readSDChar = *SD_SDDATA_REG;
 		*destAddr++ = readSDChar;
+		loopCount--;
 	}
 }
 
@@ -113,8 +114,6 @@ void wait_Until_SD_CMD_Done(void)
 		charStat = *SD_STATUS_REG;
 	}
 }
-
-
 
 void waitUART(unsigned int waitTime)
 {
