@@ -1,4 +1,4 @@
-== SD Card ==
+== SD Card Code ==
 
 * Code reads SD Card to RAM
 * Runs on MultiComp In A Box platform
