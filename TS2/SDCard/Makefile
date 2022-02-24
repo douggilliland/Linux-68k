@@ -1,13 +1,13 @@
-all:	demo.run demo.s
+all:	SDCard.run SDCard.s
 
-demo.run: demo.c
-	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -m68000 -msoft-float -c demo.c
-	/opt/m68k-elf/bin/m68k-elf-ld --defsym=_start=main -Ttext=0x2000 -Tdata=0x3000 -Tbss=0x4000 --section-start=.rodata=0x5000 demo.o `/opt/m68k-elf/bin/m68k-elf-gcc -m68000 -print-libgcc-file-name`
-	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec a.out demo.run
+SDCard.run: SDCard.c
+	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -m68000 -msoft-float -c SDCard.c
+	/opt/m68k-elf/bin/m68k-elf-ld --defsym=_start=main -Ttext=0x2000 -Tdata=0x3000 -Tbss=0x4000 --section-start=.rodata=0x5000 SDCard.o `/opt/m68k-elf/bin/m68k-elf-gcc -m68000 -print-libgcc-file-name`
+	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec a.out SDCard.run
 
-demo.s: demo.c
-	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -nostdlib -nodefaultlibs -m68000 -S demo.c
+SDCard.s: SDCard.c
+	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -nostdlib -nodefaultlibs -m68000 -S SDCard.c
 
 clean:
-	$(RM) a.out demo.o demo.run demo.s
+	$(RM) a.out SDCard.o SDCard.run SDCard.s
 
