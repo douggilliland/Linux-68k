@@ -74,7 +74,7 @@ void readSDBlockToBuffer(void)
 	unsigned short loopCount = 512;
 	unsigned char readSDChar;
 	unsigned char * destAddr;
-	destAddr = BUFFER_START;
+	destAddr = (unsigned long) BUFFER_START;
 	while (loopCount > 0)
 	{
 		wait_Until_SD_Char_RD_Rdy();
