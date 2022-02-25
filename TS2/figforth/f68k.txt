@@ -12,7 +12,7 @@ compiler, math words, output words, and VLIST run from 3000-3400H. Disc I/O and 
 to the COLD label (at 364E).or the warm start at the label WARM (at 368A).
 
 The 1802 model used as a starting point assumed 128-byte buffer blocks. Modifications were made in +BUF to handle automatically
-1024,512, and 256 byte buffers as well. "84" was replaced by "B/BUF 4 + ". Similarly, the null word X, was modified to handle 1,2,4,as well as
+1024,512, and 256 byte buffers as well. "84" was replaced by "B/BUF 4 + ". Similarly, the null word X, was modified to handle 1, 2, 4, as well as
 the original 8 buffers/screen, "7" was replaced by "B/SCR 1 -", B/BUF and B/SCR, now userconstants on the USER page need only be chosen to
 give 1024 bytes/screen.
 
@@ -27,7 +27,7 @@ FILL. To abide by the fig standards you may perform the modification suggested i
 The 68000 is considered a word addressing processor, so ! and @ do not handle odd addresses. However C@ C! C, CMOVE all work as expected
 (with the aforementionned restriction with respect to CMOVE)
 
-A new code word,C=,has been added that functions like = except that only the low bytes are compared. This is used in EXPECT a couple of
+A new code word, C=,has been added that functions like = except that only the low bytes are compared. This is used in EXPECT a couple of
 times to replace =. EXPECT has also been modified to get its backspace-keyin and backspace-output ASCII codes from the USER
 page,where they are called BKSPKEY and BKSPEMIT.
 
@@ -46,7 +46,7 @@ We aschewed the use of advanced features in the assembler such as macros as they
 used ourselves the A68k public domain CP/M cross assembler from QUELO. Some labels in repeat loops have been replaced by the SET directive.
 This releaves the burden on the symbol table (in our case crucial) and it is also cleaner because it shows that the label is strictly local.
 
-                                REGISTER ALLOCATION
+REGISTER ALLOCATION
 
 Address registers are numbered A0..A7 in the 68000 and data registers are D0...D7. Five address registers are dedicated pointers. A3 is CS,
 the computation stack pointer which grows toward low memory and is always pointing at the high order (but lower memory) byte of the top
@@ -54,14 +54,14 @@ the computation stack pointer which grows toward low memory and is always pointi
 pointer, loaded as usual via IP and incremented as used, A6 is US, the USER page pointer with which offset addresses are used to locate USER
 variables and userconstants. A7 is RS , the return stack, which operates like CS. Any code routines that use A3-A7 must save and restore them.
 
-                              RUNNING 68000 fig-FORTH
+RUNNING 68000 fig-FORTH
 
 1. Load the 68000 code into a 68000 system from 2000-370B or at whatever place you choose to assemble.
 
 2. Write 68000 code subroutines for EMIT, KEY, ?TERMINAL.CR, and R/W and put the addresses of these subroutines at bytes 40-49 on the USER page
 by filling them into the appropriate locations in the COLDUS data block. It is much easier to append the customized code to the 68000
 source and assemble the whole lot in one go. The addresses of the subroutines will be filled in automatically correct. Data register D0
-is used to pass ASCII bytes in EMIT and KEY,and the flag in ?TERMINAL. Remember to save and restore address register A3-A7 if they are used.
+is used to pass ASCII bytes in EMIT and KEY, and the flag in ?TERMINAL. Remember to save and restore address register A3-A7 if they are used.
 FORTH will look on the user page for the addresses of these subroutines, and COLD will have put them there.
 
 3. Fit U0 S0 R0 TIB BKSPKEY BKSPEMIT DICTLIMIT FIRST LIMIT USE PREV B/BUF and B/SCR to fit your hardware. Do this by changing the
