@@ -25,8 +25,7 @@ README.TXT      This file
 * Brings up a small Forth system.
 * Note that the FIG standard has been superseeded by F79, F83 and ANSI.
 * What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available.
-* A print out of this once was available from our user group and a fotocopy kan still be had from me.
-* You can reach me on the Forth gg board 085-422164 (From abroad 31-85-422164)
+* A print out of this once was available from our user group and a photocopy can still be had from me.
 
-                                Albert van der Horst
-                                HCC-FORTH-GG
+Albert van der Horst
+HCC-FORTH-GG
