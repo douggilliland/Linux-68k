@@ -1,11 +1,16 @@
 == FIGForth ==
 
-* It runs on my TS2 FPGA Retro-Computer. 
-* Jeff Tranter made one small source change and added a Makefile. 
-* Build it using the VASM cross-assembler. 
+* Brings up a small Forth system
+* It runs on my [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TS2_FPGA TS2_FPGA Retro-Computer]
+* Jeff Tranter made one small source change and added a Makefile
+* Build it using the VASM cross-assembler
 * It loads into RAM from TUTOR
-* Start address is $3648.
+* Start address is '''$3648'''
 * Modifications Doug Gilliland 2022
+* Used vasm 68K cross assembler
+* Note that the FIG standard has been superseeded by F79, F83 and ANSI
+* What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available
+* A print out of this once was available from our user group and a photocopy can still be had from me
 
 == Source ==
 
@@ -26,12 +31,6 @@ F68K.DOC        ASCII version of F68K.WS, such as printed
 F68K.TXT        ASCII version of F68K.WS, printable on screen
 README.TXT      This file
 </pre>
-
-* Used vasm 68K cross assembler
-* Brings up a small Forth system.
-* Note that the FIG standard has been superseeded by F79, F83 and ANSI.
-* What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available.
-* A print out of this once was available from our user group and a photocopy can still be had from me.
 
 Albert van der Horst
 HCC-FORTH-GG
