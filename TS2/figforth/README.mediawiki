@@ -4,7 +4,7 @@ http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
 http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
 http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
 
-It runs on my TS2 680000-based single board computer. I made one small source change and added a Makefile to build it using the VASM cross-assembler. 
+It runs on my TS2 680000-based single board computer. I [Jeff Tranter] made one small source change and added a Makefile to build it using the VASM cross-assembler. 
 
 It loads into RAM and the start address is $3648.
 
