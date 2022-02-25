@@ -1,12 +1,14 @@
-Modifications Doug Gilliland 2022
+== FIGForth ==
 
-These files were originally downloaded from:
+* Modifications Doug Gilliland 2022
+* These files were originally downloaded from:
+** http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
+** http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
+** http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
 
-* http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
-* http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
-* http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
-
-It runs on my TS2 680000-based single board computer. I [Jeff Tranter] made one small source change and added a Makefile to build it using the VASM cross-assembler. 
+* It runs on my TS2 FPGA Retro-Computer. 
+* Jeff Tranter made one small source change and added a Makefile. 
+* Build it using the VASM cross-assembler. 
 
 It loads into RAM and the start address is $3648.
 
