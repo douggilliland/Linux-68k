@@ -1,20 +1,23 @@
 == FIGForth ==
 
+* It runs on my TS2 FPGA Retro-Computer. 
+* Jeff Tranter made one small source change and added a Makefile. 
+* Build it using the VASM cross-assembler. 
+* It loads into RAM from TUTOR
+* Start address is $3648.
 * Modifications Doug Gilliland 2022
+
+== Source ==
+
 * These files were originally downloaded from:
 ** http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
 ** http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
 ** http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
 
-* It runs on my TS2 FPGA Retro-Computer. 
-* Jeff Tranter made one small source change and added a Makefile. 
-* Build it using the VASM cross-assembler. 
-
-It loads into RAM and the start address is $3648.
-
 ------------------------------------------------------------------------
 
-Distribution by HCC-FORTH-GG     1994 nov 10
+== Distribution by HCC-FORTH-GG     1994 nov 10 ==
+
 <pre>
 F68K.ASM        68000 assembler source listing for FIG Forth
 F68K.WS         Documentation in Wordstar format
