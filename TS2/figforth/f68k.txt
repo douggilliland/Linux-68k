@@ -1,4 +1,4 @@
-                        68000 fig-FORTH
+68000 fig-FORTH
 
 This version of FORTH implements the fig-FORTH model presented in the FORTH Interest Group's Installation Manual in code for the Motorola
 68000 microprocessor. The listing presented here after is identical to the version 1.0 of Kenneth Mantei, except that this is in standard
