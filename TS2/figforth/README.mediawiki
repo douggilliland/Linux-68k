@@ -7,8 +7,7 @@
 
 == Build ==
 
-* Build it using the VASM cross-assembler
-* Used vasm 68K cross assembler
+* Build it using the VASM 68k cross-assembler
 
 == History ==
 
