@@ -11,7 +11,7 @@ Most of the constants relate to hardware and it seemed desirable to locate these
 The conditional compiler, math words, output words, and VLIST run from 3000-3400H. Disc I/O and boot-up code runs from 3400-3700H. 
 FORTH is entered by a jump to the COLD label (at 364E).or the warm start at the label WARM (at 368A).
 
-The 1802 model used as a starting point assumed 128-byte buffer blocks. Modifications were made in +BUF to handle automatically 1024,512, and 256 byte buffers as well. 
+The 1802 model used as a starting point assumed 128-byte buffer blocks. Modifications were made in +BUF to handle automatically 1024, 512, and 256 byte buffers as well. 
 "84" was replaced by "B/BUF 4 + ". Similarly, the null word X, was modified to handle 1, 2, 4, as well as the original 8 buffers/screen, "7" was replaced by "B/SCR 1 -", 
 B/BUF and B/SCR, now userconstants on the USER page need only be chosen to give 1024 bytes/screen.
 
