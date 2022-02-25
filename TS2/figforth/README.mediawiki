@@ -16,6 +16,8 @@
 * What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available
 * A print out of this once was available from our user group and a photocopy can still be had from me
 * Modifications Doug Gilliland 2022
+** Fixed a source file line
+** Updated [https://github.com/douggilliland/Linux-68k/blob/master/TS2/figforth/Makefile make file] path to vasm
 
 == Source ==
 
