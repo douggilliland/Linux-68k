@@ -9,10 +9,11 @@
 
 == Source ==
 
-* These files were originally downloaded from:
-** http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
-** http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
-** http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
+These files were originally downloaded from:
+
+* http://home.hccnet.nl/a.w.m.van.der.horst/forthimpl.html
+* http://home.hccnet.nl/a.w.m.van.der.horst/fig68k.zip
+* http://home.hccnet.nl/a.w.m.van.der.horst/figdoc.zip
 
 ------------------------------------------------------------------------
 
