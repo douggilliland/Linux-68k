@@ -1,7 +1,7 @@
 == FIGForth ==
 
 * Brings up a small Forth system
-* It runs on my [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TS2_FPGA TS2_FPGA Retro-Computer]
+* Runs on my [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TS2_FPGA TS2_FPGA Retro-Computer]
 * Jeff Tranter made one small source change and added a Makefile
 * Build it using the VASM cross-assembler
 * It loads into RAM from TUTOR
