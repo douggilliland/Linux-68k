@@ -1,49 +1,13 @@
-CC=clang
-CFLAGS=-Wall -std=c99 -pedantic -Wextra -Weverything -Wno-padded -Os #-emit-llvm
-LDFLAGS=-Os
-AR=ar
-ARFLAGS=rcs
+all:	kk_srec.run kk_srec.s
 
-OBJS = kk_srec.o bin2srec.o srec2bin.o
-BINPATH = ./
-LIBPATH = ./
-BINS = $(BINPATH)srec2bin $(BINPATH)bin2srec
-LIB = $(LIBPATH)libkk_srec.a
-TESTER =
-TESTFILE = $(LIB)
+kk_srec.run: kk_srec.c
+	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -m68000 -msoft-float -c kk_srec.c
+	/opt/m68k-elf/bin/m68k-elf-ld --defsym=_start=main -Ttext=0x2000 -Tdata=0x3000 -Tbss=0x4000 --section-start=.rodata=0x5000 kk_srec.o `/opt/m68k-elf/bin/m68k-elf-gcc -m68000 -print-libgcc-file-name`
+	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec a.out kk_srec.run
 
-.PHONY: all clean distclean test
-
-all: $(BINS) $(LIB)
-
-$(OBJS): kk_srec.h
-$(BINS): | $(BINPATH)
-$(LIB): | $(LIBPATH)
-
-$(LIB): $(OBJS)
-	$(AR) $(ARFLAGS) $@ $+
-
-$(BINPATH)srec2bin: srec2bin.o $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $+
-
-$(BINPATH)bin2srec: bin2srec.o $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $+
-
-test: $(BINPATH)bin2srec $(BINPATH)srec2bin $(TESTFILE)
-	@$(TESTER) $(BINPATH)bin2srec -v -a 0x80000 \
-		-h '123456789_123456789_123456789_1' \
-		-i '$(TESTFILE)' -x 0xFF | \
-	    $(TESTER) $(BINPATH)srec2bin -A -v | \
-	    diff '$(TESTFILE)' -
-	@echo Loopback test success!
-
-$(sort $(BINPATH) $(LIBPATH)):
-	@mkdir -p $@
+kk_srec.s: kk_srec.c
+	/opt/m68k-elf/bin/m68k-elf-gcc -Wall -nostdlib -nodefaultlibs -m68000 -S kk_srec.c
 
 clean:
-	rm -f $(OBJS)
-
-distclean: | clean
-	rm -f $(BINS) $(LIB)
-	@rmdir $(BINPATH) $(LIBPATH) >/dev/null 2>/dev/null || true
+	$(RM) a.out kk_srec.o kk_srec.run kk_srec.s
 

@@ -13,6 +13,15 @@
 #define SREC_RECORD_TYPE_MASK 0xF0
 #define SREC_READ_STATE_MASK 0x0F
 
+void srec_begin_read (struct srec_state *srec);
+void srec_read_byte (struct srec_state *srec, char byte);
+void srec_read_bytes (struct srec_state * restrict srec, const char * restrict data, srec_count_t count);
+void srec_end_read (struct srec_state *srec);
+
+int main(void)
+{
+}
+
 enum srec_read_state {
     READ_WAIT_FOR_START = 0,
     READ_RECORD_TYPE,
@@ -23,15 +32,13 @@ enum srec_read_state {
     READ_DATA_LOW
 };
 
-void
-srec_begin_read (struct srec_state *srec) {
+void srec_begin_read (struct srec_state *srec) {
     srec->flags = 0;
     srec->byte_count = 0;
     srec->length = 0;
 }
 
-void
-srec_read_byte (struct srec_state *srec, char byte) {
+void srec_read_byte (struct srec_state *srec, char byte) {
     uint_fast8_t b = (uint_fast8_t) byte;
     uint_fast8_t state = (srec->flags & SREC_READ_STATE_MASK);
     srec->flags ^= state; // turn off the old state
@@ -91,8 +98,7 @@ save_read_state:
     srec->flags |= state;
 }
 
-void
-srec_read_bytes (struct srec_state * restrict srec,
+void srec_read_bytes (struct srec_state * restrict srec,
                  const char * restrict data,
                  srec_count_t count) {
     while (count > 0) {
@@ -101,8 +107,7 @@ srec_read_bytes (struct srec_state * restrict srec,
     }
 }
 
-void
-srec_end_read (struct srec_state *srec) {
+void srec_end_read (struct srec_state *srec) {
     uint8_t *r = srec->data;
     uint8_t *eptr;
     srec_address_t address = 0;
@@ -135,3 +140,4 @@ srec_end_read (struct srec_state *srec) {
     srec->length = 0;
     srec->byte_count = 0;
 }
+
