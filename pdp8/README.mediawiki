@@ -2,18 +2,17 @@
 
 = PDP-8 Software Toolchain =
 
-This project is [https://hackaday.io/project/179357-pdp-8-fpga described here].
-
-Please consider purchasing Tom's book. It's inexpensive ($7) and helpful.
-
-* [https://www.amazon.com/PDP-8-Class-Project-Resoling-Machine-ebook/dp/B07KY5RCJ7/ Amazon link]
+* [https://hackaday.io/project/179357-pdp-8-fpga Hackaday project page].
+* Please consider purchasing Tom's book. It's inexpensive ($7) and helpful.
+** [https://www.amazon.com/PDP-8-Class-Project-Resoling-Machine-ebook/dp/B07KY5RCJ7/ Amazon link]
 
 <img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/PDP-8/PDP8_Book(Almy)/Almy_Book_Cover.png"></img>
 
-* MACRO8X - PDP-8 Macro Assembler
-** [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c Source code] and Linux executable
-** Linux executable compiled with GCC
-** Source code would not compile under Visual Studio
+= MACRO8X - PDP-8 Macro Assembler =
+
+* [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c Source code] and Linux executable
+* Linux executable compiled with GCC
+* Source code would not compile under Visual Studio
 * bin2mif.py
 ** Convert DEC BIN (binary) file to Altera Memory Initialization file (MIF)
 <pre>python ..\bin2mif_2.py skippy.bin > skippy.mif</pre>
