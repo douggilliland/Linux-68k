@@ -6,6 +6,7 @@
 ** 68000
 ** PDP-8
 ** PDP-11
+* Run on Linux Virtual Machine under VirtualBox
 
 == 68000 Software Development Toolchain ==
 
