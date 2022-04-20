@@ -1,4 +1,4 @@
-== PDP-8 Software ==
+= PDP-8 Software Toolchain =
 
 This project is [https://hackaday.io/project/179357-pdp-8-fpga described here].
 
@@ -7,7 +7,6 @@ Please consider purchasing Tom's book. It's inexpensive ($7) and helpful.
 * [https://www.amazon.com/PDP-8-Class-Project-Resoling-Machine-ebook/dp/B07KY5RCJ7/ Amazon link]
 
 <img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/PDP-8/PDP8_Book(Almy)/Almy_Book_Cover.png"></img>
-
 
 * MACRO8X - PDP-8 Macro Assembler
 ** [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c Source code] and Linux executable
@@ -18,7 +17,7 @@ Please consider purchasing Tom's book. It's inexpensive ($7) and helpful.
 <pre>python ..\bin2mif_2.py skippy.bin > skippy.mif</pre>
 * [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/bin2mif.py bin2mif.py]
 
-== PDP8_Programs - Example Code ==
+= PDP8_Programs - Example Code =
 
 * From Tom Almy's PDP-8 book [https://www.amazon.com/PDP-8-Class-Project-Resoling-Machine-ebook/dp/B07KY5RCJ7/ref=sr_1_1?dchild=1&keywords=tom+almy+pdp-8&qid=1615991822&sr=8-1 The PDP-8 Class Project: Resoling An Old Machine]
 * [https://github.com/douggilliland/Retro-Computers/tree/master/PDP-8/PDP8_Book(Almy) FPGA code repo]
