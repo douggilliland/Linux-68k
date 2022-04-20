@@ -13,6 +13,9 @@
 * [https://github.com/douggilliland/Linux-68k/blob/master/pdp8/macro8x.c Source code] and Linux executable
 * Linux executable compiled with GCC
 * Source code would not compile under Visual Studio
+
+== Bin tool ==
+
 * bin2mif.py
 ** Convert DEC BIN (binary) file to Altera Memory Initialization file (MIF)
 <pre>python ..\bin2mif_2.py skippy.bin > skippy.mif</pre>
