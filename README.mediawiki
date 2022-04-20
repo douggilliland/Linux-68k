@@ -35,7 +35,7 @@
 
 <img src="https://raw.githubusercontent.com/douggilliland/Retro-Computers/master/68000/ReferenceDesigns/MECB/MECB-02.jpg"></img>
 
-= Useful Pages =
+=== Useful Pages ===
 
 * [https://sourceware.org/binutils/docs/binutils/objcopy.html objcopy docs]
 * [https://github.com/douggilliland/Retro-Computers/blob/master/PC%20Tools/srecord/srecord-1.64.pdf srecord docs]
