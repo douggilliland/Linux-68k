@@ -16,9 +16,13 @@
 
 === TG68_AMR_Software ===
 
+* [https://hackaday.io/project/174679-68k-cpu-with-frame-buffer-on-fpga 68000 with Frame Buffer] - Hackaday Project page
 * AMR Build
-* 68000 CPU
-* Frame Buffer
+** 68000 CPU
+** Frame Buffer
+* [https://github.com/douggilliland/Linux-68k/tree/master/TG68_AMR_Software/Apps Application Code]
+* [https://github.com/douggilliland/Linux-68k/tree/master/TG68_AMR_Software/Bootloader_Firmware Bootloader code]
+* [https://github.com/douggilliland/Linux-68k/tree/master/TG68_AMR_Software/Firmware_Common Firmware]
 
 === TS2 Build ===
 
@@ -27,6 +31,7 @@
 * [https://github.com/douggilliland/MultiComp/wiki 68000 FPGA] - MultiComp derivative - VHDL code
 * [http://land-boards.com/blwiki/index.php?title=RETRO-EP4CE15 RETRO-EP4CE15] - FPGA Wiki page
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000/Dev%20Tools/GCC_m68k-elf-toolchain Instructions to build GCC cross tools]
+* [https://github.com/douggilliland/Linux-68k/tree/master/TS2 TS2 Software]
 
 ==== MECB ====
 
@@ -46,8 +51,14 @@
 * [https://github.com/douggilliland/Retro-Computers/tree/master/68000/ReferenceDesigns/MECB MECB] Motorola Educational Computer Board
 * [https://franke.ms/cex GodBolt 68k C Compiler]
 
-== PDP-8 ==
+== PDP-8 Software Development Toolchain ==
 
+* [https://github.com/douggilliland/Linux-68k/tree/master/pdp8 PDP-8 Software]
+* [https://hackaday.io/project/179357-pdp-8-fpga PDP-8 FPGA] - Hackaday Project page (Almy build)
+** [https://github.com/douggilliland/Linux-68k/tree/master/pdp8/PDP8_Programs Almy software examples]
+* [https://hackaday.io/project/180081-opencores-pdp-8-on-fpga OpenCores PDP-8 on FPGA] - Hackaday Project page (OpenCores Build)
+** [https://github.com/douggilliland/Linux-68k/tree/master/pdp8/OpenCores_Disk_Images OpenCores Disk Images]
 
-== PDP-11 ==
+== PDP-11 Software Development Toolchain ==
 
+* [https://github.com/douggilliland/Linux-68k/tree/master/vasm vasm PDP-11 Assembler]
