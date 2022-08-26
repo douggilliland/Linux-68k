@@ -4,11 +4,12 @@
 
 * Bresenham line and circle drawing algorithms
 * Uses integer math to draw lines (no floating point)
-* https://circuitcellar.com/cc-blog/bresenhams-algorithm/
+* [https://circuitcellar.com/cc-blog/bresenhams-algorithm/ Source]
 
 == Conway ==
 
 * Conway's Game of Life
+* [https://rosettacode.org/wiki/Conway's_Game_of_Life/C Source]
 
 == Demo ==
 
