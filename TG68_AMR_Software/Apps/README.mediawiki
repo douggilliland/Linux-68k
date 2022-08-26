@@ -24,6 +24,7 @@
 
 == Filesystem ==
 
+* FAT Filesystem
 * Load raw sound file and play it
 
 == Hello World! ==
