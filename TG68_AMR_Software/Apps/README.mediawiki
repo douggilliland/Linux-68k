@@ -39,6 +39,7 @@
 
 * Portable ProTracker 2.3a replayer
 * Play MOD files
+* [https://github.com/8bitbubsy/pt2-clone Source code]
 * [https://www.youtube.com/watch?v=nLij_gBkbtk Demo video]
 
 == New Demo ==
