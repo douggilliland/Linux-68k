@@ -33,11 +33,13 @@
 
 == JPEG ==
 
-* Display JPEG picture on VGA
+* De-compress and display JPEG picture on VGA display
 
 == Modplayer ==
 
+* Portable ProTracker 2.3a replayer
 * Play MOD files
+* [https://www.youtube.com/watch?v=nLij_gBkbtk Demo video]
 
 == New Demo ==
 
