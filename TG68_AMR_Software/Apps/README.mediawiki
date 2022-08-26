@@ -1,5 +1,9 @@
 = TG68 AMR Applications =
 
+== Bresenham ==
+
+* Line drawing algorithm
+
 == Conway ==
 
 * Conway's Game of Life
@@ -10,10 +14,34 @@
 ** Switch between modes using function keys on keyboard
 * Load Image from SD Card
 
+== Drystone ==
+
+* Benchmark
+
+== Filesystem ==
+
+* Load raw sound file and play it
+
 == Hello World! ==
 
 * Hello World code
 
+== JPEG ==
+
+* Display JPEG picture on VGA
+
+== Modplayer ==
+
+* Play MOD files
+
+== New Demo ==
+
+* Add functions to AMR's demo code
+
 == Rectangles ==
 
 * Draw a bunch of rectangles
+
+== SoundCheck ==
+
+* Play audio ramp
