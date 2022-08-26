@@ -20,6 +20,7 @@
 == Drystone ==
 
 * Benchmark
+* [https://github.com/Keith-S-Thompson/dhrystone Source code]
 
 == Filesystem ==
 
