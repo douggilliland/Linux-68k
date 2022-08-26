@@ -2,7 +2,9 @@
 
 == Bresenham ==
 
-* Line drawing algorithm
+* Bresenham line and circle drawing algorithms
+* Uses integer math to draw lines (no floating point)
+* https://circuitcellar.com/cc-blog/bresenhams-algorithm/
 
 == Conway ==
 
