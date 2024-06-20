@@ -42,9 +42,9 @@ CTRLX	=	$18     | Line Clear
 
 STACK_START         =     RAM_END
 
-	ORG	ROM_START
+	.ORG	ROM_START
 
-|||| FIRST 8 bytes loaded after reset ||||
+| FIRST 8 bytes loaded after reset |
     DC.l    STACK_START  | Supervisor stack pointer
     DC.l    ROM_START    | Initial PC    
 
