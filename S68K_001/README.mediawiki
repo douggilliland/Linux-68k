@@ -5,7 +5,7 @@
 <pre>
 ssh-keygen
 </pre>
-* Copy id_rsa.pub file contents to github public key
+* Copy id_rsa.pub file contents to github public key via github web browser
 <pre>
 git remote remove origin
 git remote add origin douggilliland/Linux-68k.git
