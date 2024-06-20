@@ -1,46 +1,46 @@
 * Borrowed init code from
 *  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
-RAM_START	equ $00100	* Leave room for vector table copy
-RAM_END		equ $7FFFF	* 512KB SRAM
-ROM_START	equ $08000	* ROM start
-ROM_END		equ $0BFFF	* End of 32KB EPROM
+RAM_START	= $00100	* Leave room for vector table copy
+RAM_END		= $7FFFF	* 512KB SRAM
+ROM_START	= $08000	* ROM start
+ROM_END		= $0BFFF	* End of 32KB EPROM
 
 *********************************
 * 68681 Duart Register Addresses
 *
-DUART equ $0F0000       * Base Addr of DUART
-MRA   equ DUART+0       * Mode Register A           (R/W)
-SRA   equ DUART+2       * Status Register A         (r)
-CSRA  equ DUART+2       * Clock Select Register A   (w)
-CRA   equ DUART+4       * Commands Register A       (w)
-RBA   equ DUART+6       * Receiver Buffer A         (r)
-TBA   equ DUART+6       * Transmitter Buffer A      (w)
-ACR   equ DUART+8       * Aux. Control Register     (R/W)
-ISR   equ DUART+10      * Interrupt Status Register (R)
-IMR   equ DUART+10      * Interrupt Mask Register   (W)
-MRB   equ DUART+16      * Mode Register B           (R/W)
-SRB   equ DUART+18      * Status Register B         (R)
-CSRB  equ DUART+18      * Clock Select Register B   (W)
-CRB   equ DUART+20      * Commands Register B       (W)
-RBB   equ DUART+22      * Reciever Buffer B         (R)
-TBB   equ DUART+22      * Transmitter Buffer B      (W)
-IVR   equ DUART+24      * Interrupt Vector Register (R/W)
+DUART = $0F0000       * Base Addr of DUART
+MRA   = DUART+0       * Mode Register A           (R/W)
+SRA   = DUART+2       * Status Register A         (r)
+CSRA  = DUART+2       * Clock Select Register A   (w)
+CRA   = DUART+4       * Commands Register A       (w)
+RBA   = DUART+6       * Receiver Buffer A         (r)
+TBA   = DUART+6       * Transmitter Buffer A      (w)
+ACR   = DUART+8       * Aux. Control Register     (R/W)
+ISR   = DUART+10      * Interrupt Status Register (R)
+IMR   = DUART+10      * Interrupt Mask Register   (W)
+MRB   = DUART+16      * Mode Register B           (R/W)
+SRB   = DUART+18      * Status Register B         (R)
+CSRB  = DUART+18      * Clock Select Register B   (W)
+CRB   = DUART+20      * Commands Register B       (W)
+RBB   = DUART+22      * Reciever Buffer B         (R)
+TBB   = DUART+22      * Transmitter Buffer B      (W)
+IVR   = DUART+24      * Interrupt Vector Register (R/W)
 
 **********************************
 * ASCII Control Characters
 *
-BEL   equ $07
-BKSP  equ $08       * CTRL-H
-TAB   equ $09
-LF    equ $0A
-CR    equ $0D
-ESC   equ $1B
+BEL   = $07
+BKSP  = $08       * CTRL-H
+TAB   = $09
+LF    = $0A
+CR    = $0D
+ESC   = $1B
 
-CTRLC	EQU	$03     
-CTRLX	EQU	$18     * Line Clear
+CTRLC	=	$03     
+CTRLX	=	$18     * Line Clear
 
-STACK_START         equ     RAM_END
+STACK_START         =     RAM_END
 
 	ORG	ROM_START
 
