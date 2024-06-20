@@ -14,5 +14,7 @@ git remote add origin douggilliland/Linux-68k.git
 <pre>
 git add .
 git commit -m 'my commit'
+git push
+(or if needed)
 git push --set-upstream origin master
 </pre>
