@@ -1,1 +1,7 @@
 = Build of 68K Code =
+
+* Code built on Linux VM VirtualBox
+<pre>
+git add .
+git commit -m 'my commit'
+git push --set-upstream origin master
