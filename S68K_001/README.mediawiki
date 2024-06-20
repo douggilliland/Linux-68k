@@ -1,0 +1,18 @@
+= Build of 68K Code =
+
+* Code built on Linux VM VirtualBo
+* Needed to make a new key
+<pre>
+ssh-keygen
+</pre>
+* Copy id_rsa.pub file contents to github public key
+<pre>
+git remote remove origin
+git remote add origin douggilliland/Linux-68k.git
+</pre>
+* Again
+<pre>
+git add .
+git commit -m 'my commit'
+git push --set-upstream origin master
+</pre>
