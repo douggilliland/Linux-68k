@@ -49,7 +49,7 @@ STACK_START         =     RAM_END
     DC.l    ROM_START    | Initial PC    
 
 ROM_START:
-    lea     STACK_START, SP     | Set our stack pointer to be sure
+    lea     RAM_END, SP     | Set our stack pointer to be sure
     jsr     initDuart           | Setup the serial port
 
 
