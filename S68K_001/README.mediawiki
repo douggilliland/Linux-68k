@@ -1,16 +1,28 @@
 = Build of 68K Code =
 
-* Code built on Linux VM VirtualBo
+== Environment ==
+
+* Code built on Linux VM VirtualBox
+** Host machine is a Windows box
+** Running MINT Linux OS
+
+== Fix error from no longer being allowed to use ID/Pwd ==
+
 * Needed to make a new key
 <pre>
 ssh-keygen
 </pre>
 * Copy id_rsa.pub file contents to github public key via github web browser
+
+== Connect to database with ssh instead of https ==
+
 <pre>
 git remote remove origin
 git remote add origin douggilliland/Linux-68k.git
 </pre>
-* Again
+
+== Push the code changes up to github ==
+
 <pre>
 git add .
 git commit -m 'my commit'
