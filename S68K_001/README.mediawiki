@@ -1,6 +1,7 @@
 = Build of 68K Code =
 
-* Code built on Linux VM VirtualBox
+* Code built on Linux VM VirtualBo
+* Needed to make a new key
 <pre>
 ssh-keygen
 </pre>
