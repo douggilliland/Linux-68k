@@ -2,7 +2,7 @@
 
 == Environment ==
 
-* Code built on Linux VM VirtualBox
+* Code built on Oracle VM VirtualBox
 ** Host machine is a Windows box
 ** Running MINT Linux OS
 
