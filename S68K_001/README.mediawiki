@@ -2,6 +2,10 @@
 
 * Code built on Linux VM VirtualBox
 <pre>
+ssh-keygen
+</pre>
+* Copy id_rsa.pub file contents to github public key
+<pre>
 git remote remove origin
 git remote add origin douggilliland/Linux-68k.git
 </pre>
