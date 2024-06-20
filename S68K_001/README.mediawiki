@@ -2,6 +2,11 @@
 
 * Code built on Linux VM VirtualBox
 <pre>
+git remote remove origin
+git remote add origin douggilliland/Linux-68k.git
+</pre>
+* Again
+<pre>
 git add .
 git commit -m 'my commit'
 git push --set-upstream origin master
