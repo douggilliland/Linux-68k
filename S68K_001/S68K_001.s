@@ -1,15 +1,15 @@
 | Borrowed init code from
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
-RAM_START	= $00100	| Leave room for vector table copy
-RAM_END		= $7FFFF	| 512KB SRAM
-ROM_START	= $08000	| ROM start
-ROM_END		= $0BFFF	| End of 32KB EPROM
+RAM_START	= 0x00100	| Leave room for vector table copy
+RAM_END		= 0x7FFFF	| 512KB SRAM
+ROM_START	= 0x08000	| ROM start
+ROM_END		= 0x0BFFF	| End of 32KB EPROM
 
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
 |
-DUART = $0F0000       | Base Addr of DUART
+DUART = 0x0F0000       | Base Addr of DUART
 MRA   = DUART+0       | Mode Register A           (R/W)
 SRA   = DUART+2       | Status Register A         (r)
 CSRA  = DUART+2       | Clock Select Register A   (w)
@@ -30,15 +30,15 @@ IVR   = DUART+24      | Interrupt Vector Register (R/W)
 ||||||||||||||||||||||||||||||||||
 | ASCII Control Characters
 |
-BEL   = $07
-BKSP  = $08       | CTRL-H
-TAB   = $09
-LF    = $0A
-CR    = $0D
-ESC   = $1B
+BEL   = 0x07
+BKSP  = 0x08       | CTRL-H
+TAB   = 0x09
+LF    = 0x0A
+CR    = 0x0D
+ESC   = 0x1B
 
-CTRLC	=	$03     
-CTRLX	=	$18     | Line Clear
+CTRLC	=	0x03     
+CTRLX	=	0x18     | Line Clear
 
 STACK_START         =     RAM_END
 
@@ -75,16 +75,16 @@ inChar:
 |||||
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
-    move.b  #$30, CRA       | Reset Transmitter
-    move.b  #$20, CRA       | Reset Reciever
-    move.b  #$10, CRA       | Reset Mode Register Pointer
+    move.b  #0x30, CRA       | Reset Transmitter
+    move.b  #0x20, CRA       | Reset Reciever
+    move.b  #0x10, CRA       | Reset Mode Register Pointer
     
-    move.b  #$80, ACR       | Baud Rate Set #2
-    move.b  #$BB, CSRA      | Set Tx and Rx rates to 9600
-    move.b  #$93, MRA       | 7-bit, No Parity ($93 for 8-bit, $92 for 7-bit)
-    move.b  #$07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+    move.b  #0x80, ACR       | Baud Rate Set #2
+    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
     
-    move.b  #$05, CRA       | Enable Transmit/Recieve
+    move.b  #0x05, CRA       | Enable Transmit/Recieve
     rts    
 
 
