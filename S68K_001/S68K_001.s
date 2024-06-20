@@ -49,9 +49,9 @@ STACK_START         =     RAM_END
     DC.l    ROM_START    | Initial PC    
 
 ROM_START:
-    lea     #RAM_END, SP     | Set our stack pointer to be sure
     jsr     initDuart           | Setup the serial port
-
+FERVR:
+	jmp FERVR
 
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
