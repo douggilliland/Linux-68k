@@ -5,3 +5,4 @@
 git add .
 git commit -m 'my commit'
 git push --set-upstream origin master
+</pre>
