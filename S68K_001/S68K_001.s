@@ -1,10 +1,10 @@
-| Borrowed init code from
+| Borrowed init code from 
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
 RAM_START	= 0x00100	| Leave room for vector table copy
 RAM_END		= 0x7FFFF	| 512KB SRAM
-ROM_START	= 0x08000	| ROM start
-ROM_END		= 0x0BFFF	| End of 32KB EPROM
+ROM_START	= 0x80000	| ROM start
+ROM_END		= 0x87FFF	| End of 32KB EPROM
 
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
