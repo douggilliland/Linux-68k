@@ -1,0 +1,155 @@
+68K GAS  S68K_001.s 			page 1
+
+
+   1               	| Borrowed init code from
+   2               	|  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
+   3               	
+   4               	RAM_START	= 0x00100	| Leave room for vector table copy
+   5               	RAM_END		= 0x7FFFF	| 512KB SRAM
+   6               	ROM_START	= 0x08000	| ROM start
+   7               	ROM_END		= 0x0BFFF	| End of 32KB EPROM
+   8               	
+   9               	|||||||||||||||||||||||||||||||||
+  10               	| 68681 Duart Register Addresses
+  11               	|
+  12               	DUART = 0x0F0000       | Base Addr of DUART
+  13               	MRA   = DUART+0       | Mode Register A           (R/W)
+  14               	SRA   = DUART+2       | Status Register A         (r)
+  15               	CSRA  = DUART+2       | Clock Select Register A   (w)
+  16               	CRA   = DUART+4       | Commands Register A       (w)
+  17               	RBA   = DUART+6       | Receiver Buffer A         (r)
+  18               	TBA   = DUART+6       | Transmitter Buffer A      (w)
+  19               	ACR   = DUART+8       | Aux. Control Register     (R/W)
+  20               	ISR   = DUART+10      | Interrupt Status Register (R)
+  21               	IMR   = DUART+10      | Interrupt Mask Register   (W)
+  22               	MRB   = DUART+16      | Mode Register B           (R/W)
+  23               	SRB   = DUART+18      | Status Register B         (R)
+  24               	CSRB  = DUART+18      | Clock Select Register B   (W)
+  25               	CRB   = DUART+20      | Commands Register B       (W)
+  26               	RBB   = DUART+22      | Reciever Buffer B         (R)
+  27               	TBB   = DUART+22      | Transmitter Buffer B      (W)
+  28               	IVR   = DUART+24      | Interrupt Vector Register (R/W)
+  29               	
+  30               	||||||||||||||||||||||||||||||||||
+  31               	| ASCII Control Characters
+  32               	|
+  33               	BEL   = 0x07
+  34               	BKSP  = 0x08       | CTRL-H
+  35               	TAB   = 0x09
+  36               	LF    = 0x0A
+  37               	CR    = 0x0D
+  38               	ESC   = 0x1B
+  39               	
+  40               	CTRLC	=	0x03     
+  41               	CTRLX	=	0x18     | Line Clear
+  42               	
+  43               	STACK_START         =     RAM_END
+  44               	
+  45 0000 0000 0000 		.ORG	ROM_START
+  45      0000 0000 
+  45      0000 0000 
+  45      0000 0000 
+  45      0000 0000 
+  46               	
+  47               	| FIRST 8 bytes loaded after reset |
+  48 8000 0007 FFFF 	    DC.l    STACK_START  | Supervisor stack pointer
+  49 8004 0000 8000 	    DC.l    ROM_START    | Initial PC    
+  50               	
+  51               	ROM_START:
+  52 8008 4EBA 0036 	    jsr     initDuart           | Setup the serial port
+  53               	FERVR:
+68K GAS  S68K_001.s 			page 2
+
+
+  54 800c 4EFA FFFE 		jmp FERVR
+  55               	
+  56               	|||||
+  57               	| Writes a character to Port A, blocking if not ready (Full buffer)
+  58               	|  - Takes a character in D0
+  59               	outChar:
+  60 8010 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
+  60      000F 0002 
+  61 8018 6700 FFF6 	    beq     outChar     
+  62 801c 13F9 0000 	    move.b  d0, TBA      | Transmit Character
+  62      0000 000F 
+  62      0006 
+  63 8026 4E75      	    rts
+  64               	
+  65               	|||||
+  66               	| Reads in a character from Port A, blocking if none available
+  67               	|  - Returns character in D0
+  68               	|    
+  69               	inChar:
+  70 8028 0839 0000 	    btst    #0,  SRA     | Check if receiver ready bit is set
+  70      000F 0002 
+  71 8030 6700 FFF6 	    beq     inChar
+  72 8034 13F9 000F 	    move.b  RBA, d0      | Read Character into D0
+  72      0006 0000 
+  72      0000 
+  73 803e 4E75      	    rts
+  74               	
+  75               	|||||
+  76               	| Initializes the 68681 DUART port A as 9600 8N1 
+  77               	initDuart:
+  78 8040 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+  78      000F 0004 
+  79 8048 13FC 0020 	    move.b  #0x20, CRA       | Reset Reciever
+  79      000F 0004 
+  80 8050 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
+  80      000F 0004 
+  81               	    
+  82 8058 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+  82      000F 0008 
+  83 8060 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+  83      000F 0002 
+  84 8068 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+  84      000F 0000 
+  85 8070 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+  85      000F 0000 
+  86               	    
+  87 8078 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+  87      000F 0004 
+  88 8080 4E75      	    rts    
+  89               	
+  90               	
+68K GAS  S68K_001.s 			page 3
+
+
+DEFINED SYMBOLS
+          S68K_001.s:4      *ABS*:0000000000000100 RAM_START
+          S68K_001.s:5      *ABS*:000000000007ffff RAM_END
+          S68K_001.s:51     .text:0000000000008008 ROM_START
+          S68K_001.s:7      *ABS*:000000000000bfff ROM_END
+          S68K_001.s:12     *ABS*:00000000000f0000 DUART
+          S68K_001.s:13     *ABS*:00000000000f0000 MRA
+          S68K_001.s:14     *ABS*:00000000000f0002 SRA
+          S68K_001.s:15     *ABS*:00000000000f0002 CSRA
+          S68K_001.s:16     *ABS*:00000000000f0004 CRA
+          S68K_001.s:17     *ABS*:00000000000f0006 RBA
+          S68K_001.s:18     *ABS*:00000000000f0006 TBA
+          S68K_001.s:19     *ABS*:00000000000f0008 ACR
+          S68K_001.s:20     *ABS*:00000000000f000a ISR
+          S68K_001.s:21     *ABS*:00000000000f000a IMR
+          S68K_001.s:22     *ABS*:00000000000f0010 MRB
+          S68K_001.s:23     *ABS*:00000000000f0012 SRB
+          S68K_001.s:24     *ABS*:00000000000f0012 CSRB
+          S68K_001.s:25     *ABS*:00000000000f0014 CRB
+          S68K_001.s:26     *ABS*:00000000000f0016 RBB
+          S68K_001.s:27     *ABS*:00000000000f0016 TBB
+          S68K_001.s:28     *ABS*:00000000000f0018 IVR
+          S68K_001.s:33     *ABS*:0000000000000007 BEL
+          S68K_001.s:34     *ABS*:0000000000000008 BKSP
+          S68K_001.s:35     *ABS*:0000000000000009 TAB
+          S68K_001.s:36     *ABS*:000000000000000a LF
+          S68K_001.s:37     *ABS*:000000000000000d CR
+          S68K_001.s:38     *ABS*:000000000000001b ESC
+          S68K_001.s:40     *ABS*:0000000000000003 CTRLC
+          S68K_001.s:41     *ABS*:0000000000000018 CTRLX
+          S68K_001.s:43     *ABS*:000000000007ffff STACK_START
+          S68K_001.s:77     .text:0000000000008040 initDuart
+          S68K_001.s:53     .text:000000000000800c FERVR
+          S68K_001.s:59     .text:0000000000008010 outChar
+          S68K_001.s:69     .text:0000000000008028 inChar
+
+UNDEFINED SYMBOLS
+d0
