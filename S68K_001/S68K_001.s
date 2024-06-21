@@ -48,8 +48,7 @@ STACK_START         =     RAM_END
     DC.l    STACK_START  | Supervisor stack pointer
     DC.l    ROM_START    | Initial PC    
 
-ROM_START:
-    jsr     initDuart           | Setup the serial port
+	jsr     initDuart           | Setup the serial port
 FERVR:
 	jmp FERVR
 
