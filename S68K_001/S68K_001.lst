@@ -53,8 +53,8 @@
   46      0000 0000 
   47               	
   48               	| FIRST 8 bytes loaded after reset |
-  49 80000 0007 FFFF 	    DC.l    STACK_START  | Supervisor stack pointer
-  50 80004 0008 0008 	    DC.l    ROM_START+8  | Initial PC
+  49 80000 0007 FFFF 	    DC.l    STACK_START | Supervisor stack pointer
+  50 80004 0008 0400 	    DC.l    ROM_CODE	| Initial PC
   51               	
   52 80008 0000 0000 	        .ORG ROM_CODE
   52      0000 0000 

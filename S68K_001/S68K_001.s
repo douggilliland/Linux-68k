@@ -46,8 +46,8 @@ STACK_START         =     RAM_END
 	.ORG	ROM_START
 
 | FIRST 8 bytes loaded after reset |
-    DC.l    STACK_START  | Supervisor stack pointer
-    DC.l    ROM_START+8  | Initial PC
+    DC.l    STACK_START | Supervisor stack pointer
+    DC.l    ROM_CODE	| Initial PC
 
         .ORG ROM_CODE
 	move.l	#1, d0
