@@ -37,7 +37,7 @@ LF    = 0x0A
 CR    = 0x0D
 ESC   = 0x1B
 
-CTRLC	=	0x03     
+CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
 
 STACK_START         =     RAM_END
@@ -46,7 +46,7 @@ STACK_START         =     RAM_END
 
 | FIRST 8 bytes loaded after reset |
     DC.l    STACK_START  | Supervisor stack pointer
-    DC.l    ROM_START    | Initial PC    
+    DC.l    ROM_START+8  | Initial PC
 
 	jsr     initDuart           | Setup the serial port
 FERVR:
