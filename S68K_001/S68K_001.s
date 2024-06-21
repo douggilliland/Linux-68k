@@ -4,6 +4,7 @@
 RAM_START	= 0x00100	| Leave room for vector table copy
 RAM_END		= 0x7FFFF	| 512KB SRAM
 ROM_START	= 0x80000	| ROM start
+ROM_CODE	= ROM_START+1024| Skip vector table
 ROM_END		= 0x87FFF	| End of 32KB EPROM
 
 |||||||||||||||||||||||||||||||||
@@ -48,7 +49,10 @@ STACK_START         =     RAM_END
     DC.l    STACK_START  | Supervisor stack pointer
     DC.l    ROM_START+8  | Initial PC
 
-	jsr     initDuart           | Setup the serial port
+        .ORG ROM_CODE
+	move.l	#1, d0
+	move.b	d0, 0x080000	| Set swap bit so SRAM works
+	jsr     initDuart       | Setup the serial port
 FERVR:
 	jmp FERVR
 

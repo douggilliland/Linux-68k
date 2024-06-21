@@ -7,148 +7,164 @@
    4               	RAM_START	= 0x00100	| Leave room for vector table copy
    5               	RAM_END		= 0x7FFFF	| 512KB SRAM
    6               	ROM_START	= 0x80000	| ROM start
-   7               	ROM_END		= 0x87FFF	| End of 32KB EPROM
-   8               	
-   9               	|||||||||||||||||||||||||||||||||
-  10               	| 68681 Duart Register Addresses
-  11               	|
-  12               	DUART = 0x0F0000       | Base Addr of DUART
-  13               	MRA   = DUART+0       | Mode Register A           (R/W)
-  14               	SRA   = DUART+2       | Status Register A         (r)
-  15               	CSRA  = DUART+2       | Clock Select Register A   (w)
-  16               	CRA   = DUART+4       | Commands Register A       (w)
-  17               	RBA   = DUART+6       | Receiver Buffer A         (r)
-  18               	TBA   = DUART+6       | Transmitter Buffer A      (w)
-  19               	ACR   = DUART+8       | Aux. Control Register     (R/W)
-  20               	ISR   = DUART+10      | Interrupt Status Register (R)
-  21               	IMR   = DUART+10      | Interrupt Mask Register   (W)
-  22               	MRB   = DUART+16      | Mode Register B           (R/W)
-  23               	SRB   = DUART+18      | Status Register B         (R)
-  24               	CSRB  = DUART+18      | Clock Select Register B   (W)
-  25               	CRB   = DUART+20      | Commands Register B       (W)
-  26               	RBB   = DUART+22      | Reciever Buffer B         (R)
-  27               	TBB   = DUART+22      | Transmitter Buffer B      (W)
-  28               	IVR   = DUART+24      | Interrupt Vector Register (R/W)
-  29               	
-  30               	||||||||||||||||||||||||||||||||||
-  31               	| ASCII Control Characters
-  32               	|
-  33               	BEL   = 0x07
-  34               	BKSP  = 0x08       | CTRL-H
-  35               	TAB   = 0x09
-  36               	LF    = 0x0A
-  37               	CR    = 0x0D
-  38               	ESC   = 0x1B
-  39               	
-  40               	CTRLC	=	0x03
-  41               	CTRLX	=	0x18     | Line Clear
-  42               	
-  43               	STACK_START         =     RAM_END
-  44               	
-  45 0000 0000 0000 		.ORG	ROM_START
-  45      0000 0000 
-  45      0000 0000 
-  45      0000 0000 
-  45      0000 0000 
-  46               	
-  47               	| FIRST 8 bytes loaded after reset |
-  48 80000 0007 FFFF 	    DC.l    STACK_START  | Supervisor stack pointer
-  49 80004 0008 0008 	    DC.l    ROM_START+8  | Initial PC
-  50               	
-  51 80008 4EBA 0036 		jsr     initDuart           | Setup the serial port
-  52               	FERVR:
-  53 8000c 4EFA FFFE 		jmp FERVR
+   7               	ROM_CODE	= ROM_START+1024| Skip vector table
+   8               	ROM_END		= 0x87FFF	| End of 32KB EPROM
+   9               	
+  10               	|||||||||||||||||||||||||||||||||
+  11               	| 68681 Duart Register Addresses
+  12               	|
+  13               	DUART = 0x0F0000       | Base Addr of DUART
+  14               	MRA   = DUART+0       | Mode Register A           (R/W)
+  15               	SRA   = DUART+2       | Status Register A         (r)
+  16               	CSRA  = DUART+2       | Clock Select Register A   (w)
+  17               	CRA   = DUART+4       | Commands Register A       (w)
+  18               	RBA   = DUART+6       | Receiver Buffer A         (r)
+  19               	TBA   = DUART+6       | Transmitter Buffer A      (w)
+  20               	ACR   = DUART+8       | Aux. Control Register     (R/W)
+  21               	ISR   = DUART+10      | Interrupt Status Register (R)
+  22               	IMR   = DUART+10      | Interrupt Mask Register   (W)
+  23               	MRB   = DUART+16      | Mode Register B           (R/W)
+  24               	SRB   = DUART+18      | Status Register B         (R)
+  25               	CSRB  = DUART+18      | Clock Select Register B   (W)
+  26               	CRB   = DUART+20      | Commands Register B       (W)
+  27               	RBB   = DUART+22      | Reciever Buffer B         (R)
+  28               	TBB   = DUART+22      | Transmitter Buffer B      (W)
+  29               	IVR   = DUART+24      | Interrupt Vector Register (R/W)
+  30               	
+  31               	||||||||||||||||||||||||||||||||||
+  32               	| ASCII Control Characters
+  33               	|
+  34               	BEL   = 0x07
+  35               	BKSP  = 0x08       | CTRL-H
+  36               	TAB   = 0x09
+  37               	LF    = 0x0A
+  38               	CR    = 0x0D
+  39               	ESC   = 0x1B
+  40               	
+  41               	CTRLC	=	0x03
+  42               	CTRLX	=	0x18     | Line Clear
+  43               	
+  44               	STACK_START         =     RAM_END
+  45               	
+  46 0000 0000 0000 		.ORG	ROM_START
+  46      0000 0000 
+  46      0000 0000 
+  46      0000 0000 
+  46      0000 0000 
+  47               	
+  48               	| FIRST 8 bytes loaded after reset |
+  49 80000 0007 FFFF 	    DC.l    STACK_START  | Supervisor stack pointer
+  50 80004 0008 0008 	    DC.l    ROM_START+8  | Initial PC
+  51               	
+  52 80008 0000 0000 	        .ORG ROM_CODE
+  52      0000 0000 
 68K GAS  S68K_001.s 			page 2
 
 
-  54               	
-  55               	|||||
-  56               	| Writes a character to Port A, blocking if not ready (Full buffer)
-  57               	|  - Takes a character in D0
-  58               	outChar:
-  59 80010 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
-  59      000F 0002 
-  60 80018 6700 FFF6 	    beq     outChar     
-  61 8001c 13F9 0000 	    move.b  d0, TBA      | Transmit Character
-  61      0000 000F 
-  61      0006 
-  62 80026 4E75      	    rts
-  63               	
-  64               	|||||
-  65               	| Reads in a character from Port A, blocking if none available
-  66               	|  - Returns character in D0
-  67               	|    
-  68               	inChar:
-  69 80028 0839 0000 	    btst    #0,  SRA     | Check if receiver ready bit is set
-  69      000F 0002 
-  70 80030 6700 FFF6 	    beq     inChar
-  71 80034 13F9 000F 	    move.b  RBA, d0      | Read Character into D0
-  71      0006 0000 
-  71      0000 
-  72 8003e 4E75      	    rts
-  73               	
-  74               	|||||
-  75               	| Initializes the 68681 DUART port A as 9600 8N1 
-  76               	initDuart:
-  77 80040 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
-  77      000F 0004 
-  78 80048 13FC 0020 	    move.b  #0x20, CRA       | Reset Reciever
-  78      000F 0004 
-  79 80050 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
-  79      000F 0004 
-  80               	    
-  81 80058 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
-  81      000F 0008 
-  82 80060 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
-  82      000F 0002 
-  83 80068 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-  83      000F 0000 
-  84 80070 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
-  84      000F 0000 
-  85               	    
-  86 80078 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
-  86      000F 0004 
-  87 80080 4E75      	    rts    
-  88               	
-  89               	
+  52      0000 0000 
+  52      0000 0000 
+  52      0000 0000 
+  53 80400 23FC 0000 		move.l	#1, d0
+  53      0001 0000 
+  53      0000 
+  54 8040a 13F9 0000 		move.b	d0, 0x080000	| Set swap bit so SRAM works
+  54      0000 0008 
+  54      0000 
+  55 80414 4EBA 0036 		jsr     initDuart       | Setup the serial port
+  56               	FERVR:
+  57 80418 4EFA FFFE 		jmp FERVR
+  58               	
+  59               	|||||
+  60               	| Writes a character to Port A, blocking if not ready (Full buffer)
+  61               	|  - Takes a character in D0
+  62               	outChar:
+  63 8041c 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
+  63      000F 0002 
+  64 80424 6700 FFF6 	    beq     outChar     
+  65 80428 13F9 0000 	    move.b  d0, TBA      | Transmit Character
+  65      0000 000F 
+  65      0006 
+  66 80432 4E75      	    rts
+  67               	
+  68               	|||||
+  69               	| Reads in a character from Port A, blocking if none available
+  70               	|  - Returns character in D0
+  71               	|    
+  72               	inChar:
+  73 80434 0839 0000 	    btst    #0,  SRA     | Check if receiver ready bit is set
+  73      000F 0002 
+  74 8043c 6700 FFF6 	    beq     inChar
+  75 80440 13F9 000F 	    move.b  RBA, d0      | Read Character into D0
+  75      0006 0000 
+  75      0000 
+  76 8044a 4E75      	    rts
+  77               	
+  78               	|||||
+  79               	| Initializes the 68681 DUART port A as 9600 8N1 
+  80               	initDuart:
+  81 8044c 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+  81      000F 0004 
+  82 80454 13FC 0020 	    move.b  #0x20, CRA       | Reset Reciever
+  82      000F 0004 
+  83 8045c 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
+  83      000F 0004 
+  84               	    
+  85 80464 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+  85      000F 0008 
+  86 8046c 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+  86      000F 0002 
+  87 80474 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+  87      000F 0000 
+  88 8047c 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+  88      000F 0000 
+  89               	    
 68K GAS  S68K_001.s 			page 3
+
+
+  90 80484 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+  90      000F 0004 
+  91 8048c 4E75      	    rts    
+  92               	
+  93               	
+68K GAS  S68K_001.s 			page 4
 
 
 DEFINED SYMBOLS
           S68K_001.s:4      *ABS*:0000000000000100 RAM_START
           S68K_001.s:5      *ABS*:000000000007ffff RAM_END
           S68K_001.s:6      *ABS*:0000000000080000 ROM_START
-          S68K_001.s:7      *ABS*:0000000000087fff ROM_END
-          S68K_001.s:12     *ABS*:00000000000f0000 DUART
-          S68K_001.s:13     *ABS*:00000000000f0000 MRA
-          S68K_001.s:14     *ABS*:00000000000f0002 SRA
-          S68K_001.s:15     *ABS*:00000000000f0002 CSRA
-          S68K_001.s:16     *ABS*:00000000000f0004 CRA
-          S68K_001.s:17     *ABS*:00000000000f0006 RBA
-          S68K_001.s:18     *ABS*:00000000000f0006 TBA
-          S68K_001.s:19     *ABS*:00000000000f0008 ACR
-          S68K_001.s:20     *ABS*:00000000000f000a ISR
-          S68K_001.s:21     *ABS*:00000000000f000a IMR
-          S68K_001.s:22     *ABS*:00000000000f0010 MRB
-          S68K_001.s:23     *ABS*:00000000000f0012 SRB
-          S68K_001.s:24     *ABS*:00000000000f0012 CSRB
-          S68K_001.s:25     *ABS*:00000000000f0014 CRB
-          S68K_001.s:26     *ABS*:00000000000f0016 RBB
-          S68K_001.s:27     *ABS*:00000000000f0016 TBB
-          S68K_001.s:28     *ABS*:00000000000f0018 IVR
-          S68K_001.s:33     *ABS*:0000000000000007 BEL
-          S68K_001.s:34     *ABS*:0000000000000008 BKSP
-          S68K_001.s:35     *ABS*:0000000000000009 TAB
-          S68K_001.s:36     *ABS*:000000000000000a LF
-          S68K_001.s:37     *ABS*:000000000000000d CR
-          S68K_001.s:38     *ABS*:000000000000001b ESC
-          S68K_001.s:40     *ABS*:0000000000000003 CTRLC
-          S68K_001.s:41     *ABS*:0000000000000018 CTRLX
-          S68K_001.s:43     *ABS*:000000000007ffff STACK_START
-          S68K_001.s:76     .text:0000000000080040 initDuart
-          S68K_001.s:52     .text:000000000008000c FERVR
-          S68K_001.s:58     .text:0000000000080010 outChar
-          S68K_001.s:68     .text:0000000000080028 inChar
+          S68K_001.s:7      *ABS*:0000000000080400 ROM_CODE
+          S68K_001.s:8      *ABS*:0000000000087fff ROM_END
+          S68K_001.s:13     *ABS*:00000000000f0000 DUART
+          S68K_001.s:14     *ABS*:00000000000f0000 MRA
+          S68K_001.s:15     *ABS*:00000000000f0002 SRA
+          S68K_001.s:16     *ABS*:00000000000f0002 CSRA
+          S68K_001.s:17     *ABS*:00000000000f0004 CRA
+          S68K_001.s:18     *ABS*:00000000000f0006 RBA
+          S68K_001.s:19     *ABS*:00000000000f0006 TBA
+          S68K_001.s:20     *ABS*:00000000000f0008 ACR
+          S68K_001.s:21     *ABS*:00000000000f000a ISR
+          S68K_001.s:22     *ABS*:00000000000f000a IMR
+          S68K_001.s:23     *ABS*:00000000000f0010 MRB
+          S68K_001.s:24     *ABS*:00000000000f0012 SRB
+          S68K_001.s:25     *ABS*:00000000000f0012 CSRB
+          S68K_001.s:26     *ABS*:00000000000f0014 CRB
+          S68K_001.s:27     *ABS*:00000000000f0016 RBB
+          S68K_001.s:28     *ABS*:00000000000f0016 TBB
+          S68K_001.s:29     *ABS*:00000000000f0018 IVR
+          S68K_001.s:34     *ABS*:0000000000000007 BEL
+          S68K_001.s:35     *ABS*:0000000000000008 BKSP
+          S68K_001.s:36     *ABS*:0000000000000009 TAB
+          S68K_001.s:37     *ABS*:000000000000000a LF
+          S68K_001.s:38     *ABS*:000000000000000d CR
+          S68K_001.s:39     *ABS*:000000000000001b ESC
+          S68K_001.s:41     *ABS*:0000000000000003 CTRLC
+          S68K_001.s:42     *ABS*:0000000000000018 CTRLX
+          S68K_001.s:44     *ABS*:000000000007ffff STACK_START
+          S68K_001.s:80     .text:000000000008044c initDuart
+          S68K_001.s:56     .text:0000000000080418 FERVR
+          S68K_001.s:62     .text:000000000008041c outChar
+          S68K_001.s:72     .text:0000000000080434 inChar
 
 UNDEFINED SYMBOLS
 d0
