@@ -50,15 +50,19 @@ CTRLX	=	0x18     | Line Clear
 
         .ORG ROM_CODE
 	nop
-	move.b	#0xFF, 0x080000	| Set swap bit so SRAM works
+	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
-	move.l	#0xDEADBEEF, 0x00000000
-	move.l	#0x5555AAAA, 0x00000004
-	move.l	0x00000000, d0
-	move.l	0x00000004, d1
-	cmp.l		#0xDEADBEEF, d0
-	bne			FERVR
-	cmp.l		#0x5555AAAA, d1
+	move.l	#0xDEADBEEF, %d0	| Test Pattern #1
+	move		#0x00000000, %a0	| First address of SRAM
+	move.l	%d0, (%a0)				| Write out test pattern to SRAM
+	move.l	(%a0), %d2				| Read first SRAM pattern into d2
+	cmp			%d2, %d0
+	bne			FERVR						
+	move.l	#0x5555AAAA, %d1	| Test Pattern #2
+	move		#0x00000004, %a1	| Second long address of SRAM
+	move.l	%d1, (%a1)				| Write out test pattern to SRAM
+	move.l	(%a1), %d3				| Read back
+	cmp			%d3, %d1
 	bne			FERVR
 	nop
 	jsr     initDuart       | Setup the serial port

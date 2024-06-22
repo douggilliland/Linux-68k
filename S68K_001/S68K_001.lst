@@ -64,83 +64,81 @@
   51      0000 0000 
   51      0000 0000 
   52 80400 4E71      		nop
-  53 80402 13FC 00FF 		move.b	#0xFF, 0x080000	| Set swap bit so SRAM works
+  53 80402 13FC 00FF 		move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
   53      0008 0000 
   54 8040a 4E71      		nop
-  55 8040c 21FC DEAD 		move.l	#0xDEADBEEF, 0x00000000
-  55      BEEF 0000 
-  56 80414 21FC 5555 		move.l	#0x5555AAAA, 0x00000004
-  56      AAAA 0004 
-  57 8041c 23F8 0000 		move.l	0x00000000, d0
-  57      0000 0000 
-  58 80424 23F8 0004 		move.l	0x00000004, d1
-  58      0000 0000 
-  59 8042c 0CB9 DEAD 		cmp.l		#0xDEADBEEF, d0
-  59      BEEF 0000 
-  59      0000 
-  60 80436 6600 0016 		bne			FERVR
-  61 8043a 0CB9 5555 		cmp.l		#0x5555AAAA, d1
-  61      AAAA 0000 
-  61      0000 
-  62 80444 6600 0008 		bne			FERVR
-  63 80448 4E71      		nop
-  64 8044a 4EBA 0038 		jsr     initDuart       | Setup the serial port
-  65               	FERVR:
-  66 8044e 4E71      		nop
-  67 80450 4EFA FFFC 		jmp FERVR
-  68               	
-  69               	|||||
-  70               	| Writes a character to Port A, blocking if not ready (Full buffer)
-  71               	|  - Takes a character in D0
-  72               	outChar:
-  73 80454 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
-  73      000F 0002 
-  74 8045c 6700 FFF6 	    beq     outChar     
-  75 80460 13F9 0000 	    move.b  d0, TBA      | Transmit Character
-  75      0000 000F 
-  75      0006 
-  76 8046a 4E75      	    rts
-  77               	
-  78               	|||||
-  79               	| Reads in a character from Port A, blocking if none available
-  80               	|  - Returns character in D0
-  81               	|    
-  82               	inChar:
-  83 8046c 0839 0000 	    btst    #0,  SRA     | Check if receiver ready bit is set
-  83      000F 0002 
-  84 80474 6700 FFF6 	    beq     inChar
-  85 80478 13F9 000F 	    move.b  RBA, d0      | Read Character into D0
-  85      0006 0000 
-  85      0000 
-  86 80482 4E75      	    rts
-  87               	
-  88               	|||||
-  89               	| Initializes the 68681 DUART port A as 9600 8N1 
-  90               	initDuart:
-  91 80484 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+  55 8040c 203C DEAD 		move.l	#0xDEADBEEF, %d0	| Test Pattern #1
+  55      BEEF 
+  56 80412 307C 0000 		move		#0x00000000, %a0	| First address of SRAM
+  57 80416 2080      		move.l	%d0, (%a0)				| Write out test pattern to SRAM
+  58 80418 2410      		move.l	(%a0), %d2				| Read first SRAM pattern into d2
+  59 8041a B042      		cmp			%d2, %d0
+  60 8041c 6600 001C 		bne			FERVR						
+  61 80420 223C 5555 		move.l	#0x5555AAAA, %d1	| Test Pattern #2
+  61      AAAA 
+  62 80426 327C 0004 		move		#0x00000004, %a1	| Second long address of SRAM
+  63 8042a 2281      		move.l	%d1, (%a1)				| Write out test pattern to SRAM
+  64 8042c 2611      		move.l	(%a1), %d3				| Read back
+  65 8042e B243      		cmp			%d3, %d1
+  66 80430 6600 0008 		bne			FERVR
+  67 80434 4E71      		nop
+  68 80436 4EBA 0038 		jsr     initDuart       | Setup the serial port
+  69               	FERVR:
+  70 8043a 4E71      		nop
+  71 8043c 4EFA FFFC 		jmp FERVR
+  72               	
+  73               	|||||
+  74               	| Writes a character to Port A, blocking if not ready (Full buffer)
+  75               	|  - Takes a character in D0
+  76               	outChar:
+  77 80440 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
+  77      000F 0002 
+  78 80448 6700 FFF6 	    beq     outChar     
+  79 8044c 13F9 0000 	    move.b  d0, TBA      | Transmit Character
+  79      0000 000F 
+  79      0006 
+  80 80456 4E75      	    rts
+  81               	
+  82               	|||||
+  83               	| Reads in a character from Port A, blocking if none available
+  84               	|  - Returns character in D0
+  85               	|    
+  86               	inChar:
+  87 80458 0839 0000 	    btst    #0,  SRA     | Check if receiver ready bit is set
+  87      000F 0002 
+  88 80460 6700 FFF6 	    beq     inChar
+  89 80464 13F9 000F 	    move.b  RBA, d0      | Read Character into D0
+  89      0006 0000 
+  89      0000 
+  90 8046e 4E75      	    rts
+  91               	
+  92               	|||||
+  93               	| Initializes the 68681 DUART port A as 9600 8N1 
+  94               	initDuart:
+  95 80470 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+  95      000F 0004 
+  96 80478 13FC 0020 	    move.b  #0x20, CRA       | Reset Reciever
 68K GAS  S68K_001.s 			page 3
 
 
-  91      000F 0004 
-  92 8048c 13FC 0020 	    move.b  #0x20, CRA       | Reset Reciever
-  92      000F 0004 
-  93 80494 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
-  93      000F 0004 
-  94               	    
-  95 8049c 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
-  95      000F 0008 
-  96 804a4 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
-  96      000F 0002 
-  97 804ac 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-  97      000F 0000 
-  98 804b4 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
-  98      000F 0000 
-  99               	    
- 100 804bc 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 100      000F 0004 
- 101 804c4 4E75      	    rts    
- 102               	
- 103               	
+  96      000F 0004 
+  97 80480 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
+  97      000F 0004 
+  98               	    
+  99 80488 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+  99      000F 0008 
+ 100 80490 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 100      000F 0002 
+ 101 80498 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 101      000F 0000 
+ 102 804a0 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 102      000F 0000 
+ 103               	    
+ 104 804a8 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+ 104      000F 0004 
+ 105 804b0 4E75      	    rts    
+ 106               	
+ 107               	
 68K GAS  S68K_001.s 			page 4
 
 
@@ -176,11 +174,10 @@ DEFINED SYMBOLS
           S68K_001.s:40     *ABS*:000000000000001b ESC
           S68K_001.s:42     *ABS*:0000000000000003 CTRLC
           S68K_001.s:43     *ABS*:0000000000000018 CTRLX
-          S68K_001.s:65     .text:000000000008044e FERVR
-          S68K_001.s:90     .text:0000000000080484 initDuart
-          S68K_001.s:72     .text:0000000000080454 outChar
-          S68K_001.s:82     .text:000000000008046c inChar
+          S68K_001.s:69     .text:000000000008043a FERVR
+          S68K_001.s:94     .text:0000000000080470 initDuart
+          S68K_001.s:76     .text:0000000000080440 outChar
+          S68K_001.s:86     .text:0000000000080458 inChar
 
 UNDEFINED SYMBOLS
 d0
-d1
