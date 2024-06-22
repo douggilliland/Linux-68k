@@ -41,7 +41,7 @@ ESC   = 0x1B
 CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
 
-STACK_START         =     RAM_END
+STACK_START         =     RAM_END-0x1000
 
 	.ORG	ROM_START
 
@@ -51,7 +51,7 @@ STACK_START         =     RAM_END
 
         .ORG ROM_CODE
 	move.b	#0xFF, 0x080000	| Set swap bit so SRAM works
-	jsr     initDuart       | Setup the serial port
+|	jsr     initDuart       | Setup the serial port
 FERVR:
 	jmp FERVR
 
