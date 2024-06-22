@@ -2,6 +2,7 @@
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
 RAM_START	= 0x00100	| Leave room for vector table copy
+STACK_END	= 0x7FFFC	| Has to be on a word boundary
 RAM_END		= 0x7FFFF	| 512KB SRAM
 ROM_START	= 0x80000	| ROM start
 ROM_CODE	= ROM_START+1024| Skip vector table
@@ -41,21 +42,28 @@ ESC   = 0x1B
 CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
 
-STACK_START         =     RAM_END-0x1000
-
 	.ORG	ROM_START
 
 | FIRST 8 bytes loaded after reset |
-    DC.l    STACK_START | Supervisor stack pointer
+    DC.l    STACK_END | Supervisor stack pointer
     DC.l    ROM_CODE	| Initial PC
 
         .ORG ROM_CODE
-FERVR:
 	nop
 	move.b	#0xFF, 0x080000	| Set swap bit so SRAM works
 	nop
-	move.b	#0, 0x080000
-|	jsr     initDuart       | Setup the serial port
+	move.l	#0xDEADBEEF, 0x00000000
+	move.l	#0x5555AAAA, 0x00000004
+	move.l	0x00000000, d0
+	move.l	0x00000004, d1
+	cmp.l		#0xDEADBEEF, d0
+	bne			FERVR
+	cmp.l		#0x5555AAAA, d1
+	bne			FERVR
+	nop
+	jsr     initDuart       | Setup the serial port
+FERVR:
+	nop
 	jmp FERVR
 
 |||||
