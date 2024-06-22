@@ -66,9 +66,15 @@ CTRLX	=	0x18     | Line Clear
 	bne			FERVR
 	nop
 	jsr     initDuart       | Setup the serial port
+	move.b	#0x20, d0
 FERVR:
-	nop
-	jmp FERVR
+	jsr	outChar
+	add	#1,%d0
+	cmp	#0x66,d0
+	bne	skipIt
+	move.b	#0x20, d0
+skipIt:
+	jmp	FERVR
 
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
@@ -76,7 +82,7 @@ FERVR:
 outChar:
     btst    #2, SRA      | Check if transmitter ready bit is set
     beq     outChar     
-    move.b  d0, TBA      | Transmit Character
+    move.b  %d0, TBA      | Transmit Character
     rts
 
 |||||
@@ -86,7 +92,7 @@ outChar:
 inChar:
     btst    #0,  SRA     | Check if receiver ready bit is set
     beq     inChar
-    move.b  RBA, d0      | Read Character into D0
+    move.b  RBA, %d0      | Read Character into D0
     rts
 
 |||||
