@@ -50,8 +50,7 @@ STACK_START         =     RAM_END
     DC.l    ROM_CODE	| Initial PC
 
         .ORG ROM_CODE
-	move.l	#1, d0
-	move.b	d0, 0x080000	| Set swap bit so SRAM works
+	move.b	#0xFF, 0x080000	| Set swap bit so SRAM works
 	jsr     initDuart       | Setup the serial port
 FERVR:
 	jmp FERVR
