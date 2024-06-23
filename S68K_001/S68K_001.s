@@ -107,9 +107,11 @@ loopAdrCk:
 	move.l	%a0, %d2 
 	lsl.l		#1, %d2
 	move.l	%d2, %a0
-	cmp.l		#$080000000,%d2
+	cmp.l		#$08000000,%d2
 	bne			loopAdrCk
+|
 | Done with address test of SRAM
+|
 	jsr     initDuart       | Setup the serial port
 	move.b	#0x20, d0
 FERVR:
