@@ -11,8 +11,8 @@ ROM_END		= 0x87FFF	| End of 32KB EPROM
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
 |
-DUART = 0x0F0000			| Base Addr of DUART
-MRA   = DUART+0				| Mode Register A           (R/W)
+DUART = 0x0F0000	  | Base Addr of DUART
+MRA   = DUART+0		  | Mode Register A           (R/W)
 SRA   = DUART+2       | Status Register A         (r)
 CSRA  = DUART+2       | Clock Select Register A   (w)
 CRA   = DUART+4       | Commands Register A       (w)
@@ -28,6 +28,10 @@ CRB   = DUART+20      | Commands Register B       (W)
 RBB   = DUART+22      | Reciever Buffer B         (R)
 TBB   = DUART+22      | Transmitter Buffer B      (W)
 IVR   = DUART+24      | Interrupt Vector Register (R/W)
+OPC   = DUART+26      | Output port config        (W)
+INU   = DUART+26      | Input port (unlatched)    (R)
+OPS   = DUART+28      | Output port Set           (W)
+OPR   = DUART+30      | Output port Clear         (W)
 
 ||||||||||||||||||||||||||||||||||
 | ASCII Control Characters
@@ -117,6 +121,10 @@ loopAdrCk:
 	jsr	outChar
 FERVR:
 	nop
+	move.b	#0x04, OPS		| Blink LED on DUART Out2
+	jsr		delay1Sec
+	move.b	#0x04, OPR
+	jsr		delay1Sec
 	jmp	FERVR
 |
 FERVR2:
@@ -160,6 +168,24 @@ initDuart:
     move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
     
     move.b  #0x05, CRA       | Enable Transmit/Recieve
+
+    move.b  #0x30, CRB       | Reset Transmitter
+    move.b  #0x20, CRB       | Reset Receiver
+    move.b  #0x10, CRB       | Reset Mode Register Pointer
+    
+    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
+    
+    move.b  #0x05, CRB       | Enable Transmit/Recieve
+	
+	move.b	#0xFC, OPC		 | Output port configuration (all bit are outs)
+	move.b	#0xFC, OPR		 | Clear all outputs
     rts    
 
-
+delay1Sec:
+	move.l	#200000, %d0	| rough count
+delay1Loop:
+	sub.l	#1, %d0			
+	bne		delay1Loop
+	rts
