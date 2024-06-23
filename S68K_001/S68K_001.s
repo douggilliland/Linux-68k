@@ -67,18 +67,45 @@ CTRLX	=	0x18     | Line Clear
 	cmp			%d3, %d1
 	bne			FERVR2
 	nop
-| Test some more locations
+| Test bits of first location (as bytes)
 	move.l	#1, %d0
 	move.l	#0, %a0
-loopSingLoc:
+loop1stLoc:
 	move.b	%d0, (%a0)
 	move.b	(%a0), %d1
 	cmp.b		%d0, %d1
 	bne			failBitTest
 	lsl			#1, %d0
 	cmp.l		#0x00000100, %d0
-	bne			loopSingLoc
-	
+	bne			loop1stLoc
+| Test all address lines, 512KB SRAM
+| Write incrementing pattern to data bits
+	move.l	#1, %d0		| Fill pattern
+	move.l	#1, %d2
+	move.l	#1, %a0		| Start address 1 (already tested addr 0)
+loopAdrFill:
+	move.b	%d0,(%a0)	| Do the write
+	add			#1, %d0		| Increment the pattern
+	move.l	%a0, %d2	| Copy a0 to d2 for shift
+	lsl			#1, %d2		| Shift temp addr
+	move.l	%d2, %a0	| Put back into addr reg
+	cmp.l		#$08000000,%d2
+	blt			loopAdrFill
+| Check
+	move.l	#1, %d0
+	move.l	#1, %d2
+	move.l	#1, %a0
+loopAdrCk:
+	move.b	(%a0), %d1
+	cmp			%d0, %d1
+	bne			failAdrTest
+	add			#1, %d0
+	move.l	%a0, %d2 
+	lsl			#1, %d2
+	move.l	%d2, %a2
+	cmp			#$080000000,%d2
+	blt			loopAdrCk
+| Done with address test of SRAM
 	jsr     initDuart       | Setup the serial port
 	move.b	#0x20, d0
 FERVR:
@@ -96,7 +123,9 @@ FERVR2:
 failBitTest:
 	nop
 	jmp	failBitTest
-
+failAdrTest:
+	nop
+	jmp	failAdrTest
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
 |  - Takes a character in D0
