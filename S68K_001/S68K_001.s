@@ -53,7 +53,9 @@ CTRLX	=	0x18     | Line Clear
 	lea			STACK_END,%sp
 	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
+|
 | Test the first two SRAM location
+|
 	move.l	#0xDEADBEEF, %d0	| Test Pattern #1
 	move		#0x00000000, %a0	| First address of SRAM
 	move.l	%d0, (%a0)				| Write out test pattern to SRAM
@@ -78,33 +80,35 @@ loop1stLoc:
 	lsl			#1, %d0
 	cmp.l		#0x00000100, %d0
 	bne			loop1stLoc
+|
 | Test all address lines, 512KB SRAM
 | Write incrementing pattern to data bits
+|
 	move.l	#1, %d0		| Fill pattern
 	move.l	#1, %d2
 	move.l	#1, %a0		| Start address 1 (already tested addr 0)
 loopAdrFill:
 	move.b	%d0,(%a0)	| Do the write
-	add			#1, %d0		| Increment the pattern
+	addq		#1, %d0		| Increment the pattern
 	move.l	%a0, %d2	| Copy a0 to d2 for shift
-	lsl			#1, %d2		| Shift temp addr
+	lsl.l		#1, %d2		| Shift temp addr
 	move.l	%d2, %a0	| Put back into addr reg
 	cmp.l		#$08000000,%d2
-	blt			loopAdrFill
+	bne			loopAdrFill
 | Check
 	move.l	#1, %d0
 	move.l	#1, %d2
 	move.l	#1, %a0
 loopAdrCk:
-	move.b	(%a0), %d1
-	cmp			%d0, %d1
+	move.b	(%a0), %d1	| Do the read (as a byte)
+	cmp.b		%d0, %d1
 	bne			failAdrTest
-	add			#1, %d0
+	addq		#1, %d0
 	move.l	%a0, %d2 
-	lsl			#1, %d2
+	lsl.l		#1, %d2
 	move.l	%d2, %a2
-	cmp			#$080000000,%d2
-	blt			loopAdrCk
+	cmp.l		#$080000000,%d2
+	bne			loopAdrCk
 | Done with address test of SRAM
 	jsr     initDuart       | Setup the serial port
 	move.b	#0x20, d0
