@@ -113,7 +113,7 @@ loopAdrCk:
 | Done with address test of SRAM
 |
 	jsr     initDuart       | Setup the serial port
-	move.b	#'+', d0
+	move.b	#'+', %d0
 	jsr	outChar
 FERVR:
 	nop
