@@ -50,6 +50,7 @@ CTRLX	=	0x18     | Line Clear
 
         .ORG ROM_CODE
 	nop
+	lea			STACK_END,%sp
 	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
 	move.l	#0xDEADBEEF, %d0	| Test Pattern #1
