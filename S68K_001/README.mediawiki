@@ -8,6 +8,8 @@
 
 == Fix error from no longer being allowed to use ID/Pwd ==
 
+* GitHub eliminated the ability to log in with user ID and password
+* The solution is to switch to SSH to log into GitHub
 * Needed to make a new key
 <pre>
 ssh-keygen
