@@ -68,9 +68,9 @@ CTRLX	=	0x18     | Line Clear
 	bne			FERVR2
 	nop
 | Test some more locations
-loopSingLoc:
 	move.l	#1, %d0
 	move.l	#0, %a0
+loopSingLoc:
 	move.b	%d0, (%a0)
 	move.b	(%a0), %d1
 	cmp.b		%d0, %d1

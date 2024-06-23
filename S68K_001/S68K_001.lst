@@ -86,10 +86,10 @@
   68 80436 6600 004C 		bne			FERVR2
   69 8043a 4E71      		nop
   70               	| Test some more locations
-  71               	loopSingLoc:
-  72 8043c 7001      		move.l	#1, %d0
-  73 8043e 207C 0000 		move.l	#0, %a0
-  73      0000 
+  71 8043c 7001      		move.l	#1, %d0
+  72 8043e 207C 0000 		move.l	#0, %a0
+  72      0000 
+  73               	loopSingLoc:
   74 80444 1080      		move.b	%d0, (%a0)
   75 80446 1210      		move.b	(%a0), %d1
   76 80448 B200      		cmp.b		%d0, %d1
@@ -97,7 +97,7 @@
   78 8044e E348      		lsl			#1, %d0
   79 80450 0C80 0000 		cmp.l		#0x00000100, %d0
   79      0100 
-  80 80456 6600 FFE4 		bne			loopSingLoc
+  80 80456 6600 FFEC 		bne			loopSingLoc
   81               		
   82 8045a 4EBA 005C 		jsr     initDuart       | Setup the serial port
   83 8045e 13FC 0020 		move.b	#0x20, d0
@@ -206,7 +206,7 @@ DEFINED SYMBOLS
           S68K_001.s:42     *ABS*:0000000000000003 CTRLC
           S68K_001.s:43     *ABS*:0000000000000018 CTRLX
           S68K_001.s:93     .text:0000000000080484 FERVR2
-          S68K_001.s:71     .text:000000000008043c loopSingLoc
+          S68K_001.s:73     .text:0000000000080444 loopSingLoc
           S68K_001.s:96     .text:000000000008048a failBitTest
           S68K_001.s:121    .text:00000000000804b8 initDuart
           S68K_001.s:84     .text:0000000000080466 FERVR
