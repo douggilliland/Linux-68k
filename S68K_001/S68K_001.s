@@ -1,7 +1,7 @@
 | Borrowed init code from 
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
-RAM_START	= 0x00100	| Leave room for vector table copy
+RAM_START	= 0x00000	| Beginning of the SRAM
 STACK_END	= 0x7FFFC	| Has to be on a word boundary
 RAM_END		= 0x7FFFF	| 512KB SRAM
 ROM_START	= 0x80000	| ROM start
@@ -11,8 +11,8 @@ ROM_END		= 0x87FFF	| End of 32KB EPROM
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
 |
-DUART = 0x0F0000       | Base Addr of DUART
-MRA   = DUART+0       | Mode Register A           (R/W)
+DUART = 0x0F0000			| Base Addr of DUART
+MRA   = DUART+0				| Mode Register A           (R/W)
 SRA   = DUART+2       | Status Register A         (r)
 CSRA  = DUART+2       | Clock Select Register A   (w)
 CRA   = DUART+4       | Commands Register A       (w)
@@ -53,19 +53,32 @@ CTRLX	=	0x18     | Line Clear
 	lea			STACK_END,%sp
 	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
+| Test the first two SRAM location
 	move.l	#0xDEADBEEF, %d0	| Test Pattern #1
 	move		#0x00000000, %a0	| First address of SRAM
 	move.l	%d0, (%a0)				| Write out test pattern to SRAM
 	move.l	(%a0), %d2				| Read first SRAM pattern into d2
 	cmp			%d2, %d0
-	bne			FERVR						
+	bne			FERVR2						
 	move.l	#0x5555AAAA, %d1	| Test Pattern #2
 	move		#0x00000004, %a1	| Second long address of SRAM
 	move.l	%d1, (%a1)				| Write out test pattern to SRAM
 	move.l	(%a1), %d3				| Read back
 	cmp			%d3, %d1
-	bne			FERVR
+	bne			FERVR2
 	nop
+| Test some more locations
+loopSingLoc:
+	move.l	#1, %d0
+	move.l	#0, %a0
+	move.b	%d0, (%a0)
+	move.b	(%a0), %d1
+	cmp.b		%d0, %d1
+	bne			failBitTest
+	lsl			#1, %d0
+	cmp.l		#0x00000100, %d0
+	bne			loopSingLoc
+	
 	jsr     initDuart       | Setup the serial port
 	move.b	#0x20, d0
 FERVR:
@@ -76,6 +89,13 @@ FERVR:
 	move.b	#0x20, d0
 skipIt:
 	jmp	FERVR
+|
+FERVR2:
+	nop
+	jmp	FERVR2
+failBitTest:
+	nop
+	jmp	failBitTest
 
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
@@ -100,7 +120,7 @@ inChar:
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
     move.b  #0x30, CRA       | Reset Transmitter
-    move.b  #0x20, CRA       | Reset Reciever
+    move.b  #0x20, CRA       | Reset Receiver
     move.b  #0x10, CRA       | Reset Mode Register Pointer
     
     move.b  #0x80, ACR       | Baud Rate Set #2
