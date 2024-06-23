@@ -93,7 +93,7 @@ loopAdrFill:
 	move.l	%a0, %d2	| Copy a0 to d2 for shift
 	lsl.l		#1, %d2		| Shift temp addr
 	move.l	%d2, %a0	| Put back into addr reg
-	cmp.l		#$08000000,%d2
+	cmp.l		#0x00080000,%d2
 	bne			loopAdrFill
 | Check
 	move.l	#1, %d0
@@ -107,7 +107,7 @@ loopAdrCk:
 	move.l	%a0, %d2 
 	lsl.l		#1, %d2
 	move.l	%d2, %a0
-	cmp.l		#$08000000,%d2
+	cmp.l		#0x00080000,%d2
 	bne			loopAdrCk
 |
 | Done with address test of SRAM

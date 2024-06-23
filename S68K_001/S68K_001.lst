@@ -114,7 +114,7 @@
   93 80468 2408      		move.l	%a0, %d2	| Copy a0 to d2 for shift
   94 8046a E38A      		lsl.l		#1, %d2		| Shift temp addr
   95 8046c 2042      		move.l	%d2, %a0	| Put back into addr reg
-  96 8046e 0C82 0000 		cmp.l		#$08000000,%d2
+  96 8046e 0C82 0008 		cmp.l		#0x00080000,%d2
   96      0000 
   97 80474 6600 FFEE 		bne			loopAdrFill
   98               	| Check
@@ -133,7 +133,7 @@
  107 8048c 2408      		move.l	%a0, %d2 
  108 8048e E38A      		lsl.l		#1, %d2
  109 80490 2042      		move.l	%d2, %a0
- 110 80492 0C82 0000 		cmp.l		#$08000000,%d2
+ 110 80492 0C82 0008 		cmp.l		#0x00080000,%d2
  110      0000 
  111 80498 6600 FFE8 		bne			loopAdrCk
  112               	|
@@ -260,5 +260,4 @@ DEFINED SYMBOLS
           S68K_001.s:148    .text:00000000000804ec inChar
 
 UNDEFINED SYMBOLS
-$08000000
 d0
