@@ -106,7 +106,7 @@ loopAdrCk:
 	addq		#1, %d0
 	move.l	%a0, %d2 
 	lsl.l		#1, %d2
-	move.l	%d2, %a2
+	move.l	%d2, %a0
 	cmp.l		#$080000000,%d2
 	bne			loopAdrCk
 | Done with address test of SRAM
