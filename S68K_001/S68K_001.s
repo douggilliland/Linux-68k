@@ -117,15 +117,15 @@ loopAdrCk:
 | Done with address test of SRAM
 |
 	jsr     initDuart       | Setup the serial port
-	move.b	#'+', %d0
-	jsr	outChar
+	lea		RAM_PASS_MSG, %a0
+	jsr		printString1
 FERVR:
 	nop
 	move.b	#0x04, OPS		| Blink LED on DUART Out2
 	jsr		delay1Sec
 	move.b	#0x04, OPR
 	jsr		delay1Sec
-	jmp	FERVR
+	jmp		FERVR
 |
 FERVR2:
 	nop
@@ -136,23 +136,55 @@ failBitTest:
 failAdrTest:
 	nop
 	jmp	failAdrTest
+
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
 |  - Takes a character in D0
+outChar1:
 outChar:
     btst    #2, SRA      | Check if transmitter ready bit is set
-    beq     outChar     
+    beq     outChar1     
     move.b  %d0, TBA      | Transmit Character
     rts
+
+| Writes a character to Port A, blocking if not ready (Full buffer)
+|  - Takes a character in D0
+outChar2:
+    btst    #2, SRB      | Check if transmitter ready bit is set
+    beq     outChar2     
+    move.b  %d0, TBB      | Transmit Character
+    rts
+
+******
+* Print a null terminated string
+*
+printString1:
+printString:
+ .loop:
+    move.b  (%a0)+, %d0  * Read in character
+    beq.s   .end         * Check for the null
+    
+    bsr.s   outChar      * Otherwise write the character
+    bra.s   .loop        * And continue
+ .end:
+    rts
+
 
 |||||
 | Reads in a character from Port A, blocking if none available
 |  - Returns character in D0
 |    
+inChar1:
 inChar:
-    btst    #0,  SRA     | Check if receiver ready bit is set
-    beq     inChar
-    move.b  RBA, %d0      | Read Character into D0
+    btst    #0,  SRA	| Check if receiver ready bit is set
+    beq     inChar1
+    move.b  RBA, %d0	| Read Character into D0
+    rts
+
+inChar2:
+    btst    #0,  SRB	| Check if receiver ready bit is set
+    beq     inChar2
+    move.b  RBB, %d0	| Read Character into D0
     rts
 
 |||||
@@ -189,3 +221,6 @@ delay1Loop:
 	sub.l	#1, %d0			
 	bne		delay1Loop
 	rts
+
+RAM_PASS_MSG:  .ascii  "RAM Test Passed"
+         DC.B    EOT
