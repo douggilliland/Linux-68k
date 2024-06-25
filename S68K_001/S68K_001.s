@@ -117,7 +117,14 @@ loopAdrCk:
 | Done with address test of SRAM
 |
 	jsr     initDuart       | Setup the serial port
+	
+	lea		BANNER_MSG, %a0
+	jsr		printString1
+	lea		CRLF_MSG, %a0
+	jsr		printString1
 	lea		RAM_PASS_MSG, %a0
+	jsr		printString1
+	lea		CRLF_MSG, %a0
 	jsr		printString1
 FERVR:
 	nop
@@ -223,4 +230,7 @@ delay1Loop:
 	rts
 
 RAM_PASS_MSG:  .ascii  "RAM Test Passed"
-         DC.B    EOT
+			DC.B    EOT
+CRLF_MSG:	dc.b $a,$d,0
+BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
+			DC.B    EOT
