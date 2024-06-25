@@ -231,6 +231,6 @@ delay1Loop:
 
 RAM_PASS_MSG:  .ascii  "RAM Test Passed"
 			DC.B    EOT
-CRLF_MSG:	dc.b $a,$d,0
+CRLF_MSG:	dc.b 0x0a,0xd,0
 BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
 			DC.B    EOT
