@@ -161,11 +161,11 @@ outChar2:
 printString1:
 printString:
  .loop:
-    move.b  (%a0)+, %d0  * Read in character
-    beq.s   .end         * Check for the null
+    move.b  (%a0)+, %d0  | Read in character
+    beq.s   .end         | Check for the null
     
-    bsr.s   outChar      * Otherwise write the character
-    bra.s   .loop        * And continue
+    bsr.s   outChar      | Otherwise write the character
+    bra.s   .loop        | And continue
  .end:
     rts
 
