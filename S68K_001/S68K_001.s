@@ -254,17 +254,17 @@ readLine:
 | Convert line buffer to upper case
 lineToUpper:
     lea     varLineBuf, %a0   | Get the start of the line buffer
- .loop:
+ LUloop:
     move.b  (%a0), %d0        | Read in a character
     cmp.b   #'a', %d0         
-    blt.s   .next2            | Is it less than lower-case 'a', then move on
+    blt.s   LUnext2            | Is it less than lower-case 'a', then move on
     cmp.b   #'z', %d0
-    bgt.s   .next2            | Is it greater than lower-case 'z', then move on
+    bgt.s   LUnext2            | Is it greater than lower-case 'z', then move on
     sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
- .next:
+ LUnext:
     move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
-.next2:
-    bne.s   .loop             | Keep going till we hit a null terminator
+LUnext2:
+    bne.s   LUloop             | Keep going till we hit a null terminator
     rts
 
 
