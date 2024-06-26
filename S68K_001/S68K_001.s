@@ -196,59 +196,59 @@ inChar2:
 
 | Read in a line into the line buffer
 readLine:
-    movem.l %d2/%a2, -(%SP)     * Save changed registers
-    lea     varLineBuf, %a2   * Start of the lineBuffer
-    eor.w   %d2, %d2           * Clear the character counter
+    movem.l %d2/%a2, -(%SP)     | Save changed registers
+    lea     varLineBuf, %a2   	| Start of the lineBuffer
+    eor.w   %d2, %d2           	| Clear the character counter
  .loop:
-    bsr.w   inChar           * Read a character from the serial port
-    cmp.b   #BKSP, %d0        * Is it a backspace?
+    bsr.w   inChar           	| Read a character from the serial port
+    cmp.b   #BKSP, %d0        	| Is it a backspace?
     beq.s   .backspace
-    cmp.b   #CTRLX, %d0       * Is it Ctrl-H (Line Clear)?
+    cmp.b   #CTRLX, %d0       	| Is it Ctrl-H (Line Clear)?
     beq.s   .lineclear
-    cmp.b   #CR, %d0          * Is it a carriage return?
+    cmp.b   #CR, %d0          	| Is it a carriage return?
     beq.s   .endline
-    cmp.b   #LF, %d0          * Is it anything else but a LF?
-    beq.s   .loop            * Ignore LFs and get the next character
- .char:                      * Normal character to be inserted into the buffer
+    cmp.b   #LF, %d0          	| Is it anything else but a LF?
+    beq.s   .loop            	| Ignore LFs and get the next character
+ .char:                      	| Normal character to be inserted into the buffer
     cmp.w   #MAX_LINE_LENGTH, d2
-    bge.s   .loop            * If the buffer is full ignore the character
-    move.b  %d0, (%a2)+        * Otherwise store the character
-    addq.w  #1, %d2           * Increment character count
-    bsr.w   outChar          * Echo the character
-    bra.s   .loop            * And get the next one
+    bge.s   .loop            	| If the buffer is full ignore the character
+    move.b  %d0, (%a2)+        	| Otherwise store the character
+    addq.w  #1, %d2           	| Increment character count
+    bsr.w   outChar          	| Echo the character
+    bra.s   .loop            	| And get the next one
  .backspace:
-    tst.w   %d2               * Are we at the beginning of the line?
-    beq.s   .loop            * Then ignore it
-    bsr.w   outChar          * Backspace
+    tst.w   %d2               	| Are we at the beginning of the line?
+    beq.s   .loop            	| Then ignore it
+    bsr.w   outChar          	| Backspace
     move.b  #' ', %d0
-    bsr.w   outChar          * Space
+    bsr.w   outChar          	| Space
     move.b  #BKSP, %d0
-    bsr.w   outChar          * Backspace
-    subq.l  #1, %a2           * Move back in the buffer
-    subq.l  #1, %d2           * And current character count
-    bra.s   .loop            * And goto the next character
+    bsr.w   outChar          	| Backspace
+    subq.l  #1, %a2           	| Move back in the buffer
+    subq.l  #1, %d2           	| And current character count
+    bra.s   .loop            	| And goto the next character
  .lineclear:
-    tst     %d2               * Anything to clear?
-    beq.s   .loop            * If not, fetch the next character
-    suba.l  %d2, %a2           * Return to the start of the buffer
+    tst     %d2               	| Anything to clear?
+    beq.s   .loop            	| If not, fetch the next character
+    suba.l  %d2, %a2           	| Return to the start of the buffer
  .lineclearloop:
     move.b  #BKSP, %d0
-    bsr.w   outChar          * Backspace
+    bsr.w   outChar          	| Backspace
     move.b  #' ', %d0
-    bsr.w   outChar          * Space
+    bsr.w   outChar          	| Space
     move.b  #BKSP, %d0
-    bsr.w   outChar          * Backspace
+    bsr.w   outChar          	| Backspace
     subq.w  #1, %d2          
-    bne.s   .lineclearloop   * Go till the start of the line
+    bne.s   .lineclearloop   	| Go till the start of the line
     bra.s   .loop   
  .endline:
-    bsr.w   outChar          * Echo the CR
+    bsr.w   outChar          	| Echo the CR
     move.b  #LF, %d0
-    bsr.w   outChar          * Line feed to be safe
-    move.b  #0, (%a2)         * Terminate the line (Buffer is longer than max to allow this at full length)
-    movea.l %a2, %a0           * Ready the pointer to return (if needed)
-    movem.l (%SP)+, %d2/%a2     * Restore registers
-    rts                      * And return
+    bsr.w   outChar          	| Line feed to be safe
+    move.b  #0, (%a2)         	| Terminate the line (Buffer is longer than max to allow this at full length)
+    movea.l %a2, %a0           	| Ready the pointer to return (if needed)
+    movem.l (%SP)+, %d2/%a2     | Restore registers
+    rts                      	| And return
 
 
 | Convert line buffer to upper case
