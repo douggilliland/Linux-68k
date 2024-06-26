@@ -126,6 +126,12 @@ loopAdrCk:
 	jsr		printString1
 	lea		CRLF_MSG, %a0
 	jsr		printString1
+|
+	jsr		readLine
+	jsr		lineToUpper
+	lea     varLineBuf, %a0
+	jsr		printString1
+	
 FERVR:
 	nop
 	move.b	#0x04, OPS		| Blink LED on DUART Out2
