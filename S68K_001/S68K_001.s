@@ -136,7 +136,7 @@ loopAdrCk:
 	lea		CRLF_MSG, %a0
 	jsr		printString1
 	jsr		readLine
-	lea		LINETOUPPER, %a0
+	lea		L_TO_UPPER_MSG, %a0
 	jsr		printString1
 	lea		CRLF_MSG, %a0
 	jsr		printString1
@@ -327,7 +327,7 @@ delay1Loop:
 
 READINLINE:	  .ascii  "Reading in line"
 			DC.B    EOT
-LINETOUPPER:  .ascii  "Convert line to upper case"
+L_TO_UPPER_MSG:  .ascii  "Convert line to upper case"
 			DC.B    EOT
 WRITEOUTLINE:	  .ascii  "Writing out line"
 			DC.B    EOT
