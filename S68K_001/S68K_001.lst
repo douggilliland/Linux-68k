@@ -328,106 +328,105 @@
  279               	 LUloop:
  280 80624 1010      	    move.b  (%a0), %d0        | Read in a character
  281 80626 0C00 0061 	    cmp.b   #'a', %d0         
- 282 8062a 6D0C      	    blt.s   LUnext2            | Is it less than lower-case 'a', then move on
+ 282 8062a 6D0A      	    blt.s   LUnext            | Is it less than lower-case 'a', then move on
  283 8062c 0C00 007A 	    cmp.b   #'z', %d0
- 284 80630 6E06      	    bgt.s   LUnext2            | Is it greater than lower-case 'z', then move on
+ 284 80630 6E04      	    bgt.s   LUnext            | Is it greater than lower-case 'z', then move on
  285 80632 0400 0000 	    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
  286               	 LUnext:
  287 80636 10C0      	    move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
- 288               	LUnext2:
- 289 80638 66EA      	    bne.s   LUloop             | Keep going till we hit a null terminator
- 290 8063a 4E75      	    rts
+ 288 80638 66EA      	    bne.s   LUloop             | Keep going till we hit a null terminator
+ 289 8063a 4E75      	    rts
+ 290               	
  291               	
- 292               	
- 293               	|||||
- 294               	| Initializes the 68681 DUART port A as 9600 8N1 
- 295               	initDuart:
- 296 8063c 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 292               	|||||
+ 293               	| Initializes the 68681 DUART port A as 9600 8N1 
+ 294               	initDuart:
+ 295 8063c 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 295      000F 0004 
+ 296 80644 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
  296      000F 0004 
- 297 80644 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
+ 297 8064c 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
  297      000F 0004 
- 298 8064c 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
- 298      000F 0004 
- 299               	    
- 300 80654 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
- 300      000F 0008 
- 301 8065c 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
- 301      000F 0002 
- 302 80664 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 298               	    
+ 299 80654 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+ 299      000F 0008 
+ 300 8065c 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 300      000F 0002 
+ 301 80664 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 301      000F 0000 
+ 302 8066c 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
  302      000F 0000 
- 303 8066c 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
- 303      000F 0000 
- 304               	    
+ 303               	    
+ 304 80674 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
 68K GAS  S68K_001.s 			page 7
 
 
- 305 80674 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 305      000F 0004 
- 306               	
- 307 8067c 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 304      000F 0004 
+ 305               	
+ 306 8067c 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 306      000F 0014 
+ 307 80684 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
  307      000F 0014 
- 308 80684 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 308 8068c 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
  308      000F 0014 
- 309 8068c 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
- 309      000F 0014 
- 310               	    
- 311 80694 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
- 311      000F 0012 
- 312 8069c 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 309               	    
+ 310 80694 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 310      000F 0012 
+ 311 8069c 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 311      000F 0010 
+ 312 806a4 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
  312      000F 0010 
- 313 806a4 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
- 313      000F 0010 
- 314               	    
- 315 806ac 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
- 315      000F 0014 
- 316               		
- 317 806b4 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
- 317      000F 001A 
- 318 806bc 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
- 318      000F 001E 
- 319 806c4 4E75      	    rts    
- 320               	
- 321               	delay1Sec:
- 322 806c6 203C 0003 		move.l	#200000, %d0	| rough count
- 322      0D40 
- 323               	delay1Loop:
- 324 806cc 5380      		sub.l	#1, %d0			
- 325 806ce 6600 FFFC 		bne		delay1Loop
- 326 806d2 4E75      		rts
- 327               	
- 328 806d4 5265 6164 	READINLINE:	  .ascii  "Reading in line"
- 328      696E 6720 
- 328      696E 206C 
- 328      696E 65
- 329 806e3 00        				DC.B    EOT
- 330 806e4 436F 6E76 	L_TO_UPPER_MSG:  .ascii  "Convert line to upper case"
- 330      6572 7420 
- 330      6C69 6E65 
- 330      2074 6F20 
- 330      7570 7065 
- 331 806fe 00        				DC.B    EOT
- 332 806ff 5772 6974 	WRITEOUTLINE:	  .ascii  "Writing out line"
- 332      696E 6720 
- 332      6F75 7420 
- 332      6C69 6E65 
- 333 8070f 00        				DC.B    EOT
- 334 80710 5241 4D20 	RAM_PASS_MSG:  .ascii  "RAM Test Passed"
- 334      5465 7374 
- 334      2050 6173 
- 334      7365 64
- 335 8071f 00        				DC.B    EOT
- 336 80720 0A0D 00   	CRLF_MSG:	dc.b 0x0a,0xd,0
- 337 80723 5349 4D50 	BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
+ 313               	    
+ 314 806ac 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 314      000F 0014 
+ 315               		
+ 316 806b4 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
+ 316      000F 001A 
+ 317 806bc 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
+ 317      000F 001E 
+ 318 806c4 4E75      	    rts    
+ 319               	
+ 320               	delay1Sec:
+ 321 806c6 203C 0003 		move.l	#200000, %d0	| rough count
+ 321      0D40 
+ 322               	delay1Loop:
+ 323 806cc 5380      		sub.l	#1, %d0			
+ 324 806ce 6600 FFFC 		bne		delay1Loop
+ 325 806d2 4E75      		rts
+ 326               	
+ 327 806d4 5265 6164 	READINLINE:	  .ascii  "Reading in line"
+ 327      696E 6720 
+ 327      696E 206C 
+ 327      696E 65
+ 328 806e3 00        				DC.B    EOT
+ 329 806e4 436F 6E76 	L_TO_UPPER_MSG:  .ascii  "Convert line to upper case"
+ 329      6572 7420 
+ 329      6C69 6E65 
+ 329      2074 6F20 
+ 329      7570 7065 
+ 330 806fe 00        				DC.B    EOT
+ 331 806ff 5772 6974 	WRITEOUTLINE:	  .ascii  "Writing out line"
+ 331      696E 6720 
+ 331      6F75 7420 
+ 331      6C69 6E65 
+ 332 8070f 00        				DC.B    EOT
+ 333 80710 5241 4D20 	RAM_PASS_MSG:  .ascii  "RAM Test Passed"
+ 333      5465 7374 
+ 333      2050 6173 
+ 333      7365 64
+ 334 8071f 00        				DC.B    EOT
+ 335 80720 0A0D 00   	CRLF_MSG:	dc.b 0x0a,0xd,0
+ 336 80723 5349 4D50 	BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
+ 336      4C45 2D36 
 68K GAS  S68K_001.s 			page 8
 
 
- 337      4C45 2D36 
- 337      3830 3038 
- 337      2043 5055 
- 338 80733 00        				DC.B    EOT
- 339               	
- 340               	MAX_LINE_LENGTH = 80
- 341               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+ 336      3830 3038 
+ 336      2043 5055 
+ 337 80733 00        				DC.B    EOT
+ 338               	
+ 339               	MAX_LINE_LENGTH = 80
+ 340               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
 68K GAS  S68K_001.s 			page 9
 
 
@@ -473,19 +472,19 @@ DEFINED SYMBOLS
           S68K_001.s:94     .text:0000000000080464 loopAdrFill
           S68K_001.s:106    .text:0000000000080482 loopAdrCk
           S68K_001.s:165    .text:000000000008052c failAdrTest
-          S68K_001.s:295    .text:000000000008063c initDuart
-          S68K_001.s:337    .text:0000000000080723 BANNER_MSG
+          S68K_001.s:294    .text:000000000008063c initDuart
+          S68K_001.s:336    .text:0000000000080723 BANNER_MSG
           S68K_001.s:190    .text:000000000008055a printString1
-          S68K_001.s:336    .text:0000000000080720 CRLF_MSG
-          S68K_001.s:334    .text:0000000000080710 RAM_PASS_MSG
-          S68K_001.s:328    .text:00000000000806d4 READINLINE
+          S68K_001.s:335    .text:0000000000080720 CRLF_MSG
+          S68K_001.s:333    .text:0000000000080710 RAM_PASS_MSG
+          S68K_001.s:327    .text:00000000000806d4 READINLINE
           S68K_001.s:220    .text:000000000008058c readLine
-          S68K_001.s:330    .text:00000000000806e4 L_TO_UPPER_MSG
+          S68K_001.s:329    .text:00000000000806e4 L_TO_UPPER_MSG
           S68K_001.s:277    .text:000000000008061e lineToUpper
-          S68K_001.s:332    .text:00000000000806ff WRITEOUTLINE
+          S68K_001.s:331    .text:00000000000806ff WRITEOUTLINE
                             *ABS*:000000000007fbae varLineBuf
           S68K_001.s:151    .text:0000000000080502 FERVR
-          S68K_001.s:321    .text:00000000000806c6 delay1Sec
+          S68K_001.s:320    .text:00000000000806c6 delay1Sec
           S68K_001.s:172    .text:0000000000080532 outChar1
           S68K_001.s:173    .text:0000000000080532 outChar
 68K GAS  S68K_001.s 			page 10
@@ -506,9 +505,8 @@ DEFINED SYMBOLS
                             *ABS*:0000000000000050 MAX_LINE_LENGTH
           S68K_001.s:256    .text:00000000000805e8 RLlineClrloop
           S68K_001.s:279    .text:0000000000080624 LUloop
-          S68K_001.s:288    .text:0000000000080638 LUnext2
           S68K_001.s:286    .text:0000000000080636 LUnext
-          S68K_001.s:323    .text:00000000000806cc delay1Loop
+          S68K_001.s:322    .text:00000000000806cc delay1Loop
 
 UNDEFINED SYMBOLS
 $20
