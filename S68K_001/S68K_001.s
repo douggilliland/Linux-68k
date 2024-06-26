@@ -127,8 +127,20 @@ loopAdrCk:
 	lea		CRLF_MSG, %a0
 	jsr		printString1
 |
+	lea		READINLINE, %a0
+	jsr		printString1
+	lea		CRLF_MSG, %a0
+	jsr		printString1
 	jsr		readLine
+	lea		LINETOUPPER, %a0
+	jsr		printString1
+	lea		CRLF_MSG, %a0
+	jsr		printString1
 	jsr		lineToUpper
+	lea		WRITEOUTLINE,%a0
+	jsr		printString1
+	lea		CRLF_MSG, %a0
+	jsr		printString1
 	lea     varLineBuf, %a0
 	jsr		printString1
 	
@@ -309,6 +321,12 @@ delay1Loop:
 	bne		delay1Loop
 	rts
 
+READINLINE:	  .ascii  "Reading in line"
+			DC.B    EOT
+LINETOUPPER:  .ascii  "Convert line to upper case"
+			DC.B    EOT
+WRITEOUTLINE:	  .ascii  "Writing out line"
+			DC.B    EOT
 RAM_PASS_MSG:  .ascii  "RAM Test Passed"
 			DC.B    EOT
 CRLF_MSG:	dc.b 0x0a,0xd,0
