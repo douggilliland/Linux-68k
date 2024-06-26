@@ -129,6 +129,8 @@ loopAdrCk:
 |
 	jsr		inChar
 	jsr		outChar
+
+	jmp		FERVR
 |
 	lea		READINLINE, %a0
 	jsr		printString1
@@ -313,7 +315,7 @@ initDuart:
     
     move.b  #0x05, CRB       | Enable Transmit/Recieve
 	
-	move.b	#0xFC, OPC		 | Output port configuration (all bit are outs)
+	move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
 	move.b	#0xFC, OPR		 | Clear all outputs
     rts    
 
