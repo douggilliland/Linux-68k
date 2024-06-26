@@ -331,7 +331,7 @@
  282 8062a 6D0A      	    blt.s   LUnext            | Is it less than lower-case 'a', then move on
  283 8062c 0C00 007A 	    cmp.b   #'z', %d0
  284 80630 6E04      	    bgt.s   LUnext            | Is it greater than lower-case 'z', then move on
- 285 80632 0400 0000 	    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
+ 285 80632 0400 0020 	    sub.b   #0x20, %d0         | Then convert a to A, b to B, etc.
  286               	 LUnext:
  287 80636 10C0      	    move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
  288 80638 66EA      	    bne.s   LUloop             | Keep going till we hit a null terminator
@@ -509,5 +509,4 @@ DEFINED SYMBOLS
           S68K_001.s:322    .text:00000000000806cc delay1Loop
 
 UNDEFINED SYMBOLS
-$20
 EOT
