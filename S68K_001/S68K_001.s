@@ -221,26 +221,26 @@ readLine:
     movem.l %d2/%a2, -(%SP)     | Save changed registers
     lea     varLineBuf, %a2   	| Start of the lineBuffer
     eor.w   %d2, %d2           	| Clear the character counter
- .loop:
+ RLloop:
     bsr.w   inChar           	| Read a character from the serial port
     cmp.b   #BKSP, %d0        	| Is it a backspace?
-    beq.s   .backspace
+    beq.s   RLBS
     cmp.b   #CTRLX, %d0       	| Is it Ctrl-H (Line Clear)?
-    beq.s   .lineclear
+    beq.s   RLlineClr
     cmp.b   #CR, %d0          	| Is it a carriage return?
-    beq.s   .endline
+    beq.s   RLEndLn
     cmp.b   #LF, %d0          	| Is it anything else but a LF?
-    beq.s   .loop            	| Ignore LFs and get the next character
+    beq.s   RLloop            	| Ignore LFs and get the next character
  .char:                      	| Normal character to be inserted into the buffer
     cmp.w   #MAX_LINE_LENGTH, %d2
-    bge.s   .loop            	| If the buffer is full ignore the character
+    bge.s   RLloop            	| If the buffer is full ignore the character
     move.b  %d0, (%a2)+        	| Otherwise store the character
     addq.w  #1, %d2           	| Increment character count
     bsr.w   outChar          	| Echo the character
-    bra.s   .loop            	| And get the next one
- .backspace:
+    bra.s   RLloop            	| And get the next one
+ RLBS:
     tst.w   %d2               	| Are we at the beginning of the line?
-    beq.s   .loop            	| Then ignore it
+    beq.s   RLloop            	| Then ignore it
     bsr.w   outChar          	| Backspace
     move.b  #' ', %d0
     bsr.w   outChar          	| Space
@@ -248,12 +248,12 @@ readLine:
     bsr.w   outChar          	| Backspace
     subq.l  #1, %a2           	| Move back in the buffer
     subq.l  #1, %d2           	| And current character count
-    bra.s   .loop            	| And goto the next character
- .lineclear:
+    bra.s   RLloop            	| And goto the next character
+ RLlineClr:
     tst     %d2               	| Anything to clear?
-    beq.s   .loop            	| If not, fetch the next character
+    beq.s   RLloop            	| If not, fetch the next character
     suba.l  %d2, %a2           	| Return to the start of the buffer
- .lineclearloop:
+ RLlineClrloop:
     move.b  #BKSP, %d0
     bsr.w   outChar          	| Backspace
     move.b  #' ', %d0
@@ -261,9 +261,9 @@ readLine:
     move.b  #BKSP, %d0
     bsr.w   outChar          	| Backspace
     subq.w  #1, %d2          
-    bne.s   .lineclearloop   	| Go till the start of the line
-    bra.s   .loop   
- .endline:
+    bne.s   RLlineClrloop   	| Go till the start of the line
+    bra.s   RLloop   
+ RLEndLn:
     bsr.w   outChar          	| Echo the CR
     move.b  #LF, %d0
     bsr.w   outChar          	| Line feed to be safe
