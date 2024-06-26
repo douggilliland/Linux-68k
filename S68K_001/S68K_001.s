@@ -282,7 +282,7 @@ lineToUpper:
     blt.s   LUnext            | Is it less than lower-case 'a', then move on
     cmp.b   #'z', %d0
     bgt.s   LUnext            | Is it greater than lower-case 'z', then move on
-    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
+    sub.b   #0x20, %d0         | Then convert a to A, b to B, etc.
  LUnext:
     move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
     bne.s   LUloop             | Keep going till we hit a null terminator
