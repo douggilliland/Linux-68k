@@ -82,14 +82,14 @@
   65 8041c 2080      		move.l	%d0, (%a0)				| Write out test pattern to SRAM
   66 8041e 2410      		move.l	(%a0), %d2				| Read first SRAM pattern into d2
   67 80420 B042      		cmp			%d2, %d0
-  68 80422 6600 0108 		bne			FERVR2						
+  68 80422 6600 00FC 		bne			FERVR2						
   69 80426 223C 5555 		move.l	#0x5555AAAA, %d1	| Test Pattern #2
   69      AAAA 
   70 8042c 327C 0004 		move		#0x00000004, %a1	| Second long address of SRAM
   71 80430 2281      		move.l	%d1, (%a1)				| Write out test pattern to SRAM
   72 80432 2611      		move.l	(%a1), %d3				| Read back
   73 80434 B243      		cmp			%d3, %d1
-  74 80436 6600 00F4 		bne			FERVR2
+  74 80436 6600 00E8 		bne			FERVR2
   75 8043a 4E71      		nop
   76               	| Test bits of first location (as bytes)
   77 8043c 7001      		move.l	#1, %d0
@@ -99,7 +99,7 @@
   80 80444 1080      		move.b	%d0, (%a0)
   81 80446 1210      		move.b	(%a0), %d1
   82 80448 B200      		cmp.b		%d0, %d1
-  83 8044a 6600 00E6 		bne			failBitTest
+  83 8044a 6600 00DA 		bne			failBitTest
   84 8044e E348      		lsl			#1, %d0
   85 80450 0C80 0000 		cmp.l		#0x00000100, %d0
   85      0100 
@@ -132,7 +132,7 @@
  106               	loopAdrCk:
  107 80482 1210      		move.b	(%a0), %d1	| Do the read (as a byte)
  108 80484 B200      		cmp.b		%d0, %d1
- 109 80486 6600 00B0 		bne			failAdrTest
+ 109 80486 6600 00A4 		bne			failAdrTest
  110 8048a 5240      		addq		#1, %d0
  111 8048c 2408      		move.l	%a0, %d2 
  112 8048e E38A      		lsl.l		#1, %d2
@@ -143,292 +143,291 @@
  116               	|
  117               	| Done with address test of SRAM
  118               	|
- 119 8049c 4EBA 01AA 		jsr     initDuart       | Setup the serial port
+ 119 8049c 4EBA 019E 		jsr     initDuart       | Setup the serial port
  120               		
- 121 804a0 41FA 028D 		lea		BANNER_MSG, %a0
- 122 804a4 4EBA 00C0 		jsr		printString1
- 123 804a8 41FA 0282 		lea		CRLF_MSG, %a0
- 124 804ac 4EBA 00B8 		jsr		printString1
- 125 804b0 41FA 026A 		lea		RAM_PASS_MSG, %a0
- 126 804b4 4EBA 00B0 		jsr		printString1
- 127 804b8 41FA 0272 		lea		CRLF_MSG, %a0
- 128 804bc 4EBA 00A8 		jsr		printString1
+ 121 804a0 41FA 0281 		lea		BANNER_MSG, %a0
+ 122 804a4 4EBA 00B4 		jsr		printString1
+ 123 804a8 41FA 0276 		lea		CRLF_MSG, %a0
+ 124 804ac 4EBA 00AC 		jsr		printString1
+ 125 804b0 41FA 025E 		lea		RAM_PASS_MSG, %a0
+ 126 804b4 4EBA 00A4 		jsr		printString1
+ 127 804b8 41FA 0266 		lea		CRLF_MSG, %a0
+ 128 804bc 4EBA 009C 		jsr		printString1
  129               	|
- 130 804c0 4EBA 00AE 		jsr		inChar
- 131 804c4 4EBA 0078 		jsr		outChar
- 132               	
- 133 804c8 4EFA 0044 		jmp		FERVR
- 134               	|
- 135 804cc 41FA 0212 		lea		READINLINE, %a0
- 136 804d0 4EBA 0094 		jsr		printString1
- 137 804d4 41FA 0256 		lea		CRLF_MSG, %a0
- 138 804d8 4EBA 008C 		jsr		printString1
- 139 804dc 4EBA 00BA 		jsr		readLine
- 140 804e0 41FA 020E 		lea		LINETOUPPER, %a0
- 141 804e4 4EBA 0080 		jsr		printString1
- 142 804e8 41FA 0242 		lea		CRLF_MSG, %a0
- 143 804ec 4EBA 0078 		jsr		printString1
- 144 804f0 4EBA 0138 		jsr		lineToUpper
- 145 804f4 41FA 0215 		lea		WRITEOUTLINE,%a0
- 146 804f8 4EBA 006C 		jsr		printString1
- 147 804fc 41FA 022E 		lea		CRLF_MSG, %a0
- 148 80500 4EBA 0064 		jsr		printString1
- 149 80504 41F9 0007 		lea     varLineBuf, %a0
- 149      FBAE 
- 150 8050a 4EBA 005A 		jsr		printString1
- 151               		
- 152               	FERVR:
+ 130               	|	jsr		inChar
+ 131               	|	jsr		outChar
+ 132               	|	jmp		FERVR
+ 133               	|
+ 134 804c0 41FA 0212 		lea		READINLINE, %a0
+ 135 804c4 4EBA 0094 		jsr		printString1
+ 136 804c8 41FA 0256 		lea		CRLF_MSG, %a0
+ 137 804cc 4EBA 008C 		jsr		printString1
+ 138 804d0 4EBA 00BA 		jsr		readLine
+ 139 804d4 41FA 020E 		lea		LINETOUPPER, %a0
+ 140 804d8 4EBA 0080 		jsr		printString1
+ 141 804dc 41FA 0242 		lea		CRLF_MSG, %a0
+ 142 804e0 4EBA 0078 		jsr		printString1
+ 143 804e4 4EBA 0138 		jsr		lineToUpper
+ 144 804e8 41FA 0215 		lea		WRITEOUTLINE,%a0
+ 145 804ec 4EBA 006C 		jsr		printString1
+ 146 804f0 41FA 022E 		lea		CRLF_MSG, %a0
+ 147 804f4 4EBA 0064 		jsr		printString1
+ 148 804f8 41F9 0007 		lea     varLineBuf, %a0
+ 148      FBAE 
+ 149 804fe 4EBA 005A 		jsr		printString1
+ 150               		
+ 151               	FERVR:
+ 152 80502 4E71      		nop
 68K GAS  S68K_001.s 			page 4
 
 
- 153 8050e 4E71      		nop
- 154 80510 13FC 0004 		move.b	#0x04, OPS		| Blink LED on DUART Out2
- 154      000F 001C 
- 155 80518 4EBA 01B8 		jsr		delay1Sec
- 156 8051c 13FC 0004 		move.b	#0x04, OPR
- 156      000F 001E 
- 157 80524 4EBA 01AC 		jsr		delay1Sec
- 158 80528 4EFA FFE4 		jmp		FERVR
- 159               	|
- 160               	FERVR2:
- 161 8052c 4E71      		nop
- 162 8052e 4EFA FFFC 		jmp	FERVR2
- 163               	failBitTest:
- 164 80532 4E71      		nop
- 165 80534 4EFA FFFC 		jmp	failBitTest
- 166               	failAdrTest:
- 167 80538 4E71      		nop
- 168 8053a 4EFA FFFC 		jmp	failAdrTest
- 169               	
- 170               	|||||
- 171               	| Writes a character to Port A, blocking if not ready (Full buffer)
- 172               	|  - Takes a character in D0
- 173               	outChar1:
- 174               	outChar:
- 175 8053e 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
- 175      000F 0002 
- 176 80546 6700 FFF6 	    beq     outChar1     
- 177 8054a 13C0 000F 	    move.b  %d0, TBA      | Transmit Character
- 177      0006 
- 178 80550 4E75      	    rts
- 179               	
- 180               	| Writes a character to Port A, blocking if not ready (Full buffer)
- 181               	|  - Takes a character in D0
- 182               	outChar2:
- 183 80552 0839 0002 	    btst    #2, SRB      | Check if transmitter ready bit is set
- 183      000F 0012 
- 184 8055a 6700 FFF6 	    beq     outChar2     
- 185 8055e 13C0 000F 	    move.b  %d0, TBB      | Transmit Character
- 185      0016 
- 186 80564 4E75      	    rts
- 187               	
- 188               	******
- 189               	* Print a null terminated string
- 190               	*
- 191               	printString1:
- 192               	printString:
- 193               	 PSloop:
- 194 80566 1018      	    move.b  (%a0)+, %d0  | Read in character
- 195 80568 6704      	    beq.s   PSend         | Check for the null
- 196               	    
- 197 8056a 61D2      	    bsr.s   outChar      | Otherwise write the character
- 198 8056c 60F8      	    bra.s   PSloop        | And continue
- 199               	PSend:
- 200 8056e 4E75      	    rts
+ 153 80504 13FC 0004 		move.b	#0x04, OPS		| Blink LED on DUART Out2
+ 153      000F 001C 
+ 154 8050c 4EBA 01B8 		jsr		delay1Sec
+ 155 80510 13FC 0004 		move.b	#0x04, OPR
+ 155      000F 001E 
+ 156 80518 4EBA 01AC 		jsr		delay1Sec
+ 157 8051c 4EFA FFE4 		jmp		FERVR
+ 158               	|
+ 159               	FERVR2:
+ 160 80520 4E71      		nop
+ 161 80522 4EFA FFFC 		jmp	FERVR2
+ 162               	failBitTest:
+ 163 80526 4E71      		nop
+ 164 80528 4EFA FFFC 		jmp	failBitTest
+ 165               	failAdrTest:
+ 166 8052c 4E71      		nop
+ 167 8052e 4EFA FFFC 		jmp	failAdrTest
+ 168               	
+ 169               	|||||
+ 170               	| Writes a character to Port A, blocking if not ready (Full buffer)
+ 171               	|  - Takes a character in D0
+ 172               	outChar1:
+ 173               	outChar:
+ 174 80532 0839 0002 	    btst    #2, SRA      | Check if transmitter ready bit is set
+ 174      000F 0002 
+ 175 8053a 6700 FFF6 	    beq     outChar1     
+ 176 8053e 13C0 000F 	    move.b  %d0, TBA      | Transmit Character
+ 176      0006 
+ 177 80544 4E75      	    rts
+ 178               	
+ 179               	| Writes a character to Port A, blocking if not ready (Full buffer)
+ 180               	|  - Takes a character in D0
+ 181               	outChar2:
+ 182 80546 0839 0002 	    btst    #2, SRB      | Check if transmitter ready bit is set
+ 182      000F 0012 
+ 183 8054e 6700 FFF6 	    beq     outChar2     
+ 184 80552 13C0 000F 	    move.b  %d0, TBB      | Transmit Character
+ 184      0016 
+ 185 80558 4E75      	    rts
+ 186               	
+ 187               	******
+ 188               	* Print a null terminated string
+ 189               	*
+ 190               	printString1:
+ 191               	printString:
+ 192               	 PSloop:
+ 193 8055a 1018      	    move.b  (%a0)+, %d0  | Read in character
+ 194 8055c 6704      	    beq.s   PSend         | Check for the null
+ 195               	    
+ 196 8055e 61D2      	    bsr.s   outChar      | Otherwise write the character
+ 197 80560 60F8      	    bra.s   PSloop        | And continue
+ 198               	PSend:
+ 199 80562 4E75      	    rts
+ 200               	
  201               	
- 202               	
- 203               	|||||
+ 202               	|||||
+ 203               	| Reads in a character from Port A, blocking if none available
 68K GAS  S68K_001.s 			page 5
 
 
- 204               	| Reads in a character from Port A, blocking if none available
- 205               	|  - Returns character in D0
- 206               	|    
- 207               	inChar1:
- 208               	inChar:
- 209 80570 0839 0000 	    btst    #0,  SRA	| Check if receiver ready bit is set
- 209      000F 0002 
- 210 80578 6700 FFF6 	    beq     inChar1
- 211 8057c 1039 000F 	    move.b  RBA, %d0	| Read Character into D0
- 211      0006 
- 212 80582 4E75      	    rts
- 213               	
- 214               	inChar2:
- 215 80584 0839 0000 	    btst    #0,  SRB	| Check if receiver ready bit is set
- 215      000F 0012 
- 216 8058c 6700 FFF6 	    beq     inChar2
- 217 80590 1039 000F 	    move.b  RBB, %d0	| Read Character into D0
- 217      0016 
- 218 80596 4E75      	    rts
- 219               	
- 220               	| Read in a line into the line buffer
- 221               	readLine:
- 222 80598 48E7 2020 	    movem.l %d2/%a2, -(%SP)     | Save changed registers
- 223 8059c 45F9 0007 	    lea     varLineBuf, %a2   	| Start of the lineBuffer
- 223      FBAE 
- 224 805a2 B542      	    eor.w   %d2, %d2           	| Clear the character counter
- 225               	 .loop:
- 226 805a4 6100 FFCA 	    bsr.w   inChar           	| Read a character from the serial port
- 227 805a8 0C00 0008 	    cmp.b   #BKSP, %d0        	| Is it a backspace?
- 228 805ac 6722      	    beq.s   .backspace
- 229 805ae 0C00 0018 	    cmp.b   #CTRLX, %d0       	| Is it Ctrl-H (Line Clear)?
- 230 805b2 673A      	    beq.s   .lineclear
- 231 805b4 0C00 000D 	    cmp.b   #CR, %d0          	| Is it a carriage return?
- 232 805b8 6758      	    beq.s   .endline
- 233 805ba 0C00 000A 	    cmp.b   #LF, %d0          	| Is it anything else but a LF?
- 234 805be 67E4      	    beq.s   .loop            	| Ignore LFs and get the next character
- 235               	 .char:                      	| Normal character to be inserted into the buffer
- 236 805c0 0C42 0050 	    cmp.w   #MAX_LINE_LENGTH, %d2
- 237 805c4 6CDE      	    bge.s   .loop            	| If the buffer is full ignore the character
- 238 805c6 14C0      	    move.b  %d0, (%a2)+        	| Otherwise store the character
- 239 805c8 5242      	    addq.w  #1, %d2           	| Increment character count
- 240 805ca 6100 FF72 	    bsr.w   outChar          	| Echo the character
- 241 805ce 60D4      	    bra.s   .loop            	| And get the next one
- 242               	 .backspace:
- 243 805d0 4A42      	    tst.w   %d2               	| Are we at the beginning of the line?
- 244 805d2 67D0      	    beq.s   .loop            	| Then ignore it
- 245 805d4 6100 FF68 	    bsr.w   outChar          	| Backspace
- 246 805d8 103C 0020 	    move.b  #' ', %d0
- 247 805dc 6100 FF60 	    bsr.w   outChar          	| Space
- 248 805e0 103C 0008 	    move.b  #BKSP, %d0
- 249 805e4 6100 FF58 	    bsr.w   outChar          	| Backspace
- 250 805e8 538A      	    subq.l  #1, %a2           	| Move back in the buffer
- 251 805ea 5382      	    subq.l  #1, %d2           	| And current character count
- 252 805ec 60B6      	    bra.s   .loop            	| And goto the next character
- 253               	 .lineclear:
- 254 805ee 4A42      	    tst     %d2               	| Anything to clear?
- 255 805f0 67B2      	    beq.s   .loop            	| If not, fetch the next character
+ 204               	|  - Returns character in D0
+ 205               	|    
+ 206               	inChar1:
+ 207               	inChar:
+ 208 80564 0839 0000 	    btst    #0,  SRA	| Check if receiver ready bit is set
+ 208      000F 0002 
+ 209 8056c 6700 FFF6 	    beq     inChar1
+ 210 80570 1039 000F 	    move.b  RBA, %d0	| Read Character into D0
+ 210      0006 
+ 211 80576 4E75      	    rts
+ 212               	
+ 213               	inChar2:
+ 214 80578 0839 0000 	    btst    #0,  SRB	| Check if receiver ready bit is set
+ 214      000F 0012 
+ 215 80580 6700 FFF6 	    beq     inChar2
+ 216 80584 1039 000F 	    move.b  RBB, %d0	| Read Character into D0
+ 216      0016 
+ 217 8058a 4E75      	    rts
+ 218               	
+ 219               	| Read in a line into the line buffer
+ 220               	readLine:
+ 221 8058c 48E7 2020 	    movem.l %d2/%a2, -(%SP)     | Save changed registers
+ 222 80590 45F9 0007 	    lea     varLineBuf, %a2   	| Start of the lineBuffer
+ 222      FBAE 
+ 223 80596 B542      	    eor.w   %d2, %d2           	| Clear the character counter
+ 224               	 .loop:
+ 225 80598 6100 FFCA 	    bsr.w   inChar           	| Read a character from the serial port
+ 226 8059c 0C00 0008 	    cmp.b   #BKSP, %d0        	| Is it a backspace?
+ 227 805a0 6722      	    beq.s   .backspace
+ 228 805a2 0C00 0018 	    cmp.b   #CTRLX, %d0       	| Is it Ctrl-H (Line Clear)?
+ 229 805a6 673A      	    beq.s   .lineclear
+ 230 805a8 0C00 000D 	    cmp.b   #CR, %d0          	| Is it a carriage return?
+ 231 805ac 6758      	    beq.s   .endline
+ 232 805ae 0C00 000A 	    cmp.b   #LF, %d0          	| Is it anything else but a LF?
+ 233 805b2 67E4      	    beq.s   .loop            	| Ignore LFs and get the next character
+ 234               	 .char:                      	| Normal character to be inserted into the buffer
+ 235 805b4 0C42 0050 	    cmp.w   #MAX_LINE_LENGTH, %d2
+ 236 805b8 6CDE      	    bge.s   .loop            	| If the buffer is full ignore the character
+ 237 805ba 14C0      	    move.b  %d0, (%a2)+        	| Otherwise store the character
+ 238 805bc 5242      	    addq.w  #1, %d2           	| Increment character count
+ 239 805be 6100 FF72 	    bsr.w   outChar          	| Echo the character
+ 240 805c2 60D4      	    bra.s   .loop            	| And get the next one
+ 241               	 .backspace:
+ 242 805c4 4A42      	    tst.w   %d2               	| Are we at the beginning of the line?
+ 243 805c6 67D0      	    beq.s   .loop            	| Then ignore it
+ 244 805c8 6100 FF68 	    bsr.w   outChar          	| Backspace
+ 245 805cc 103C 0020 	    move.b  #' ', %d0
+ 246 805d0 6100 FF60 	    bsr.w   outChar          	| Space
+ 247 805d4 103C 0008 	    move.b  #BKSP, %d0
+ 248 805d8 6100 FF58 	    bsr.w   outChar          	| Backspace
+ 249 805dc 538A      	    subq.l  #1, %a2           	| Move back in the buffer
+ 250 805de 5382      	    subq.l  #1, %d2           	| And current character count
+ 251 805e0 60B6      	    bra.s   .loop            	| And goto the next character
+ 252               	 .lineclear:
+ 253 805e2 4A42      	    tst     %d2               	| Anything to clear?
+ 254 805e4 67B2      	    beq.s   .loop            	| If not, fetch the next character
+ 255 805e6 95C2      	    suba.l  %d2, %a2           	| Return to the start of the buffer
 68K GAS  S68K_001.s 			page 6
 
 
- 256 805f2 95C2      	    suba.l  %d2, %a2           	| Return to the start of the buffer
- 257               	 .lineclearloop:
- 258 805f4 103C 0008 	    move.b  #BKSP, %d0
- 259 805f8 6100 FF44 	    bsr.w   outChar          	| Backspace
- 260 805fc 103C 0020 	    move.b  #' ', %d0
- 261 80600 6100 FF3C 	    bsr.w   outChar          	| Space
- 262 80604 103C 0008 	    move.b  #BKSP, %d0
- 263 80608 6100 FF34 	    bsr.w   outChar          	| Backspace
- 264 8060c 5342      	    subq.w  #1, %d2          
- 265 8060e 66E4      	    bne.s   .lineclearloop   	| Go till the start of the line
- 266 80610 6092      	    bra.s   .loop   
- 267               	 .endline:
- 268 80612 6100 FF2A 	    bsr.w   outChar          	| Echo the CR
- 269 80616 103C 000A 	    move.b  #LF, %d0
- 270 8061a 6100 FF22 	    bsr.w   outChar          	| Line feed to be safe
- 271 8061e 14BC 0000 	    move.b  #0, (%a2)         	| Terminate the line (Buffer is longer than max to allow this at ful
- 272 80622 204A      	    movea.l %a2, %a0           	| Ready the pointer to return (if needed)
- 273 80624 4CDF 0404 	    movem.l (%SP)+, %d2/%a2     | Restore registers
- 274 80628 4E75      	    rts                      	| And return
+ 256               	 .lineclearloop:
+ 257 805e8 103C 0008 	    move.b  #BKSP, %d0
+ 258 805ec 6100 FF44 	    bsr.w   outChar          	| Backspace
+ 259 805f0 103C 0020 	    move.b  #' ', %d0
+ 260 805f4 6100 FF3C 	    bsr.w   outChar          	| Space
+ 261 805f8 103C 0008 	    move.b  #BKSP, %d0
+ 262 805fc 6100 FF34 	    bsr.w   outChar          	| Backspace
+ 263 80600 5342      	    subq.w  #1, %d2          
+ 264 80602 66E4      	    bne.s   .lineclearloop   	| Go till the start of the line
+ 265 80604 6092      	    bra.s   .loop   
+ 266               	 .endline:
+ 267 80606 6100 FF2A 	    bsr.w   outChar          	| Echo the CR
+ 268 8060a 103C 000A 	    move.b  #LF, %d0
+ 269 8060e 6100 FF22 	    bsr.w   outChar          	| Line feed to be safe
+ 270 80612 14BC 0000 	    move.b  #0, (%a2)         	| Terminate the line (Buffer is longer than max to allow this at ful
+ 271 80616 204A      	    movea.l %a2, %a0           	| Ready the pointer to return (if needed)
+ 272 80618 4CDF 0404 	    movem.l (%SP)+, %d2/%a2     | Restore registers
+ 273 8061c 4E75      	    rts                      	| And return
+ 274               	
  275               	
- 276               	
- 277               	| Convert line buffer to upper case
- 278               	lineToUpper:
- 279 8062a 41F9 0007 	    lea     varLineBuf, %a0   | Get the start of the line buffer
- 279      FBAE 
- 280               	 LUloop:
- 281 80630 1010      	    move.b  (%a0), %d0        | Read in a character
- 282 80632 0C00 0061 	    cmp.b   #'a', %d0         
- 283 80636 6D0C      	    blt.s   LUnext2            | Is it less than lower-case 'a', then move on
- 284 80638 0C00 007A 	    cmp.b   #'z', %d0
- 285 8063c 6E06      	    bgt.s   LUnext2            | Is it greater than lower-case 'z', then move on
- 286 8063e 0400 0000 	    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
- 287               	 LUnext:
- 288 80642 10C0      	    move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
- 289               	LUnext2:
- 290 80644 66EA      	    bne.s   LUloop             | Keep going till we hit a null terminator
- 291 80646 4E75      	    rts
+ 276               	| Convert line buffer to upper case
+ 277               	lineToUpper:
+ 278 8061e 41F9 0007 	    lea     varLineBuf, %a0   | Get the start of the line buffer
+ 278      FBAE 
+ 279               	 LUloop:
+ 280 80624 1010      	    move.b  (%a0), %d0        | Read in a character
+ 281 80626 0C00 0061 	    cmp.b   #'a', %d0         
+ 282 8062a 6D0C      	    blt.s   LUnext2            | Is it less than lower-case 'a', then move on
+ 283 8062c 0C00 007A 	    cmp.b   #'z', %d0
+ 284 80630 6E06      	    bgt.s   LUnext2            | Is it greater than lower-case 'z', then move on
+ 285 80632 0400 0000 	    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
+ 286               	 LUnext:
+ 287 80636 10C0      	    move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
+ 288               	LUnext2:
+ 289 80638 66EA      	    bne.s   LUloop             | Keep going till we hit a null terminator
+ 290 8063a 4E75      	    rts
+ 291               	
  292               	
- 293               	
- 294               	|||||
- 295               	| Initializes the 68681 DUART port A as 9600 8N1 
- 296               	initDuart:
- 297 80648 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 293               	|||||
+ 294               	| Initializes the 68681 DUART port A as 9600 8N1 
+ 295               	initDuart:
+ 296 8063c 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 296      000F 0004 
+ 297 80644 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
  297      000F 0004 
- 298 80650 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
+ 298 8064c 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
  298      000F 0004 
- 299 80658 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
- 299      000F 0004 
- 300               	    
- 301 80660 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
- 301      000F 0008 
- 302 80668 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
- 302      000F 0002 
- 303 80670 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 299               	    
+ 300 80654 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+ 300      000F 0008 
+ 301 8065c 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 301      000F 0002 
+ 302 80664 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 302      000F 0000 
+ 303 8066c 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
  303      000F 0000 
- 304 80678 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
- 304      000F 0000 
+ 304               	    
 68K GAS  S68K_001.s 			page 7
 
 
- 305               	    
- 306 80680 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 306      000F 0004 
- 307               	
- 308 80688 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 305 80674 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+ 305      000F 0004 
+ 306               	
+ 307 8067c 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 307      000F 0014 
+ 308 80684 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
  308      000F 0014 
- 309 80690 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 309 8068c 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
  309      000F 0014 
- 310 80698 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
- 310      000F 0014 
- 311               	    
- 312 806a0 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
- 312      000F 0012 
- 313 806a8 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 310               	    
+ 311 80694 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 311      000F 0012 
+ 312 8069c 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 312      000F 0010 
+ 313 806a4 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
  313      000F 0010 
- 314 806b0 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
- 314      000F 0010 
- 315               	    
- 316 806b8 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
- 316      000F 0014 
- 317               		
- 318 806c0 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
- 318      000F 001A 
- 319 806c8 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
- 319      000F 001E 
- 320 806d0 4E75      	    rts    
- 321               	
- 322               	delay1Sec:
- 323 806d2 203C 0003 		move.l	#200000, %d0	| rough count
- 323      0D40 
- 324               	delay1Loop:
- 325 806d8 5380      		sub.l	#1, %d0			
- 326 806da 6600 FFFC 		bne		delay1Loop
- 327 806de 4E75      		rts
- 328               	
- 329 806e0 5265 6164 	READINLINE:	  .ascii  "Reading in line"
- 329      696E 6720 
- 329      696E 206C 
- 329      696E 65
- 330 806ef 00        				DC.B    EOT
- 331 806f0 436F 6E76 	LINETOUPPER:  .ascii  "Convert line to upper case"
- 331      6572 7420 
- 331      6C69 6E65 
- 331      2074 6F20 
- 331      7570 7065 
- 332 8070a 00        				DC.B    EOT
- 333 8070b 5772 6974 	WRITEOUTLINE:	  .ascii  "Writing out line"
- 333      696E 6720 
- 333      6F75 7420 
- 333      6C69 6E65 
- 334 8071b 00        				DC.B    EOT
- 335 8071c 5241 4D20 	RAM_PASS_MSG:  .ascii  "RAM Test Passed"
- 335      5465 7374 
- 335      2050 6173 
- 335      7365 64
- 336 8072b 00        				DC.B    EOT
- 337 8072c 0A0D 00   	CRLF_MSG:	dc.b 0x0a,0xd,0
+ 314               	    
+ 315 806ac 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 315      000F 0014 
+ 316               		
+ 317 806b4 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
+ 317      000F 001A 
+ 318 806bc 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
+ 318      000F 001E 
+ 319 806c4 4E75      	    rts    
+ 320               	
+ 321               	delay1Sec:
+ 322 806c6 203C 0003 		move.l	#200000, %d0	| rough count
+ 322      0D40 
+ 323               	delay1Loop:
+ 324 806cc 5380      		sub.l	#1, %d0			
+ 325 806ce 6600 FFFC 		bne		delay1Loop
+ 326 806d2 4E75      		rts
+ 327               	
+ 328 806d4 5265 6164 	READINLINE:	  .ascii  "Reading in line"
+ 328      696E 6720 
+ 328      696E 206C 
+ 328      696E 65
+ 329 806e3 00        				DC.B    EOT
+ 330 806e4 436F 6E76 	LINETOUPPER:  .ascii  "Convert line to upper case"
+ 330      6572 7420 
+ 330      6C69 6E65 
+ 330      2074 6F20 
+ 330      7570 7065 
+ 331 806fe 00        				DC.B    EOT
+ 332 806ff 5772 6974 	WRITEOUTLINE:	  .ascii  "Writing out line"
+ 332      696E 6720 
+ 332      6F75 7420 
+ 332      6C69 6E65 
+ 333 8070f 00        				DC.B    EOT
+ 334 80710 5241 4D20 	RAM_PASS_MSG:  .ascii  "RAM Test Passed"
+ 334      5465 7374 
+ 334      2050 6173 
+ 334      7365 64
+ 335 8071f 00        				DC.B    EOT
+ 336 80720 0A0D 00   	CRLF_MSG:	dc.b 0x0a,0xd,0
+ 337 80723 5349 4D50 	BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
 68K GAS  S68K_001.s 			page 8
 
 
- 338 8072f 5349 4D50 	BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
- 338      4C45 2D36 
- 338      3830 3038 
- 338      2043 5055 
- 339 8073f 00        				DC.B    EOT
- 340               	
- 341               	MAX_LINE_LENGTH = 80
- 342               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+ 337      4C45 2D36 
+ 337      3830 3038 
+ 337      2043 5055 
+ 338 80733 00        				DC.B    EOT
+ 339               	
+ 340               	MAX_LINE_LENGTH = 80
+ 341               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
 68K GAS  S68K_001.s 			page 9
 
 
@@ -468,48 +467,48 @@ DEFINED SYMBOLS
           S68K_001.s:44     *ABS*:000000000000001b ESC
           S68K_001.s:46     *ABS*:0000000000000003 CTRLC
           S68K_001.s:47     *ABS*:0000000000000018 CTRLX
-          S68K_001.s:160    .text:000000000008052c FERVR2
+          S68K_001.s:159    .text:0000000000080520 FERVR2
           S68K_001.s:79     .text:0000000000080444 loop1stLoc
-          S68K_001.s:163    .text:0000000000080532 failBitTest
+          S68K_001.s:162    .text:0000000000080526 failBitTest
           S68K_001.s:94     .text:0000000000080464 loopAdrFill
           S68K_001.s:106    .text:0000000000080482 loopAdrCk
-          S68K_001.s:166    .text:0000000000080538 failAdrTest
-          S68K_001.s:296    .text:0000000000080648 initDuart
-          S68K_001.s:338    .text:000000000008072f BANNER_MSG
-          S68K_001.s:191    .text:0000000000080566 printString1
-          S68K_001.s:337    .text:000000000008072c CRLF_MSG
-          S68K_001.s:335    .text:000000000008071c RAM_PASS_MSG
-          S68K_001.s:208    .text:0000000000080570 inChar
-          S68K_001.s:174    .text:000000000008053e outChar
-          S68K_001.s:152    .text:000000000008050e FERVR
-          S68K_001.s:329    .text:00000000000806e0 READINLINE
-          S68K_001.s:221    .text:0000000000080598 readLine
-          S68K_001.s:331    .text:00000000000806f0 LINETOUPPER
-          S68K_001.s:278    .text:000000000008062a lineToUpper
-          S68K_001.s:333    .text:000000000008070b WRITEOUTLINE
+          S68K_001.s:165    .text:000000000008052c failAdrTest
+          S68K_001.s:295    .text:000000000008063c initDuart
+          S68K_001.s:337    .text:0000000000080723 BANNER_MSG
+          S68K_001.s:190    .text:000000000008055a printString1
+          S68K_001.s:336    .text:0000000000080720 CRLF_MSG
+          S68K_001.s:334    .text:0000000000080710 RAM_PASS_MSG
+          S68K_001.s:328    .text:00000000000806d4 READINLINE
+          S68K_001.s:220    .text:000000000008058c readLine
+          S68K_001.s:330    .text:00000000000806e4 LINETOUPPER
+          S68K_001.s:277    .text:000000000008061e lineToUpper
+          S68K_001.s:332    .text:00000000000806ff WRITEOUTLINE
                             *ABS*:000000000007fbae varLineBuf
-          S68K_001.s:322    .text:00000000000806d2 delay1Sec
+          S68K_001.s:151    .text:0000000000080502 FERVR
+          S68K_001.s:321    .text:00000000000806c6 delay1Sec
+          S68K_001.s:172    .text:0000000000080532 outChar1
+          S68K_001.s:173    .text:0000000000080532 outChar
 68K GAS  S68K_001.s 			page 10
 
 
-          S68K_001.s:173    .text:000000000008053e outChar1
-          S68K_001.s:182    .text:0000000000080552 outChar2
-          S68K_001.s:192    .text:0000000000080566 printString
-          S68K_001.s:193    .text:0000000000080566 PSloop
-          S68K_001.s:199    .text:000000000008056e PSend
-          S68K_001.s:207    .text:0000000000080570 inChar1
-          S68K_001.s:214    .text:0000000000080584 inChar2
-          S68K_001.s:225    .text:00000000000805a4 .loop
-          S68K_001.s:242    .text:00000000000805d0 .backspace
-          S68K_001.s:253    .text:00000000000805ee .lineclear
-          S68K_001.s:267    .text:0000000000080612 .endline
-          S68K_001.s:235    .text:00000000000805c0 .char
+          S68K_001.s:181    .text:0000000000080546 outChar2
+          S68K_001.s:191    .text:000000000008055a printString
+          S68K_001.s:192    .text:000000000008055a PSloop
+          S68K_001.s:198    .text:0000000000080562 PSend
+          S68K_001.s:206    .text:0000000000080564 inChar1
+          S68K_001.s:207    .text:0000000000080564 inChar
+          S68K_001.s:213    .text:0000000000080578 inChar2
+          S68K_001.s:224    .text:0000000000080598 .loop
+          S68K_001.s:241    .text:00000000000805c4 .backspace
+          S68K_001.s:252    .text:00000000000805e2 .lineclear
+          S68K_001.s:266    .text:0000000000080606 .endline
+          S68K_001.s:234    .text:00000000000805b4 .char
                             *ABS*:0000000000000050 MAX_LINE_LENGTH
-          S68K_001.s:257    .text:00000000000805f4 .lineclearloop
-          S68K_001.s:280    .text:0000000000080630 LUloop
-          S68K_001.s:289    .text:0000000000080644 LUnext2
-          S68K_001.s:287    .text:0000000000080642 LUnext
-          S68K_001.s:324    .text:00000000000806d8 delay1Loop
+          S68K_001.s:256    .text:00000000000805e8 .lineclearloop
+          S68K_001.s:279    .text:0000000000080624 LUloop
+          S68K_001.s:288    .text:0000000000080638 LUnext2
+          S68K_001.s:286    .text:0000000000080636 LUnext
+          S68K_001.s:323    .text:00000000000806cc delay1Loop
 
 UNDEFINED SYMBOLS
 $20
