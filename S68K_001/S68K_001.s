@@ -127,6 +127,9 @@ loopAdrCk:
 	lea		CRLF_MSG, %a0
 	jsr		printString1
 |
+	jsr		inChar
+	jsr		outChar
+|
 	lea		READINLINE, %a0
 	jsr		printString1
 	lea		CRLF_MSG, %a0
@@ -228,7 +231,7 @@ readLine:
     cmp.b   #LF, %d0          	| Is it anything else but a LF?
     beq.s   .loop            	| Ignore LFs and get the next character
  .char:                      	| Normal character to be inserted into the buffer
-    cmp.w   #MAX_LINE_LENGTH, d2
+    cmp.w   #MAX_LINE_LENGTH, %d2
     bge.s   .loop            	| If the buffer is full ignore the character
     move.b  %d0, (%a2)+        	| Otherwise store the character
     addq.w  #1, %d2           	| Increment character count
