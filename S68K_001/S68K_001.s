@@ -167,13 +167,13 @@ outChar2:
 *
 printString1:
 printString:
- .loop:
+ PSloop:
     move.b  (%a0)+, %d0  | Read in character
-    beq.s   .end         | Check for the null
+    beq.s   PSend         | Check for the null
     
     bsr.s   outChar      | Otherwise write the character
-    bra.s   .loop        | And continue
- .end:
+    bra.s   PSloop        | And continue
+PSend:
     rts
 
 
