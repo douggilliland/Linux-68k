@@ -163,7 +163,7 @@
  136 804c8 41FA 0256 		lea		CRLF_MSG, %a0
  137 804cc 4EBA 008C 		jsr		printString1
  138 804d0 4EBA 00BA 		jsr		readLine
- 139 804d4 41FA 020E 		lea		LINETOUPPER, %a0
+ 139 804d4 41FA 020E 		lea		L_TO_UPPER_MSG, %a0
  140 804d8 4EBA 0080 		jsr		printString1
  141 804dc 41FA 0242 		lea		CRLF_MSG, %a0
  142 804e0 4EBA 0078 		jsr		printString1
@@ -400,7 +400,7 @@
  328      696E 206C 
  328      696E 65
  329 806e3 00        				DC.B    EOT
- 330 806e4 436F 6E76 	LINETOUPPER:  .ascii  "Convert line to upper case"
+ 330 806e4 436F 6E76 	L_TO_UPPER_MSG:  .ascii  "Convert line to upper case"
  330      6572 7420 
  330      6C69 6E65 
  330      2074 6F20 
@@ -480,7 +480,7 @@ DEFINED SYMBOLS
           S68K_001.s:334    .text:0000000000080710 RAM_PASS_MSG
           S68K_001.s:328    .text:00000000000806d4 READINLINE
           S68K_001.s:220    .text:000000000008058c readLine
-          S68K_001.s:330    .text:00000000000806e4 LINETOUPPER
+          S68K_001.s:330    .text:00000000000806e4 L_TO_UPPER_MSG
           S68K_001.s:277    .text:000000000008061e lineToUpper
           S68K_001.s:332    .text:00000000000806ff WRITEOUTLINE
                             *ABS*:000000000007fbae varLineBuf
