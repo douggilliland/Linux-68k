@@ -194,6 +194,80 @@ inChar2:
     move.b  RBB, %d0	| Read Character into D0
     rts
 
+| Read in a line into the line buffer
+readLine:
+    movem.l %d2/%a2, -(%SP)     * Save changed registers
+    lea     varLineBuf, %a2   * Start of the lineBuffer
+    eor.w   %d2, %d2           * Clear the character counter
+ .loop:
+    bsr.w   inChar           * Read a character from the serial port
+    cmp.b   #BKSP, %d0        * Is it a backspace?
+    beq.s   .backspace
+    cmp.b   #CTRLX, %d0       * Is it Ctrl-H (Line Clear)?
+    beq.s   .lineclear
+    cmp.b   #CR, %d0          * Is it a carriage return?
+    beq.s   .endline
+    cmp.b   #LF, %d0          * Is it anything else but a LF?
+    beq.s   .loop            * Ignore LFs and get the next character
+ .char:                      * Normal character to be inserted into the buffer
+    cmp.w   #MAX_LINE_LENGTH, d2
+    bge.s   .loop            * If the buffer is full ignore the character
+    move.b  %d0, (%a2)+        * Otherwise store the character
+    addq.w  #1, %d2           * Increment character count
+    bsr.w   outChar          * Echo the character
+    bra.s   .loop            * And get the next one
+ .backspace:
+    tst.w   %d2               * Are we at the beginning of the line?
+    beq.s   .loop            * Then ignore it
+    bsr.w   outChar          * Backspace
+    move.b  #' ', %d0
+    bsr.w   outChar          * Space
+    move.b  #BKSP, %d0
+    bsr.w   outChar          * Backspace
+    subq.l  #1, %a2           * Move back in the buffer
+    subq.l  #1, %d2           * And current character count
+    bra.s   .loop            * And goto the next character
+ .lineclear:
+    tst     %d2               * Anything to clear?
+    beq.s   .loop            * If not, fetch the next character
+    suba.l  %d2, %a2           * Return to the start of the buffer
+ .lineclearloop:
+    move.b  #BKSP, %d0
+    bsr.w   outChar          * Backspace
+    move.b  #' ', %d0
+    bsr.w   outChar          * Space
+    move.b  #BKSP, %d0
+    bsr.w   outChar          * Backspace
+    subq.w  #1, %d2          
+    bne.s   .lineclearloop   * Go till the start of the line
+    bra.s   .loop   
+ .endline:
+    bsr.w   outChar          * Echo the CR
+    move.b  #LF, %d0
+    bsr.w   outChar          * Line feed to be safe
+    move.b  #0, (%a2)         * Terminate the line (Buffer is longer than max to allow this at full length)
+    movea.l %a2, %a0           * Ready the pointer to return (if needed)
+    movem.l (%SP)+, %d2/%a2     * Restore registers
+    rts                      * And return
+
+
+| Convert line buffer to upper case
+lineToUpper:
+    lea     varLineBuf, %a0   | Get the start of the line buffer
+ .loop:
+    move.b  (%a0), %d0        | Read in a character
+    cmp.b   #'a', %d0         
+    blt.s   .next2            | Is it less than lower-case 'a', then move on
+    cmp.b   #'z', %d0
+    bgt.s   .next2            | Is it greater than lower-case 'z', then move on
+    sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
+ .next:
+    move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
+.next2:
+    bne.s   .loop             | Keep going till we hit a null terminator
+    rts
+
+
 |||||
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
@@ -234,3 +308,6 @@ RAM_PASS_MSG:  .ascii  "RAM Test Passed"
 CRLF_MSG:	dc.b 0x0a,0xd,0
 BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
 			DC.B    EOT
+
+MAX_LINE_LENGTH     equ     80
+varLineBuf  equ     RAM_END+1-1024-MAX_LINE_LENGTH-2
