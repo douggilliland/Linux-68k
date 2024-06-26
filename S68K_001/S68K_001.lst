@@ -266,26 +266,26 @@
  222 80590 45F9 0007 	    lea     varLineBuf, %a2   	| Start of the lineBuffer
  222      FBAE 
  223 80596 B542      	    eor.w   %d2, %d2           	| Clear the character counter
- 224               	 .loop:
+ 224               	 RLloop:
  225 80598 6100 FFCA 	    bsr.w   inChar           	| Read a character from the serial port
  226 8059c 0C00 0008 	    cmp.b   #BKSP, %d0        	| Is it a backspace?
- 227 805a0 6722      	    beq.s   .backspace
+ 227 805a0 6722      	    beq.s   RLBS
  228 805a2 0C00 0018 	    cmp.b   #CTRLX, %d0       	| Is it Ctrl-H (Line Clear)?
- 229 805a6 673A      	    beq.s   .lineclear
+ 229 805a6 673A      	    beq.s   RLlineClr
  230 805a8 0C00 000D 	    cmp.b   #CR, %d0          	| Is it a carriage return?
- 231 805ac 6758      	    beq.s   .endline
+ 231 805ac 6758      	    beq.s   RLEndLn
  232 805ae 0C00 000A 	    cmp.b   #LF, %d0          	| Is it anything else but a LF?
- 233 805b2 67E4      	    beq.s   .loop            	| Ignore LFs and get the next character
+ 233 805b2 67E4      	    beq.s   RLloop            	| Ignore LFs and get the next character
  234               	 .char:                      	| Normal character to be inserted into the buffer
  235 805b4 0C42 0050 	    cmp.w   #MAX_LINE_LENGTH, %d2
- 236 805b8 6CDE      	    bge.s   .loop            	| If the buffer is full ignore the character
+ 236 805b8 6CDE      	    bge.s   RLloop            	| If the buffer is full ignore the character
  237 805ba 14C0      	    move.b  %d0, (%a2)+        	| Otherwise store the character
  238 805bc 5242      	    addq.w  #1, %d2           	| Increment character count
  239 805be 6100 FF72 	    bsr.w   outChar          	| Echo the character
- 240 805c2 60D4      	    bra.s   .loop            	| And get the next one
- 241               	 .backspace:
+ 240 805c2 60D4      	    bra.s   RLloop            	| And get the next one
+ 241               	 RLBS:
  242 805c4 4A42      	    tst.w   %d2               	| Are we at the beginning of the line?
- 243 805c6 67D0      	    beq.s   .loop            	| Then ignore it
+ 243 805c6 67D0      	    beq.s   RLloop            	| Then ignore it
  244 805c8 6100 FF68 	    bsr.w   outChar          	| Backspace
  245 805cc 103C 0020 	    move.b  #' ', %d0
  246 805d0 6100 FF60 	    bsr.w   outChar          	| Space
@@ -293,15 +293,15 @@
  248 805d8 6100 FF58 	    bsr.w   outChar          	| Backspace
  249 805dc 538A      	    subq.l  #1, %a2           	| Move back in the buffer
  250 805de 5382      	    subq.l  #1, %d2           	| And current character count
- 251 805e0 60B6      	    bra.s   .loop            	| And goto the next character
- 252               	 .lineclear:
+ 251 805e0 60B6      	    bra.s   RLloop            	| And goto the next character
+ 252               	 RLlineClr:
  253 805e2 4A42      	    tst     %d2               	| Anything to clear?
- 254 805e4 67B2      	    beq.s   .loop            	| If not, fetch the next character
+ 254 805e4 67B2      	    beq.s   RLloop            	| If not, fetch the next character
  255 805e6 95C2      	    suba.l  %d2, %a2           	| Return to the start of the buffer
 68K GAS  S68K_001.s 			page 6
 
 
- 256               	 .lineclearloop:
+ 256               	 RLlineClrloop:
  257 805e8 103C 0008 	    move.b  #BKSP, %d0
  258 805ec 6100 FF44 	    bsr.w   outChar          	| Backspace
  259 805f0 103C 0020 	    move.b  #' ', %d0
@@ -309,9 +309,9 @@
  261 805f8 103C 0008 	    move.b  #BKSP, %d0
  262 805fc 6100 FF34 	    bsr.w   outChar          	| Backspace
  263 80600 5342      	    subq.w  #1, %d2          
- 264 80602 66E4      	    bne.s   .lineclearloop   	| Go till the start of the line
- 265 80604 6092      	    bra.s   .loop   
- 266               	 .endline:
+ 264 80602 66E4      	    bne.s   RLlineClrloop   	| Go till the start of the line
+ 265 80604 6092      	    bra.s   RLloop   
+ 266               	 RLEndLn:
  267 80606 6100 FF2A 	    bsr.w   outChar          	| Echo the CR
  268 8060a 103C 000A 	    move.b  #LF, %d0
  269 8060e 6100 FF22 	    bsr.w   outChar          	| Line feed to be safe
@@ -498,13 +498,13 @@ DEFINED SYMBOLS
           S68K_001.s:206    .text:0000000000080564 inChar1
           S68K_001.s:207    .text:0000000000080564 inChar
           S68K_001.s:213    .text:0000000000080578 inChar2
-          S68K_001.s:224    .text:0000000000080598 .loop
-          S68K_001.s:241    .text:00000000000805c4 .backspace
-          S68K_001.s:252    .text:00000000000805e2 .lineclear
-          S68K_001.s:266    .text:0000000000080606 .endline
+          S68K_001.s:224    .text:0000000000080598 RLloop
+          S68K_001.s:241    .text:00000000000805c4 RLBS
+          S68K_001.s:252    .text:00000000000805e2 RLlineClr
+          S68K_001.s:266    .text:0000000000080606 RLEndLn
           S68K_001.s:234    .text:00000000000805b4 .char
                             *ABS*:0000000000000050 MAX_LINE_LENGTH
-          S68K_001.s:256    .text:00000000000805e8 .lineclearloop
+          S68K_001.s:256    .text:00000000000805e8 RLlineClrloop
           S68K_001.s:279    .text:0000000000080624 LUloop
           S68K_001.s:288    .text:0000000000080638 LUnext2
           S68K_001.s:286    .text:0000000000080636 LUnext
