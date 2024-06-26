@@ -279,13 +279,12 @@ lineToUpper:
  LUloop:
     move.b  (%a0), %d0        | Read in a character
     cmp.b   #'a', %d0         
-    blt.s   LUnext2            | Is it less than lower-case 'a', then move on
+    blt.s   LUnext            | Is it less than lower-case 'a', then move on
     cmp.b   #'z', %d0
-    bgt.s   LUnext2            | Is it greater than lower-case 'z', then move on
+    bgt.s   LUnext            | Is it greater than lower-case 'z', then move on
     sub.b   #$20, %d0         | Then convert a to A, b to B, etc.
  LUnext:
     move.b  %d0, (%a0)+       | Store the character back into a0, and move to the next
-LUnext2:
     bne.s   LUloop             | Keep going till we hit a null terminator
     rts
 
