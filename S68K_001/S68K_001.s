@@ -127,10 +127,9 @@ loopAdrCk:
 	lea		CRLF_MSG, %a0
 	jsr		printString1
 |
-	jsr		inChar
-	jsr		outChar
-
-	jmp		FERVR
+|	jsr		inChar
+|	jsr		outChar
+|	jmp		FERVR
 |
 	lea		READINLINE, %a0
 	jsr		printString1
