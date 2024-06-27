@@ -506,7 +506,7 @@ dumpRAM:
     
     bsr.w   parseNumber         | Otherwise read the address
     tst.b   %d1
-    bne.s   .invalidAddr
+    bne		.invalidAddr
     move.l  %d0, %a3           	| Save the start address
  DepLoop:
     move.b  (%a0), %d0            
@@ -515,11 +515,11 @@ dumpRAM:
     tst     %d0              	| Check for the end of line
     beq     DepEnd
     
-    bsr.s   parseNumber         | Otherwise read a value
+    bsr		parseNumber         | Otherwise read a value
     tst.b   %d1
-    bne.s   .invalidVal
+    bne		.invalidVal
     cmp.w   #255, %d0          	| Make sure it's a byte
-    bgt.s   .invalidVal
+    bgt		.invalidVal
     
     move.b  %d0, (%a3)+        	| Store the value into memory
     bra.s   DepLoop
@@ -545,7 +545,7 @@ dumpRAM:
  .run:
     bsr.w   parseNumber        	| Otherwise read the address
     tst.b   %d1
-    bne.s   .invalidAddr
+    bne		.invalidAddr
     move.l  %d0, %a0
     jsr     (%a0)             	| Jump to the code! 
                                 | Go as subroutine to allow code to return to us
