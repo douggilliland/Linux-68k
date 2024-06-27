@@ -361,7 +361,7 @@ BANNER_MSG:
 	.ascii  "SIMPLE-68008 CPU"
 	dc.b CR,LF,EOT
 msgInvalidCommand:
-    .ascii 'Invalid Command'
+    .ascii "Invalid Command"
 	dc.b CR,LF,EOT
 CRLF_MSG:	
 	dc.b CR,LF,EOT
