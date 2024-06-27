@@ -501,41 +501,41 @@ dumpRAM:
 |||||||||||||||||||||||
 .deposit:
     move.b  (%a0), %d0
-    cmp.b   #':', %d0            * Check if we want to continue from last
+    cmp.b   #':', %d0       	| Check if we want to continue from last
     beq.s   DepCont
     
-    bsr.w   parseNumber         * Otherwise read the address
+    bsr.w   parseNumber         | Otherwise read the address
     tst.b   %d1
     bne.s   .invalidAddr
-    move.l  %d0, %a3              * Save the start address
+    move.l  %d0, %a3           	| Save the start address
  DepLoop:
     move.b  (%a0), %d0            
-    cmp.b   #';', %d0            * Check for continue
+    cmp.b   #';', %d0          	| Check for continue
     beq.s   DepMLine
-    tst     %d0                  * Check for the end of line
+    tst     %d0              	| Check for the end of line
     beq     DepEnd
     
-    bsr.s   parseNumber         * Otherwise read a value
+    bsr.s   parseNumber         | Otherwise read a value
     tst.b   %d1
     bne.s   .invalidVal
-    cmp.w   #255, %d0            * Make sure it's a byte
+    cmp.w   #255, %d0          	| Make sure it's a byte
     bgt.s   .invalidVal
     
-    move.b  %d0, (%a3)+           * Store the value into memory
+    move.b  %d0, (%a3)+        	| Store the value into memory
     bra.s   DepLoop
     
  DepCont:
-    move.l  varCurAddr, %a3      * Read in the last address 
-    addq.l  #1, %a0              * Skip over the ':'
+    move.l  varCurAddr, %a3   	| Read in the last address 
+    addq.l  #1, %a0           	| Skip over the ':'
     bra.s   DepLoop
     
  DepMLine:
     lea     msgDepositPrompt, %a0
     bsr.w   printString
-    bsr.w   readLine            * Read in the next line to be parsed
-    bsr.w   lineToUpper         * Convert to uppercase
-    lea     varLineBuf, %a0      * Reset our buffer pointer
-    bra.s   DepLoop            * And jump back to decoding
+    bsr.w   readLine          	| Read in the next line to be parsed
+    bsr.w   lineToUpper         | Convert to uppercase
+    lea     varLineBuf, %a0    	| Reset our buffer pointer
+    bra.s   DepLoop            	| And jump back to decoding
  DepEnd:
     move.l  %a3, varCurAddr
     bra.w   .exit
