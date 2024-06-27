@@ -117,8 +117,8 @@ loopAdrCk:
 |
 | Done with address test of SRAM
 |
-	jsr     initDuart       | Setup the serial port
-	
+	jsr     initDuart       	| Setup the serial port
+monitorStart:					| Warm start
 	lea		BANNER_MSG, %a0
 	jsr		printString1
 	lea		RAM_PASS_MSG, %a0
@@ -492,9 +492,66 @@ dumpRAM:
     movem.l (%SP)+, %d2-%d4/%a2		| Restore registers
     rts
 
+|||||||||||||||||||||||
+| Deposit values into RAM
+| d ADDR VAL VAL            Deposit value(s) into RAM
+| d ADDR VAL VAL;           Deposit values, continue with values on next line
+|  VAL VAL VAL;              - Continuing with further continue
+| d: VAL VAL                Continue depositing values after the last address written to
+|||||||||||||||||||||||
 .deposit:
-.run:
-	bra	.exit
+    move.b  (%a0), %d0
+    cmp.b   #':', %d0            * Check if we want to continue from last
+    beq.s   DepCont
+    
+    bsr.w   parseNumber         * Otherwise read the address
+    tst.b   %d1
+    bne.s   .invalidAddr
+    move.l  %d0, %a3              * Save the start address
+ DepLoop:
+    move.b  (%a0), %d0            
+    cmp.b   #';', %d0            * Check for continue
+    beq.s   DepMLine
+    tst     %d0                  * Check for the end of line
+    beq     DepEnd
+    
+    bsr.s   parseNumber         * Otherwise read a value
+    tst.b   %d1
+    bne.s   .invalidVal
+    cmp.w   #255, %d0            * Make sure it's a byte
+    bgt.s   .invalidVal
+    
+    move.b  %d0, (%a3)+           * Store the value into memory
+    bra.s   DepLoop
+    
+ DepCont:
+    move.l  varCurAddr, %a3      * Read in the last address 
+    addq.l  #1, %a0              * Skip over the ':'
+    bra.s   DepLoop
+    
+ DepMLine:
+    lea     msgDepositPrompt, %a0
+    bsr.w   printString
+    bsr.w   readLine            * Read in the next line to be parsed
+    bsr.w   lineToUpper         * Convert to uppercase
+    lea     varLineBuf, %a0      * Reset our buffer pointer
+    bra.s   DepLoop            * And jump back to decoding
+ DepEnd:
+    move.l  %a3, varCurAddr
+    bra.w   .exit
+
+|||||||||||||||||||||||
+| run code
+ .run:
+    bsr.w   parseNumber         * Otherwise read the address
+    tst.b   %d1
+    bne.s   .invalidAddr
+    move.l  %d0, %a0
+    jsr     (%a0)                * Jump to the code! 
+                                * Go as subroutine to allow code to return to us
+    jsr     monitorStart        * Warm start after returning so everything is in
+                                * a known state.
+
 
 |||||||||||||||||||||||
 || KEEP All printHex functions together ||
