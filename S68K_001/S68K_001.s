@@ -129,6 +129,7 @@ loopAdrCk:
 |
 	lea		READINLINE, %a0
 	jsr		printString1
+intLoop:
 	jsr		readLine
 	lea		L_TO_UPPER_MSG, %a0
 	jsr		printString1
@@ -137,6 +138,8 @@ loopAdrCk:
 	jsr		printString1
 	lea     varLineBuf, %a0
 	jsr		printString1
+	jsr		parseLine
+	bra		intLoop
 	
 FERVR:
 	nop
@@ -280,6 +283,7 @@ lineToUpper:
 
 |
 | Parse Line
+|
 parseLine:
     movem.l %a2-%a3, -(%SP)     | Save registers
     lea     varLineBuf, %a0
