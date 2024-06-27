@@ -311,10 +311,22 @@ parseLine:
     movem.l (%SP)+, %a2-%a3     | Restore registers
     rts
 
+ .help:
+    lea     msgHelp, %a0
+    bsr.w   printString
+    bra.w   .exit
+ .invalidAddr:
+    lea     msgInvalidAddress, %a0
+    bsr.w   printString
+    bra.w   .exit
+ .invalidVal:
+    lea     msgInvalidValue, %a0
+    bsr.w   printString
+    bra.w   .exit
+
 .examine:
 .deposit:
 .run:
-.help:
 	bra	.exit
 	
 |||||
@@ -372,6 +384,17 @@ msgInvalidCommand:
 	dc.b CR,LF,EOT
 CRLF_MSG:	
 	dc.b CR,LF,EOT
+msgHelp:
+    .ascii	"Available Commands: '
+	dc.b	CR,LF
+    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
+	dc.b	CR,LF,EOT
+msgInvalidAddress:
+    dc.b	"Invalid Address"
+	dc.b 	CR,LF,EOT
+msgInvalidValue:
+    .ascii	"Invalid Value"
+	dc.b	CR,LF,EOT
 
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
