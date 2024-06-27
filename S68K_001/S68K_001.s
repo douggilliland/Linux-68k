@@ -543,7 +543,8 @@ printHex_wordentry:
 |  - Takes byte in D0
 printHexByte:
     move.l  %D2, -(%SP)
-    move.b  %D0, %D2
+	move.l	#0, %d2
+    move.b  %d0, %d2
     lsr.b   #0x4, %D0
     add.b   #'0', %D0
     cmp.b   #'9', %D0		| Check if the hex number was from 0-9
