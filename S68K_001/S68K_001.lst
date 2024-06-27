@@ -569,8 +569,8 @@
  503 807e6 2F02      	    move.l  %d2, -(%SP)		| Save D2
  504 807e8 2400      	    move.l  %d0, %d2		| Save the address in d2
  505               	    
- 506 807ea E19A      	    rol.l   #8, %d2       | 4321 -> 3214
- 507 807ec E19A      	    rol.l   #8, %d2       | 3214 -> 2143 
+ 506 807ea E19A      	    rol.l   #0x8, %d2       | 4321 -> 3214
+ 507 807ec E19A      	    rol.l   #0x8, %d2       | 3214 -> 2143 
  508 807ee 6018      	    bra.s   printHex_wordentry  | Print out the last 16 bits
  509               	|||||||||||||||||||||||
  510               	| Print a hex 24-bit address
@@ -578,7 +578,7 @@
  512 807f0 2F02      	    move.l %d2, -(%SP)   	| Save D2
  513 807f2 2400      	    move.l %d0, %d2      	| Save the address in d2
  514               	    
- 515 807f4 E19A      	    rol.l   #8, %d2     	| 4321 -> 3214
+ 515 807f4 E19A      	    rol.l   #0x8, %d2     	| 4321 -> 3214
  516 807f6 600A      	    bra.s   printHex_addrentry  | Print out the last 24 bits
  517               	|||||||||||||||||||||||
  518               	* Print a hex long
@@ -586,18 +586,18 @@
  520 807f8 2F02      	    move.l  %d2, -(%SP)     | Save D2
  521 807fa 2400      	    move.l  %d0, %d2        | Save the address in d2
  522               	    
- 523 807fc E19A      	    rol.l   #8, %d2        | 4321 -> 3214 high byte in low
+ 523 807fc E19A      	    rol.l   #0x8, %d2        | 4321 -> 3214 high byte in low
  524 807fe 2002      	    move.l  %d2, %d0
  525 80800 6116      	    bsr.s   printHexByte  	| Print the high byte (24-31)
  526               	printHex_addrentry:     
- 527 80802 E19A      	    rol.l   #8, %d2        	| 3214 -> 2143 middle-high byte in low
+ 527 80802 E19A      	    rol.l   #0x8, %d2        	| 3214 -> 2143 middle-high byte in low
  528 80804 2002      	    move.l  %d2, %d0              
  529 80806 6110      	    bsr.s   printHexByte  	| Print the high-middle byte (16-23)
  530               	printHex_wordentry:    
- 531 80808 E19A      	    rol.l   #8, %d2        	| 2143 -> 1432 Middle byte in low
+ 531 80808 E19A      	    rol.l   #0x8, %d2        	| 2143 -> 1432 Middle byte in low
  532 8080a 2002      	    move.l  %d2, %d0
  533 8080c 610A      	    bsr.s   printHexByte  	| Print the middle byte (8-15)
- 534 8080e E19A      	    rol.l   #8, %d2
+ 534 8080e E19A      	    rol.l   #0x8, %d2
 68K GAS  S68K_001.s 			page 11
 
 
@@ -617,14 +617,14 @@
  548 8081e 0600 0030 	    add.b   #'0', %D0
  549 80822 0C00 0039 	    cmp.b   #'9', %D0		| Check if the hex number was from 0-9
  550 80826 6F02      	    ble.s   PHBsecond
- 551 80828 5E00      	    add.b   #7, %D0			| Shift 0xA-0xF from ':' to 'A'
+ 551 80828 5E00      	    add.b   #0x7, %D0			| Shift 0xA-0xF from ':' to 'A'
  552               	PHBsecond:
  553 8082a 6100 FCB6 	    bsr   outChar			| Print the digit
  554 8082e 0202 000F 	    andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
  555 80832 0602 0030 	    add.b   #'0', %D2
  556 80836 0C02 0039 	    cmp.b   #'9', %D2     	| Same as before    
  557 8083a 6F02      	    ble.s   PHBend
- 558 8083c 5E02      	    add.b   #7, %D2
+ 558 8083c 5E02      	    add.b   #0x7, %D2
  559               	PHBend:
  560 8083e 1002      	    move.b  %D2, %D0
  561 80840 6100 FCA0 	    bsr	   outChar      	| Print the lower digit
