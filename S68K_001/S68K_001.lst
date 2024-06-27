@@ -143,18 +143,18 @@
  116               	|
  117               	| Done with address test of SRAM
  118               	|
- 119 8049c 4EBA 01C4 		jsr     initDuart       | Setup the serial port
+ 119 8049c 4EBA 01E8 		jsr     initDuart       | Setup the serial port
  120               		
- 121 804a0 41FA 02AC 		lea		BANNER_MSG, %a0
+ 121 804a0 41FA 02D0 		lea		BANNER_MSG, %a0
  122 804a4 4EBA 008E 		jsr		printString1
- 123 804a8 41FA 0292 		lea		RAM_PASS_MSG, %a0
+ 123 804a8 41FA 02B6 		lea		RAM_PASS_MSG, %a0
  124 804ac 4EBA 0086 		jsr		printString1
  125               	|
  126               	|	jsr		inChar
  127               	|	jsr		outChar
  128               	|	jmp		FERVR
  129               	|
- 130 804b0 41FA 0248 		lea		READINLINE, %a0
+ 130 804b0 41FA 026C 		lea		READINLINE, %a0
  131 804b4 4EBA 007E 		jsr		printString1
  132               	interpLoop:
  133 804b8 4EBA 00AC 		jsr		readLine
@@ -168,7 +168,7 @@
  141 804c0 13FC 0004 		move.b	#0x04, OPS		| Blink LED on DUART Out2
  141      000F 001C 
  142 804c8 4EBA 014C 		jsr		parseLine
- 143 804cc 4EBA 021E 		jsr		delay1Sec
+ 143 804cc 4EBA 0242 		jsr		delay1Sec
  144 804d0 13FC 0004 		move.b	#0x04, OPR
  144      000F 001E 
  145 804d8 6000 FFDE 		bra		interpLoop
@@ -177,13 +177,13 @@
  148 804dc 4E71      		nop
  149 804de 13FC 0004 		move.b	#0x04, OPS		| Blink LED on DUART Out2
  149      000F 001C 
- 150 804e6 4EBA 0204 		jsr		delay1Sec
+ 150 804e6 4EBA 0228 		jsr		delay1Sec
 68K GAS  S68K_001.s 			page 4
 
 
  151 804ea 13FC 0004 		move.b	#0x04, OPR
  151      000F 001E 
- 152 804f2 4EBA 01F8 		jsr		delay1Sec
+ 152 804f2 4EBA 021C 		jsr		delay1Sec
  153 804f6 4EFA FFE4 		jmp		FERVR
  154               	|
  155               	FERVR2:
@@ -346,17 +346,17 @@
  295 80622 0C00 0020 	    cmp.b   #' ', %d0           | Ignore spaces
  296 80626 6700 FFF8 	    beq.w   PLfindCommand    
  297 8062a 0C00 0045 	    cmp.b   #'E', %d0           | Examine command
- 298 8062e 6700 002E 	    beq.w   .examine
+ 298 8062e 6700 0052 	    beq.w   .examine
  299 80632 0C00 0044 	    cmp.b   #'D', %d0           | Deposit command
- 300 80636 6700 0026 	    beq.w   .deposit
+ 300 80636 6700 004A 	    beq.w   .deposit
  301 8063a 0C00 0052 	    cmp.b   #'R', %d0           | Run command
- 302 8063e 6700 001E 	    beq.w   .run
+ 302 8063e 6700 0042 	    beq.w   .run
  303 80642 0C00 0048 	    cmp.b   #'H', %d0           | Help command
  304 80646 6700 0016 	    beq.w   .help
  305 8064a 0C00 0000 	    cmp.b   #0, %d0             | Ignore blank lines
  306 8064e 6708      	    beq.s   .exit               
  307               	 .invalid:   
- 308 80650 41FA 010F 	    lea     msgInvalidCommand, %a0
+ 308 80650 41FA 0133 	    lea     msgInvalidCommand, %a0
  309 80654 6100 FEDE 	    bsr.w   printString
 68K GAS  S68K_001.s 			page 7
 
@@ -365,111 +365,148 @@
  311 80658 4CDF 0C00 	    movem.l (%SP)+, %a2-%a3     | Restore registers
  312 8065c 4E75      	    rts
  313               	
- 314               	.examine:
- 315               	.deposit:
- 316               	.run:
- 317               	.help:
- 318 8065e 6000 FFF8 		bra	.exit
- 319               		
- 320               	|||||
- 321               	| Initializes the 68681 DUART port A as 9600 8N1 
- 322               	initDuart:
- 323 80662 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
- 323      000F 0004 
- 324 8066a 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
- 324      000F 0004 
- 325 80672 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
- 325      000F 0004 
- 326               	    
- 327 8067a 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
- 327      000F 0008 
- 328 80682 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
- 328      000F 0002 
- 329 8068a 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 329      000F 0000 
- 330 80692 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
- 330      000F 0000 
- 331               	    
- 332 8069a 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 332      000F 0004 
- 333               	
- 334 806a2 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
- 334      000F 0014 
- 335 806aa 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
- 335      000F 0014 
- 336 806b2 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
- 336      000F 0014 
- 337               	    
- 338 806ba 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
- 338      000F 0012 
- 339 806c2 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 339      000F 0010 
- 340 806ca 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
- 340      000F 0010 
- 341               	    
- 342 806d2 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
- 342      000F 0014 
- 343               		
- 344 806da 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
- 344      000F 001A 
- 345 806e2 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
- 345      000F 001E 
- 346 806ea 4E75      	    rts    
- 347               	
- 348               	delay1Sec:
- 349 806ec 203C 0003 		move.l	#200000, %d0	| rough count
+ 314               	 .help:
+ 315 8065e 41FA 013A 	    lea     msgHelp, %a0
+ 316 80662 6100 FED0 	    bsr.w   printString
+ 317 80666 6000 FFF0 	    bra.w   .exit
+ 318               	 .invalidAddr:
+ 319 8066a 41FA 0172 	    lea     msgInvalidAddress, %a0
+ 320 8066e 6100 FEC4 	    bsr.w   printString
+ 321 80672 6000 FFE4 	    bra.w   .exit
+ 322               	 .invalidVal:
+ 323 80676 41FA 016A 	    lea     msgInvalidValue, %a0
+ 324 8067a 6100 FEB8 	    bsr.w   printString
+ 325 8067e 6000 FFD8 	    bra.w   .exit
+ 326               	
+ 327               	.examine:
+ 328               	.deposit:
+ 329               	.run:
+ 330 80682 6000 FFD4 		bra	.exit
+ 331               		
+ 332               	|||||
+ 333               	| Initializes the 68681 DUART port A as 9600 8N1 
+ 334               	initDuart:
+ 335 80686 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 335      000F 0004 
+ 336 8068e 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
+ 336      000F 0004 
+ 337 80696 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
+ 337      000F 0004 
+ 338               	    
+ 339 8069e 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+ 339      000F 0008 
+ 340 806a6 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 340      000F 0002 
+ 341 806ae 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 341      000F 0000 
+ 342 806b6 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 342      000F 0000 
+ 343               	    
+ 344 806be 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+ 344      000F 0004 
+ 345               	
+ 346 806c6 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 346      000F 0014 
+ 347 806ce 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 347      000F 0014 
+ 348 806d6 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
+ 348      000F 0014 
+ 349               	    
+ 350 806de 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 350      000F 0012 
+ 351 806e6 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 351      000F 0010 
+ 352 806ee 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 352      000F 0010 
 68K GAS  S68K_001.s 			page 8
 
 
- 349      0D40 
- 350               	delay1Loop:
- 351 806f2 5380      		sub.l	#1, %d0			
- 352 806f4 6600 FFFC 		bne		delay1Loop
- 353 806f8 4E75      		rts
- 354               	
- 355               	READINLINE:	  
- 356 806fa 5265 6164 		.ascii  "Reading in line"
- 356      696E 6720 
- 356      696E 206C 
- 356      696E 65
- 357 80709 0D0A 00   		dc.b CR,LF,EOT
- 358               	L_TO_UPPER_MSG:  
- 359 8070c 436F 6E76 		.ascii  "Convert line to upper case"
- 359      6572 7420 
- 359      6C69 6E65 
- 359      2074 6F20 
- 359      7570 7065 
- 360 80726 0D0A 00   		dc.b CR,LF,EOT
- 361               	WRITEOUTLINE:	  
- 362 80729 5772 6974 		.ascii  "Writing out line"
- 362      696E 6720 
- 362      6F75 7420 
- 362      6C69 6E65 
- 363 80739 0D0A 00   		dc.b CR,LF,EOT
- 364               	RAM_PASS_MSG:  
- 365 8073c 5241 4D20 		.ascii  "RAM Test Passed"
- 365      5465 7374 
- 365      2050 6173 
- 365      7365 64
- 366 8074b 0D0A 00   		dc.b CR,LF,EOT
- 367               	BANNER_MSG:	
- 368 8074e 5349 4D50 		.ascii  "SIMPLE-68008 CPU"
- 368      4C45 2D36 
- 368      3830 3038 
- 368      2043 5055 
- 369 8075e 0D0A 00   		dc.b CR,LF,EOT
- 370               	msgInvalidCommand:
- 371 80761 496E 7661 	    .ascii "Invalid Command"
- 371      6C69 6420 
- 371      436F 6D6D 
- 371      616E 64
- 372 80770 0D0A 00   		dc.b CR,LF,EOT
- 373               	CRLF_MSG:	
- 374 80773 0D0A 00   		dc.b CR,LF,EOT
- 375               	
- 376               	MAX_LINE_LENGTH = 80
- 377               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+ 353               	    
+ 354 806f6 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 354      000F 0014 
+ 355               		
+ 356 806fe 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
+ 356      000F 001A 
+ 357 80706 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
+ 357      000F 001E 
+ 358 8070e 4E75      	    rts    
+ 359               	
+ 360               	delay1Sec:
+ 361 80710 203C 0003 		move.l	#200000, %d0	| rough count
+ 361      0D40 
+ 362               	delay1Loop:
+ 363 80716 5380      		sub.l	#1, %d0			
+ 364 80718 6600 FFFC 		bne		delay1Loop
+ 365 8071c 4E75      		rts
+ 366               	
+ 367               	READINLINE:	  
+ 368 8071e 5265 6164 		.ascii  "Reading in line"
+ 368      696E 6720 
+ 368      696E 206C 
+ 368      696E 65
+ 369 8072d 0D0A 00   		dc.b CR,LF,EOT
+ 370               	L_TO_UPPER_MSG:  
+ 371 80730 436F 6E76 		.ascii  "Convert line to upper case"
+ 371      6572 7420 
+ 371      6C69 6E65 
+ 371      2074 6F20 
+ 371      7570 7065 
+ 372 8074a 0D0A 00   		dc.b CR,LF,EOT
+ 373               	WRITEOUTLINE:	  
+ 374 8074d 5772 6974 		.ascii  "Writing out line"
+ 374      696E 6720 
+ 374      6F75 7420 
+ 374      6C69 6E65 
+ 375 8075d 0D0A 00   		dc.b CR,LF,EOT
+ 376               	RAM_PASS_MSG:  
+ 377 80760 5241 4D20 		.ascii  "RAM Test Passed"
+ 377      5465 7374 
+ 377      2050 6173 
+ 377      7365 64
+ 378 8076f 0D0A 00   		dc.b CR,LF,EOT
+ 379               	BANNER_MSG:	
+ 380 80772 5349 4D50 		.ascii  "SIMPLE-68008 CPU"
+ 380      4C45 2D36 
+ 380      3830 3038 
+ 380      2043 5055 
+ 381 80782 0D0A 00   		dc.b CR,LF,EOT
+ 382               	msgInvalidCommand:
+ 383 80785 496E 7661 	    .ascii "Invalid Command"
+ 383      6C69 6420 
+ 383      436F 6D6D 
+ 383      616E 64
+ 384 80794 0D0A 00   		dc.b CR,LF,EOT
+ 385               	CRLF_MSG:	
+ 386 80797 0D0A 00   		dc.b CR,LF,EOT
 68K GAS  S68K_001.s 			page 9
+
+
+ 387               	msgHelp:
+ 388 8079a 4176 6169 	    .ascii	"Available Commands: "
+ 388      6C61 626C 
+ 388      6520 436F 
+ 388      6D6D 616E 
+ 388      6473 3A20 
+ 389 807ae 0D0A      		dc.b	CR,LF
+ 390 807b0 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
+ 390      7861 6D69 
+ 390      6E65 2020 
+ 390      2020 2844 
+ 390      2965 706F 
+ 391 807db 0D0A 00   		dc.b	CR,LF,EOT
+ 392               	msgInvalidAddress:
+ 393 807de 00        	    dc.b	"Invalid Address"
+ 394 807df 0D0A 00   		dc.b 	CR,LF,EOT
+ 395               	msgInvalidValue:
+ 396 807e2 496E 7661 	    .ascii	"Invalid Value"
+ 396      6C69 6420 
+ 396      5661 6C75 
+ 396      65
+ 397 807ef 0D0A 00   		dc.b	CR,LF,EOT
+ 398               	
+ 399               	MAX_LINE_LENGTH = 80
+ 400               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+68K GAS  S68K_001.s 			page 10
 
 
 DEFINED SYMBOLS
@@ -514,22 +551,22 @@ DEFINED SYMBOLS
           S68K_001.s:94     .text:0000000000080464 loopAdrFill
           S68K_001.s:106    .text:0000000000080482 loopAdrCk
           S68K_001.s:161    .text:0000000000080506 failAdrTest
-          S68K_001.s:322    .text:0000000000080662 initDuart
-          S68K_001.s:367    .text:000000000008074e BANNER_MSG
+          S68K_001.s:334    .text:0000000000080686 initDuart
+          S68K_001.s:379    .text:0000000000080772 BANNER_MSG
           S68K_001.s:186    .text:0000000000080534 printString1
-          S68K_001.s:364    .text:000000000008073c RAM_PASS_MSG
-          S68K_001.s:355    .text:00000000000806fa READINLINE
+          S68K_001.s:376    .text:0000000000080760 RAM_PASS_MSG
+          S68K_001.s:367    .text:000000000008071e READINLINE
           S68K_001.s:132    .text:00000000000804b8 interpLoop
           S68K_001.s:216    .text:0000000000080566 readLine
           S68K_001.s:273    .text:00000000000805f8 lineToUpper
           S68K_001.s:290    .text:0000000000080616 parseLine
-          S68K_001.s:348    .text:00000000000806ec delay1Sec
+          S68K_001.s:360    .text:0000000000080710 delay1Sec
           S68K_001.s:147    .text:00000000000804dc FERVR
           S68K_001.s:168    .text:000000000008050c outChar1
           S68K_001.s:169    .text:000000000008050c outChar
           S68K_001.s:177    .text:0000000000080520 outChar2
           S68K_001.s:187    .text:0000000000080534 printString
-68K GAS  S68K_001.s 			page 10
+68K GAS  S68K_001.s 			page 11
 
 
           S68K_001.s:188    .text:0000000000080534 PSloop
@@ -548,17 +585,23 @@ DEFINED SYMBOLS
           S68K_001.s:275    .text:00000000000805fe LUloop
           S68K_001.s:282    .text:0000000000080610 LUnext
           S68K_001.s:293    .text:0000000000080620 PLfindCommand
-          S68K_001.s:314    .text:000000000008065e .examine
-          S68K_001.s:315    .text:000000000008065e .deposit
-          S68K_001.s:316    .text:000000000008065e .run
-          S68K_001.s:317    .text:000000000008065e .help
+          S68K_001.s:327    .text:0000000000080682 .examine
+          S68K_001.s:328    .text:0000000000080682 .deposit
+          S68K_001.s:329    .text:0000000000080682 .run
+          S68K_001.s:314    .text:000000000008065e .help
           S68K_001.s:310    .text:0000000000080658 .exit
           S68K_001.s:307    .text:0000000000080650 .invalid
-          S68K_001.s:370    .text:0000000000080761 msgInvalidCommand
-          S68K_001.s:350    .text:00000000000806f2 delay1Loop
-          S68K_001.s:358    .text:000000000008070c L_TO_UPPER_MSG
-          S68K_001.s:361    .text:0000000000080729 WRITEOUTLINE
-          S68K_001.s:373    .text:0000000000080773 CRLF_MSG
+          S68K_001.s:382    .text:0000000000080785 msgInvalidCommand
+          S68K_001.s:387    .text:000000000008079a msgHelp
+          S68K_001.s:318    .text:000000000008066a .invalidAddr
+          S68K_001.s:392    .text:00000000000807de msgInvalidAddress
+          S68K_001.s:322    .text:0000000000080676 .invalidVal
+          S68K_001.s:395    .text:00000000000807e2 msgInvalidValue
+          S68K_001.s:362    .text:0000000000080716 delay1Loop
+          S68K_001.s:370    .text:0000000000080730 L_TO_UPPER_MSG
+          S68K_001.s:373    .text:000000000008074d WRITEOUTLINE
+          S68K_001.s:385    .text:0000000000080797 CRLF_MSG
 
 UNDEFINED SYMBOLS
 EOT
+Invalid Address
