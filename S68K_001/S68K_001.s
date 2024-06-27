@@ -359,7 +359,7 @@ parseLine:
     beq.s   .exinter
     cmp.b   #' ', %d0           | Display a page (256 bytes at a time)
     beq.s   .exinterpage
-    bra.s   .exit               | Otherwise exit
+    bra	   .exit               | Otherwise exit
  .exinterpage:
     move.l  %a3, %a0
     move.l  #0x100, %d0         | 256 bytes
@@ -396,7 +396,7 @@ PNfirstdigit2:
  .firstdigit1:
     sub.b   #'0', %d0       | Turn '0' to 0
  PNloop:
-    move.b  (a0)+, %d1      | Read in a digit
+    move.b  (%a0)+, %d1      | Read in a digit
     cmp.b   #'0', %d1       | Look for hex digits 0-9
     blt.s   PNend         	| Any other characters mean we're done reading
     cmp.b   #'9', %d1
