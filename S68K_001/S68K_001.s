@@ -127,15 +127,14 @@ monitorStart:					| Warm start
 | Interpreter Loop
 |
 interpLoop:
-    lea     msgPrompt, %a0   | Prompt
+    lea     msgPrompt, %a0	| Prompt
     bsr.w   printString
-	jsr		readLine
+	move.b	#0x04, OPR		| Turn on LED
+	jsr		readLine		| Blocking read of line
+	move.b	#0x04, OPS		| Turn off LED
 	jsr		lineToUpper
-	move.b	#0x04, OPS		| Blink LED on DUART Out2
 	jsr		parseLine
-	jsr		delay1Sec
-	move.b	#0x04, OPR
-	bra		interpLoop
+	bra.s	interpLoop
 	
 failBitTest:
 failAdrTest:
