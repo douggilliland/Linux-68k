@@ -42,6 +42,7 @@ TAB   = 0x09
 LF    = 0x0A
 CR    = 0x0D
 ESC   = 0x1B
+EOT	  = 0x00
 
 CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
@@ -622,7 +623,7 @@ CRLF_MSG:
 	dc.b CR,LF,EOT
 msgHelp:
     .ascii	"Available Commands: "
-	dc.b	CR,LF
+	dc.b	CR,LF, EOT
     .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
 	dc.b	CR,LF,EOT
 msgInvalidAddress:
@@ -634,6 +635,11 @@ msgInvalidValue:
 msgPrompt:
 	.ascii "> "
     dc.b EOT
+msgColonSpace:
+    .ascii ": "
+    dc.b EOT
+msgNewline:
+    dc.b CR,LF,EOT
 	
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
