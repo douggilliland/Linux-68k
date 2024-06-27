@@ -123,12 +123,8 @@ loopAdrCk:
 	lea		RAM_PASS_MSG, %a0
 	jsr		printString1
 |
-|	jsr		inChar
-|	jsr		outChar
-|	jmp		FERVR
+| Interpreter Loop
 |
-|	lea		READINLINE, %a0
-|	jsr		printString1
 interpLoop:
     lea     msgPrompt, %a0   | Prompt
     bsr.w   printString
@@ -140,23 +136,11 @@ interpLoop:
 	move.b	#0x04, OPR
 	bra		interpLoop
 	
-FERVR:
-	nop
-	move.b	#0x04, OPS		| Blink LED on DUART Out2
-	jsr		delay1Sec
-	move.b	#0x04, OPR
-	jsr		delay1Sec
-	jmp		FERVR
-|
+failBitTest:
+failAdrTest:
 FERVR2:
 	nop
 	jmp	FERVR2
-failBitTest:
-	nop
-	jmp	failBitTest
-failAdrTest:
-	nop
-	jmp	failAdrTest
 
 |||||
 | Writes a character to Port A, blocking if not ready (Full buffer)
