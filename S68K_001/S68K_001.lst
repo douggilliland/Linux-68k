@@ -154,7 +154,7 @@
  127               	| Interpreter Loop
  128               	|
  129               	interpLoop:
- 130 804b0 41FA 0579 	    lea     msgPrompt, %a0   | Prompt
+ 130 804b0 41FA 0578 	    lea     msgPrompt, %a0   | Prompt
  131 804b4 6100 0054 	    bsr.w   printString
  132 804b8 4EBA 0082 		jsr		readLine
  133 804bc 4EBA 0110 		jsr		lineToUpper
@@ -346,11 +346,11 @@
  297 80638 6100 FED0 	    bsr.w   printString
  298 8063c 6000 FFF0 	    bra.w   .exit
  299               	 .invalidAddr:
- 300 80640 41FA 03D5 	    lea     msgInvalidAddress, %a0
+ 300 80640 41FA 03D4 	    lea     msgInvalidAddress, %a0
  301 80644 6100 FEC4 	    bsr.w   printString
  302 80648 6000 FFE4 	    bra.w   .exit
  303               	 .invalidVal:
- 304 8064c 41FA 03CD 	    lea     msgInvalidValue, %a0
+ 304 8064c 41FA 03CC 	    lea     msgInvalidValue, %a0
  305 80650 6100 FEB8 	    bsr.w   printString
  306 80654 6000 FFD8 	    bra.w   .exit
  307               	
@@ -495,7 +495,7 @@
  434               	 .line:
  435 8074c 200A      	    move.l  %a2, %d0          
  436 8074e 6100 0110 	    bsr.w   printHexAddr     	| Starting address of this line
- 437 80752 41FA 02DA 	    lea     msgColonSpace, %a0
+ 437 80752 41FA 02D9 	    lea     msgColonSpace, %a0
  438 80756 6100 FDB2 	    bsr.w   printString
  439 8075a 7610      	    move.l  #16, %d3         	| 16 Bytes can be printed on a line
  440 8075c 2803      	    move.l  %d3, %d4       		| Save number of bytes on this line
@@ -547,7 +547,7 @@
  483 807c2 6100 FD1E 	    bsr.w   outChar
  484 807c6 60DA      	    bra.s   .endbytesLoop
  485               	 .endline:
- 486 807c8 41FA 0267 	    lea     msgNewline, %a0
+ 486 807c8 41FA 0266 	    lea     msgNewline, %a0
  487 807cc 6100 FD3C 	    bsr.w   printString
  488 807d0 4A82      	    tst.l   %d2
  489 807d2 6F04      	    ble.s   .end
@@ -801,30 +801,30 @@
  682      6520 436F 
  682      6D6D 616E 
  682      6473 3A20 
- 683 809e6 0D0A 00   		dc.b	CR,LF, EOT
- 684 809e9 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
+ 683 809e6 0D0A      		dc.b	CR,LF
+ 684 809e8 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
  684      7861 6D69 
  684      6E65 2020 
  684      2020 2844 
  684      2965 706F 
- 685 80a14 0D0A 00   		dc.b	CR,LF,EOT
+ 685 80a13 0D0A 00   		dc.b	CR,LF,EOT
  686               	msgInvalidAddress:
- 687 80a17 00        	    dc.b	"Invalid Address"
- 688 80a18 0D0A 00   		dc.b 	CR,LF,EOT
+ 687 80a16 00        	    dc.b	"Invalid Address"
+ 688 80a17 0D0A 00   		dc.b 	CR,LF,EOT
  689               	msgInvalidValue:
- 690 80a1b 496E 7661 	    .ascii	"Invalid Value"
+ 690 80a1a 496E 7661 	    .ascii	"Invalid Value"
  690      6C69 6420 
  690      5661 6C75 
  690      65
- 691 80a28 0D0A 00   		dc.b	CR,LF,EOT
+ 691 80a27 0D0A 00   		dc.b	CR,LF,EOT
  692               	msgPrompt:
- 693 80a2b 3E20      		.ascii "> "
- 694 80a2d 00        	    dc.b EOT
+ 693 80a2a 3E20      		.ascii "> "
+ 694 80a2c 00        	    dc.b EOT
  695               	msgColonSpace:
- 696 80a2e 3A20      	    .ascii ": "
- 697 80a30 00        	    dc.b EOT
+ 696 80a2d 3A20      	    .ascii ": "
+ 697 80a2f 00        	    dc.b EOT
  698               	msgNewline:
- 699 80a31 0D0A 00   	    dc.b CR,LF,EOT
+ 699 80a30 0D0A 00   	    dc.b CR,LF,EOT
  700               		
  701               	MAX_LINE_LENGTH = 80
  702               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
@@ -880,7 +880,7 @@ DEFINED SYMBOLS
           S68K_001.s:167    .text:000000000008050a printString1
           S68K_001.s:670    .text:0000000000080998 RAM_PASS_MSG
           S68K_001.s:129    .text:00000000000804b0 interpLoop
-          S68K_001.s:692    .text:0000000000080a2b msgPrompt
+          S68K_001.s:692    .text:0000000000080a2a msgPrompt
           S68K_001.s:168    .text:000000000008050a printString
           S68K_001.s:197    .text:000000000008053c readLine
           S68K_001.s:254    .text:00000000000805ce lineToUpper
@@ -917,9 +917,9 @@ DEFINED SYMBOLS
           S68K_001.s:676    .text:00000000000809bd msgInvalidCommand
           S68K_001.s:681    .text:00000000000809d2 msgHelp
           S68K_001.s:299    .text:0000000000080640 .invalidAddr
-          S68K_001.s:686    .text:0000000000080a17 msgInvalidAddress
+          S68K_001.s:686    .text:0000000000080a16 msgInvalidAddress
           S68K_001.s:303    .text:000000000008064c .invalidVal
-          S68K_001.s:689    .text:0000000000080a1b msgInvalidValue
+          S68K_001.s:689    .text:0000000000080a1a msgInvalidValue
           S68K_001.s:377    .text:00000000000806e2 parseNumber
           S68K_001.s:321    .text:0000000000080664 .exloop
           S68K_001.s:335    .text:0000000000080688 .exrange
@@ -940,7 +940,7 @@ DEFINED SYMBOLS
           S68K_001.s:419    .text:000000000008073e PNdigit3
           S68K_001.s:434    .text:000000000008074c .line
           S68K_001.s:569    .text:0000000000080860 printHexAddr
-          S68K_001.s:695    .text:0000000000080a2e msgColonSpace
+          S68K_001.s:695    .text:0000000000080a2d msgColonSpace
           S68K_001.s:441    .text:000000000008075e .hexbyte
           S68K_001.s:453    .text:000000000008077a .endbytesShort
           S68K_001.s:468    .text:00000000000807a0 .endbytes
@@ -952,7 +952,7 @@ DEFINED SYMBOLS
 
 
           S68K_001.s:481    .text:00000000000807be .unprintable
-          S68K_001.s:698    .text:0000000000080a31 msgNewline
+          S68K_001.s:698    .text:0000000000080a30 msgNewline
           S68K_001.s:491    .text:00000000000807d8 .end
           S68K_001.s:527    .text:0000000000080816 DepCont
           S68K_001.s:511    .text:00000000000807f2 DepLoop
