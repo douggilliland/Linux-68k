@@ -385,7 +385,7 @@ msgInvalidCommand:
 CRLF_MSG:	
 	dc.b CR,LF,EOT
 msgHelp:
-    .ascii	"Available Commands: '
+    .ascii	"Available Commands: "
 	dc.b	CR,LF
     .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
 	dc.b	CR,LF,EOT
