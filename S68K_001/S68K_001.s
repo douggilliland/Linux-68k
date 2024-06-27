@@ -127,17 +127,13 @@ loopAdrCk:
 |	jsr		outChar
 |	jmp		FERVR
 |
-	lea		READINLINE, %a0
-	jsr		printString1
+|	lea		READINLINE, %a0
+|	jsr		printString1
 interpLoop:
+    lea     msgPrompt, %a0   | Prompt
+    bsr.w   printString
 	jsr		readLine
-|	lea		L_TO_UPPER_MSG, %a0
-|	jsr		printString1
 	jsr		lineToUpper
-|	lea		WRITEOUTLINE, %a0
-|	jsr		printString1
-|	lea     varLineBuf, %a0
-|	jsr		printString1
 	move.b	#0x04, OPS		| Blink LED on DUART Out2
 	jsr		parseLine
 	jsr		delay1Sec
@@ -395,6 +391,9 @@ msgInvalidAddress:
 msgInvalidValue:
     .ascii	"Invalid Value"
 	dc.b	CR,LF,EOT
-
+msgPrompt:
+	.ascii "> "
+    dc.b EOT
+	
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
