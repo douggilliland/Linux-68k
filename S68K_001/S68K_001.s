@@ -545,16 +545,17 @@ printHexByte:
     move.l  %D2, -(%SP)
 	move.l	#0, %d2
     move.b  %d0, %d2
-    lsr.b   #0x4, %D0
-    add.b   #'0', %D0
-    cmp.b   #'9', %D0		| Check if the hex number was from 0-9
+    lsr.b   #0x4, %d0		| Shift down upper nibble
+	andi.b	#0xf, %d0
+    add.b   #'0', %d0
+    cmp.b   #'9', %d0		| Check if the hex number was from 0-9
     ble.s   PHBsecond
-    add.b   #0x7, %D0			| Shift 0xA-0xF from ':' to 'A'
+    add.b   #0x7, %d0			| Shift 0xA-0xF from ':' to 'A'
 PHBsecond:
     bsr   outChar			| Print the digit
-    andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
-    add.b   #'0', %D2
-    cmp.b   #'9', %D2     	| Same as before    
+    andi.b  #0x0F, %d2		| Now we want the lower digit Mask only the lower digit
+    add.b   #'0', %d2
+    cmp.b   #'9', %d2     	| Same as before    
     ble.s   PHBend
     add.b   #0x7, %D2
 PHBend:
