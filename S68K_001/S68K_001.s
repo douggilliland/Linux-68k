@@ -120,11 +120,7 @@ loopAdrCk:
 	
 	lea		BANNER_MSG, %a0
 	jsr		printString1
-	lea		CRLF_MSG, %a0
-	jsr		printString1
 	lea		RAM_PASS_MSG, %a0
-	jsr		printString1
-	lea		CRLF_MSG, %a0
 	jsr		printString1
 |
 |	jsr		inChar
@@ -133,17 +129,11 @@ loopAdrCk:
 |
 	lea		READINLINE, %a0
 	jsr		printString1
-	lea		CRLF_MSG, %a0
-	jsr		printString1
 	jsr		readLine
 	lea		L_TO_UPPER_MSG, %a0
 	jsr		printString1
-	lea		CRLF_MSG, %a0
-	jsr		printString1
 	jsr		lineToUpper
-	lea		WRITEOUTLINE,%a0
-	jsr		printString1
-	lea		CRLF_MSG, %a0
+	lea		WRITEOUTLINE, %a0
 	jsr		printString1
 	lea     varLineBuf, %a0
 	jsr		printString1
@@ -288,7 +278,38 @@ lineToUpper:
     bne.s   LUloop             | Keep going till we hit a null terminator
     rts
 
+|
+| Parse Line
+parseLine:
+    movem.l %a2-%a3, -(%SP)     | Save registers
+    lea     varLineBuf, %a0
+ PLfindCommand:
+    move.b  (%a0)+, %d0
+    cmp.b   #' ', %d0           | Ignore spaces
+    beq.w   PLfindCommand    
+    cmp.b   #'E', %d0           | Examine command
+    beq.w   .examine
+    cmp.b   #'D', %d0           | Deposit command
+    beq.w   .deposit
+    cmp.b   #'R', %d0           | Run command
+    beq.w   .run
+    cmp.b   #'H', %d0           | Help command
+    beq.w   .help
+    cmp.b   #0, %d0             | Ignore blank lines
+    beq.s   .exit               
+ .invalid:   
+    lea     msgInvalidCommand, %a0
+    bsr.w   printString
+ .exit:
+    movem.l (%SP)+, %a2-%a3     | Restore registers
+    rts
 
+.examine:
+.deposit:
+.run:
+.help:
+	bra	.exit
+	
 |||||
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
@@ -324,17 +345,26 @@ delay1Loop:
 	bne		delay1Loop
 	rts
 
-READINLINE:	  .ascii  "Reading in line"
-			DC.B    EOT
-L_TO_UPPER_MSG:  .ascii  "Convert line to upper case"
-			DC.B    EOT
-WRITEOUTLINE:	  .ascii  "Writing out line"
-			DC.B    EOT
-RAM_PASS_MSG:  .ascii  "RAM Test Passed"
-			DC.B    EOT
-CRLF_MSG:	dc.b 0x0a,0xd,0
-BANNER_MSG:	.ascii  "SIMPLE-68008 CPU"
-			DC.B    EOT
+READINLINE:	  
+	.ascii  "Reading in line"
+	dc.b CR,LF,EOT
+L_TO_UPPER_MSG:  
+	.ascii  "Convert line to upper case"
+	dc.b CR,LF,EOT
+WRITEOUTLINE:	  
+	.ascii  "Writing out line"
+	dc.b CR,LF,EOT
+RAM_PASS_MSG:  
+	.ascii  "RAM Test Passed"
+	dc.b CR,LF,EOT
+BANNER_MSG:	
+	.ascii  "SIMPLE-68008 CPU"
+	dc.b CR,LF,EOT
+msgInvalidCommand:
+    .ascii 'Invalid Command'
+	dc.b CR,LF,EOT
+CRLF_MSG:	
+	dc.b CR,LF,EOT
 
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
