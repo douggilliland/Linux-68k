@@ -434,7 +434,7 @@ dumpRAM:
     ble.s   .end
     bra.w   .line
  .end:
-    movem.l (SP)+, %d2-%d4/%a2		| Restore registers
+    movem.l (%SP)+, %d2-%d4/%a2		| Restore registers
     rts
 
 .deposit:
