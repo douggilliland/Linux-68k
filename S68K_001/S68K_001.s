@@ -503,8 +503,8 @@ printHexWord:
     move.l  %d2, -(%SP)		| Save D2
     move.l  %d0, %d2		| Save the address in d2
     
-    rol.l   #8, %d2       | 4321 -> 3214
-    rol.l   #8, %d2       | 3214 -> 2143 
+    rol.l   #0x8, %d2       | 4321 -> 3214
+    rol.l   #0x8, %d2       | 3214 -> 2143 
     bra.s   printHex_wordentry  | Print out the last 16 bits
 |||||||||||||||||||||||
 | Print a hex 24-bit address
@@ -512,7 +512,7 @@ printHexAddr:
     move.l %d2, -(%SP)   	| Save D2
     move.l %d0, %d2      	| Save the address in d2
     
-    rol.l   #8, %d2     	| 4321 -> 3214
+    rol.l   #0x8, %d2     	| 4321 -> 3214
     bra.s   printHex_addrentry  | Print out the last 24 bits
 |||||||||||||||||||||||
 * Print a hex long
@@ -520,18 +520,18 @@ printHexLong:
     move.l  %d2, -(%SP)     | Save D2
     move.l  %d0, %d2        | Save the address in d2
     
-    rol.l   #8, %d2        | 4321 -> 3214 high byte in low
+    rol.l   #0x8, %d2        | 4321 -> 3214 high byte in low
     move.l  %d2, %d0
     bsr.s   printHexByte  	| Print the high byte (24-31)
 printHex_addrentry:     
-    rol.l   #8, %d2        	| 3214 -> 2143 middle-high byte in low
+    rol.l   #0x8, %d2        	| 3214 -> 2143 middle-high byte in low
     move.l  %d2, %d0              
     bsr.s   printHexByte  	| Print the high-middle byte (16-23)
 printHex_wordentry:    
-    rol.l   #8, %d2        	| 2143 -> 1432 Middle byte in low
+    rol.l   #0x8, %d2        	| 2143 -> 1432 Middle byte in low
     move.l  %d2, %d0
     bsr.s   printHexByte  	| Print the middle byte (8-15)
-    rol.l   #8, %d2
+    rol.l   #0x8, %d2
     move.l  %d2, %d0
     bsr.s   printHexByte  	| Print the low byte (0-7)
     
@@ -548,14 +548,14 @@ printHexByte:
     add.b   #'0', %D0
     cmp.b   #'9', %D0		| Check if the hex number was from 0-9
     ble.s   PHBsecond
-    add.b   #7, %D0			| Shift 0xA-0xF from ':' to 'A'
+    add.b   #0x7, %D0			| Shift 0xA-0xF from ':' to 'A'
 PHBsecond:
     bsr   outChar			| Print the digit
     andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
     add.b   #'0', %D2
     cmp.b   #'9', %D2     	| Same as before    
     ble.s   PHBend
-    add.b   #7, %D2
+    add.b   #0x7, %D2
 PHBend:
     move.b  %D2, %D0
     bsr	   outChar      	| Print the lower digit
