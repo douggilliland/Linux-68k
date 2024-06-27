@@ -304,11 +304,211 @@ parseLine:
     bsr.w   printString
     bra.w   .exit
 
+|||||||||||||||||||||||||||||||
+| Examines memory addresses
+| Valid modes:
+|   e ADDR                  Displays a single byte
+|   e ADDR-ADDR             Dispalys all bytes between the two addresses
+|   e ADDR+LEN              Dispays LEN bytes after ADDR
+|   e ADDR;                 Interactive mode, space shows 16 lines, enter shows 1.
+|   e ADDR.                 Quick line, displays one line 
 .examine:
+    bsr.w   parseNumber         | Read in the start address
+    tst.b   %d1                 | Make sure it's valid (parseNumber returns non-zero in d1 for failure)
+    bne.w   .invalidAddr        
+    move.l  %d0, %a3            | Save the start address
+ .exloop:
+    move.b  (%a0)+, %d0
+    cmp.b   #' ', %d0           | Ignore spaces
+    beq.s   .exloop
+    cmp.b   #'-', %d0           | Check if it's a range specifier
+    beq.s   .exrange
+    cmp.b   #'+', %d0           | Check if it's a length specifier
+    beq.s   .exlength
+    cmp.b   #';', %d0           | Check if we're going interactive
+    beq.s   .exinter
+    cmp.b   #'.', %d0           | Check if quick 16 
+    beq.s   .exquick
+    move.l  #1, %d0             | Otherwise read in a single byte
+    bra.s   .exend              
+ .exrange:
+    bsr.w   parseNumber         | Find the end address
+    tst.b   %d1                 | Check if we found a valid address
+    bne.w   .invalidAddr
+    sub.l   %a3, %d0            | Get the length
+    bra.s   .exend
+ .exquick:                      | Quick mode means show one line of 16 bytes
+    move.l  #0x10, %d0
+    bra.s   .exend
+ .exlength:                     | Length mode means a length is specified
+    bsr.w   parseNumber         | Find the length
+    tst.b   %d1
+    bne.w   .invalidAddr
+ .exend:                        | Done parsing, give the parameters to dumpRAM and exit
+    move.l  %a3, %a0
+    bsr.w   dumpRAM
+    bra.s   .exit
+ .exinter:                      | Interactive mode, Space shows 16 lines, enter shows 1.
+    move.l  %a3, %a0            | Current Address
+    move.l  #0x10, %d0          | 16 bytes
+    bsr.w   dumpRAM             | Dump this line
+    add.l   #0x10, %a3          | Move up the current address 16 bytes
+ .exinterend:
+    bsr.w   inChar
+    cmp.b   #CR, %d0            | Display another line
+    beq.s   .exinter
+    cmp.b   #' ', %d0           | Display a page (256 bytes at a time)
+    beq.s   .exinterpage
+    bra.s   .exit               | Otherwise exit
+ .exinterpage:
+    move.l  %a3, %a0
+    move.l  #0x100, %d0         | 256 bytes
+    bsr.w   dumpRAM             | Dump 16 lines of RAM
+    add.l   #0x100, %a3         | Move up the current address by 256
+    bra.s   .exinterend
+
+|||||||||||||||||||||||||||||
+| Dumps a section of RAM to the screen
+| Displays both hex values and ASCII characters
+| d0 - Number of bytes to dump
+| a0 - Start Address
+dumpRAM:
+    movem.l %d2-%d4/%a2, -(%SP) | Save registers
+    move.l  %a0, %a2           	| Save the start address
+    move.l  %d0, %d2           	| And the number of bytes
+ .line:
+    move.l  %a2, %d0          
+    bsr.w   printHexAddr     	| Starting address of this line
+    lea     msgColonSpace, %a0
+    bsr.w   printString
+    move.l  #16, %d3         	| 16 Bytes can be printed on a line
+    move.l  %d3, %d4       		| Save number of bytes on this line
+ .hexbyte:
+    tst.l   %d2               	| Check if we're out of bytes
+    beq.s   .endbytesShort
+    tst.b   %d3               	| Check if we're done this line
+    beq.s   .endbytes    
+    move.b  (%a2)+, %d0        	| Read a byte in from RAM
+    bsr.w   printHexByte     	| Display it
+    move.b  #' ', %d0
+    bsr.w   outChar          	| Space out bytes
+    subq.l  #1, %d3    
+    subq.l  #1, %d2        
+    bra.s   .hexbyte
+ .endbytesShort:
+    sub.b   %d3, %d4           	| Make d4 the actual number of bytes on this line
+    move.b  #' ', %d0
+ .endbytesShortLoop:
+    tst.b   %d3               	| Check if we ended the line
+    beq.s   .endbytes
+    move.b  #' ', %d0
+    bsr.w   outChar          	| Three spaces to pad out
+    move.b  #' ', %d0
+    bsr.w   outChar
+    move.b  #' ', %d0
+    bsr.w   outChar
+    
+    subq.b  #1, %d3
+    bra.s   .endbytesShortLoop
+ .endbytes:
+    suba.l  %d4, %a2        	| Return to the start address of this line
+ .endbytesLoop:
+    tst.b   %d4               	| Check if we are done printing ascii
+    beq     .endline    
+    subq.b  #1, %d4
+    move.b  (%a2)+, %d0        	| Read the byte again
+    cmp.b   #' ', %d0         	| Lowest printable character
+    blt.s   .unprintable
+    cmp.b   #'~', %d0         	| Highest printable character
+    bgt.s   .unprintable
+    bsr.w   outChar
+    bra.s   .endbytesLoop
+ .unprintable:
+    move.b  #'.', %d0
+    bsr.w   outChar
+    bra.s   .endbytesLoop
+ .endline:
+    lea     msgNewline, %a0
+    bsr.w   printString
+    tst.l   %d2
+    ble.s   .end
+    bra.w   .line
+ .end:
+    movem.l (SP)+, %d2-%d4/%a2		| Restore registers
+    rts
+
 .deposit:
 .run:
 	bra	.exit
+
+|||||||||||||||||||||||
+|| KEEP All printHex functions together ||
+|||||||||||||||||||||||
+| Print a hex word
+printHexWord:
+    move.l  %d2, -(%SP)		| Save D2
+    move.l  %d0, %d2		| Save the address in d2
+    
+    rol.l   #8, %d2       | 4321 -> 3214
+    rol.l   #8, %d2       | 3214 -> 2143 
+    bra.s   printHex_wordentry  * Print out the last 16 bits
+|||||||||||||||||||||||
+| Print a hex 24-bit address
+printHexAddr:
+    move.l %d2, -(%SP)   	| Save D2
+    move.l %d0, %d2      	| Save the address in d2
+    
+    rol.l   #8, %d2     	| 4321 -> 3214
+    bra.s   printHex_addrentry  * Print out the last 24 bits
+|||||||||||||||||||||||
+* Print a hex long
+printHexLong:
+    move.l  %d2, -(%SP)     | Save D2
+    move.l  %d0, %d2        | Save the address in d2
+    
+    rol.l   #8, 0xd2        | 4321 -> 3214 high byte in low
+    move.l  %d2, %d0
+    bsr.s   printHexByte  	| Print the high byte (24-31)
+printHex_addrentry:     
+    rol.l   #8, %d2        	| 3214 -> 2143 middle-high byte in low
+    move.l  %d2, %d0              
+    bsr.s   printHexByte  	| Print the high-middle byte (16-23)
+printHex_wordentry:    
+    rol.l   #8, %d2        	| 2143 -> 1432 Middle byte in low
+    move.l  %d2, %d0
+    bsr.s   printHexByte  	| Print the middle byte (8-15)
+    rol.l   #8, %d2
+    move.l  %d2, %d0
+    bsr.s   printHexByte  	| Print the low byte (0-7)
+    
+    move.l (%SP)+, %d2      | Restore D2
+    RTS
+    
+|||||||||||||||||||||||
+| Print a hex byte
+|  - Takes byte in D0
+printHexByte:
+    move.l  %D2, -(%SP)
+    move.b  %D0, %D2
+    lsr.b   #$4, %D0
+    add.b   #'0', %D0
+    cmp.b   #'9', %D0		| Check if the hex number was from 0-9
+    ble.s   .second
+    add.b   #7, %D0			| Shift 0xA-0xF from ':' to 'A'
+.second:
+    bsr.s   outChar			| Print the digit
+    andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
+    add.b   #'0', %D2
+    cmp.b   #'9', %D2     	| Same as before    
+    ble.s   .end
+    add.b   #7, %D2
+.end:
+    move.b  %D2, %D0
+    bsr.s   outChar      	| Print the lower digit
+    move.l  (%SP)+, %D2
+    rts
 	
+
 |||||
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
