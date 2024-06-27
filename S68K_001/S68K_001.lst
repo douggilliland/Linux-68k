@@ -144,24 +144,24 @@
  117               	|
  118               	| Done with address test of SRAM
  119               	|
- 120 8049c 4EBA 03AC 		jsr     initDuart       | Setup the serial port
- 121               		
- 122 804a0 41FA 0494 		lea		BANNER_MSG, %a0
+ 120 8049c 4EBA 0420 		jsr     initDuart       	| Setup the serial port
+ 121               	monitorStart:					| Warm start
+ 122 804a0 41FA 0508 		lea		BANNER_MSG, %a0
  123 804a4 4EBA 0064 		jsr		printString1
- 124 804a8 41FA 047A 		lea		RAM_PASS_MSG, %a0
+ 124 804a8 41FA 04EE 		lea		RAM_PASS_MSG, %a0
  125 804ac 4EBA 005C 		jsr		printString1
  126               	|
  127               	| Interpreter Loop
  128               	|
  129               	interpLoop:
- 130 804b0 41FA 0505 	    lea     msgPrompt, %a0   | Prompt
+ 130 804b0 41FA 0579 	    lea     msgPrompt, %a0   | Prompt
  131 804b4 6100 0054 	    bsr.w   printString
  132 804b8 4EBA 0082 		jsr		readLine
  133 804bc 4EBA 0110 		jsr		lineToUpper
  134 804c0 13FC 0004 		move.b	#0x04, OPS		| Blink LED on DUART Out2
  134      000F 001C 
  135 804c8 4EBA 0122 		jsr		parseLine
- 136 804cc 4EBA 0406 		jsr		delay1Sec
+ 136 804cc 4EBA 047A 		jsr		delay1Sec
  137 804d0 13FC 0004 		move.b	#0x04, OPR
  137      000F 001E 
  138 804d8 6000 FFD6 		bra		interpLoop
@@ -329,28 +329,28 @@
  280 80608 0C00 0044 	    cmp.b   #'D', %d0           | Deposit command
  281 8060c 6700 01D0 	    beq.w   .deposit
  282 80610 0C00 0052 	    cmp.b   #'R', %d0           | Run command
- 283 80614 6700 01C8 	    beq.w   .run
+ 283 80614 6700 022E 	    beq.w   .run
  284 80618 0C00 0048 	    cmp.b   #'H', %d0           | Help command
  285 8061c 6700 0016 	    beq.w   .help
  286 80620 0C00 0000 	    cmp.b   #0, %d0             | Ignore blank lines
  287 80624 6708      	    beq.s   .exit               
  288               	 .invalid:   
- 289 80626 41FA 0321 	    lea     msgInvalidCommand, %a0
+ 289 80626 41FA 0395 	    lea     msgInvalidCommand, %a0
  290 8062a 6100 FEDE 	    bsr.w   printString
  291               	 .exit:
  292 8062e 4CDF 0C00 	    movem.l (%SP)+, %a2-%a3     | Restore registers
  293 80632 4E75      	    rts
  294               	
  295               	 .help:
- 296 80634 41FA 0328 	    lea     msgHelp, %a0
+ 296 80634 41FA 039C 	    lea     msgHelp, %a0
  297 80638 6100 FED0 	    bsr.w   printString
  298 8063c 6000 FFF0 	    bra.w   .exit
  299               	 .invalidAddr:
- 300 80640 41FA 0361 	    lea     msgInvalidAddress, %a0
+ 300 80640 41FA 03D5 	    lea     msgInvalidAddress, %a0
  301 80644 6100 FEC4 	    bsr.w   printString
  302 80648 6000 FFE4 	    bra.w   .exit
  303               	 .invalidVal:
- 304 8064c 41FA 0359 	    lea     msgInvalidValue, %a0
+ 304 8064c 41FA 03CD 	    lea     msgInvalidValue, %a0
  305 80650 6100 FEB8 	    bsr.w   printString
  306 80654 6000 FFD8 	    bra.w   .exit
  307               	
@@ -494,8 +494,8 @@
  433 8074a 2400      	    move.l  %d0, %d2           	| And the number of bytes
  434               	 .line:
  435 8074c 200A      	    move.l  %a2, %d0          
- 436 8074e 6100 009C 	    bsr.w   printHexAddr     	| Starting address of this line
- 437 80752 41FA 0266 	    lea     msgColonSpace, %a0
+ 436 8074e 6100 0110 	    bsr.w   printHexAddr     	| Starting address of this line
+ 437 80752 41FA 02DA 	    lea     msgColonSpace, %a0
  438 80756 6100 FDB2 	    bsr.w   printString
  439 8075a 7610      	    move.l  #16, %d3         	| 16 Bytes can be printed on a line
  440 8075c 2803      	    move.l  %d3, %d4       		| Save number of bytes on this line
@@ -505,7 +505,7 @@
  444 80762 4A03      	    tst.b   %d3               	| Check if we're done this line
  445 80764 673A      	    beq.s   .endbytes    
  446 80766 101A      	    move.b  (%a2)+, %d0        	| Read a byte in from RAM
- 447 80768 6100 00AA 	    bsr.w   printHexByte     	| Display it
+ 447 80768 6100 011E 	    bsr.w   printHexByte     	| Display it
  448 8076c 103C 0020 	    move.b  #' ', %d0
  449 80770 6100 FD70 	    bsr.w   outChar          	| Space out bytes
  450 80774 5383      	    subq.l  #1, %d3    
@@ -547,7 +547,7 @@
  483 807c2 6100 FD1E 	    bsr.w   outChar
  484 807c6 60DA      	    bra.s   .endbytesLoop
  485               	 .endline:
- 486 807c8 41FA 01F3 	    lea     msgNewline, %a0
+ 486 807c8 41FA 0267 	    lea     msgNewline, %a0
  487 807cc 6100 FD3C 	    bsr.w   printString
  488 807d0 4A82      	    tst.l   %d2
  489 807d2 6F04      	    ble.s   .end
@@ -556,215 +556,279 @@
  492 807d8 4CDF 041C 	    movem.l (%SP)+, %d2-%d4/%a2		| Restore registers
  493 807dc 4E75      	    rts
  494               	
- 495               	.deposit:
- 496               	.run:
- 497 807de 6000 FE4E 		bra	.exit
- 498               	
- 499               	|||||||||||||||||||||||
- 500               	|| KEEP All printHex functions together ||
+ 495               	|||||||||||||||||||||||
+ 496               	| Deposit values into RAM
+ 497               	| d ADDR VAL VAL            Deposit value(s) into RAM
+ 498               	| d ADDR VAL VAL;           Deposit values, continue with values on next line
+ 499               	|  VAL VAL VAL;              - Continuing with further continue
+ 500               	| d: VAL VAL                Continue depositing values after the last address written to
  501               	|||||||||||||||||||||||
- 502               	| Print a hex word
- 503               	printHexWord:
- 504 807e2 2F02      	    move.l  %d2, -(%SP)		| Save D2
- 505 807e4 2400      	    move.l  %d0, %d2		| Save the address in d2
+ 502               	.deposit:
+ 503 807de 1010      	    move.b  (%a0), %d0
+ 504 807e0 0C00 003A 	    cmp.b   #':', %d0       	| Check if we want to continue from last
+ 505 807e4 6730      	    beq.s   DepCont
  506               	    
- 507 807e6 E19A      	    rol.l   #0x8, %d2       | 4321 -> 3214
- 508 807e8 E19A      	    rol.l   #0x8, %d2       | 3214 -> 2143 
- 509 807ea 6018      	    bra.s   printHex_wordentry  | Print out the last 16 bits
- 510               	|||||||||||||||||||||||
- 511               	| Print a hex 24-bit address
- 512               	printHexAddr:
- 513 807ec 2F02      	    move.l %d2, -(%SP)   	| Save D2
- 514 807ee 2400      	    move.l %d0, %d2      	| Save the address in d2
- 515               	    
- 516 807f0 E19A      	    rol.l   #0x8, %d2     	| 4321 -> 3214
- 517 807f2 600A      	    bra.s   printHex_addrentry  | Print out the last 24 bits
- 518               	|||||||||||||||||||||||
- 519               	* Print a hex long
- 520               	printHexLong:
- 521 807f4 2F02      	    move.l  %d2, -(%SP)     | Save D2
- 522 807f6 2400      	    move.l  %d0, %d2        | Save the address in d2
+ 507 807e6 6100 FEFA 	    bsr.w   parseNumber         | Otherwise read the address
+ 508 807ea 4A01      	    tst.b   %d1
+ 509 807ec 6600 FE52 	    bne		.invalidAddr
+ 510 807f0 2640      	    move.l  %d0, %a3           	| Save the start address
+ 511               	 DepLoop:
+ 512 807f2 1010      	    move.b  (%a0), %d0            
+ 513 807f4 0C00 003B 	    cmp.b   #';', %d0          	| Check for continue
+ 514 807f8 6726      	    beq.s   DepMLine
+ 515 807fa 4A40      	    tst     %d0              	| Check for the end of line
+ 516 807fc 6700 003C 	    beq     DepEnd
+ 517               	    
+ 518 80800 6100 FEE0 	    bsr		parseNumber         | Otherwise read a value
+ 519 80804 4A01      	    tst.b   %d1
+ 520 80806 6600 FE44 	    bne		.invalidVal
+ 521 8080a 0C40 00FF 	    cmp.w   #255, %d0          	| Make sure it's a byte
+ 522 8080e 6E00 FE3C 	    bgt		.invalidVal
  523               	    
- 524 807f8 E19A      	    rol.l   #0x8, %d2        | 4321 -> 3214 high byte in low
- 525 807fa 2002      	    move.l  %d2, %d0
- 526 807fc 6116      	    bsr.s   printHexByte  	| Print the high byte (24-31)
- 527               	printHex_addrentry:     
- 528 807fe E19A      	    rol.l   #0x8, %d2        	| 3214 -> 2143 middle-high byte in low
- 529 80800 2002      	    move.l  %d2, %d0              
- 530 80802 6110      	    bsr.s   printHexByte  	| Print the high-middle byte (16-23)
- 531               	printHex_wordentry:    
- 532 80804 E19A      	    rol.l   #0x8, %d2        	| 2143 -> 1432 Middle byte in low
- 533 80806 2002      	    move.l  %d2, %d0
- 534 80808 610A      	    bsr.s   printHexByte  	| Print the middle byte (8-15)
- 535 8080a E19A      	    rol.l   #0x8, %d2
- 536 8080c 2002      	    move.l  %d2, %d0
+ 524 80812 16C0      	    move.b  %d0, (%a3)+        	| Store the value into memory
+ 525 80814 60DC      	    bra.s   DepLoop
+ 526               	    
+ 527               	 DepCont:
+ 528 80816 2679 0000 	    move.l  varCurAddr, %a3   	| Read in the last address 
+ 528      0000 
+ 529 8081c 5288      	    addq.l  #1, %a0           	| Skip over the ':'
+ 530 8081e 60D2      	    bra.s   DepLoop
+ 531               	    
+ 532               	 DepMLine:
+ 533 80820 41F9 0000 	    lea     msgDepositPrompt, %a0
+ 533      0000 
+ 534 80826 6100 FCE2 	    bsr.w   printString
 68K GAS  S68K_001.s 			page 11
 
 
- 537 8080e 6104      	    bsr.s   printHexByte  	| Print the low byte (0-7)
- 538               	    
- 539 80810 241F      	    move.l (%SP)+, %d2      | Restore D2
- 540 80812 4E75      	    RTS
- 541               	    
- 542               	|||||||||||||||||||||||
- 543               	| Print a hex byte
- 544               	|  - Takes byte in D0
- 545               	printHexByte:
- 546 80814 2F02      	    move.l  %D2, -(%SP)
- 547 80816 7400      		move.l	#0, %d2
- 548 80818 1400      	    move.b  %d0, %d2
- 549 8081a E808      	    lsr.b   #0x4, %d0		| Shift down upper nibble
- 550 8081c 0200 000F 		andi.b	#0xf, %d0
- 551 80820 0600 0030 	    add.b   #'0', %d0
- 552 80824 0C00 0039 	    cmp.b   #'9', %d0		| Check if the hex number was from 0-9
- 553 80828 6F02      	    ble.s   PHBsecond
- 554 8082a 5E00      	    add.b   #0x7, %d0			| Shift 0xA-0xF from ':' to 'A'
- 555               	PHBsecond:
- 556 8082c 6100 FCB4 	    bsr   outChar			| Print the digit
- 557 80830 0202 000F 	    andi.b  #0x0F, %d2		| Now we want the lower digit Mask only the lower digit
- 558 80834 0602 0030 	    add.b   #'0', %d2
- 559 80838 0C02 0039 	    cmp.b   #'9', %d2     	| Same as before    
- 560 8083c 6F02      	    ble.s   PHBend
- 561 8083e 5E02      	    add.b   #0x7, %D2
- 562               	PHBend:
- 563 80840 1002      	    move.b  %D2, %D0
- 564 80842 6100 FC9E 	    bsr	   outChar      	| Print the lower digit
- 565 80846 241F      	    move.l  (%SP)+, %D2
- 566 80848 4E75      	    rts
- 567               		
- 568               	
- 569               	|||||
- 570               	| Initializes the 68681 DUART port A as 9600 8N1 
- 571               	initDuart:
- 572 8084a 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
- 572      000F 0004 
- 573 80852 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
- 573      000F 0004 
- 574 8085a 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
- 574      000F 0004 
- 575               	    
- 576 80862 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
- 576      000F 0008 
- 577 8086a 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
- 577      000F 0002 
- 578 80872 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 578      000F 0000 
- 579 8087a 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
- 579      000F 0000 
+ 535 8082a 6100 FD10 	    bsr.w   readLine          	| Read in the next line to be parsed
+ 536 8082e 6100 FD9E 	    bsr.w   lineToUpper         | Convert to uppercase
+ 537 80832 41F9 0007 	    lea     varLineBuf, %a0    	| Reset our buffer pointer
+ 537      FBAE 
+ 538 80838 60B8      	    bra.s   DepLoop            	| And jump back to decoding
+ 539               	 DepEnd:
+ 540 8083a 23CB 0000 	    move.l  %a3, varCurAddr
+ 540      0000 
+ 541 80840 6000 FDEC 	    bra.w   .exit
+ 542               	
+ 543               	|||||||||||||||||||||||
+ 544               	| run code
+ 545               	 .run:
+ 546 80844 6100 FE9C 	    bsr.w   parseNumber        	| Otherwise read the address
+ 547 80848 4A01      	    tst.b   %d1
+ 548 8084a 6600 FDF4 	    bne		.invalidAddr
+ 549 8084e 2040      	    move.l  %d0, %a0
+ 550 80850 4E90      	    jsr     (%a0)             	| Jump to the code! 
+ 551               	                                | Go as subroutine to allow code to return to us
+ 552 80852 4EBA FC4C 	    jsr     monitorStart        | Warm start after returning so everything is in
+ 553               	                                | a known state.
+ 554               	
+ 555               	
+ 556               	|||||||||||||||||||||||
+ 557               	|| KEEP All printHex functions together ||
+ 558               	|||||||||||||||||||||||
+ 559               	| Print a hex word
+ 560               	printHexWord:
+ 561 80856 2F02      	    move.l  %d2, -(%SP)		| Save D2
+ 562 80858 2400      	    move.l  %d0, %d2		| Save the address in d2
+ 563               	    
+ 564 8085a E19A      	    rol.l   #0x8, %d2       | 4321 -> 3214
+ 565 8085c E19A      	    rol.l   #0x8, %d2       | 3214 -> 2143 
+ 566 8085e 6018      	    bra.s   printHex_wordentry  | Print out the last 16 bits
+ 567               	|||||||||||||||||||||||
+ 568               	| Print a hex 24-bit address
+ 569               	printHexAddr:
+ 570 80860 2F02      	    move.l %d2, -(%SP)   	| Save D2
+ 571 80862 2400      	    move.l %d0, %d2      	| Save the address in d2
+ 572               	    
+ 573 80864 E19A      	    rol.l   #0x8, %d2     	| 4321 -> 3214
+ 574 80866 600A      	    bra.s   printHex_addrentry  | Print out the last 24 bits
+ 575               	|||||||||||||||||||||||
+ 576               	* Print a hex long
+ 577               	printHexLong:
+ 578 80868 2F02      	    move.l  %d2, -(%SP)     | Save D2
+ 579 8086a 2400      	    move.l  %d0, %d2        | Save the address in d2
  580               	    
- 581 80882 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 581      000F 0004 
- 582               	
- 583 8088a 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
- 583      000F 0014 
- 584 80892 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 581 8086c E19A      	    rol.l   #0x8, %d2        | 4321 -> 3214 high byte in low
+ 582 8086e 2002      	    move.l  %d2, %d0
+ 583 80870 6116      	    bsr.s   printHexByte  	| Print the high byte (24-31)
+ 584               	printHex_addrentry:     
+ 585 80872 E19A      	    rol.l   #0x8, %d2        	| 3214 -> 2143 middle-high byte in low
+ 586 80874 2002      	    move.l  %d2, %d0              
+ 587 80876 6110      	    bsr.s   printHexByte  	| Print the high-middle byte (16-23)
+ 588               	printHex_wordentry:    
+ 589 80878 E19A      	    rol.l   #0x8, %d2        	| 2143 -> 1432 Middle byte in low
 68K GAS  S68K_001.s 			page 12
 
 
- 584      000F 0014 
- 585 8089a 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
- 585      000F 0014 
- 586               	    
- 587 808a2 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
- 587      000F 0012 
- 588 808aa 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 588      000F 0010 
- 589 808b2 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
- 589      000F 0010 
- 590               	    
- 591 808ba 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
- 591      000F 0014 
- 592               		
- 593 808c2 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
- 593      000F 001A 
- 594 808ca 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
- 594      000F 001E 
- 595 808d2 4E75      	    rts    
- 596               	
- 597               	delay1Sec:
- 598 808d4 203C 0003 		move.l	#200000, %d0	| rough count
- 598      0D40 
- 599               	delay1Loop:
- 600 808da 5380      		sub.l	#1, %d0			
- 601 808dc 6600 FFFC 		bne		delay1Loop
- 602 808e0 4E75      		rts
- 603               	
- 604               	READINLINE:	  
- 605 808e2 5265 6164 		.ascii  "Reading in line"
- 605      696E 6720 
- 605      696E 206C 
- 605      696E 65
- 606 808f1 0D0A 00   		dc.b CR,LF,EOT
- 607               	L_TO_UPPER_MSG:  
- 608 808f4 436F 6E76 		.ascii  "Convert line to upper case"
- 608      6572 7420 
- 608      6C69 6E65 
- 608      2074 6F20 
- 608      7570 7065 
- 609 8090e 0D0A 00   		dc.b CR,LF,EOT
- 610               	WRITEOUTLINE:	  
- 611 80911 5772 6974 		.ascii  "Writing out line"
- 611      696E 6720 
- 611      6F75 7420 
- 611      6C69 6E65 
- 612 80921 0D0A 00   		dc.b CR,LF,EOT
- 613               	RAM_PASS_MSG:  
- 614 80924 5241 4D20 		.ascii  "RAM Test Passed"
- 614      5465 7374 
- 614      2050 6173 
- 614      7365 64
- 615 80933 0D0A 00   		dc.b CR,LF,EOT
- 616               	BANNER_MSG:	
- 617 80936 5349 4D50 		.ascii  "SIMPLE-68008 CPU"
- 617      4C45 2D36 
- 617      3830 3038 
+ 590 8087a 2002      	    move.l  %d2, %d0
+ 591 8087c 610A      	    bsr.s   printHexByte  	| Print the middle byte (8-15)
+ 592 8087e E19A      	    rol.l   #0x8, %d2
+ 593 80880 2002      	    move.l  %d2, %d0
+ 594 80882 6104      	    bsr.s   printHexByte  	| Print the low byte (0-7)
+ 595               	    
+ 596 80884 241F      	    move.l (%SP)+, %d2      | Restore D2
+ 597 80886 4E75      	    RTS
+ 598               	    
+ 599               	|||||||||||||||||||||||
+ 600               	| Print a hex byte
+ 601               	|  - Takes byte in D0
+ 602               	printHexByte:
+ 603 80888 2F02      	    move.l  %D2, -(%SP)
+ 604 8088a 7400      		move.l	#0, %d2
+ 605 8088c 1400      	    move.b  %d0, %d2
+ 606 8088e E808      	    lsr.b   #0x4, %d0		| Shift down upper nibble
+ 607 80890 0200 000F 		andi.b	#0xf, %d0
+ 608 80894 0600 0030 	    add.b   #'0', %d0
+ 609 80898 0C00 0039 	    cmp.b   #'9', %d0		| Check if the hex number was from 0-9
+ 610 8089c 6F02      	    ble.s   PHBsecond
+ 611 8089e 5E00      	    add.b   #0x7, %d0			| Shift 0xA-0xF from ':' to 'A'
+ 612               	PHBsecond:
+ 613 808a0 6100 FC40 	    bsr   outChar			| Print the digit
+ 614 808a4 0202 000F 	    andi.b  #0x0F, %d2		| Now we want the lower digit Mask only the lower digit
+ 615 808a8 0602 0030 	    add.b   #'0', %d2
+ 616 808ac 0C02 0039 	    cmp.b   #'9', %d2     	| Same as before    
+ 617 808b0 6F02      	    ble.s   PHBend
+ 618 808b2 5E02      	    add.b   #0x7, %D2
+ 619               	PHBend:
+ 620 808b4 1002      	    move.b  %D2, %D0
+ 621 808b6 6100 FC2A 	    bsr	   outChar      	| Print the lower digit
+ 622 808ba 241F      	    move.l  (%SP)+, %D2
+ 623 808bc 4E75      	    rts
+ 624               		
+ 625               	
+ 626               	|||||
+ 627               	| Initializes the 68681 DUART port A as 9600 8N1 
+ 628               	initDuart:
+ 629 808be 13FC 0030 	    move.b  #0x30, CRA       | Reset Transmitter
+ 629      000F 0004 
+ 630 808c6 13FC 0020 	    move.b  #0x20, CRA       | Reset Receiver
+ 630      000F 0004 
+ 631 808ce 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
+ 631      000F 0004 
+ 632               	    
+ 633 808d6 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+ 633      000F 0008 
+ 634 808de 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 634      000F 0002 
+ 635 808e6 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 635      000F 0000 
+ 636 808ee 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 636      000F 0000 
+ 637               	    
+ 638 808f6 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+ 638      000F 0004 
 68K GAS  S68K_001.s 			page 13
 
 
- 617      2043 5055 
- 618 80946 0D0A 00   		dc.b CR,LF,EOT
- 619               	msgInvalidCommand:
- 620 80949 496E 7661 	    .ascii "Invalid Command"
- 620      6C69 6420 
- 620      436F 6D6D 
- 620      616E 64
- 621 80958 0D0A 00   		dc.b CR,LF,EOT
- 622               	CRLF_MSG:	
- 623 8095b 0D0A 00   		dc.b CR,LF,EOT
- 624               	msgHelp:
- 625 8095e 4176 6169 	    .ascii	"Available Commands: "
- 625      6C61 626C 
- 625      6520 436F 
- 625      6D6D 616E 
- 625      6473 3A20 
- 626 80972 0D0A 00   		dc.b	CR,LF, EOT
- 627 80975 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
- 627      7861 6D69 
- 627      6E65 2020 
- 627      2020 2844 
- 627      2965 706F 
- 628 809a0 0D0A 00   		dc.b	CR,LF,EOT
- 629               	msgInvalidAddress:
- 630 809a3 00        	    dc.b	"Invalid Address"
- 631 809a4 0D0A 00   		dc.b 	CR,LF,EOT
- 632               	msgInvalidValue:
- 633 809a7 496E 7661 	    .ascii	"Invalid Value"
- 633      6C69 6420 
- 633      5661 6C75 
- 633      65
- 634 809b4 0D0A 00   		dc.b	CR,LF,EOT
- 635               	msgPrompt:
- 636 809b7 3E20      		.ascii "> "
- 637 809b9 00        	    dc.b EOT
- 638               	msgColonSpace:
- 639 809ba 3A20      	    .ascii ": "
- 640 809bc 00        	    dc.b EOT
- 641               	msgNewline:
- 642 809bd 0D0A 00   	    dc.b CR,LF,EOT
- 643               		
- 644               	MAX_LINE_LENGTH = 80
- 645               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+ 639               	
+ 640 808fe 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
+ 640      000F 0014 
+ 641 80906 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 641      000F 0014 
+ 642 8090e 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
+ 642      000F 0014 
+ 643               	    
+ 644 80916 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 644      000F 0012 
+ 645 8091e 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 645      000F 0010 
+ 646 80926 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 646      000F 0010 
+ 647               	    
+ 648 8092e 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 648      000F 0014 
+ 649               		
+ 650 80936 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
+ 650      000F 001A 
+ 651 8093e 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
+ 651      000F 001E 
+ 652 80946 4E75      	    rts    
+ 653               	
+ 654               	delay1Sec:
+ 655 80948 203C 0003 		move.l	#200000, %d0	| rough count
+ 655      0D40 
+ 656               	delay1Loop:
+ 657 8094e 5380      		sub.l	#1, %d0			
+ 658 80950 6600 FFFC 		bne		delay1Loop
+ 659 80954 4E75      		rts
+ 660               	
+ 661               	READINLINE:	  
+ 662 80956 5265 6164 		.ascii  "Reading in line"
+ 662      696E 6720 
+ 662      696E 206C 
+ 662      696E 65
+ 663 80965 0D0A 00   		dc.b CR,LF,EOT
+ 664               	L_TO_UPPER_MSG:  
+ 665 80968 436F 6E76 		.ascii  "Convert line to upper case"
+ 665      6572 7420 
+ 665      6C69 6E65 
+ 665      2074 6F20 
+ 665      7570 7065 
+ 666 80982 0D0A 00   		dc.b CR,LF,EOT
+ 667               	WRITEOUTLINE:	  
+ 668 80985 5772 6974 		.ascii  "Writing out line"
+ 668      696E 6720 
+ 668      6F75 7420 
+ 668      6C69 6E65 
+ 669 80995 0D0A 00   		dc.b CR,LF,EOT
+ 670               	RAM_PASS_MSG:  
+ 671 80998 5241 4D20 		.ascii  "RAM Test Passed"
+ 671      5465 7374 
+ 671      2050 6173 
+ 671      7365 64
+ 672 809a7 0D0A 00   		dc.b CR,LF,EOT
 68K GAS  S68K_001.s 			page 14
+
+
+ 673               	BANNER_MSG:	
+ 674 809aa 5349 4D50 		.ascii  "SIMPLE-68008 CPU"
+ 674      4C45 2D36 
+ 674      3830 3038 
+ 674      2043 5055 
+ 675 809ba 0D0A 00   		dc.b CR,LF,EOT
+ 676               	msgInvalidCommand:
+ 677 809bd 496E 7661 	    .ascii "Invalid Command"
+ 677      6C69 6420 
+ 677      436F 6D6D 
+ 677      616E 64
+ 678 809cc 0D0A 00   		dc.b CR,LF,EOT
+ 679               	CRLF_MSG:	
+ 680 809cf 0D0A 00   		dc.b CR,LF,EOT
+ 681               	msgHelp:
+ 682 809d2 4176 6169 	    .ascii	"Available Commands: "
+ 682      6C61 626C 
+ 682      6520 436F 
+ 682      6D6D 616E 
+ 682      6473 3A20 
+ 683 809e6 0D0A 00   		dc.b	CR,LF, EOT
+ 684 809e9 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
+ 684      7861 6D69 
+ 684      6E65 2020 
+ 684      2020 2844 
+ 684      2965 706F 
+ 685 80a14 0D0A 00   		dc.b	CR,LF,EOT
+ 686               	msgInvalidAddress:
+ 687 80a17 00        	    dc.b	"Invalid Address"
+ 688 80a18 0D0A 00   		dc.b 	CR,LF,EOT
+ 689               	msgInvalidValue:
+ 690 80a1b 496E 7661 	    .ascii	"Invalid Value"
+ 690      6C69 6420 
+ 690      5661 6C75 
+ 690      65
+ 691 80a28 0D0A 00   		dc.b	CR,LF,EOT
+ 692               	msgPrompt:
+ 693 80a2b 3E20      		.ascii "> "
+ 694 80a2d 00        	    dc.b EOT
+ 695               	msgColonSpace:
+ 696 80a2e 3A20      	    .ascii ": "
+ 697 80a30 00        	    dc.b EOT
+ 698               	msgNewline:
+ 699 80a31 0D0A 00   	    dc.b CR,LF,EOT
+ 700               		
+ 701               	MAX_LINE_LENGTH = 80
+ 702               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+68K GAS  S68K_001.s 			page 15
 
 
 DEFINED SYMBOLS
@@ -810,23 +874,24 @@ DEFINED SYMBOLS
           S68K_001.s:95     .text:0000000000080464 loopAdrFill
           S68K_001.s:107    .text:0000000000080482 loopAdrCk
           S68K_001.s:141    .text:00000000000804dc failAdrTest
-          S68K_001.s:571    .text:000000000008084a initDuart
-          S68K_001.s:616    .text:0000000000080936 BANNER_MSG
+          S68K_001.s:628    .text:00000000000808be initDuart
+          S68K_001.s:121    .text:00000000000804a0 monitorStart
+          S68K_001.s:673    .text:00000000000809aa BANNER_MSG
           S68K_001.s:167    .text:000000000008050a printString1
-          S68K_001.s:613    .text:0000000000080924 RAM_PASS_MSG
+          S68K_001.s:670    .text:0000000000080998 RAM_PASS_MSG
           S68K_001.s:129    .text:00000000000804b0 interpLoop
-          S68K_001.s:635    .text:00000000000809b7 msgPrompt
+          S68K_001.s:692    .text:0000000000080a2b msgPrompt
           S68K_001.s:168    .text:000000000008050a printString
           S68K_001.s:197    .text:000000000008053c readLine
           S68K_001.s:254    .text:00000000000805ce lineToUpper
           S68K_001.s:271    .text:00000000000805ec parseLine
-          S68K_001.s:597    .text:00000000000808d4 delay1Sec
+          S68K_001.s:654    .text:0000000000080948 delay1Sec
           S68K_001.s:149    .text:00000000000804e2 outChar1
           S68K_001.s:150    .text:00000000000804e2 outChar
+68K GAS  S68K_001.s 			page 16
+
+
           S68K_001.s:158    .text:00000000000804f6 outChar2
-68K GAS  S68K_001.s 			page 15
-
-
           S68K_001.s:169    .text:000000000008050a PSloop
           S68K_001.s:175    .text:0000000000080512 PSend
           S68K_001.s:183    .text:0000000000080514 inChar1
@@ -844,17 +909,17 @@ DEFINED SYMBOLS
           S68K_001.s:263    .text:00000000000805e6 LUnext
           S68K_001.s:274    .text:00000000000805f6 PLfindCommand
           S68K_001.s:316    .text:0000000000080658 .examine
-          S68K_001.s:495    .text:00000000000807de .deposit
-          S68K_001.s:496    .text:00000000000807de .run
+          S68K_001.s:502    .text:00000000000807de .deposit
+          S68K_001.s:545    .text:0000000000080844 .run
           S68K_001.s:295    .text:0000000000080634 .help
           S68K_001.s:291    .text:000000000008062e .exit
           S68K_001.s:288    .text:0000000000080626 .invalid
-          S68K_001.s:619    .text:0000000000080949 msgInvalidCommand
-          S68K_001.s:624    .text:000000000008095e msgHelp
+          S68K_001.s:676    .text:00000000000809bd msgInvalidCommand
+          S68K_001.s:681    .text:00000000000809d2 msgHelp
           S68K_001.s:299    .text:0000000000080640 .invalidAddr
-          S68K_001.s:629    .text:00000000000809a3 msgInvalidAddress
+          S68K_001.s:686    .text:0000000000080a17 msgInvalidAddress
           S68K_001.s:303    .text:000000000008064c .invalidVal
-          S68K_001.s:632    .text:00000000000809a7 msgInvalidValue
+          S68K_001.s:689    .text:0000000000080a1b msgInvalidValue
           S68K_001.s:377    .text:00000000000806e2 parseNumber
           S68K_001.s:321    .text:0000000000080664 .exloop
           S68K_001.s:335    .text:0000000000080688 .exrange
@@ -874,32 +939,38 @@ DEFINED SYMBOLS
           S68K_001.s:414    .text:0000000000080734 PNdigit2
           S68K_001.s:419    .text:000000000008073e PNdigit3
           S68K_001.s:434    .text:000000000008074c .line
-          S68K_001.s:512    .text:00000000000807ec printHexAddr
-          S68K_001.s:638    .text:00000000000809ba msgColonSpace
+          S68K_001.s:569    .text:0000000000080860 printHexAddr
+          S68K_001.s:695    .text:0000000000080a2e msgColonSpace
           S68K_001.s:441    .text:000000000008075e .hexbyte
           S68K_001.s:453    .text:000000000008077a .endbytesShort
           S68K_001.s:468    .text:00000000000807a0 .endbytes
-          S68K_001.s:545    .text:0000000000080814 printHexByte
+          S68K_001.s:602    .text:0000000000080888 printHexByte
           S68K_001.s:456    .text:0000000000080780 .endbytesShortLoop
           S68K_001.s:470    .text:00000000000807a2 .endbytesLoop
           S68K_001.s:485    .text:00000000000807c8 .endline
+68K GAS  S68K_001.s 			page 17
+
+
           S68K_001.s:481    .text:00000000000807be .unprintable
-68K GAS  S68K_001.s 			page 16
-
-
-          S68K_001.s:641    .text:00000000000809bd msgNewline
+          S68K_001.s:698    .text:0000000000080a31 msgNewline
           S68K_001.s:491    .text:00000000000807d8 .end
-          S68K_001.s:503    .text:00000000000807e2 printHexWord
-          S68K_001.s:531    .text:0000000000080804 printHex_wordentry
-          S68K_001.s:527    .text:00000000000807fe printHex_addrentry
-          S68K_001.s:520    .text:00000000000807f4 printHexLong
-          S68K_001.s:555    .text:000000000008082c PHBsecond
-          S68K_001.s:562    .text:0000000000080840 PHBend
-          S68K_001.s:599    .text:00000000000808da delay1Loop
-          S68K_001.s:604    .text:00000000000808e2 READINLINE
-          S68K_001.s:607    .text:00000000000808f4 L_TO_UPPER_MSG
-          S68K_001.s:610    .text:0000000000080911 WRITEOUTLINE
-          S68K_001.s:622    .text:000000000008095b CRLF_MSG
+          S68K_001.s:527    .text:0000000000080816 DepCont
+          S68K_001.s:511    .text:00000000000807f2 DepLoop
+          S68K_001.s:532    .text:0000000000080820 DepMLine
+          S68K_001.s:539    .text:000000000008083a DepEnd
+          S68K_001.s:560    .text:0000000000080856 printHexWord
+          S68K_001.s:588    .text:0000000000080878 printHex_wordentry
+          S68K_001.s:584    .text:0000000000080872 printHex_addrentry
+          S68K_001.s:577    .text:0000000000080868 printHexLong
+          S68K_001.s:612    .text:00000000000808a0 PHBsecond
+          S68K_001.s:619    .text:00000000000808b4 PHBend
+          S68K_001.s:656    .text:000000000008094e delay1Loop
+          S68K_001.s:661    .text:0000000000080956 READINLINE
+          S68K_001.s:664    .text:0000000000080968 L_TO_UPPER_MSG
+          S68K_001.s:667    .text:0000000000080985 WRITEOUTLINE
+          S68K_001.s:679    .text:00000000000809cf CRLF_MSG
 
 UNDEFINED SYMBOLS
+varCurAddr
+msgDepositPrompt
 Invalid Address
