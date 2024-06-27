@@ -670,6 +670,9 @@ WRITEOUTLINE:
 RAM_PASS_MSG:  
 	.ascii  "RAM Test Passed"
 	dc.b CR,LF,EOT
+msgDepositPrompt:
+    .ascii	": "
+	dc.b 	EOT
 BANNER_MSG:	
 	.ascii  "SIMPLE-68008 CPU"
 	dc.b CR,LF,EOT
@@ -684,7 +687,7 @@ msgHelp:
     .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
 	dc.b	CR,LF,EOT
 msgInvalidAddress:
-    dc.b	"Invalid Address"
+    .ascii	"Invalid Address"
 	dc.b 	CR,LF,EOT
 msgInvalidValue:
     .ascii	"Invalid Value"
@@ -700,3 +703,4 @@ msgNewline:
 	
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+varCurAddr = varLineBuf-4
