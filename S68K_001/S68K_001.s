@@ -543,14 +543,14 @@ dumpRAM:
 |||||||||||||||||||||||
 | run code
  .run:
-    bsr.w   parseNumber         * Otherwise read the address
+    bsr.w   parseNumber        	| Otherwise read the address
     tst.b   %d1
     bne.s   .invalidAddr
     move.l  %d0, %a0
-    jsr     (%a0)                * Jump to the code! 
-                                * Go as subroutine to allow code to return to us
-    jsr     monitorStart        * Warm start after returning so everything is in
-                                * a known state.
+    jsr     (%a0)             	| Jump to the code! 
+                                | Go as subroutine to allow code to return to us
+    jsr     monitorStart        | Warm start after returning so everything is in
+                                | a known state.
 
 
 |||||||||||||||||||||||
