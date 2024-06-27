@@ -384,7 +384,7 @@ parseNumber:
     ble.s   PNfirstdigit1
 
     cmp.b   #'A', %d0      	| Look for hex digits A-F
-    blt.s   .invalid    
+    blt   .invalid    
     cmp.b   #'F', %d0
     ble.s   PNfirstdigit2
 PNinvalid:
@@ -550,7 +550,7 @@ printHexByte:
     ble.s   PHBsecond
     add.b   #7, %D0			| Shift 0xA-0xF from ':' to 'A'
 PHBsecond:
-    bsr.s   outChar			| Print the digit
+    bsr   outChar			| Print the digit
     andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
     add.b   #'0', %D2
     cmp.b   #'9', %D2     	| Same as before    
@@ -558,7 +558,7 @@ PHBsecond:
     add.b   #7, %D2
 PHBend:
     move.b  %D2, %D0
-    bsr.s   outChar      	| Print the lower digit
+    bsr	   outChar      	| Print the lower digit
     move.l  (%SP)+, %D2
     rts
 	
