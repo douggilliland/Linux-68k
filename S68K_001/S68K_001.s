@@ -451,7 +451,7 @@ printHexWord:
     
     rol.l   #8, %d2       | 4321 -> 3214
     rol.l   #8, %d2       | 3214 -> 2143 
-    bra.s   printHex_wordentry  * Print out the last 16 bits
+    bra.s   printHex_wordentry  | Print out the last 16 bits
 |||||||||||||||||||||||
 | Print a hex 24-bit address
 printHexAddr:
