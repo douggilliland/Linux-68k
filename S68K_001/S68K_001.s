@@ -393,7 +393,7 @@ PNinvalid:
 PNfirstdigit2:
     sub.b   #'7', %d0       | Turn 'A' to 10
     bra.s   PNloop
- .firstdigit1:
+PNfirstdigit1:
     sub.b   #'0', %d0       | Turn '0' to 0
  PNloop:
     move.b  (%a0)+, %d1      | Read in a digit
