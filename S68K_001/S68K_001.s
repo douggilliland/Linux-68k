@@ -368,6 +368,60 @@ parseLine:
     bra.s   .exinterend
 
 |||||||||||||||||||||||||||||
+| Find and parse a hex number
+|  Starting address in A0
+|  Number returned in D0
+|  Status in D1   (0 success, 1 fail)
+|  TODO: Try and merge first digit code with remaining digit code
+parseNumber:
+    eor.l   %d0, %d0		| Zero out d0
+    move.b  (%a0)+, %d0
+    cmp.b   #' ', %d0		|  Ignore all leading spaces
+    beq.s   parseNumber
+    cmp.b   #'0', %d0       | Look for hex digits 0-9
+    blt.s	PNinvalid
+    cmp.b   #'9', %d0
+    ble.s   PNfirstdigit1
+
+    cmp.b   #'A', %d0      	| Look for hex digits A-F
+    blt.s   .invalid    
+    cmp.b   #'F', %d0
+    ble.s   PNfirstdigit2
+PNinvalid:
+    move.l  #1, %d1			| Invalid character, mark failure and return
+    rts
+PNfirstdigit2:
+    sub.b   #'7', %d0       | Turn 'A' to 10
+    bra.s   PNloop
+ .firstdigit1:
+    sub.b   #'0', %d0       | Turn '0' to 0
+ PNloop:
+    move.b  (a0)+, %d1      | Read in a digit
+    cmp.b   #'0', %d1       | Look for hex digits 0-9
+    blt.s   PNend         	| Any other characters mean we're done reading
+    cmp.b   #'9', %d1
+    ble.s   PNdigit1
+    cmp.b   #'A', %d1      	| Look for hex digits A-F
+    blt.s   PNend
+    cmp.b   #'F', %d1
+    ble.s   PNdigit2
+
+PNend:                       | We hit a non-hex digit character, we're done parsing
+    subq.l  #1, %a0         | Move the pointer back before the end character we read
+    move.l  #0, %d1
+    rts
+PNdigit2:
+    sub.b   #'7', %d1		| Turn 'A' to 10
+    bra.s   PNdigit3
+PNdigit1:
+    sub.b   #'0', %d1       | Turn '0' to 0
+PNdigit3:
+    lsl.l   #4, %d0        	| Shift over to the next nybble
+    add.b   %d1, %d0       	| Place in our current nybble (could be or.b instead)
+    bra.s   PNloop
+    
+
+|||||||||||||||||||||||||||||
 | Dumps a section of RAM to the screen
 | Displays both hex values and ASCII characters
 | d0 - Number of bytes to dump
