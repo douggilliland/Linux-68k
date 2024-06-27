@@ -129,17 +129,20 @@ loopAdrCk:
 |
 	lea		READINLINE, %a0
 	jsr		printString1
-intLoop:
+interpLoop:
 	jsr		readLine
-	lea		L_TO_UPPER_MSG, %a0
-	jsr		printString1
+|	lea		L_TO_UPPER_MSG, %a0
+|	jsr		printString1
 	jsr		lineToUpper
-	lea		WRITEOUTLINE, %a0
-	jsr		printString1
-	lea     varLineBuf, %a0
-	jsr		printString1
+|	lea		WRITEOUTLINE, %a0
+|	jsr		printString1
+|	lea     varLineBuf, %a0
+|	jsr		printString1
+	move.b	#0x04, OPS		| Blink LED on DUART Out2
 	jsr		parseLine
-	bra		intLoop
+	jsr		delay1Sec
+	move.b	#0x04, OPR
+	bra		interpLoop
 	
 FERVR:
 	nop
