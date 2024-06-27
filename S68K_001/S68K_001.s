@@ -466,7 +466,7 @@ printHexLong:
     move.l  %d2, -(%SP)     | Save D2
     move.l  %d0, %d2        | Save the address in d2
     
-    rol.l   #8, 0xd2        | 4321 -> 3214 high byte in low
+    rol.l   #8, %d2        | 4321 -> 3214 high byte in low
     move.l  %d2, %d0
     bsr.s   printHexByte  	| Print the high byte (24-31)
 printHex_addrentry:     
@@ -490,19 +490,19 @@ printHex_wordentry:
 printHexByte:
     move.l  %D2, -(%SP)
     move.b  %D0, %D2
-    lsr.b   #$4, %D0
+    lsr.b   #0x4, %D0
     add.b   #'0', %D0
     cmp.b   #'9', %D0		| Check if the hex number was from 0-9
-    ble.s   .second
+    ble.s   PHBsecond
     add.b   #7, %D0			| Shift 0xA-0xF from ':' to 'A'
-.second:
+PHBsecond:
     bsr.s   outChar			| Print the digit
     andi.b  #0x0F, %D2		| Now we want the lower digit Mask only the lower digit
     add.b   #'0', %D2
     cmp.b   #'9', %D2     	| Same as before    
-    ble.s   .end
+    ble.s   PHBend
     add.b   #7, %D2
-.end:
+PHBend:
     move.b  %D2, %D0
     bsr.s   outChar      	| Print the lower digit
     move.l  (%SP)+, %D2
