@@ -459,7 +459,7 @@ printHexAddr:
     move.l %d0, %d2      	| Save the address in d2
     
     rol.l   #8, %d2     	| 4321 -> 3214
-    bra.s   printHex_addrentry  * Print out the last 24 bits
+    bra.s   printHex_addrentry  | Print out the last 24 bits
 |||||||||||||||||||||||
 * Print a hex long
 printHexLong:
