@@ -6,7 +6,8 @@ STACK_END	= 0x7FFFC	| Has to be on a word boundary
 RAM_END		= 0x7FFFF	| 512KB SRAM
 ROM_START	= 0x80000	| ROM start
 ROM_CODE	= ROM_START+1024| Skip vector table
-ROM_END		= 0x87FFF	| End of 32KB EPROM
+*ROM_END	= 0x87FFF	| End of 32KB EPROM
+ROM_END		= 0x8FFFF	| End of 64KB EPROM
 
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
