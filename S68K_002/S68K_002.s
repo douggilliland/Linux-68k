@@ -50,6 +50,13 @@ EOT	  = 0x00
 CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
 
+	.ORG    0x000400
+srecType:	ds.b	1		| S1-S9 stored as binary 1-9
+srecByCt:	ds.b	1		| Byte Count
+srecData:	ds.b	1 		| Data
+srecCSum:	ds.b	1 		| S-Record Checksum
+srecAddr:	ds.l	1		| S Record current byte address
+
 	.ORG	ROM_START
 
 | FIRST 8 bytes loaded after reset |
@@ -64,7 +71,7 @@ CTRLX	=	0x18     | Line Clear
 |
 | Test the first two SRAM location
 |
-	move.l	#0xDEADBEEF, %d0	| Test Pattern #1
+	move.l	#0xDEADBEEF, %d0		| Test Pattern #1
 	move		#0x00000000, %a0	| First address of SRAM
 	move.l	%d0, (%a0)				| Write out test pattern to SRAM
 	move.l	(%a0), %d2				| Read first SRAM pattern into d2
@@ -120,6 +127,7 @@ loopAdrCk:
 	
 |
 | Fill SRAM with 0x00 values
+| 512KB fill takes about 2.5 seconds at 10 MHz CPU speed
 |
 fillSRAM:
 	lea		RAM_START, %a0		| Start at base RAM address
@@ -393,6 +401,11 @@ parseLine:
 loadSRec:
     lea     ldSRecMsg, %a0
     bsr.w   printString
+	jsr		getRecType
+	jsr		getBytCt
+	jsr		getAddr
+	jsr		getLdData
+	jsr		getChksum
 	bra.w   .exit
 
 |||||||||||||||||||||||||||||
@@ -715,7 +728,7 @@ msgHelp:
 	dc.b	CR,LF,EOT
 ldSRecMsg:
     .ascii	"Load S-Record"
-	dc.b	CR,LF
+	dc.b	CR,LF,EOT
 msgInvalidAddress:
     .ascii	"Invalid Address"
 	dc.b 	CR,LF,EOT
