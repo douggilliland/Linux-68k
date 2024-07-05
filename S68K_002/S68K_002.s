@@ -126,7 +126,7 @@ fillSRAM:
 	lea		ROM_START, %a1
 	move.l	#0x00, %d0
 fillSRAMLoop:
-	move.b	%d0, (%a0)+
+	move.l	%d0, (%a0)+
 	cmp		%a0, %a1
 	bne		fillSRAMLoop
 
