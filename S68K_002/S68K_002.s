@@ -325,7 +325,9 @@ parseLine:
     bra.w   .exit
 
 loadSRec:
-	rts
+    lea     ldSRecMsg, %a0
+    bsr.w   printString
+	bra.w   .exit
 	
 |||||||||||||||||||||||||||||||
 | Examines memory addresses
@@ -708,6 +710,9 @@ msgHelp:
 	dc.b	CR,LF
     .ascii	" (E)xamine    (D)eposit    (R)un     (L)oad     (H)elp"
 	dc.b	CR,LF,EOT
+ldSRecMsg:
+    .ascii	"Load S-Record"
+	dc.b	CR,LF
 msgInvalidAddress:
     .ascii	"Invalid Address"
 	dc.b 	CR,LF,EOT
