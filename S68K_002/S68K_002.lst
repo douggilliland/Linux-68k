@@ -150,13 +150,13 @@
  123               	|
  124               	fillSRAM:
  125 8049c 41F8 0000 		lea		RAM_START, %a0
- 126 804a0 43F9 0007 		lea		RAM_END, %a1
- 126      FFFF 
+ 126 804a0 43F9 0008 		lea		ROM_START, %a1
+ 126      0000 
  127 804a6 7000      		move.l	#0x00, %d0
  128               	fillSRAMLoop:
- 129 804a8 20C0      		move.l	%d0, (%a0)+
+ 129 804a8 10C0      		move.b	%d0, (%a0)+
  130 804aa B2C8      		cmp		%a0, %a1
- 131 804ac 6C00 FFFA 		bge		fillSRAMLoop
+ 131 804ac 6600 FFFA 		bne		fillSRAMLoop
  132               	
  133               	|
  134               	| Done with address test of SRAM
