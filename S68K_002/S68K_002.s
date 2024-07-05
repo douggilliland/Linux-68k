@@ -122,13 +122,13 @@ loopAdrCk:
 | Fill SRAM with 0x00 values
 |
 fillSRAM:
-	lea		RAM_START, %a0
-	lea		ROM_START, %a1
-	move.l	#0x00, %d0
+	lea		RAM_START, %a0		| Start at base RAM address
+	lea		ROM_START, %a1		| End when reach ROM space
+	move.l	#0x00, %d0			| Fill with zeros
 fillSRAMLoop:
-	move.l	%d0, (%a0)+
-	cmp		%a0, %a1
-	bne		fillSRAMLoop
+	move.l	%d0, (%a0)+			| Long fills are faster
+	cmpa	%a0, %a1
+	bgt		fillSRAMLoop
 
 |
 | Done with address test of SRAM
