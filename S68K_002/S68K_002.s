@@ -123,12 +123,12 @@ loopAdrCk:
 |
 fillSRAM:
 	lea		RAM_START, %a0
-	lea		RAM_END, %a1
+	lea		ROM_START, %a1
 	move.l	#0x00, %d0
 fillSRAMLoop:
-	move.l	%d0, (%a0)+
+	move.b	%d0, (%a0)+
 	cmp		%a0, %a1
-	bge		fillSRAMLoop
+	bne		fillSRAMLoop
 
 |
 | Done with address test of SRAM
