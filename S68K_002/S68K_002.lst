@@ -150,12 +150,12 @@
  123               	|
  124               	fillSRAM:
  125 8049c 41F8 0000 		lea		RAM_START, %a0		| Start at base RAM address
- 126 804a0 43F9 0000 		lea		0x00ffff, %a1		| End when reach end RAM space
+ 126 804a0 43F9 0007 		lea		RAM_END, %a1		| End when reach end RAM space
  126      FFFF 
  127 804a6 7000      		move.l	#0x00, %d0			| Fill with zeros
  128               	fillSRAMLoop:
  129 804a8 20C0      		move.l	%d0, (%a0)+			| Long fills are faster
- 130 804aa B2C8      		cmpa	%a0, %a1
+ 130 804aa B3C8      		cmpa.l	%a0, %a1
  131 804ac 6E00 FFFA 		bgt		fillSRAMLoop
  132               	
  133               	|
