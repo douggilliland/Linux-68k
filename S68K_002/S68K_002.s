@@ -323,11 +323,6 @@ parseLine:
     lea     msgInvalidValue, %a0
     bsr.w   printString
     bra.w   .exit
-
-loadSRec:
-    lea     ldSRecMsg, %a0
-    bsr.w   printString
-	bra.w   .exit
 	
 |||||||||||||||||||||||||||||||
 | Examines memory addresses
@@ -391,6 +386,14 @@ loadSRec:
     bsr.w   dumpRAM             | Dump 16 lines of RAM
     add.l   #0x100, %a3         | Move up the current address by 256
     bra.s   .exinterend
+
+|||||||||||||||||||||||||||||
+|| Load S Record
+
+loadSRec:
+    lea     ldSRecMsg, %a0
+    bsr.w   printString
+	bra.w   .exit
 
 |||||||||||||||||||||||||||||
 | Find and parse a hex number
