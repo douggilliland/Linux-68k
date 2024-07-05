@@ -127,7 +127,7 @@ fillSRAM:
 	move.l	#0x00, %d0			| Fill with zeros
 fillSRAMLoop:
 	move.l	%d0, (%a0)+			| Long fills are faster
-	cmpa.1	%a0, %a1
+	cmpa.l	%a0, %a1
 	bgt		fillSRAMLoop
 
 |
