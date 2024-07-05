@@ -156,7 +156,7 @@
  128               	fillSRAMLoop:
  129 804a8 20C0      		move.l	%d0, (%a0)+
  130 804aa B2C8      		cmp		%a0, %a1
- 131 804ac 6F00 FFFA 		ble		fillSRAMLoop
+ 131 804ac 6C00 FFFA 		bge		fillSRAMLoop
  132               	
  133               	|
  134               	| Done with address test of SRAM

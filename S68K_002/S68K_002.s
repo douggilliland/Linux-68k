@@ -128,7 +128,7 @@ fillSRAM:
 fillSRAMLoop:
 	move.l	%d0, (%a0)+
 	cmp		%a0, %a1
-	ble		fillSRAMLoop
+	bge		fillSRAMLoop
 
 |
 | Done with address test of SRAM
