@@ -298,6 +298,8 @@ parseLine:
     beq.w   .run
     cmp.b   #'H', %d0           | Help command
     beq.w   .help
+    cmp.b   #'L', %d0           | Help command
+    beq.w   loadSRec
     cmp.b   #0, %d0             | Ignore blank lines
     beq.s   .exit               
  .invalid:   
@@ -307,6 +309,8 @@ parseLine:
     movem.l (%SP)+, %a2-%a3     | Restore registers
     rts
 
+|||||||||||||||||||||||||||||||
+|| HELP command
  .help:
     lea     msgHelp, %a0
     bsr.w   printString
@@ -320,6 +324,9 @@ parseLine:
     bsr.w   printString
     bra.w   .exit
 
+loadSRec:
+	rts
+	
 |||||||||||||||||||||||||||||||
 | Examines memory addresses
 | Valid modes:
@@ -699,7 +706,7 @@ CRLF_MSG:
 msgHelp:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
-    .ascii	" (E)xamine    (D)eposit    (R)un     (H)elp"
+    .ascii	" (E)xamine    (D)eposit    (R)un     (L)oad     (H)elp"
 	dc.b	CR,LF,EOT
 msgInvalidAddress:
     .ascii	"Invalid Address"
