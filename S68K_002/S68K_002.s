@@ -397,6 +397,11 @@ parseLine:
 
 |||||||||||||||||||||||||||||
 || Load S Record
+|	srecType:	ds.b	1		| S1-S9 stored as binary 1-9
+|	srecByCt:	ds.b	1		| Byte Count
+|	srecData:	ds.b	1 		| Data
+|	srecCSum:	ds.b	1 		| S-Record Checksum
+|	srecAddr:	ds.l	1		| S Record current byte address
 
 loadSRec:
     lea     ldSRecMsg, %a0
@@ -407,6 +412,41 @@ loadSRec:
 	jsr		getLdData
 	jsr		getChksum
 	bra.w   .exit
+
+getRecType:
+	jsr		inChar
+	cmp.b	#'S', %d0
+	bne		getRecType
+	jsr		inChar
+	andi.b	#0x0f, %d0
+	move.b	%d0, srecType
+	rts
+	
+getBytCt:
+	jsr		getHexPair
+	move.b	%d0, srecByCt
+	rts
+
+getHexPair:
+	movem.l %d2, -(%SP)		| Save registers
+	jsr		inChar
+	jsr		toNibble
+	asl.b	#4, %d0
+	move.b	%d0, %d2
+	jsr		inChar
+	jsr		toNibble
+	or.b	%d2, %d0
+	movem.l (%SP)+, %d2		| Restore registers
+	rts
+
+toNibble:
+	cmp.b	#'A', %d0
+	bge		doHexLetter
+	sub.b	#'0', %d0
+	rts
+doHexLetter:
+	sub.b	#'A'+10, %d0
+	rts
 
 |||||||||||||||||||||||||||||
 | Find and parse a hex number
