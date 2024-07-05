@@ -123,7 +123,7 @@ loopAdrCk:
 |
 fillSRAM:
 	lea		RAM_START, %a0		| Start at base RAM address
-	lea		ROM_START, %a1		| End when reach ROM space
+	lea		RAM_END, %a1		| End when reach ROM space
 	move.l	#0x00, %d0			| Fill with zeros
 fillSRAMLoop:
 	move.l	%d0, (%a0)+			| Long fills are faster
