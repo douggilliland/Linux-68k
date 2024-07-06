@@ -474,7 +474,6 @@ getBytCt:
 	jsr		getHexPair
 	move.b 	%d0, srecCSum
 	move.b	%d0, srecByCt
-	sub.b	#1, srecByCt
 | Debug messages follow
 	lea		debug_Srec_BytCt_Msg, %a0
     bsr.w   printString
@@ -483,6 +482,7 @@ getBytCt:
 	lea		CRLF_MSG, %a0
     bsr.w   printString
 | Debug messages end
+	sub.b	#1, srecByCt
 	rts
 
 getHexPair:
@@ -511,16 +511,21 @@ getAddr:
 	move.b	srecType, %d0
 	cmp.b	#'2', %d0
 	bne		adrLen16
+	lea		debug_Srec_Addr_Msg, %a0
+	bsr		printString
 	move.l	#0, %d2
 	jsr		getHexPair
+	bsr		printHexLong
 	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	jsr		getHexPair
+	bsr		printHexLong
 	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	jsr		getHexPair
+	bsr		printHexLong
 	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
 	move.l	%d2, srecAddr
@@ -529,9 +534,11 @@ getAddr:
 adrLen16:
 |	move.l	#0, %d2
 	jsr		getHexPair
+	bsr		printHexLong
 |	or.l	%d0, %d2
 |	asl.l	#8, %d2
 	jsr		getHexPair
+	bsr		printHexLong
 |	or.l	%d0, %d2
 |	move.l	%d2, srecAddr
 	sub.b	#2, srecByCt
@@ -882,6 +889,9 @@ debug_Srec_BytCt_Msg:
     dc.b EOT
 debug_Srec_CSum_Msg:
 	.ascii	"S Record Checksum="
+    dc.b EOT
+debug_Srec_Addr_Msg:
+	.ascii	"S Record Address="
     dc.b EOT
 
 MAX_LINE_LENGTH = 80
