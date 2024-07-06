@@ -421,33 +421,36 @@ parseLine:
 loadSRec:
     lea     ldSRecMsg, %a0
     bsr.w   printString
-	bsr		getRecType
-	bsr		getBytCt
+	bsr		setRecType
+	bsr		setBytCt
 	move.b 	#0, srecCSum
-	bsr		getAddr
+	bsr		setAddr
 	lea		debug_Srec_LDData_Msg, %a0
 	bsr		printString
+	cmp.b	#2, srecType
+	bne		sRecDataDone
 loopSData:
 	cmp.b 	#1, srecByCt
 	beq		sRecDataDone
-	jsr		getLdData
+	bsr		getSetLdData
 	bra		loopSData
 sRecDataDone:
-	jsr		getChksum
+	bsr		getChksum
 	bra.w   .exit
 
-getLdData:
-	cmp.b	#2, srecType
-	bne		skipLdData
+|||||||||||||||||||||||||||||
+getSetLdData:
 	jsr		getHexPair
 	lea 	srecAddr, %a0
 	move.b	%d0, (%a0)
-	add.l	#1, srecAddr
+	add.l	#1, %a0
+	move.l	%a0, srecAddr
 	add.b	%d0, srecCSum
 	sub.b	#1, srecByCt
 skipLdData:
 	rts
 
+|||||||||||||||||||||||||||||
 getChksum:
 	lea		debug_Srec_CSum_Msg, %a0
     bsr.w   printString
@@ -460,10 +463,11 @@ getChksum:
 failCSUM:
 	rts
 
-getRecType:
+|||||||||||||||||||||||||||||
+setRecType:
 	jsr		inChar
 	cmp.b	#'S', %d0
-	bne		getRecType					| Toss extra chars
+	bne		setRecType					| Toss extra chars
 	jsr		inChar
 	andi.b	#0x0f, %d0
 	move.b	%d0, srecType
@@ -478,7 +482,8 @@ getRecType:
 | Debug messages end
 	rts
 	
-getBytCt:
+|||||||||||||||||||||||||||||
+setBytCt:
 	jsr		getHexPair
 	move.b 	%d0, srecCSum	| Initialize checksum
 	move.b	%d0, srecByCt	| Byte count
@@ -493,6 +498,7 @@ getBytCt:
 	sub.b	#1, srecByCt
 	rts
 
+|||||||||||||||||||||||||||||
 getHexPair:
 	movem.l %d2, -(%SP)		| Save registers
 	jsr		inChar
@@ -505,6 +511,7 @@ getHexPair:
 	movem.l (%SP)+, %d2		| Restore registers
 	rts
 
+|||||||||||||||||||||||||||||
 toNibble:
 	cmp.b	#'A', %d0
 	bge		doHexLetter
@@ -514,7 +521,8 @@ doHexLetter:
 	sub.b	#'A'+10, %d0
 	rts
 
-getAddr:
+|||||||||||||||||||||||||||||
+setAddr:
 	movem.l %d2, -(%SP)		| Save registers
 	cmp.b	#2, srecType
 	bne		adrLen16
