@@ -420,6 +420,14 @@ getRecType:
 	jsr		inChar
 	andi.b	#0x0f, %d0
 	move.b	%d0, srecType
+| Debug messages follow
+	lea		debug_Srec_Typ_Msg, %a0		| Debug message
+    bsr.w   printString
+	move.b	srecType, %d0
+	add.b	#'0'+srecType, %d0
+	jsr		outChar
+	lea		CRLF_MSG, %a0
+    bsr.w   printString
 	rts
 	
 getBytCt:
@@ -448,6 +456,15 @@ doHexLetter:
 	sub.b	#'A'+10, %d0
 	rts
 
+getAddr:
+	rts
+	
+getLdData:
+	rts
+
+getChksum:
+	rts
+	
 |||||||||||||||||||||||||||||
 | Find and parse a hex number
 |  Starting address in A0
@@ -783,7 +800,10 @@ msgColonSpace:
     dc.b EOT
 msgNewline:
     dc.b CR,LF,EOT
-	
+debug_Srec_Typ_Msg:
+	.ascii	"S Record Type"
+    dc.b EOT
+
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
 varCurAddr = varLineBuf-4
