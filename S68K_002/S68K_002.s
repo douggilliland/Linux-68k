@@ -524,33 +524,36 @@ getAddr:
 	move.l	#0, %d2			| d2 stores address for accumulation of bytes
 	| Get the upper 8-bits of 24-bits
 	jsr		getHexPair
-	lea		srecCSum, %a1
-	add.b 	%d0, (%a1)
+	and.l	#0xff, %d0
+	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
 	asl.l	#8, %d2
-	move.l	%d2, %d0
-	bsr		printHexLong
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	move.l	%d2, %d0
+|	bsr		printHexLong
+|	lea		CRLF_MSG, %a0
+|   bsr.w   printString
 	| Get the middle 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, (%a1)
+	and.l	#0xff, %d0
+	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
 	asl.l	#8, %d2
-	move.l	%d2, %d0
-	bsr		printHexLong
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	move.l	%d2, %d0
+|	bsr		printHexLong
+|	lea		CRLF_MSG, %a0
+|   bsr.w   printString
 	| Get the lower 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, (%a1)
+	and.l	#0xff, %d0
+	add.b 	%d0, srecCSum
 	or.l	%d0, %d2
+	andi.l	#0x00ffffff, %d2
 	move.l	%d2, srecAddr		| Save the S record address
-	sub.b	#3, srecByCt
 	move.l	%d2, %d0
 	bsr		printHexLong
 	lea		CRLF_MSG, %a0
     bsr.w   printString
+	sub.b	#3, srecByCt
 	bra		past16
 adrLen16:
 	lea		debug_SXrec_Addr_Msg, %a0
@@ -914,16 +917,16 @@ debug_Srec_Typ_Msg:
 	.ascii	"S Record Type="
     dc.b EOT
 debug_Srec_BytCt_Msg:
-	.ascii	"S Record Byte Count="
+	.ascii	"S Record Byte Count=0x"
     dc.b EOT
 debug_Srec_CSum_Msg:
 	.ascii	"S Record Checksum="
     dc.b EOT
 debug_S2rec_Addr_Msg:
-	.ascii	"S2 Record Address="
+	.ascii	"S2 Record Address=0x"
     dc.b EOT
 debug_SXrec_Addr_Msg:
-	.ascii	"S (not 2) Record Address="
+	.ascii	"S (not 2) Record Address=0x"
     dc.b EOT
 debug_Srec_LDData_Msg:
     .ascii	"Load Data Loop start"
