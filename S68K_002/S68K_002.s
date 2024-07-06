@@ -510,15 +510,16 @@ doHexLetter:
 
 getAddr:
 	movem.l %d2, -(%SP)		| Save registers
-	move.b	srecType, %d0
-	cmp.b	#2, %d0
+	lea		srecType, %a0
+	cmp.b	#2, (%a0)
 	bne		adrLen16
 	lea		debug_S2rec_Addr_Msg, %a0
 	bsr		printString
 	move.l	#0, %d2			| d2 stores address for accumulation of bytes
 	| Get the upper 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, srecCSum
+	lea		srecCSum, a1
+	add.b 	%d0, (a1)
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	move.l	%d2, %d0
@@ -527,7 +528,7 @@ getAddr:
     bsr.w   printString
 	| Get the middle 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, srecCSum
+	add.b 	%d0, (a1)
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	move.l	%d2, %d0
@@ -536,7 +537,7 @@ getAddr:
     bsr.w   printString
 	| Get the lower 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, srecCSum
+	add.b 	%d0, (a1)
 	or.l	%d0, %d2
 	move.l	%d2, srecAddr		| Save the S record address
 	sub.b	#3, srecByCt
