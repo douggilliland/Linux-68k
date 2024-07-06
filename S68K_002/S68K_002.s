@@ -518,7 +518,7 @@ getAddr:
 	move.l	#0, %d2			| d2 stores address for accumulation of bytes
 	| Get the upper 8-bits of 24-bits
 	jsr		getHexPair
-	lea		srecCSum, a1
+	lea		srecCSum, %a1
 	add.b 	%d0, (%a1)
 	or.l	%d0, %d2
 	asl.l	#8, %d2
@@ -528,7 +528,7 @@ getAddr:
     bsr.w   printString
 	| Get the middle 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, (a1)
+	add.b 	%d0, (%a1)
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	move.l	%d2, %d0
@@ -537,7 +537,7 @@ getAddr:
     bsr.w   printString
 	| Get the lower 8-bits of 24-bits
 	jsr		getHexPair
-	add.b 	%d0, (a1)
+	add.b 	%d0, (%a1)
 	or.l	%d0, %d2
 	move.l	%d2, srecAddr		| Save the S record address
 	sub.b	#3, srecByCt
