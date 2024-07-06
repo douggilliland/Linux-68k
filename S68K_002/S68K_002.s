@@ -411,10 +411,10 @@ parseLine:
 loadSRec:
     lea     ldSRecMsg, %a0
     bsr.w   printString
-	jsr		getRecType
-	jsr		getBytCt
+	bsr		getRecType
+	bsr		getBytCt
 	move.b 	#0, srecCSum
-	jsr		getAddr
+	bsr		getAddr
 loopSData:
 	cmp.b 	#1, srecByCt
 	beq		sRecDataDone
@@ -437,7 +437,15 @@ skipLdData:
 	rts
 
 getChksum:
+	lea		debug_Srec_CSum_Msg, a0
+    bsr.w   printString
 	jsr		getHexPair
+	add.b	%d0, srecCSum
+	move.b	srecCSum, %d0
+	jsr		printHexByte
+	lea		CRLF_MSG, %a0
+    bsr.w   printString
+failCSUM:
 	rts
 
 getRecType:
@@ -868,7 +876,9 @@ debug_Srec_Typ_Msg:
 debug_Srec_BytCt_Msg:
 	.ascii	"S Record Byte Count="
     dc.b EOT
-
+debug_Srec_CSum_Msg:
+	.ascii	"S Record Checksum="
+    dc.b EOT
 
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
