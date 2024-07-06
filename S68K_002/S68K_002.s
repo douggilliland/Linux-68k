@@ -442,9 +442,9 @@ sRecDataDone:
 getSetLdData:
 	jsr		getHexPair
 	lea 	srecAddr, %a0
-	move.b	%d0, (%a0)
-	add.l	#1, %a0
-	move.l	%a0, srecAddr
+	move.l	(%a0), %a1
+	move.b	%d0, (%a1)+
+	move.l	%a1, srecAddr
 	add.b	%d0, srecCSum
 	sub.b	#1, srecByCt
 skipLdData:
