@@ -424,7 +424,7 @@ getRecType:
 	lea		debug_Srec_Typ_Msg, %a0		| Debug message
     bsr.w   printString
 	move.b	srecType, %d0
-	add.b	#'0'+srecType, %d0
+	add.b	#'0', %d0
 	jsr		outChar
 	lea		CRLF_MSG, %a0
     bsr.w   printString
