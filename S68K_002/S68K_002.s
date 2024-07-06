@@ -428,11 +428,21 @@ getRecType:
 	jsr		outChar
 	lea		CRLF_MSG, %a0
     bsr.w   printString
+| Debug messages end
 	rts
 	
 getBytCt:
 	jsr		getHexPair
 	move.b	%d0, srecByCt
+| Debug messages follow
+	lea		debug_Srec_BytCt_Msg, %a0
+    bsr.w   printString
+	move.b	srecByCt, %d0
+	add.b	#'0', %d0
+	jsr		outChar
+	lea		CRLF_MSG, %a0
+    bsr.w   printString
+| Debug messages end
 	rts
 
 getHexPair:
@@ -801,8 +811,12 @@ msgColonSpace:
 msgNewline:
     dc.b CR,LF,EOT
 debug_Srec_Typ_Msg:
-	.ascii	"S Record Type"
+	.ascii	"S Record Type="
     dc.b EOT
+debug_Srec_BytCt_Msg:
+	.ascii	"S Record Byte Count="
+    dc.b EOT
+
 
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
