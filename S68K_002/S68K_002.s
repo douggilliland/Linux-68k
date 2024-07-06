@@ -419,6 +419,8 @@ loadSRec:
 	bsr		getBytCt
 	move.b 	#0, srecCSum
 	bsr		getAddr
+	lea		debug_Srec_LDData_Msg, %a0
+	bsr		printString
 loopSData:
 	cmp.b 	#1, srecByCt
 	beq		sRecDataDone
@@ -916,6 +918,10 @@ debug_S2rec_Addr_Msg:
 debug_SXrec_Addr_Msg:
 	.ascii	"S2 Record Address="
     dc.b EOT
+debug_Srec_LDData_Msg:
+    .ascii	"Load Data Loop start"
+	dc.b 	CR,LF,EOT
+
 
 MAX_LINE_LENGTH = 80
 varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
