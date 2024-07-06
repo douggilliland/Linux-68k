@@ -514,9 +514,9 @@
  442               	getSetLdData:
  443 80756 4EBA 009A 		jsr		getHexPair
  444 8075a 41F8 0404 		lea 	srecAddr, %a0
- 445 8075e 1080      		move.b	%d0, (%a0)
- 446 80760 5288      		add.l	#1, %a0
- 447 80762 21C8 0404 		move.l	%a0, srecAddr
+ 445 8075e 2250      		move.l	(%a0), %a1
+ 446 80760 12C0      		move.b	%d0, (%a1)+
+ 447 80762 21C9 0404 		move.l	%a1, srecAddr
  448 80766 D138 0403 		add.b	%d0, srecCSum
  449 8076a 5338 0401 		sub.b	#1, srecByCt
  450               	skipLdData:
