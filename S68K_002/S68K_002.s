@@ -57,11 +57,11 @@ _srecData:	ds.b	1 		| Data
 _srecCSum:	ds.b	1 		| S-Record Checksum
 _srecAddr:	ds.l	1		| S Record current byte address
 
-srecType	EQU		0x000400	| S1-S9 stored as binary 1-9
-srecByCt	EQU		0x000401	| Byte Count
-srecData	EQU		0x000402	| Data
-srecCSum	EQU		0x000403	| S-Record Checksum
-srecAddr	EQU		0x000404	| S Record current byte address
+srecType	=		0x000400	| S1-S9 stored as binary 1-9
+srecByCt	=		0x000401	| Byte Count
+srecData	=		0x000402	| Data
+srecCSum	=		0x000403	| S-Record Checksum
+srecAddr	=		0x000404	| S Record current byte address
 
 	.ORG	ROM_START
 
