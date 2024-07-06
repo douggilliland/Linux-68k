@@ -51,11 +51,17 @@ CTRLC	=	0x03
 CTRLX	=	0x18     | Line Clear
 
 	.ORG    0x000400
-srecType:	ds.b	1		| S1-S9 stored as binary 1-9
-srecByCt:	ds.b	1		| Byte Count
-srecData:	ds.b	1 		| Data
-srecCSum:	ds.b	1 		| S-Record Checksum
-srecAddr:	ds.l	1		| S Record current byte address
+_srecType:	ds.b	1		| S1-S9 stored as binary 1-9
+_srecByCt:	ds.b	1		| Byte Count
+_srecData:	ds.b	1 		| Data
+_srecCSum:	ds.b	1 		| S-Record Checksum
+_srecAddr:	ds.l	1		| S Record current byte address
+
+srecType	EQU		0x000400	| S1-S9 stored as binary 1-9
+srecByCt	EQU		0x000401	| Byte Count
+srecData	EQU		0x000402	| Data
+srecCSum	EQU		0x000403	| S-Record Checksum
+srecAddr	EQU		0x000404	| S Record current byte address
 
 	.ORG	ROM_START
 
@@ -460,7 +466,8 @@ getRecType:
 	bne		getRecType
 	jsr		inChar
 	andi.b	#0x0f, %d0
-	move.b	%d0, srecType
+	lea		srecType, %a0
+	move.b	%d0, (%a0)
 | Debug messages follow
 	lea		debug_Srec_Typ_Msg, %a0		| Debug message
     bsr.w   printString
