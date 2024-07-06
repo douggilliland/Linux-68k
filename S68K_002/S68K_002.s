@@ -437,15 +437,15 @@ sRecDataDone:
 	bra.w   .exit
 
 getLdData:
-	jsr		getHexPair
 	cmp.b	#2, srecType
 	bne		skipLdData
+	jsr		getHexPair
 	lea 	srecAddr, %a0
 	move.b	%d0, (%a0)
 	add.l	#1, srecAddr
-skipLdData:
 	add.b	%d0, srecCSum
 	sub.b	#1, srecByCt
+skipLdData:
 	rts
 
 getChksum:
@@ -518,6 +518,7 @@ getAddr:
 	movem.l %d2, -(%SP)		| Save registers
 	cmp.b	#2, srecType
 	bne		adrLen16
+	move.l	#0, srecAddr
 	lea		debug_S2rec_Addr_Msg, %a0
 	bsr		printString
 	move.l	#0, %d2			| d2 stores address for accumulation of bytes
