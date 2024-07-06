@@ -511,7 +511,7 @@ doHexLetter:
 getAddr:
 	movem.l %d2, -(%SP)		| Save registers
 	move.b	srecType, %d0
-	cmp.b	#'2', %d0
+	cmp.b	#2, %d0
 	bne		adrLen16
 	lea		debug_S2rec_Addr_Msg, %a0
 	bsr		printString
