@@ -402,16 +402,43 @@ parseLine:
 |	srecData:	ds.b	1 		| Data
 |	srecCSum:	ds.b	1 		| S-Record Checksum
 |	srecAddr:	ds.l	1		| S Record current byte address
+|
+| Supports 3 S record types (matches gcc m68k output)
+|	S00F00005336384B5F3030322E746D7074
+|	S2240800000007FFFC00080400000000000000000000000000000000000000000000000000C5
+|	S503005BA1
 
 loadSRec:
     lea     ldSRecMsg, %a0
     bsr.w   printString
 	jsr		getRecType
 	jsr		getBytCt
+	move.b 	#0, srecCSum
 	jsr		getAddr
+loopSData:
+	cmp.b 	#1, srecByCt
+	beq		sRecDataDone
 	jsr		getLdData
+	bra		loopSData
+sRecDataDone:
 	jsr		getChksum
 	bra.w   .exit
+
+getLdData:
+	jsr		getHexPair
+	cmp.b	#2, srecType
+	bne		skipLdData
+	lea 	srecAddr, %a0
+	move.b	%d0, (%a0)
+skipLdData:
+	add.b	%d0, srecCSum
+	sub.b	#1, srecByCt
+	add.l	#1, srecAddr
+	rts
+
+getChksum:
+	jsr		getHexPair
+	rts
 
 getRecType:
 	jsr		inChar
@@ -433,13 +460,14 @@ getRecType:
 	
 getBytCt:
 	jsr		getHexPair
+	move.b 	%d0, srecCSum
 	move.b	%d0, srecByCt
+	sub.b	#1, srecByCt
 | Debug messages follow
 	lea		debug_Srec_BytCt_Msg, %a0
     bsr.w   printString
 	move.b	srecByCt, %d0
-	add.b	#'0', %d0
-	jsr		outChar
+	jsr		printHexByte
 	lea		CRLF_MSG, %a0
     bsr.w   printString
 | Debug messages end
@@ -467,14 +495,38 @@ doHexLetter:
 	rts
 
 getAddr:
+	movem.l %d2, -(%SP)		| Save registers
+	move.b	srecType, %d0
+	cmp.b	#'2', %d0
+	bne		adrLen16
+	move.l	#0, %d2
+	jsr		getHexPair
+	add.b 	%d0, srecCSum
+	or.l	%d0, %d2
+	asl.l	#8, %d2
+	jsr		getHexPair
+	add.b 	%d0, srecCSum
+	or.l	%d0, %d2
+	asl.l	#8, %d2
+	jsr		getHexPair
+	add.b 	%d0, srecCSum
+	or.l	%d0, %d2
+	move.l	%d2, srecAddr
+	sub.b	#3, srecByCt
+	bra		past16
+adrLen16:
+|	move.l	#0, %d2
+	jsr		getHexPair
+|	or.l	%d0, %d2
+|	asl.l	#8, %d2
+	jsr		getHexPair
+|	or.l	%d0, %d2
+|	move.l	%d2, srecAddr
+	sub.b	#2, srecByCt
+past16:
+	movem.l (%SP)+, %d2		| Restore registers
 	rts
-	
-getLdData:
-	rts
-
-getChksum:
-	rts
-	
+		
 |||||||||||||||||||||||||||||
 | Find and parse a hex number
 |  Starting address in A0
