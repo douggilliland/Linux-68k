@@ -519,7 +519,7 @@ getAddr:
 	| Get the upper 8-bits of 24-bits
 	jsr		getHexPair
 	lea		srecCSum, a1
-	add.b 	%d0, (a1)
+	add.b 	%d0, (%a1)
 	or.l	%d0, %d2
 	asl.l	#8, %d2
 	move.l	%d2, %d0
