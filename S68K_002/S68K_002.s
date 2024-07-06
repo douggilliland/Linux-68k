@@ -68,6 +68,10 @@ srecAddr:	ds.l	1		| S Record current byte address
 	lea			STACK_END,%sp
 	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
+| LEDs
+	move.b	#0x00, OPC		| Output port configuration (all bit are outs)
+	move.b	#0xFC, OPR		| Clear all outputs
+	move.b	#0x04, OPS		| Turn off LED on DUART O2
 |
 | Test the first two SRAM location
 |
@@ -189,7 +193,7 @@ outChar2:
 *
 printString1:
 printString:
- PSloop:
+PSloop:
     move.b  (%a0)+, %d0  | Read in character
     beq.s   PSend         | Check for the null
     
@@ -430,10 +434,10 @@ getLdData:
 	bne		skipLdData
 	lea 	srecAddr, %a0
 	move.b	%d0, (%a0)
+	add.l	#1, srecAddr
 skipLdData:
 	add.b	%d0, srecCSum
 	sub.b	#1, srecByCt
-	add.l	#1, srecAddr
 	rts
 
 getChksum:
