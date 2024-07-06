@@ -916,7 +916,7 @@ debug_S2rec_Addr_Msg:
 	.ascii	"S2 Record Address="
     dc.b EOT
 debug_SXrec_Addr_Msg:
-	.ascii	"S2 Record Address="
+	.ascii	"S (not 2) Record Address="
     dc.b EOT
 debug_Srec_LDData_Msg:
     .ascii	"Load Data Loop start"
