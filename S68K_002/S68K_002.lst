@@ -602,7 +602,7 @@
 
 
  513      0000 
- 514 8084c 0C00 0032 		cmp.b	#'2', %d0
+ 514 8084c 0C00 0002 		cmp.b	#2, %d0
  515 80850 6600 006E 		bne		adrLen16
  516 80854 41FA 045C 		lea		debug_S2rec_Addr_Msg, %a0
  517 80858 6100 FCD6 		bsr		printString
