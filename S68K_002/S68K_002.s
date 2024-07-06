@@ -463,11 +463,10 @@ failCSUM:
 getRecType:
 	jsr		inChar
 	cmp.b	#'S', %d0
-	bne		getRecType
+	bne		getRecType					| Toss extra chars
 	jsr		inChar
 	andi.b	#0x0f, %d0
-	lea		srecType, %a0
-	move.b	%d0, (%a0)
+	move.b	%d0, srecType
 | Debug messages follow
 	lea		debug_Srec_Typ_Msg, %a0		| Debug message
     bsr.w   printString
@@ -481,8 +480,8 @@ getRecType:
 	
 getBytCt:
 	jsr		getHexPair
-	move.b 	%d0, srecCSum
-	move.b	%d0, srecByCt
+	move.b 	%d0, srecCSum	| Initialize checksum
+	move.b	%d0, srecByCt	| Byte count
 | Debug messages follow
 	lea		debug_Srec_BytCt_Msg, %a0
     bsr.w   printString
@@ -517,8 +516,7 @@ doHexLetter:
 
 getAddr:
 	movem.l %d2, -(%SP)		| Save registers
-	lea		srecType, %a0
-	cmp.b	#2, (%a0)
+	cmp.b	#2, srecType
 	bne		adrLen16
 	lea		debug_S2rec_Addr_Msg, %a0
 	bsr		printString
