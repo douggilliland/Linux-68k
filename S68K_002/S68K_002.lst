@@ -489,7 +489,7 @@
  420 80720 13FC 0000 		move.b 	#0, srecCSum
  420      0000 0000 
  421 80728 6100 0118 		bsr		getAddr
- 422 8072c 41FA 05AA 		lea		debug_Srec_LDData_Msg, %a0
+ 422 8072c 41FA 05B1 		lea		debug_Srec_LDData_Msg, %a0
  423 80730 6100 FDFE 		bsr		printString
  424               	loopSData:
  425 80734 0C39 0001 		cmp.b 	#1, srecByCt
@@ -1111,19 +1111,19 @@
  916      733D 
  917 80cc4 00        	    dc.b EOT
  918               	debug_SXrec_Addr_Msg:
- 919 80cc5 5332 2052 		.ascii	"S2 Record Address="
- 919      6563 6F72 
- 919      6420 4164 
- 919      6472 6573 
- 919      733D 
- 920 80cd7 00        	    dc.b EOT
+ 919 80cc5 5320 286E 		.ascii	"S (not 2) Record Address="
+ 919      6F74 2032 
+ 919      2920 5265 
+ 919      636F 7264 
+ 919      2041 6464 
+ 920 80cde 00        	    dc.b EOT
  921               	debug_Srec_LDData_Msg:
- 922 80cd8 4C6F 6164 	    .ascii	"Load Data Loop start"
+ 922 80cdf 4C6F 6164 	    .ascii	"Load Data Loop start"
  922      2044 6174 
  922      6120 4C6F 
  922      6F70 2073 
  922      7461 7274 
- 923 80cec 0D0A 00   		dc.b 	CR,LF,EOT
+ 923 80cf3 0D0A 00   		dc.b 	CR,LF,EOT
  924               	
  925               	
  926               	MAX_LINE_LENGTH = 80
@@ -1242,7 +1242,7 @@ DEFINED SYMBOLS
           S68K_002.s:457    .text:00000000000807a2 getRecType
           S68K_002.s:475    .text:00000000000807dc getBytCt
           S68K_002.s:511    .text:0000000000080842 getAddr
-          S68K_002.s:921    .text:0000000000080cd8 debug_Srec_LDData_Msg
+          S68K_002.s:921    .text:0000000000080cdf debug_Srec_LDData_Msg
           S68K_002.s:424    .text:0000000000080734 loopSData
           S68K_002.s:429    .text:0000000000080748 sRecDataDone
           S68K_002.s:433    .text:0000000000080750 getLdData
