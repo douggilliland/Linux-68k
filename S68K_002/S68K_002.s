@@ -437,7 +437,7 @@ skipLdData:
 	rts
 
 getChksum:
-	lea		debug_Srec_CSum_Msg, a0
+	lea		debug_Srec_CSum_Msg, %a0
     bsr.w   printString
 	jsr		getHexPair
 	add.b	%d0, srecCSum
