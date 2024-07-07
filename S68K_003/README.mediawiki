@@ -1,0 +1,34 @@
+= Build of 68K Code =
+
+== Environment ==
+
+* Code built on Oracle VM VirtualBox
+** Host machine is a Windows box
+** Running MINT Linux OS
+
+== Fix error from no longer being allowed to use ID/Pwd ==
+
+* GitHub eliminated the ability to log in with user ID and password
+* The solution is to switch to SSH to log into GitHub
+* Needed to make a new key
+<pre>
+ssh-keygen
+</pre>
+* Copy id_rsa.pub file contents to github public key via github web browser
+
+== Connect to database with ssh instead of https ==
+
+<pre>
+git remote remove origin
+git remote add origin douggilliland/Linux-68k.git
+</pre>
+
+== Push the code changes up to github ==
+
+<pre>
+git add .
+git commit -m 'my commit'
+git push
+(or if needed)
+git push --set-upstream origin master
+</pre>
