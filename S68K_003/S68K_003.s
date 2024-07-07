@@ -8,7 +8,9 @@ RAM_END		= 0x07FFFF	| 512KB SRAM
 
 |||||||||||||||||||||||||||||||||
 | 68681 Duart Register Addresses
-|
+
+DUART = 0x0F0000	  | Base Addr of DUART
+OPC   = DUART+26      | Output port config        (W)
 OPS   = DUART+28      | Output port Set           (W)
 OPR   = DUART+30      | Output port Clear         (W)
 
