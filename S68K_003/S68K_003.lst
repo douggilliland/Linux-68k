@@ -1,0 +1,58 @@
+68K GAS  S68K_003.s 			page 1
+
+
+   1               	| S68K_002.s - 68K Monitor with extensions
+   2               	|	Adds S Record loader
+   3               	| Borrowed init code from 
+   4               	|  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
+   5               	
+   6               	CODE_START	= 0x000800	| Start of code
+   7               	RAM_END		= 0x07FFFF	| 512KB SRAM
+   8               	
+   9               	|||||||||||||||||||||||||||||||||
+  10               	| 68681 Duart Register Addresses
+  11               	|
+  12               	OPS   = DUART+28      | Output port Set           (W)
+  13               	OPR   = DUART+30      | Output port Clear         (W)
+  14               	
+  15 0000 0000 0000 		.ORG	CODE_START
+  15      0000 0000 
+  15      0000 0000 
+  15      0000 0000 
+  15      0000 0000 
+  16               	
+  17 0800 13FC 0000 		move.b	#0x00, OPC		| Output port configuration (all bit are outs)
+  17      0000 0000 
+  18 0808 13FC 00FC 		move.b	#0xFC, OPR		| Clear all outputs
+  18      0000 0000 
+  19 0810 13FC 0004 		move.b	#0x04, OPS		| Turn off LED on DUART O2
+  19      0000 0000 
+  20               	loopLEDs:
+  21 0818 13FC 0004 		move.b	#0x04, OPR		| Turn on LED
+  21      0000 0000 
+  22               	wait1:
+  23 0820 203C 0001 		move.l 	#100000, %d0
+  23      86A0 
+  24 0826 5380      		sub.l 	#1, %d0
+  25 0828 6600 FFF6 		bne		wait1
+  26 082c 13FC 0004 		move.b	#0x04, OPS		| Turn off LED
+  26      0000 0000 
+  27               	wait2:
+  28 0834 203C 0001 		move.l 	#100000, %d0
+  28      86A0 
+  29 083a 5380      		sub.l 	#1, %d0
+  30 083c 6600 FFF6 		bne		wait2
+  31 0840 6000 FFD6 		bra		loopLEDs
+68K GAS  S68K_003.s 			page 2
+
+
+DEFINED SYMBOLS
+          S68K_003.s:6      *ABS*:0000000000000800 CODE_START
+          S68K_003.s:7      *ABS*:000000000007ffff RAM_END
+          S68K_003.s:20     .text:0000000000000818 loopLEDs
+          S68K_003.s:22     .text:0000000000000820 wait1
+          S68K_003.s:27     .text:0000000000000834 wait2
+
+UNDEFINED SYMBOLS
+DUART
+OPC
