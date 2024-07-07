@@ -5,7 +5,8 @@
 
 == Improvements/New Features ==
 
-* Added S-Record load
+* Added S-Record load ('L' on command line)
+** Runs at 9600 baud with no waits/handshakes on transmit from Host Side
 * Added improved SRAM test code
 * Added SRAM fill
 
