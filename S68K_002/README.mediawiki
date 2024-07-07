@@ -1,9 +1,13 @@
 = 68K Monitor =
 
 * Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor]
-* Adds improved SRAM test code
-* Adds SRAM fill
-* Adds S-Record load
+* 'H' for Help lists commands
+
+== Improvements/New Features ==
+
+* Added S-Record load
+* Added improved SRAM test code
+* Added SRAM fill
 
 = Build Environment of 68K Code =
 
