@@ -436,6 +436,14 @@ loopSData:
 	bra		loopSData
 sRecDataDone:
 	bsr		getChksum
+	cmp.b	#0, srecType
+	beq		loadSRec
+	cmp.b	#1, srecType
+	beq		loadSRec
+	cmp.b	#2, srecType
+	beq		loadSRec
+	cmp.b	#3, srecType
+	beq		loadSRec
 	bra.w   .exit
 
 |||||||||||||||||||||||||||||
