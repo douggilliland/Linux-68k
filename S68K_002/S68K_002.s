@@ -421,6 +421,7 @@ parseLine:
 loadSRec:
     lea     ldSRecMsg, %a0					| "Load S-Record"
     bsr.w   printString
+loadSRecLoop:
 	bsr		setRecType
 	bsr		setBytCt
 	move.b 	#0, srecCSum
@@ -436,14 +437,16 @@ loopSData:
 	bra		loopSData
 sRecDataDone:
 	bsr		getChksum
+	move.b	#'+', %d0
+	bsr		outChar
 	cmp.b	#0, srecType
-	beq		loadSRec
+	beq		loadSRecLoop
 	cmp.b	#1, srecType
-	beq		loadSRec
+	beq		loadSRecLoop
 	cmp.b	#2, srecType
-	beq		loadSRec
+	beq		loadSRecLoop
 	cmp.b	#3, srecType
-	beq		loadSRec
+	beq		loadSRecLoop
 	bra.w   .exit
 
 |||||||||||||||||||||||||||||
