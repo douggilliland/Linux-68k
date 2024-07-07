@@ -19,13 +19,13 @@ OPR   = DUART+30      | Output port Clear         (W)
 	move.b	#0x04, OPS		| Turn off LED on DUART O2
 loopLEDs:
 	move.b	#0x04, OPR		| Turn on LED
-wait1:
 	move.l 	#100000, %d0
+wait1:
 	sub.l 	#1, %d0
 	bne		wait1
 	move.b	#0x04, OPS		| Turn off LED
-wait2:
 	move.l 	#100000, %d0
+wait2:
 	sub.l 	#1, %d0
 	bne		wait2
 	bra		loopLEDs
