@@ -430,7 +430,7 @@ loadSRec:
 	cmp.b	#2, srecType
 	bne		sRecDataDone
 loopSData:
-	cmp.b 	#1, srecByCt
+	cmp.b 	#0, srecByCt
 	beq		sRecDataDone
 	bsr		getSetLdData
 	bra		loopSData
