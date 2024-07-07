@@ -8,8 +8,8 @@ S68K_003.bin: S68K_003.o
 
 S68K_003.hex: S68K_003.o
 	/opt/m68k-elf/bin/m68k-elf-objcopy -O srec S68K_003.o S68K_003.tmp
-	srec_cat S68K_003.tmp --crop 0x0 0xffff -o S68K_003.sre
-	srec_cat S68K_003.tmp --crop 0x0 0xffff -o S68K_003.hex -Intel
+	srec_cat S68K_003.tmp --crop 0x0400 0xffff -o S68K_003.sre
+	srec_cat S68K_003.tmp --crop 0x0400 0xffff -o S68K_003.hex -Intel
 #	rm S68K_003.tmp
 
 clean:
