@@ -434,11 +434,9 @@ loadSRecLoop:
 	bsr		setAddr
 |	lea		debug_Srec_LDData_Msg, %a0		| "Load Data Loop start"
 |	bsr		printString
-	cmp.b	#1, srecType
+	cmp.b	#1, srecType			| 16-bit Address
 	beq		loopSData
-	cmp.b	#2, srecType
-	beq		loopSData
-	cmp.b	#3, srecType
+	cmp.b	#2, srecType			| 24-bit Address
 	beq		loopSData
 	bra		sRecDataDone
 loopSData:
