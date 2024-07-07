@@ -425,8 +425,8 @@ loadSRec:
 	bsr		setBytCt
 	move.b 	#0, srecCSum
 	bsr		setAddr
-	lea		debug_Srec_LDData_Msg, %a0		| "Load Data Loop start"
-	bsr		printString
+|	lea		debug_Srec_LDData_Msg, %a0		| "Load Data Loop start"
+|	bsr		printString
 	cmp.b	#2, srecType
 	bne		sRecDataDone
 loopSData:
@@ -460,14 +460,14 @@ skipLdData:
 
 |||||||||||||||||||||||||||||
 getChksum:
-	lea		debug_Srec_CSum_Msg, %a0	| "S Record Checksum="
-    bsr.w   printString
+|	lea		debug_Srec_CSum_Msg, %a0	| "S Record Checksum="
+|	bsr.w   printString
 	jsr		getHexPair
 	add.b	%d0, srecCSum
-	move.b	srecCSum, %d0
-	jsr		printHexByte
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	move.b	srecCSum, %d0
+|	jsr		printHexByte
+|	lea		CRLF_MSG, %a0
+|	bsr.w   printString
 failCSUM:
 	rts
 
@@ -480,13 +480,13 @@ setRecType:
 	andi.b	#0x0f, %d0
 	move.b	%d0, srecType
 | Debug messages follow
-	lea		debug_Srec_Typ_Msg, %a0		| "S Record Type="
-    bsr.w   printString
-	move.b	srecType, %d0
-	add.b	#'0', %d0
-	jsr		outChar
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	lea		debug_Srec_Typ_Msg, %a0		| "S Record Type="
+|	bsr.w   printString
+|	move.b	srecType, %d0
+|	add.b	#'0', %d0
+|	jsr		outChar
+|	lea		CRLF_MSG, %a0
+|	bsr.w   printString
 | Debug messages end
 	rts
 	
@@ -496,12 +496,12 @@ setBytCt:
 	move.b 	%d0, srecCSum				| Initialize checksum
 	move.b	%d0, srecByCt				| Byte count
 | Debug messages follow
-	lea		debug_Srec_BytCt_Msg, %a0	| "S Record Byte Count=0x"
-    bsr.w   printString
-	move.b	srecByCt, %d0
-	jsr		printHexByte
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	lea		debug_Srec_BytCt_Msg, %a0	| "S Record Byte Count=0x"
+|	bsr.w   printString
+|	move.b	srecByCt, %d0
+|	jsr		printHexByte
+|	lea		CRLF_MSG, %a0
+|	bsr		printString
 | Debug messages end
 	sub.b	#1, srecByCt
 	rts
@@ -536,8 +536,8 @@ setAddr:
 	cmp.b	#2, srecType
 	bne		adrLen16
 	move.l	#0, srecAddr
-	lea		debug_S2rec_Addr_Msg, %a0
-	bsr		printString
+|	lea		debug_S2rec_Addr_Msg, %a0
+|	bsr		printString
 	move.l	#0, %d2			| d2 stores address for accumulation of bytes
 	| Get the upper 8-bits of 24-bits
 	jsr		getHexPair
@@ -566,28 +566,28 @@ setAddr:
 	or.l	%d0, %d2
 	andi.l	#0x00ffffff, %d2
 	move.l	%d2, srecAddr		| Save the S record address
-	move.l	%d2, %d0
-	bsr		printHexLong
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	move.l	%d2, %d0
+|	bsr		printHexLong
+|	lea		CRLF_MSG, %a0
+|	bsr.w   printString
 	sub.b	#3, srecByCt
 	bra		past16
 adrLen16:
-	lea		debug_SXrec_Addr_Msg, %a0	| "S (not 2) Record Address=0x"
-	bsr		printString
-|	move.l	#0, %d2
+|	lea		debug_SXrec_Addr_Msg, %a0	| "S (not 2) Record Address=0x"
+|	bsr		printString
+	move.l	#0, %d2
 	jsr		getHexPair
 |	bsr		printHexLong
 |	lea		CRLF_MSG, %a0
 |   bsr.w   printString
-|	or.l	%d0, %d2
-|	asl.l	#8, %d2
+	or.l	%d0, %d2
+	asl.l	#8, %d2
 	jsr		getHexPair
-	bsr		printHexLong
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
-|	or.l	%d0, %d2
-|	move.l	%d2, srecAddr
+|	bsr		printHexLong
+|	lea		CRLF_MSG, %a0
+|	bsr.w   printString
+	or.l	%d0, %d2
+	move.l	%d2, srecAddr
 	sub.b	#2, srecByCt
 past16:
 	movem.l (%SP)+, %d2		| Restore registers
