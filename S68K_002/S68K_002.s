@@ -518,7 +518,8 @@ toNibble:
 	sub.b	#'0', %d0
 	rts
 doHexLetter:
-	sub.b	#'A'+10, %d0
+	sub.b	#'A', %d0
+	add.b	#10, %d0
 	rts
 
 |||||||||||||||||||||||||||||
