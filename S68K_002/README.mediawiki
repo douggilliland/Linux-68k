@@ -1,6 +1,11 @@
-= Build of 68K Code =
+= 68K Monitor =
 
-== Environment ==
+* Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor]
+* Adds improved SRAM test code
+* Adds SRAM fill
+* Adds S-Record load
+
+= Build Environment of 68K Code =
 
 * Code built on Oracle VM VirtualBox
 ** Host machine is a Windows box
