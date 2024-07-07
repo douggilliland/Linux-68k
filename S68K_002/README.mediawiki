@@ -1,6 +1,6 @@
 = 68K Monitor =
 
-* Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor]
+* Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor] by [https://github.com/ChartreuseK ChartreuseK]
 * 'H' for Help lists commands
 
 == Improvements/New Features ==
