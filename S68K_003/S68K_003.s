@@ -3,7 +3,7 @@
 | Borrowed init code from 
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 
-CODE_START	= 0x010000	| Start of code
+CODE_START	= 0x001000	| Start of code
 RAM_END		= 0x07FFFF	| 512KB SRAM
 
 |||||||||||||||||||||||||||||||||
