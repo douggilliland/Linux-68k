@@ -419,13 +419,13 @@ parseLine:
 |	S503005BA1
 
 loadSRec:
-    lea     ldSRecMsg, %a0
+    lea     ldSRecMsg, %a0					| "Load S-Record"
     bsr.w   printString
 	bsr		setRecType
 	bsr		setBytCt
 	move.b 	#0, srecCSum
 	bsr		setAddr
-	lea		debug_Srec_LDData_Msg, %a0
+	lea		debug_Srec_LDData_Msg, %a0		| "Load Data Loop start"
 	bsr		printString
 	cmp.b	#2, srecType
 	bne		sRecDataDone
@@ -452,7 +452,7 @@ skipLdData:
 
 |||||||||||||||||||||||||||||
 getChksum:
-	lea		debug_Srec_CSum_Msg, %a0
+	lea		debug_Srec_CSum_Msg, %a0	| "S Record Checksum="
     bsr.w   printString
 	jsr		getHexPair
 	add.b	%d0, srecCSum
@@ -472,7 +472,7 @@ setRecType:
 	andi.b	#0x0f, %d0
 	move.b	%d0, srecType
 | Debug messages follow
-	lea		debug_Srec_Typ_Msg, %a0		| Debug message
+	lea		debug_Srec_Typ_Msg, %a0		| "S Record Type="
     bsr.w   printString
 	move.b	srecType, %d0
 	add.b	#'0', %d0
@@ -485,10 +485,10 @@ setRecType:
 |||||||||||||||||||||||||||||
 setBytCt:
 	jsr		getHexPair
-	move.b 	%d0, srecCSum	| Initialize checksum
-	move.b	%d0, srecByCt	| Byte count
+	move.b 	%d0, srecCSum				| Initialize checksum
+	move.b	%d0, srecByCt				| Byte count
 | Debug messages follow
-	lea		debug_Srec_BytCt_Msg, %a0
+	lea		debug_Srec_BytCt_Msg, %a0	| "S Record Byte Count=0x"
     bsr.w   printString
 	move.b	srecByCt, %d0
 	jsr		printHexByte
@@ -565,18 +565,16 @@ setAddr:
 	sub.b	#3, srecByCt
 	bra		past16
 adrLen16:
-	lea		debug_SXrec_Addr_Msg, %a0
+	lea		debug_SXrec_Addr_Msg, %a0	| "S (not 2) Record Address=0x"
 	bsr		printString
 |	move.l	#0, %d2
 	jsr		getHexPair
-	sub.b	#3, srecByCt
-	bsr		printHexLong
-	lea		CRLF_MSG, %a0
-    bsr.w   printString
+|	bsr		printHexLong
+|	lea		CRLF_MSG, %a0
+|   bsr.w   printString
 |	or.l	%d0, %d2
 |	asl.l	#8, %d2
 	jsr		getHexPair
-	sub.b	#3, srecByCt
 	bsr		printHexLong
 	lea		CRLF_MSG, %a0
     bsr.w   printString
