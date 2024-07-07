@@ -501,7 +501,7 @@
  430      0400 
  431 80738 6600 0014 		bne		sRecDataDone
  432               	loopSData:
- 433 8073c 0C38 0001 		cmp.b 	#1, srecByCt
+ 433 8073c 0C38 0000 		cmp.b 	#0, srecByCt
  433      0401 
  434 80742 6700 000A 		beq		sRecDataDone
  435 80746 6100 000E 		bsr		getSetLdData
