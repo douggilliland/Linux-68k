@@ -1,7 +1,13 @@
 | S68K_002.s - 68K Monitor with extensions
 |	Adds S Record loader
+| Land Boards, LLC
+|	(c) 2024
+| Use it however you want
 | Borrowed init code from 
 |  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
+|
+| Added S-Record load code
+|	Uses SRAM from 0x400-0x407
 
 RAM_START	= 0x00000	| Beginning of the SRAM
 STACK_END	= 0x7FFFC	| Has to be on a word boundary
