@@ -13,16 +13,16 @@ int main(void)
 	DUART_OPS  = 0x0F0028;  /* Output port Set (W)		*/
 	DUART_OPR  = 0x0F0030;  /* Output port Clear (W)	*/
 	
-	*DUART_OPC = 0x00;
-	*DUART_OPR = 0xFC;
-	*DUART_OPS = 0x04;
+	*DUART_OPC = (char) 0x00;
+	*DUART_OPR = (char) 0xFC;
+	*DUART_OPS = (char) 0x04;
 	
 	while (1)
 	{
 		wait1Sec();
-		*DUART_OPR = 0xFC;
+		*DUART_OPR = (char) 0xFC;
 		wait1Sec();
-		*DUART_OPS = 0xFC;
+		*DUART_OPS = (char) 0xFC;
 	}
 }
 
