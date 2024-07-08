@@ -4,4 +4,4 @@
 * Blinks external LED on O2 pins every second
 * 4.7K resistor, red LED = less than 1 mA
 * Downloaded as S Records
-** Loaded with L command in S68K_002 monitor
+** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
