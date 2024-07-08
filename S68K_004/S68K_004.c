@@ -1,5 +1,7 @@
 /* */
 
+void wait1Sec(void);
+
 void main(void)
 {
 	unsigned char * DUART_BASE;
