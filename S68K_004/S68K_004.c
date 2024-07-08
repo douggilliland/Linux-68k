@@ -2,7 +2,7 @@
 
 void wait1Sec(void);
 
-void main(void)
+int main(void)
 {
 	unsigned char * DUART_BASE;
 	unsigned char * DUART_OPC;
