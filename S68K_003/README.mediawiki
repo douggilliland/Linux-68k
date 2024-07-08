@@ -1,6 +1,7 @@
 = Sample code for SIMPLE-68008 =
 
 * Runs from RAM
-* Downloaded as S Records
-* Blinks external LED on O2 pins
+* Blinks external LED on O2 pins every second
 * 4.7K resistor, red LED = less than 1 mA
+* Downloaded as S Records
+** Loaded with L command in S68K_002 monitor
