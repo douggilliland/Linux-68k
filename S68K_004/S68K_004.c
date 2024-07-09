@@ -15,14 +15,13 @@ int main(void)
 	
 	*DUART_OPC = (char) 0x00;
 	*DUART_OPR = (char) 0xFC;
-	*DUART_OPS = (char) 0x04;
 	
 	while (1)
 	{
 		wait1Sec();
-		*DUART_OPR = (char) 0x04;
+		*DUART_OPS = (char) 0xFC;
 		wait1Sec();
-		*DUART_OPS = (char) 0x04;
+		*DUART_OPR = (char) 0xFC;
 	}
 }
 
