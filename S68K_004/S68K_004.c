@@ -29,7 +29,7 @@ int main(void)
 void wait1Sec(void)
 {
 	unsigned long loopCt;
-	loopCt = 0x100000;
+	loopCt = 100000;
 	while (loopCt > 0)
 		loopCt--;
 }
