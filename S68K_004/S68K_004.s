@@ -29,7 +29,7 @@ main:
 	.type	wait1Sec, @function
 wait1Sec:
 	link.w %fp,#-4
-	move.l #1048576,-4(%fp)
+	move.l #100000,-4(%fp)
 	jra .L4
 .L5:
 	subq.l #1,-4(%fp)
