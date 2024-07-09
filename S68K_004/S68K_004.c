@@ -20,9 +20,9 @@ int main(void)
 	while (1)
 	{
 		wait1Sec();
-		*DUART_OPR = (char) 0xFC;
+		*DUART_OPR = (char) 0x04;
 		wait1Sec();
-		*DUART_OPS = (char) 0xFC;
+		*DUART_OPS = (char) 0x04;
 	}
 }
 
