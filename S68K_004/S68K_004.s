@@ -13,15 +13,13 @@ main:
 	clr.b (%a0)
 	move.l -12(%fp),%a0
 	move.b #-4,(%a0)
-	move.l -8(%fp),%a0
-	move.b #4,(%a0)
 .L2:
 	jsr wait1Sec
-	move.l -12(%fp),%a0
-	move.b #4,(%a0)
-	jsr wait1Sec
 	move.l -8(%fp),%a0
-	move.b #4,(%a0)
+	move.b #-4,(%a0)
+	jsr wait1Sec
+	move.l -12(%fp),%a0
+	move.b #-4,(%a0)
 	jra .L2
 	.size	main, .-main
 	.align	2
