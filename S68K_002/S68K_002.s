@@ -77,7 +77,9 @@ srecAddr	=		0x000404	| S Record current byte address
 
         .ORG ROM_CODE
 	nop
-	lea			STACK_END,%sp
+	lea		STACK_END, %sp
+	lea		STACK_END-128, %fp	| Plenty of room for the monitor's stack
+								| Need frame pointer for running C code
 	move.b	#0xFF, 0x080000		| Set swap bit so SRAM works
 	nop
 | LEDs
