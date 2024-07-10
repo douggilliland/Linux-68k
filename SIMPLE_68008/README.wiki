@@ -1,0 +1,45 @@
+<img src="http://land-boards.com/blwiki/images/d/d4/SIMPLE-68008_P475-720px.jpg"></img>
+
+= SIMPLE-68008 Code =
+
+* [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Wiki page]
+
+== Builda of 68K Code ==
+
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_001.s S68K_001] - Simple monitor + SRAM test 
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_002.s S68K_002] - Simple Monitor plus S Record Loader
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_003.s S68K_003] - Downloadable Assembly code example
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_004.s S68K_004] - Downloadable C code example
+
+== Environment ==
+
+* Code built on Oracle VM VirtualBox
+** Host machine is a Windows box
+** Running MINT Linux OS
+
+== Fix error from no longer being allowed to use ID/Pwd ==
+
+* GitHub eliminated the ability to log in with user ID and password
+* The solution is to switch to SSH to log into GitHub
+* Needed to make a new key
+<pre>
+ssh-keygen
+</pre>
+* Copy id_rsa.pub file contents to github public key via github web browser
+
+== Connect to database with ssh instead of https ==
+
+<pre>
+git remote remove origin
+git remote add origin douggilliland/Linux-68k.git
+</pre>
+
+== Push the code changes up to github ==
+
+<pre>
+git add .
+git commit -m 'my commit'
+git push
+(or if needed)
+git push --set-upstream origin master
+</pre>
