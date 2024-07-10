@@ -6,6 +6,11 @@
 
 = Build of 68K Code =
 
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_001.s S68K_001]
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_002.s S68K_002]
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_003.s S68K_003]
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_004.s S68K_004]
+
 == Environment ==
 
 * Code built on Oracle VM VirtualBox
