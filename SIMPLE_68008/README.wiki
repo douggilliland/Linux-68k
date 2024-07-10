@@ -1,6 +1,8 @@
+<img src="http://land-boards.com/blwiki/images/d/d4/SIMPLE-68008_P475-720px.jpg"></img>
+
 = SIMPLE-68008 Code =
 
-<img src="http://land-boards.com/blwiki/images/d/d4/SIMPLE-68008_P475-720px.jpg"></img>
+* [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Wiki page]
 
 = Build of 68K Code =
 
