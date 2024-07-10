@@ -25,7 +25,7 @@ int main(void)
 
 void wait1Sec(void)
 {
-	unsigned long loopCt = 1000;
+	unsigned long loopCt = 50000;
 	while (loopCt > 0)
 		loopCt -= 1;
 }
