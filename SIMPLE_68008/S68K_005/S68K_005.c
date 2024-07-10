@@ -6,12 +6,9 @@ void wait1Sec(void);
 
 int main(void)
 {
-	unsigned char * DUART_OPC;
-	unsigned char * DUART_OPS;
-	unsigned char * DUART_OPR;
-	DUART_OPC  = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
-	DUART_OPS  = (unsigned char *) DUART_OPS_ADR;	/* Output port Set (W)		*/
-	DUART_OPR  = (unsigned char *) DUART_OPR_ADR;	/* Output port Clear (W)	*/
+	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
+	unsigned char * DUART_OPS = (unsigned char *) DUART_OPS_ADR;	/* Output port Set (W)		*/
+	unsigned char * DUART_OPR = (unsigned char *) DUART_OPR_ADR;	/* Output port Clear (W)	*/
 	
 	*DUART_OPC = (char) 0x00;
 	*DUART_OPR = (char) 0xFC;
