@@ -6,9 +6,9 @@
 	.type	main, @function
 main:
 	link.w %fp,#-12
-	move.l #983078,-4(%fp)
-	move.l #983080,-8(%fp)
-	move.l #983088,-12(%fp)
+	move.l #983066,-4(%fp)
+	move.l #983068,-8(%fp)
+	move.l #983070,-12(%fp)
 	move.l -4(%fp),%a0
 	clr.b (%a0)
 	move.l -12(%fp),%a0
@@ -16,10 +16,10 @@ main:
 .L2:
 	jsr wait1Sec
 	move.l -8(%fp),%a0
-	move.b #-4,(%a0)
+	move.b #4,(%a0)
 	jsr wait1Sec
 	move.l -12(%fp),%a0
-	move.b #-4,(%a0)
+	move.b #4,(%a0)
 	jra .L2
 	.size	main, .-main
 	.align	2
