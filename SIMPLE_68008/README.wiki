@@ -9,7 +9,8 @@
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_001.s S68K_001] - Simple monitor + SRAM test 
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_002.s S68K_002] - Simple Monitor plus S Record Loader
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_003.s S68K_003] - Downloadable Assembly code example
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_004.s S68K_004] - Downloadable C code example
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_004.s S68K_004] - Downloadable C code example (Blink LED)
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_005.s S68K_005] - Downloadable C code example (Echo Char, print string)
 
 == Environment ==
 
