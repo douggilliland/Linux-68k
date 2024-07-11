@@ -1,6 +1,10 @@
 #NO_APP
 	.file	"S68K_005.c"
 	.text
+	.section	.rodata
+.LC0:
+	.string	"String to print\n"
+	.text
 	.align	2
 	.globl	main
 	.type	main, @function
@@ -24,8 +28,59 @@ main:
 	move.l %d0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
+	pea .LC0
+	jsr printString
+	addq.l #4,%sp
 	jra .L2
 	.size	main, .-main
+	.align	2
+	.globl	printString
+	.type	printString, @function
+printString:
+	link.w %fp,#-4
+	clr.l -4(%fp)
+	jra .L4
+.L5:
+	move.l 8(%fp),%a0
+	add.l -4(%fp),%a0
+	move.b (%a0),%d0
+	move.b %d0,%d0
+	and.l #255,%d0
+	move.l %d0,-(%sp)
+	jsr putCharA
+	addq.l #4,%sp
+	addq.l #1,-4(%fp)
+.L4:
+	move.l 8(%fp),-(%sp)
+	jsr strlen
+	addq.l #4,%sp
+	cmp.l -4(%fp),%d0
+	jhi .L5
+	nop
+	nop
+	unlk %fp
+	rts
+	.size	printString, .-printString
+	.align	2
+	.globl	strlen
+	.type	strlen, @function
+strlen:
+	link.w %fp,#-4
+	clr.l -4(%fp)
+	jra .L7
+.L8:
+	addq.l #1,-4(%fp)
+.L7:
+	move.l -4(%fp),%d0
+	move.l 8(%fp),%a0
+	add.l %d0,%a0
+	move.b (%a0),%d0
+	tst.b %d0
+	jne .L8
+	move.l -4(%fp),%d0
+	unlk %fp
+	rts
+	.size	strlen, .-strlen
 	.align	2
 	.globl	setLED
 	.type	setLED, @function
@@ -37,14 +92,14 @@ setLED:
 	move.l #983068,-4(%fp)
 	move.l #983070,-8(%fp)
 	tst.b -10(%fp)
-	jne .L4
+	jne .L11
 	move.l -4(%fp),%a0
 	move.b #4,(%a0)
-	jra .L6
-.L4:
+	jra .L13
+.L11:
 	move.l -8(%fp),%a0
 	move.b #4,(%a0)
-.L6:
+.L13:
 	nop
 	unlk %fp
 	rts
@@ -55,12 +110,12 @@ setLED:
 wait1Sec:
 	link.w %fp,#-4
 	move.l #50000,-4(%fp)
-	jra .L8
-.L9:
+	jra .L15
+.L16:
 	subq.l #1,-4(%fp)
-.L8:
+.L15:
 	tst.l -4(%fp)
-	jne .L9
+	jne .L16
 	nop
 	nop
 	unlk %fp
@@ -74,14 +129,14 @@ getCharA:
 	move.l #983042,-6(%fp)
 	move.l #983046,-10(%fp)
 	clr.b -1(%fp)
-	jra .L11
-.L12:
+	jra .L18
+.L19:
 	move.l -6(%fp),%a0
 	move.b (%a0),-1(%fp)
 	and.b #1,-1(%fp)
-.L11:
+.L18:
 	tst.b -1(%fp)
-	jeq .L12
+	jeq .L19
 	move.l -10(%fp),%a0
 	move.b (%a0),%d0
 	unlk %fp
@@ -95,14 +150,14 @@ getCharB:
 	move.l #983058,-6(%fp)
 	move.l #983062,-10(%fp)
 	clr.b -1(%fp)
-	jra .L15
-.L16:
+	jra .L22
+.L23:
 	move.l -6(%fp),%a0
 	move.b (%a0),-1(%fp)
 	and.b #1,-1(%fp)
-.L15:
+.L22:
 	tst.b -1(%fp)
-	jeq .L16
+	jeq .L23
 	move.l -10(%fp),%a0
 	move.b (%a0),%d0
 	unlk %fp
@@ -119,14 +174,14 @@ putCharA:
 	move.l #983042,-6(%fp)
 	move.l #983046,-10(%fp)
 	clr.b -1(%fp)
-	jra .L19
-.L20:
+	jra .L26
+.L27:
 	move.l -6(%fp),%a0
 	move.b (%a0),-1(%fp)
 	and.b #4,-1(%fp)
-.L19:
+.L26:
 	tst.b -1(%fp)
-	jeq .L20
+	jeq .L27
 	move.l -10(%fp),%a0
 	move.b -12(%fp),(%a0)
 	nop
@@ -144,14 +199,14 @@ putCharB:
 	move.l #983058,-6(%fp)
 	move.l #983062,-10(%fp)
 	clr.b -1(%fp)
-	jra .L22
-.L23:
+	jra .L29
+.L30:
 	move.l -6(%fp),%a0
 	move.b (%a0),-1(%fp)
 	and.b #4,-1(%fp)
-.L22:
+.L29:
 	tst.b -1(%fp)
-	jeq .L23
+	jeq .L30
 	move.l -10(%fp),%a0
 	move.b -12(%fp),(%a0)
 	nop
