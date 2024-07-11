@@ -12,13 +12,13 @@ void putCharB(unsigned char);
 int main(void)
 {
 	unsigned char rxChar;
-	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
+/* 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
 	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
 	unsigned char * DUART_RBA = (unsigned char *) DUART_RBA_ADR;
 	unsigned char * DUART_RBB = (unsigned char *) DUART_RBB_ADR;
 	unsigned char * DUART_TBA = (unsigned char *) DUART_TBA_ADR;
 	unsigned char * DUART_TBB = (unsigned char *) DUART_TBB_ADR;
-	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
+ */	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 
 	while (1)
