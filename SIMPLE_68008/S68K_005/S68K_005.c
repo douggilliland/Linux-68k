@@ -38,7 +38,7 @@ int main(void)
 void printString(char * pStr)
 {
 	for (unsigned int cc = 0; cc < len(pStr); cc++)
-		outChar(pStr[cc]);
+		putCharA(pStr[cc]);
 }
 
 void setLED(unsigned char LEDVal)
