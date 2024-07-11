@@ -17,8 +17,13 @@ You can now run the program from the S68K_002 monitor using R2000. Output should
 look like the following:
 
 SIMPLE-68008 CPU
+
 RAM Test Passed
+
 > l
+
 Load S-Record
+
 ++++++++++++++++++++++++++++>
+
 > r2000
