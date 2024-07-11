@@ -22,8 +22,6 @@ int main(void)
  */	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
-	unsigned char * prStr = "String to print\n";
-
 	while (1)
 	{
 		setLED(1);
@@ -31,7 +29,7 @@ int main(void)
 		setLED(0);
 		wait1Sec();
 		putCharA(rxChar);
-		printString(prStr);
+		printString("String to print\n");
 	}
 }
 
