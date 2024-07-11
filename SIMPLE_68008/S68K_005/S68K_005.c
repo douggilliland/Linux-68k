@@ -6,8 +6,8 @@ void wait1Sec(void);
 void setLED(unsigned char LEDVal);
 unsigned char getCharA(void);
 unsigned char getCharB(void);
-void putCharA(void);
-void putCharB(void);
+void putCharA(unsigned char);
+void putCharB(unsigned char);
 
 int main(void)
 {
