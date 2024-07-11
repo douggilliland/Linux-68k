@@ -1,5 +1,7 @@
 <a href="https://www.tindie.com/stores/land_boards/"><img src="http://land-boards.com/blwiki/images/5/51/Tindie-mediums.png" alt="Tindie Logo"></img></a>
 
+<img src="http://land-boards.com/blwiki/images/3/35/PDP-8_P17546_cropped_720px.jpg"></img>
+
 = PDP-8 Software Toolchain =
 
 * [https://hackaday.io/project/179357-pdp-8-fpga Hackaday project page].
