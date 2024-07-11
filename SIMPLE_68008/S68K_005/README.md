@@ -20,10 +20,10 @@ SIMPLE-68008 CPU
 
 RAM Test Passed
 
-> l
+ > l
 
 Load S-Record
 
 ++++++++++++++++++++++++++++>
 
-> r2000
+ > r2000
