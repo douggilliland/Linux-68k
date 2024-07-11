@@ -8,6 +8,7 @@ unsigned char getCharA(void);
 unsigned char getCharB(void);
 void putCharA(unsigned char);
 void putCharB(unsigned char);
+void printString(char * pStr);
 
 int main(void)
 {
@@ -20,6 +21,8 @@ int main(void)
 	unsigned char * DUART_TBB = (unsigned char *) DUART_TBB_ADR;
  */	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
+	
+	unsigned char * prStr = "String to print\n";
 
 	while (1)
 	{
@@ -28,7 +31,14 @@ int main(void)
 		setLED(0);
 		wait1Sec();
 		putCharA(rxChar);
+		printString(prStr);
 	}
+}
+
+void printString(char * pStr)
+{
+	for (unsigned int cc = 0; cc < len(pStr); cc++)
+		outChar(pStr[cc]);
 }
 
 void setLED(unsigned char LEDVal)
