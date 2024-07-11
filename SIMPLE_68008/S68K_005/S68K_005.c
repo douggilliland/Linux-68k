@@ -6,8 +6,8 @@ void wait1Sec(void);
 void setLED(unsigned char LEDVal);
 unsigned char getCharA(void);
 unsigned char getCharB(void);
-unsigned char putCharA(void);
-unsigned char putCharB(void);
+void putCharA(void);
+void putCharB(void);
 
 int main(void)
 {
@@ -74,7 +74,7 @@ unsigned char getCharB(void)
 	return (*DUART_RBB);
 }
 
-unsigned char putCharA(unsigned char outChar)
+void putCharA(unsigned char outChar)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
 	unsigned char * DUART_TBA = (unsigned char *) DUART_TBA_ADR;
@@ -87,7 +87,7 @@ unsigned char putCharA(unsigned char outChar)
 	*DUART_TBA = outChar;
 }
 
-unsigned char putCharB(unsigned char outChar)
+void putCharB(unsigned char outChar)
 {
 	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
 	unsigned char * DUART_TBB = (unsigned char *) DUART_TBB_ADR;
