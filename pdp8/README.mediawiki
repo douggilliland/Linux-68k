@@ -1,4 +1,4 @@
-<a href="https://www.tindie.com/stores/land_boards/"><img src="http://land-boards.com/blwiki/images/5/51/Tindie-mediums.png" alt="Tindie Logo"></img></a>
+<a href="https://www.tindie.com/products/land_boards/pdp-8-front-panel-for-fpga-pcb/"><img src="http://land-boards.com/blwiki/images/5/51/Tindie-mediums.png" alt="Tindie Logo"></img></a>
 
 <img src="http://land-boards.com/blwiki/images/3/35/PDP-8_P17546_cropped_720px.jpg"></img>
 
