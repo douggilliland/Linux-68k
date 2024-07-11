@@ -43,7 +43,7 @@ void printString(char * pStr)
 unsigned int strlen(char * strToMeasure)
 {
 	int ct = 0;
-	while (strToMeasure[cc] <> 0)
+	while (strToMeasure[ct] <> 0)
 		ct += 1;
 	return ct;
 }
