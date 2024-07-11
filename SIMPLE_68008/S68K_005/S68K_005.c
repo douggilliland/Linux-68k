@@ -9,6 +9,7 @@ unsigned char getCharB(void);
 void putCharA(unsigned char);
 void putCharB(unsigned char);
 void printString(char * pStr);
+unsigned int strlen(char * strToMeasure);
 
 int main(void)
 {
@@ -35,8 +36,16 @@ int main(void)
 
 void printString(char * pStr)
 {
-	for (unsigned int cc = 0; cc < len(pStr); cc++)
+	for (unsigned int cc = 0; cc < strlen(pStr); cc++)
 		putCharA(pStr[cc]);
+}
+
+unsigned int strlen(char * strToMeasure)
+{
+	int ct = 0;
+	while (strToMeasure[cc] <> 0)
+		ct += 1;
+	return ct;
 }
 
 void setLED(unsigned char LEDVal)
