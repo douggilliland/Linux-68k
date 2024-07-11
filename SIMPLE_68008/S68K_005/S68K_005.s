@@ -3,7 +3,7 @@
 	.text
 	.section	.rodata
 .LC0:
-	.string	"String to print\n"
+	.string	"String to print\n\r"
 	.text
 	.align	2
 	.globl	main
@@ -13,6 +13,9 @@ main:
 	move.l #983066,-4(%fp)
 	move.l -4(%fp),%a0
 	clr.b (%a0)
+	pea .LC0
+	jsr printString
+	addq.l #4,%sp
 .L2:
 	pea 1.w
 	jsr setLED
@@ -27,9 +30,6 @@ main:
 	move.b -5(%fp),%d0
 	move.l %d0,-(%sp)
 	jsr putCharA
-	addq.l #4,%sp
-	pea .LC0
-	jsr printString
 	addq.l #4,%sp
 	jra .L2
 	.size	main, .-main
