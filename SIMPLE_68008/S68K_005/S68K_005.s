@@ -20,6 +20,10 @@ main:
 	move.l %a0,-(%sp)
 	jsr getString
 	addq.l #4,%sp
+	lea (-85,%fp),%a0
+	move.l %a0,-(%sp)
+	jsr printString
+	addq.l #4,%sp
 .L2:
 	pea 1.w
 	jsr setLED
