@@ -1,15 +1,20 @@
-/* S68K_GAME_01.c */
-/* My weird way of using the #includes at the end of the file	*/
+/* S68K_GAME_01.c 									*/
+/* First Game for the SIMPLE-68008					*/
 
 #include "SIMPLE_68008.h"
 
 #include "main.h"
+
+/* Putting main() here before defines 
+to make sure we know that main() is at first address */
 
 int main(void)
 {
 	return(playGame());
 }
 
+/* These includes have card specific code			*/
+/* Make some standardized library calls				*/
 #include "S68K_Serial.h"
 #include "S68K_Strings.h"
 
