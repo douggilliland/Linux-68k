@@ -4,7 +4,7 @@
 ** Guess a number from 1 to 100
 * Lacks random number generator code
 
-- Development Environment =
+= Development Environment =
 
 You will need a version of gcc built as a cross-compiler for the 68k
 platform (or equivalent). I used gcc version 7.5.0.
