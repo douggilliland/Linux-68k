@@ -63,7 +63,7 @@ void printString(unsigned char * pStr)
 		putCharA(pStr[cc]);
 }
 
-unsigned int strlen(char * strToMeasure)
+unsigned int strlen(unsigned char * strToMeasure)
 {
 	int ct = 0;
 	while (strToMeasure[ct] != 0)
