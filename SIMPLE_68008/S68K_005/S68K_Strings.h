@@ -1,9 +1,6 @@
 /* S68K_Strings.h	*/
 
-#include "SIMPLE_68008.h"
-
 #ifndef S68K_STRINGS_h
-
 #include "SIMPLE_68008.h"
 
 /* Function Prototypes go here for compiler warning purposes */
@@ -20,43 +17,6 @@ char getCharA(void);
 char getCharB(void);
 void putCharA(char);
 void putCharB(char);
-
-int main(void)
-{
-	int lenStr;
-	char rxChar;
-	char inStr[80];
-	int iRtn;
-	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
-	*DUART_OPC = 0x0;
-	
-	printString("Turn on LED for a second\n\r");
-	setLED(1);
-	printString("Type a string\n\r");
-	lenStr = getString(inStr);
-	printString("\n\r");
-	setLED(0);
-	if (lenStr > 0)
-		printString("String non-zero length\n\r");
-	else
-		printString("String was zero length\n\r");
-	printString(inStr);
-	printString("\n\r");
-	wait1Sec();
-	printString("Test String to number\n\r");
-	iRtn = strToNum("12345");
-	if (iRtn == 12345)
-		printString("string to number = OK\n\r");
-	else
-		printString("str to num BAD\n\r");
-	intToStr(123456, inStr);
-	printString(inStr);
-	while (1)
-	{
-		rxChar = getCharA();
-		putCharA(rxChar);
-	}
-}
 
 void intToStr(int num, char* str)
 {
