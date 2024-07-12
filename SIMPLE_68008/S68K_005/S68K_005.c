@@ -41,11 +41,11 @@ int main(void)
 	}
 }
 
-unsigned int getString(unsigned char * strPtr)
+int getString(char * strPtr)
 {
-	unsigned int strLen = 0;
-	unsigned char rxChar;
-	unsigned char endFlag = 0;
+	int strLen = 0;
+	char rxChar;
+	int endFlag = 0;
 	while (endFlag == 0)
 	{
 		rxChar = getCharA();
