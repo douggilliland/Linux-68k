@@ -23,7 +23,10 @@ int main(void)
 			printString("Number is too low\n\r");
 		else
 		{
-			printString("Good job, you got it\n\r");
+			printString("Good job, you got it in ");
+			intToStr(guessCt, inStr);
+			printString(inStr);
+			printString(" tries\n\r");
 			return 0;
 		}
 		guessCt += 1;
