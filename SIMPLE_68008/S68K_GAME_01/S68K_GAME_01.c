@@ -6,13 +6,8 @@
 
 int main(void)
 {
-	int lenStr;
-	char rxChar;
 	char inStr[80];
-	int iRtn;
-	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
-	*DUART_OPC = 0x0;
-	
+	int iRtn;	
 	printString("Guess a number from 1 to 99\n\r");
 	lenStr = getString(inStr);
 	iRtn = strToNum(inStr);
