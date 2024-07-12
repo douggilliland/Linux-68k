@@ -24,11 +24,13 @@ int main(void)
 	
 	printString((unsigned char *)"String to print\n\r");
 	lenStr = getString(inStr);
+	printString((unsigned char *)"\n\r");
 	if (lenStr > 0)
 		printString((unsigned char *)"String non-zero length\n\r");
 	else
 		printString((unsigned char *)"String was zero length\n\r");
 	printString((unsigned char *)inStr);
+	printString((unsigned char *)"\n\r");
 	while (1)
 	{
 		setLED(1);
