@@ -9,7 +9,7 @@ int main(void)
 	char inStr[80];
 	int iRtn;	
 	printString("Guess a number from 1 to 99\n\r");
-	lenStr = getString(inStr);
+	getString(inStr);
 	iRtn = strToNum(inStr);
 	if (iRtn > 500)
 		printString("Number is too high\n\r");
