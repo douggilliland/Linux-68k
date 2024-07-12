@@ -38,7 +38,7 @@ main:
 	jsr setLED
 	addq.l #4,%sp
 	tst.l -8(%fp)
-	jeq .L2
+	jle .L2
 	pea .LC2
 	jsr printString
 	addq.l #4,%sp
