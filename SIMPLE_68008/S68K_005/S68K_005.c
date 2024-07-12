@@ -16,13 +16,14 @@ unsigned int getString(unsigned char *);
 
 int main(void)
 {
+	unsigned int lenStr;
 	unsigned char rxChar;
 	unsigned char inStr[80];
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
 	printString((unsigned char *)"String to print\n\r");
-	getString(inStr);
+	lenStr = getString(inStr);
 	printString((unsigned char *)inStr);
 	while (1)
 	{
