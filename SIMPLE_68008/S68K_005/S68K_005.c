@@ -24,6 +24,10 @@ int main(void)
 	
 	printString((unsigned char *)"String to print\n\r");
 	lenStr = getString(inStr);
+	if (lenStr > 0)
+		printString((unsigned char *)"String non-zero length\n\r");
+	else
+		printString((unsigned char *)"String was zero length\n\r");
 	printString((unsigned char *)inStr);
 	while (1)
 	{
@@ -55,6 +59,7 @@ unsigned int getString(unsigned char * strPtr)
 			endFlag = 1;
 		putCharA(rxChar);
 	}
+	*strPtr = 0;
 	return strLen;
 }
 
