@@ -1,4 +1,5 @@
 /* SIMPLE-68008 Card Defines */
+#ifndef SIMPLE_68008_h	*/
 
 /* DUART Addresses 	*/
 #define DUART_MRA_ADR	0x0F0000	/* Mode Register A (R/W)			*/
@@ -24,3 +25,7 @@
 #define DUART_OPS_ADR 	0x0F001C	/* Output port Set (W)				*/
 #define DUART_OPR_ADR 	0x0F001E	/* Stop Counter Command (R)			*/
 #define DUART_OPR_ADR 	0x0F001E	/* Output port Clear (W)			*/
+
+#else
+#define SIMPLE_68008_h
+#endif

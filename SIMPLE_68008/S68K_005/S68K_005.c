@@ -1,21 +1,22 @@
 /* S68K_005 */
 
 #include "SIMPLE_68008.h"
+#include "S68K_Serial.h"
 
 /* Function Prototypes go here for compiler warning purposes */
 
 void wait1Sec(void);
 void setLED(unsigned char LEDVal);
-char getCharA(void);
-char getCharB(void);
-void putCharA(char);
-void putCharB(char);
-void printString(char * pStr);
 int strlen(char *);
 int getString(char *);
+void printString(char * pStr);
 int isStrNum(char *);
 int strToNum(char *);
 void intToStr(int, char*);
+/*char getCharA(void);
+char getCharB(void);
+void putCharA(char);
+void putCharB(char); */
 
 int main(void)
 {
@@ -171,6 +172,7 @@ void wait1Sec(void)
 		loopCt -= 1;
 }
 
+/*
 char getCharA(void)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
@@ -222,3 +224,4 @@ void putCharB(char outChar)
 	}
 	*DUART_TBB = outChar;
 }
+*/
