@@ -13,6 +13,7 @@ void putCharB(char);
 void printString(char * pStr);
 int strlen(char *);
 int getString(char *);
+int isStrNum(char *);
 
 int main(void)
 {
@@ -45,10 +46,10 @@ int main(void)
 int strToNum(char * pStr)
 {
 	int numRtn = 0;
+	int offset;
 	if (isStrNum(pStr) == 0)
 		return numRtn;
-	int offset;
-	for (offset=0; offset<len; offset++)
+	for (offset = 0; offset < strlen(pStr); offset++)
 	{
 		numRtn = numRtn * 10;
 		numRtn += (pStr[offset] - '0');
