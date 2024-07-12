@@ -28,7 +28,7 @@ int main(void)
 		}
 		guessCt += 1;
 		printString("Guess #");
-		intToString(guessCt, inStr);
+		intToStr(guessCt, inStr);
 		printString(inStr);
 	}
 }
