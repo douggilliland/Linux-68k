@@ -9,15 +9,22 @@ int main(void)
 	char inStr[80];
 	int iRtn;	
 	printString("Guess a number from 1 to 99\n\r");
-	getString(inStr);
-	iRtn = strToNum(inStr);
-	if (iRtn > 500)
-		printString("Number is too high\n\r");
-	else if (iRtn < 500)
-		printString("Number is too low\n\r");
-	else
-		printString("Good job, you got it\n\r");
+	while (1)
+	{
+		getString(inStr);
+		iRtn = strToNum(inStr);
+		if (iRtn > 50)
+			printString("Number is too high\n\r");
+		else if (iRtn < 50)
+			printString("Number is too low\n\r");
+		else
+		{
+			printString("Good job, you got it\n\r");
+			return;
+		}
+	}
 }
+
 
 #include "S68K_Serial.h"
 #include "S68K_Strings.h"
