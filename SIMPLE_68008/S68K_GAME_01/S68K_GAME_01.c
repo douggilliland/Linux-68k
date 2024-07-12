@@ -13,6 +13,7 @@ int main(void)
 	while (1)
 	{
 		getString(inStr);
+		printString("\n\r");
 /* 		printString("You entered ");
 		printString(inStr);
 		printString(" as a string\n\r"); */
