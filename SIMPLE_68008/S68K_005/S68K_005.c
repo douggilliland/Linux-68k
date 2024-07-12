@@ -11,8 +11,8 @@ char getCharB(void);
 void putCharA(char);
 void putCharB(char);
 void printString(char * pStr);
-unsigned int strlen(char *);
-unsigned int getString(char *);
+int strlen(char *);
+int getString(char *);
 
 int main(void)
 {
@@ -71,7 +71,7 @@ void printString(char * pStr)
 		putCharA(pStr[cc]);
 }
 
-unsigned int strlen(char * strToMeasure)
+int strlen(char * strToMeasure)
 {
 	int ct = 0;
 	while (strToMeasure[ct] != 0)
@@ -135,7 +135,7 @@ void putCharA(char outChar)
 	*DUART_TBA = outChar;
 }
 
-void putCharB(unsigned char outChar)
+void putCharB(char outChar)
 {
 	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
 	unsigned char * DUART_TBB = (unsigned char *) DUART_TBB_ADR;
