@@ -11,7 +11,7 @@ unsigned char getCharB(void);
 void putCharA(unsigned char);
 void putCharB(unsigned char);
 void printString(unsigned char * pStr);
-unsigned int strlen(char *);
+unsigned int strlen(unsigned char *);
 unsigned int getString(unsigned char *);
 
 int main(void)
