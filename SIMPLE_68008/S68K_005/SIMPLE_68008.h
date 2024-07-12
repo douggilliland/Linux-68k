@@ -1,5 +1,5 @@
 /* SIMPLE-68008 Card Defines */
-#ifndef SIMPLE_68008_h	*/
+#ifndef SIMPLE_68008_h
 
 /* DUART Addresses 	*/
 #define DUART_MRA_ADR	0x0F0000	/* Mode Register A (R/W)			*/
