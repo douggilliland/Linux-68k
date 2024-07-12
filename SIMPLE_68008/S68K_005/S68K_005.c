@@ -16,10 +16,12 @@ unsigned int strlen(char * strToMeasure);
 int main(void)
 {
 	unsigned char rxChar;
+	nsigned char inStr[80];
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
 	printString("String to print\n\r");
+	getString(&inStr);
 	while (1)
 	{
 		setLED(1);
@@ -28,6 +30,29 @@ int main(void)
 		wait1Sec();
 		putCharA(rxChar);
 	}
+}
+
+unsigned int getString(unsigned char * strPtr)
+{
+	unsigned int strLen = 0;
+	unsigned char rxChar;
+	unsigned char endFlag = 0;
+	while (endFlag == 0);
+	{
+		rxChar = getCharA();
+		*strPtr = rxChar;
+		strPtr += 1;
+		strLen += 1;
+		endFlag = 0;
+		if (strLen > 78)
+			endFlag = 1;
+		else if (rxChar == '\n)
+			endFlag = 1;
+		else if (rxChar == '\r)
+			endFlag = 1;
+		putCharA(rxChar);
+	}
+	return strLen;
 }
 
 void printString(char * pStr)
