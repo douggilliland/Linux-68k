@@ -20,7 +20,7 @@ int main(void)
 		else
 		{
 			printString("Good job, you got it\n\r");
-			return;
+			return 0;
 		}
 	}
 }
