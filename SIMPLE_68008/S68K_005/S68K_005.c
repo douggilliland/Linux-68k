@@ -21,7 +21,7 @@ int main(void)
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
-	printString("String to print\n\r");
+	printString((unsigned char *)"String to print\n\r");
 	getString(inStr);
 	printString(inStr);
 	while (1)
