@@ -3,7 +3,7 @@
 	.text
 	.section	.rodata
 .LC0:
-	.string	"String to print\n\r"
+	.string	"Turn on LED for a second\n\r"
 .LC1:
 	.string	"\n\r"
 .LC2:
@@ -22,6 +22,9 @@ main:
 	pea .LC0
 	jsr printString
 	addq.l #4,%sp
+	pea 1.w
+	jsr setLED
+	addq.l #4,%sp
 	lea (-89,%fp),%a0
 	move.l %a0,-(%sp)
 	jsr getString
@@ -29,6 +32,10 @@ main:
 	move.l %d0,-8(%fp)
 	pea .LC1
 	jsr printString
+	addq.l #4,%sp
+	jsr wait1Sec
+	clr.l -(%sp)
+	jsr setLED
 	addq.l #4,%sp
 	tst.l -8(%fp)
 	jeq .L2
@@ -49,18 +56,12 @@ main:
 	jsr printString
 	addq.l #4,%sp
 .L4:
-	pea 1.w
-	jsr setLED
-	addq.l #4,%sp
 	jsr getCharA
 	move.b %d0,-9(%fp)
-	clr.l -(%sp)
-	jsr setLED
-	addq.l #4,%sp
-	jsr wait1Sec
-	moveq #0,%d0
 	move.b -9(%fp),%d0
-	move.l %d0,-(%sp)
+	ext.w %d0
+	move.w %d0,%a0
+	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
 	jra .L4
@@ -69,40 +70,44 @@ main:
 	.globl	getString
 	.type	getString, @function
 getString:
-	link.w %fp,#-8
+	link.w %fp,#-12
 	clr.l -4(%fp)
-	clr.b -5(%fp)
+	clr.l -8(%fp)
 	jra .L6
 .L10:
 	jsr getCharA
-	move.b %d0,-6(%fp)
+	move.b %d0,-9(%fp)
 	move.l 8(%fp),%a0
-	move.b -6(%fp),(%a0)
+	move.b -9(%fp),(%a0)
 	addq.l #1,8(%fp)
 	addq.l #1,-4(%fp)
-	clr.b -5(%fp)
+	clr.l -8(%fp)
 	moveq #78,%d0
 	cmp.l -4(%fp),%d0
-	jcc .L7
-	move.b #1,-5(%fp)
+	jge .L7
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
 	jra .L8
 .L7:
-	cmp.b #10,-6(%fp)
+	cmp.b #10,-9(%fp)
 	jne .L9
-	move.b #1,-5(%fp)
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
 	jra .L8
 .L9:
-	cmp.b #13,-6(%fp)
+	cmp.b #13,-9(%fp)
 	jne .L8
-	move.b #1,-5(%fp)
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
 .L8:
-	moveq #0,%d0
-	move.b -6(%fp),%d0
-	move.l %d0,-(%sp)
+	move.b -9(%fp),%d0
+	ext.w %d0
+	move.w %d0,%a0
+	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
 .L6:
-	tst.b -5(%fp)
+	tst.l -8(%fp)
 	jeq .L10
 	move.l 8(%fp),%a0
 	clr.b (%a0)
@@ -121,9 +126,9 @@ printString:
 	move.l 8(%fp),%a0
 	add.l -4(%fp),%a0
 	move.b (%a0),%d0
-	move.b %d0,%d0
-	and.l #255,%d0
-	move.l %d0,-(%sp)
+	ext.w %d0
+	move.w %d0,%a0
+	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
 	addq.l #1,-4(%fp)
@@ -254,13 +259,15 @@ putCharA:
 	jra .L35
 .L36:
 	move.l -6(%fp),%a0
-	move.b (%a0),-1(%fp)
+	move.b (%a0),%d0
+	move.b %d0,-1(%fp)
 	and.b #4,-1(%fp)
 .L35:
 	tst.b -1(%fp)
 	jeq .L36
+	move.b -12(%fp),%d0
 	move.l -10(%fp),%a0
-	move.b -12(%fp),(%a0)
+	move.b %d0,(%a0)
 	nop
 	unlk %fp
 	rts
@@ -279,13 +286,15 @@ putCharB:
 	jra .L38
 .L39:
 	move.l -6(%fp),%a0
-	move.b (%a0),-1(%fp)
+	move.b (%a0),%d0
+	move.b %d0,-1(%fp)
 	and.b #4,-1(%fp)
 .L38:
 	tst.b -1(%fp)
 	jeq .L39
+	move.b -12(%fp),%d0
 	move.l -10(%fp),%a0
-	move.b -12(%fp),(%a0)
+	move.b %d0,(%a0)
 	nop
 	unlk %fp
 	rts
