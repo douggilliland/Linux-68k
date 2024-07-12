@@ -408,7 +408,8 @@ strlen:
 	.type	playGame, @function
 playGame:
 	link.w %fp,#-88
-	clr.l -4(%fp)
+	moveq #1,%d0
+	move.l %d0,-4(%fp)
 	pea .LC0
 	jsr printString
 	addq.l #4,%sp
