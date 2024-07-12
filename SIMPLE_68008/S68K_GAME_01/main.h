@@ -2,8 +2,7 @@
 /* Function Prototypes go here for compiler warning purposes	*/
 
 #ifndef MAIN_h
-void wait1Sec(void);
-void setLED(unsigned char LEDVal);
+int playGame(void);
 /* From S68K_Strings.h	*/
 int strlen(char *);
 int getString(char *);

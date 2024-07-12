@@ -1,12 +1,21 @@
-/* S68K_005 */
+/* S68K_GAME_01.c */
 /* My weird way of using the #includes at the end of the file	*/
 
 #include "SIMPLE_68008.h"
+
 #include "main.h"
 
 int main(void)
 {
-	char inStr[80];
+	return(playGame());
+}
+
+#include "S68K_Serial.h"
+#include "S68K_Strings.h"
+
+int playGame(void)
+{
+	char inStgr[80];
 	int iRtn;
 	int guessCt = 0;
 	printString("Guess a number from 1 to 99\n\r");
@@ -34,7 +43,3 @@ int main(void)
 		guessCt += 1;
 	}
 }
-
-
-#include "S68K_Serial.h"
-#include "S68K_Strings.h"
