@@ -1,33 +1,48 @@
-Sample Game - Guess a number from 1 to 100
+= Sample Game =
 
-Lacks random number generator code
+* This is an example of a C program that runs on the SIMPLE-68008 card
+** Guess a number from 1 to 100
+* Lacks random number generator code
 
-This is an example of a C program that runs on the SIMPLE-68008 card.
+- Development Environment =
 
 You will need a version of gcc built as a cross-compiler for the 68k
-platform. I used gcc version 7.5.0.
+platform (or equivalent). I used gcc version 7.5.0.
 
 Build the code using the provided make file. It gets linked at address
 $2000. To load it into the S68K_002 monitor you can run the
 command "L" and then send the run file to the serial port. On a
 Linux desktop system using the first USB serial port, this command
 works well:
-
+<pre>
 % ascii-xfr -s -l 100 S68K_005.run > /dev/ttyUSB0 
+</pre>
 
 Or just do "make upload".
 
 You can now run the program from the S68K_002 monitor using R2000. Output should
 look like the following:
-
+<pre>
 SIMPLE-68008 CPU
-
 RAM Test Passed
-
  > l
 
-Load S-Record
-
-++++++++++++++++++++++++++++>
-
- > r2000
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>
+> r2000
+Guess a number from 1 to 99
+Guess #1
+99
+Number is too high
+Guess #2
+22
+Number is too low
+Guess #3
+50
+Good job, you got it in 3 tries
+</pre>
+* Program returns to the monitor
+<pre>
+SIMPLE-68008 CPU
+RAM Test Passed
+>
+</pre>
