@@ -20,6 +20,7 @@ int main(void)
 	int lenStr;
 	char rxChar;
 	char inStr[80];
+	int iRtn;
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = 0x0;
 	
@@ -37,7 +38,7 @@ int main(void)
 	printString("\n\r");
 	wait1Sec();
 	printString("Test String to number\n\r");
-	int iRtn = strToNum("12345");
+	iRtn = strToNum("12345");
 	if iRtn == 12345)
 		printString("string to number = OK");
 	else
