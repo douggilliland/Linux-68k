@@ -12,6 +12,9 @@ int main(void)
 	while (1)
 	{
 		getString(inStr);
+		printString("You entered ");
+		printString(inStr);
+		printString(" as a string\n\r");
 		iRtn = strToNum(inStr);
 		if (iRtn > 50)
 			printString("Number is too high\n\r");
