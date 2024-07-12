@@ -13,9 +13,9 @@ int main(void)
 	while (1)
 	{
 		getString(inStr);
-		printString("You entered ");
+/* 		printString("You entered ");
 		printString(inStr);
-		printString(" as a string\n\r");
+		printString(" as a string\n\r"); */
 		iRtn = strToNum(inStr);
 		if (iRtn > 50)
 			printString("Number is too high\n\r");
@@ -30,6 +30,7 @@ int main(void)
 		printString("Guess #");
 		intToStr(guessCt, inStr);
 		printString(inStr);
+		printString("\n\r");
 	}
 }
 
