@@ -15,7 +15,7 @@ int main(void)
 
 int playGame(void)
 {
-	char inStgr[80];
+	char inStr[80];
 	int iRtn;
 	int guessCt = 0;
 	printString("Guess a number from 1 to 99\n\r");
