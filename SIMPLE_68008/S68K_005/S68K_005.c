@@ -15,6 +15,7 @@ int strlen(char *);
 int getString(char *);
 int isStrNum(char *);
 int strToNum(char *);
+void intToStr(int, char*);
 
 int main(void)
 {
@@ -41,14 +42,49 @@ int main(void)
 	printString("Test String to number\n\r");
 	iRtn = strToNum("12345");
 	if (iRtn == 12345)
-		printString("string to number = OK");
+		printString("string to number = OK\n\r");
 	else
-		printString("str to num BAD");
+		printString("str to num BAD\n\r");
+	intToStr(123456, inStr);
+	printString(inStr);
 	while (1)
 	{
 		rxChar = getCharA();
 		putCharA(rxChar);
 	}
+}
+
+void intToStr(int num, char* str)
+{
+    int i = 0;
+    int is_negative = 0;
+    
+    if (num < 0)
+	{
+        is_negative = 1;
+        num = -num;
+    }
+    
+    do 
+	{
+        str[i++] = num % 10 + '0';
+        num /= 10;
+    } while (num > 0);
+    
+    if (is_negative) 
+	{
+        str[i++] = '-';
+    }
+    str[i] = '\0';
+    
+    int j = 0;
+    while (j < i/2) 
+	{
+        char temp = str[j];
+        str[j] = str[i-j-1];
+        str[i-j-1] = temp;
+        j++;
+    }
 }
 
 int strToNum(char * pStr)
