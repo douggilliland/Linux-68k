@@ -1,7 +1,6 @@
 /* S68K_005 */
 
 #include "SIMPLE_68008.h"
-#include "S68K_Serial.h"
 
 /* Function Prototypes go here for compiler warning purposes */
 
@@ -225,3 +224,4 @@ void putCharB(char outChar)
 	*DUART_TBB = outChar;
 }
 */
+#include "S68K_Serial.h"
