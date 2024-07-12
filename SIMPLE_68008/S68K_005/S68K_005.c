@@ -14,6 +14,7 @@ void printString(char * pStr);
 int strlen(char *);
 int getString(char *);
 int isStrNum(char *);
+int strToNum(char *);
 
 int main(void)
 {
