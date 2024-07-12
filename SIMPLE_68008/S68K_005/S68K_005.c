@@ -22,7 +22,7 @@ int main(void)
 	*DUART_OPC = (char) 0x0;
 	
 	printString("String to print\n\r");
-	getString(&inStr);
+	getString(inStr);
 	while (1)
 	{
 		setLED(1);
