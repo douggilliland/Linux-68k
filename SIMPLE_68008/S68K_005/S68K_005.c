@@ -24,6 +24,7 @@ int main(void)
 	
 	printString("Turn on LED for a second\n\r");
 	setLED(1);
+	printString("Type a string\n\r");
 	lenStr = getString(inStr);
 	printString("\n\r");
 	setLED(0);
@@ -39,6 +40,20 @@ int main(void)
 		rxChar = getCharA();
 		putCharA(rxChar);
 	}
+}
+
+int strToNum(char * pStr)
+{
+	int numRtn = 0;
+	if (isStrNum(pStr) == 0)
+		return numRtn;
+	int offset;
+	for (offset=0; offset<len; offset++)
+	{
+		numRtn = numRtn * 10;
+		numRtn += (pStr[offset] - '0');
+	}
+	return numRtn;
 }
 
 int isStrNum(char * strPtr)
