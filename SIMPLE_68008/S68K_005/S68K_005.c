@@ -39,7 +39,7 @@ int main(void)
 	wait1Sec();
 	printString("Test String to number\n\r");
 	iRtn = strToNum("12345");
-	if iRtn == 12345)
+	if (iRtn == 12345)
 		printString("string to number = OK");
 	else
 		printString("str to num BAD");
