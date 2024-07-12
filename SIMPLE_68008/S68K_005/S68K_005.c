@@ -11,8 +11,8 @@ unsigned char getCharB(void);
 void putCharA(unsigned char);
 void putCharB(unsigned char);
 void printString(char * pStr);
-unsigned int strlen(char * strToMeasure);
-unsigned int getString(unsigned char * strPtr);
+unsigned int strlen(char *);
+unsigned int getString(unsigned char *);
 
 int main(void)
 {
