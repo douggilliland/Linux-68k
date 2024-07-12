@@ -16,11 +16,11 @@ int getString(char *);
 
 int main(void)
 {
-	unsigned int lenStr;
+	int lenStr;
 	char rxChar;
 	char inStr[80];
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
-	*DUART_OPC = (char) 0x0;
+	*DUART_OPC = 0x0;
 	
 	printString("Turn on LED for a second\n\r");
 	setLED(1);
