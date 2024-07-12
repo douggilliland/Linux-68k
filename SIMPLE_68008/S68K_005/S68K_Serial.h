@@ -1,4 +1,5 @@
 /* S68K_Serial.h */
+#ifndef S68K_SERIAL_h
 
 #include "SIMPLE_68008.h"
 
@@ -60,3 +61,7 @@ void putCharB(char outChar)
 	}
 	*DUART_TBB = outChar;
 }
+
+#else
+#define S68K_SERIAL_h
+#endif
