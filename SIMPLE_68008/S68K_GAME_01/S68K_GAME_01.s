@@ -5,12 +5,16 @@
 .LC0:
 	.string	"Guess a number from 1 to 99\n\r"
 .LC1:
-	.string	"Number is too high\n\r"
+	.string	"You entered "
 .LC2:
-	.string	"Zero is bad\n\r"
+	.string	" as a string\n\r"
 .LC3:
-	.string	"Number is too low\n\r"
+	.string	"Number is too high\n\r"
 .LC4:
+	.string	"Zero is bad\n\r"
+.LC5:
+	.string	"Number is too low\n\r"
+.LC6:
 	.string	"Good job, you got it\n\r"
 	.text
 	.align	2
@@ -26,6 +30,16 @@ main:
 	move.l %a0,-(%sp)
 	jsr getString
 	addq.l #4,%sp
+	pea .LC1
+	jsr printString
+	addq.l #4,%sp
+	lea (-84,%fp),%a0
+	move.l %a0,-(%sp)
+	jsr printString
+	addq.l #4,%sp
+	pea .LC2
+	jsr printString
+	addq.l #4,%sp
 	lea (-84,%fp),%a0
 	move.l %a0,-(%sp)
 	jsr strToNum
@@ -34,14 +48,14 @@ main:
 	moveq #50,%d0
 	cmp.l -4(%fp),%d0
 	jge .L2
-	pea .LC1
+	pea .LC3
 	jsr printString
 	addq.l #4,%sp
 	jra .L7
 .L2:
 	tst.l -4(%fp)
 	jne .L4
-	pea .LC2
+	pea .LC4
 	jsr printString
 	addq.l #4,%sp
 	moveq #0,%d0
@@ -50,12 +64,12 @@ main:
 	moveq #49,%d0
 	cmp.l -4(%fp),%d0
 	jlt .L6
-	pea .LC3
+	pea .LC5
 	jsr printString
 	addq.l #4,%sp
 	jra .L7
 .L6:
-	pea .LC4
+	pea .LC6
 	jsr printString
 	addq.l #4,%sp
 	moveq #0,%d0
