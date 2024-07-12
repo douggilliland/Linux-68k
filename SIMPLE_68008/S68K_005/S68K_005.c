@@ -6,37 +6,37 @@
 
 void wait1Sec(void);
 void setLED(unsigned char LEDVal);
-unsigned char getCharA(void);
-unsigned char getCharB(void);
-void putCharA(unsigned char);
-void putCharB(unsigned char);
-void printString(unsigned char * pStr);
-unsigned int strlen(unsigned char *);
-unsigned int getString(unsigned char *);
+char getCharA(void);
+char getCharB(void);
+void putCharA(char);
+void putCharB(char);
+void printString(char * pStr);
+unsigned int strlen(char *);
+unsigned int getString(char *);
 
 int main(void)
 {
 	unsigned int lenStr;
-	unsigned char rxChar;
-	unsigned char inStr[80];
+	char rxChar;
+	char inStr[80];
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
-	printString((unsigned char *)"String to print\n\r");
+	printString("Turn on LED for a second\n\r");
+	setLED(1);
 	lenStr = getString(inStr);
-	printString((unsigned char *)"\n\r");
+	printString("\n\r");
+	wait1Sec();
+	setLED(0);
 	if (lenStr > 0)
-		printString((unsigned char *)"String non-zero length\n\r");
+		printString("String non-zero length\n\r");
 	else
-		printString((unsigned char *)"String was zero length\n\r");
-	printString((unsigned char *)inStr);
-	printString((unsigned char *)"\n\r");
+		printString("String was zero length\n\r");
+	printString(inStr);
+	printString("\n\r");
 	while (1)
 	{
-		setLED(1);
 		rxChar = getCharA();
-		setLED(0);
-		wait1Sec();
 		putCharA(rxChar);
 	}
 }
@@ -65,13 +65,13 @@ unsigned int getString(unsigned char * strPtr)
 	return strLen;
 }
 
-void printString(unsigned char * pStr)
+void printString(char * pStr)
 {
 	for (unsigned int cc = 0; cc < strlen(pStr); cc++)
 		putCharA(pStr[cc]);
 }
 
-unsigned int strlen(unsigned char * strToMeasure)
+unsigned int strlen(char * strToMeasure)
 {
 	int ct = 0;
 	while (strToMeasure[ct] != 0)
@@ -96,7 +96,7 @@ void wait1Sec(void)
 		loopCt -= 1;
 }
 
-unsigned char getCharA(void)
+char getCharA(void)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
 	unsigned char * DUART_RBA = (unsigned char *) DUART_RBA_ADR;
@@ -109,7 +109,7 @@ unsigned char getCharA(void)
 	return (*DUART_RBA);
 }
 
-unsigned char getCharB(void)
+char getCharB(void)
 {
 	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
 	unsigned char * DUART_RBB = (unsigned char *) DUART_RBB_ADR;
@@ -122,11 +122,11 @@ unsigned char getCharB(void)
 	return (*DUART_RBB);
 }
 
-void putCharA(unsigned char outChar)
+void putCharA(char outChar)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
 	unsigned char * DUART_TBA = (unsigned char *) DUART_TBA_ADR;
-	unsigned char stat = 0;
+	char stat = 0;
 	while (stat == 0)
 	{
 		stat = *DUART_SRA;
@@ -139,7 +139,7 @@ void putCharB(unsigned char outChar)
 {
 	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
 	unsigned char * DUART_TBB = (unsigned char *) DUART_TBB_ADR;
-	unsigned char stat = 0;
+	char stat = 0;
 	while (stat == 0)
 	{
 		stat = *DUART_SRB;
