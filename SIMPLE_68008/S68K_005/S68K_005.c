@@ -26,7 +26,6 @@ int main(void)
 	setLED(1);
 	lenStr = getString(inStr);
 	printString("\n\r");
-	wait1Sec();
 	setLED(0);
 	if (lenStr > 0)
 		printString("String non-zero length\n\r");
@@ -34,11 +33,27 @@ int main(void)
 		printString("String was zero length\n\r");
 	printString(inStr);
 	printString("\n\r");
+	wait1Sec();
 	while (1)
 	{
 		rxChar = getCharA();
 		putCharA(rxChar);
 	}
+}
+
+int isStrNum(char * strPtr)
+{
+	int offset;
+	int len;
+	len = strlen(strPtr);
+	for (offset=0; offset<len; offset++)
+	{
+		if (strPtr[offset] > '9')
+			return 0;
+		if (strPtr[offset] < '0')
+			return 0;
+	}
+	return 1;
 }
 
 int getString(char * strPtr)
