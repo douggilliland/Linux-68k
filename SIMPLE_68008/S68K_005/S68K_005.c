@@ -17,7 +17,7 @@ unsigned int getString(unsigned char * strPtr);
 int main(void)
 {
 	unsigned char rxChar;
-	nsigned char inStr[80];
+	unsigned char inStr[80];
 	unsigned char * DUART_OPC = (unsigned char *) DUART_OPC_ADR;	/* Output port config (W)	*/
 	*DUART_OPC = (char) 0x0;
 	
