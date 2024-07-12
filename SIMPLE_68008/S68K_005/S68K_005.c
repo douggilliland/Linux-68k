@@ -12,6 +12,7 @@ void putCharA(unsigned char);
 void putCharB(unsigned char);
 void printString(char * pStr);
 unsigned int strlen(char * strToMeasure);
+unsigned int getString(unsigned char * strPtr);
 
 int main(void)
 {
