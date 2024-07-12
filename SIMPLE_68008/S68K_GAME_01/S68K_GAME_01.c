@@ -15,6 +15,11 @@ int main(void)
 		iRtn = strToNum(inStr);
 		if (iRtn > 50)
 			printString("Number is too high\n\r");
+		else if (iRtn == 0)
+			{
+			printString("Zero is bad\n\r");
+			return 0;
+			}
 		else if (iRtn < 50)
 			printString("Number is too low\n\r");
 		else
