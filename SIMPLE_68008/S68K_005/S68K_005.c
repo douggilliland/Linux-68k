@@ -23,7 +23,7 @@ int main(void)
 	
 	printString((unsigned char *)"String to print\n\r");
 	getString(inStr);
-	printString(inStr);
+	printString(&inStr);
 	while (1)
 	{
 		setLED(1);
