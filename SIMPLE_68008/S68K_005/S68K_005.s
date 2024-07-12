@@ -5,8 +5,10 @@
 .LC0:
 	.string	"String to print\n\r"
 .LC1:
-	.string	"String non-zero length\n\r"
+	.string	"\n\r"
 .LC2:
+	.string	"String non-zero length\n\r"
+.LC3:
 	.string	"String was zero length\n\r"
 	.text
 	.align	2
@@ -25,19 +27,25 @@ main:
 	jsr getString
 	addq.l #4,%sp
 	move.l %d0,-8(%fp)
+	pea .LC1
+	jsr printString
+	addq.l #4,%sp
 	tst.l -8(%fp)
 	jeq .L2
-	pea .LC1
+	pea .LC2
 	jsr printString
 	addq.l #4,%sp
 	jra .L3
 .L2:
-	pea .LC2
+	pea .LC3
 	jsr printString
 	addq.l #4,%sp
 .L3:
 	lea (-89,%fp),%a0
 	move.l %a0,-(%sp)
+	jsr printString
+	addq.l #4,%sp
+	pea .LC1
 	jsr printString
 	addq.l #4,%sp
 .L4:
