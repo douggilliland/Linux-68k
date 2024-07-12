@@ -10,7 +10,7 @@ unsigned char getCharA(void);
 unsigned char getCharB(void);
 void putCharA(unsigned char);
 void putCharB(unsigned char);
-void printString(char * pStr);
+void printString(unsigned char * pStr);
 unsigned int strlen(char *);
 unsigned int getString(unsigned char *);
 
@@ -57,7 +57,7 @@ unsigned int getString(unsigned char * strPtr)
 	return strLen;
 }
 
-void printString(char * pStr)
+void printString(unsigned char * pStr)
 {
 	for (unsigned int cc = 0; cc < strlen(pStr); cc++)
 		putCharA(pStr[cc]);
