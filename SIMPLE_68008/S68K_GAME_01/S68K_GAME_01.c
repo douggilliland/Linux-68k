@@ -1,8 +1,8 @@
 /* S68K_GAME_01.c 									*/
 /* First Game for the SIMPLE-68008					*/
+/* Number guessing game								*/
 
 #include "SIMPLE_68008.h"
-
 #include "main.h"
 
 /* Putting main() here before defines 
