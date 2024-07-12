@@ -9,10 +9,12 @@
 .LC2:
 	.string	"Number is too low\n\r"
 .LC3:
-	.string	"Good job, you got it\n\r"
+	.string	"Good job, you got it in "
 .LC4:
-	.string	"Guess #"
+	.string	" tries\n\r"
 .LC5:
+	.string	"Guess #"
+.LC6:
 	.string	"\n\r"
 	.text
 	.align	2
@@ -53,11 +55,23 @@ main:
 	pea .LC3
 	jsr printString
 	addq.l #4,%sp
+	lea (-88,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -4(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-88,%fp),%a0
+	move.l %a0,-(%sp)
+	jsr printString
+	addq.l #4,%sp
+	pea .LC4
+	jsr printString
+	addq.l #4,%sp
 	moveq #0,%d0
 	jra .L7
 .L3:
 	addq.l #1,-4(%fp)
-	pea .LC4
+	pea .LC5
 	jsr printString
 	addq.l #4,%sp
 	lea (-88,%fp),%a0
@@ -69,7 +83,7 @@ main:
 	move.l %a0,-(%sp)
 	jsr printString
 	addq.l #4,%sp
-	pea .LC5
+	pea .LC6
 	jsr printString
 	addq.l #4,%sp
 	jra .L6
