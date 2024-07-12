@@ -12,10 +12,10 @@ void printString(char * pStr);
 int isStrNum(char *);
 int strToNum(char *);
 void intToStr(int, char*);
-/*char getCharA(void);
+char getCharA(void);
 char getCharB(void);
 void putCharA(char);
-void putCharB(char); */
+void putCharB(char);
 
 int main(void)
 {
