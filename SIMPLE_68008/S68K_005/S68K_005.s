@@ -106,6 +106,142 @@ main:
 	addq.l #4,%sp
 	jra .L6
 	.size	main, .-main
+	.align	2
+	.globl	setLED
+	.type	setLED, @function
+setLED:
+	link.w %fp,#-12
+	move.l 8(%fp),%d0
+	move.b %d0,%d0
+	move.b %d0,-10(%fp)
+	move.l #983068,-4(%fp)
+	move.l #983070,-8(%fp)
+	tst.b -10(%fp)
+	jne .L8
+	move.l -4(%fp),%a0
+	move.b #4,(%a0)
+	jra .L10
+.L8:
+	move.l -8(%fp),%a0
+	move.b #4,(%a0)
+.L10:
+	nop
+	unlk %fp
+	rts
+	.size	setLED, .-setLED
+	.align	2
+	.globl	wait1Sec
+	.type	wait1Sec, @function
+wait1Sec:
+	link.w %fp,#-4
+	move.l #50000,-4(%fp)
+	jra .L12
+.L13:
+	subq.l #1,-4(%fp)
+.L12:
+	tst.l -4(%fp)
+	jne .L13
+	nop
+	nop
+	unlk %fp
+	rts
+	.size	wait1Sec, .-wait1Sec
+	.align	2
+	.globl	getCharA
+	.type	getCharA, @function
+getCharA:
+	link.w %fp,#-12
+	move.l #983042,-6(%fp)
+	move.l #983046,-10(%fp)
+	clr.b -1(%fp)
+	jra .L15
+.L16:
+	move.l -6(%fp),%a0
+	move.b (%a0),-1(%fp)
+	and.b #1,-1(%fp)
+.L15:
+	tst.b -1(%fp)
+	jeq .L16
+	move.l -10(%fp),%a0
+	move.b (%a0),%d0
+	unlk %fp
+	rts
+	.size	getCharA, .-getCharA
+	.align	2
+	.globl	getCharB
+	.type	getCharB, @function
+getCharB:
+	link.w %fp,#-12
+	move.l #983058,-6(%fp)
+	move.l #983062,-10(%fp)
+	clr.b -1(%fp)
+	jra .L19
+.L20:
+	move.l -6(%fp),%a0
+	move.b (%a0),-1(%fp)
+	and.b #1,-1(%fp)
+.L19:
+	tst.b -1(%fp)
+	jeq .L20
+	move.l -10(%fp),%a0
+	move.b (%a0),%d0
+	unlk %fp
+	rts
+	.size	getCharB, .-getCharB
+	.align	2
+	.globl	putCharA
+	.type	putCharA, @function
+putCharA:
+	link.w %fp,#-12
+	move.l 8(%fp),%d0
+	move.b %d0,%d0
+	move.b %d0,-12(%fp)
+	move.l #983042,-6(%fp)
+	move.l #983046,-10(%fp)
+	clr.b -1(%fp)
+	jra .L23
+.L24:
+	move.l -6(%fp),%a0
+	move.b (%a0),%d0
+	move.b %d0,-1(%fp)
+	and.b #4,-1(%fp)
+.L23:
+	tst.b -1(%fp)
+	jeq .L24
+	move.b -12(%fp),%d0
+	move.l -10(%fp),%a0
+	move.b %d0,(%a0)
+	nop
+	unlk %fp
+	rts
+	.size	putCharA, .-putCharA
+	.align	2
+	.globl	putCharB
+	.type	putCharB, @function
+putCharB:
+	link.w %fp,#-12
+	move.l 8(%fp),%d0
+	move.b %d0,%d0
+	move.b %d0,-12(%fp)
+	move.l #983058,-6(%fp)
+	move.l #983062,-10(%fp)
+	clr.b -1(%fp)
+	jra .L26
+.L27:
+	move.l -6(%fp),%a0
+	move.b (%a0),%d0
+	move.b %d0,-1(%fp)
+	and.b #4,-1(%fp)
+.L26:
+	tst.b -1(%fp)
+	jeq .L27
+	move.b -12(%fp),%d0
+	move.l -10(%fp),%a0
+	move.b %d0,(%a0)
+	nop
+	unlk %fp
+	rts
+	.size	putCharB, .-putCharB
 	.globl	__modsi3
 	.globl	__divsi3
 	.align	2
@@ -117,11 +253,11 @@ intToStr:
 	clr.l -4(%fp)
 	clr.l -8(%fp)
 	tst.l 8(%fp)
-	jge .L9
+	jge .L30
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
 	neg.l 8(%fp)
-.L9:
+.L30:
 	move.l 8(%fp),%d0
 	pea 10.w
 	move.l %d0,-(%sp)
@@ -145,9 +281,9 @@ intToStr:
 	addq.l #8,%sp
 	move.l %d0,8(%fp)
 	tst.l 8(%fp)
-	jgt .L9
+	jgt .L30
 	tst.l -8(%fp)
-	jeq .L10
+	jeq .L31
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	addq.l #1,%d1
@@ -155,14 +291,14 @@ intToStr:
 	move.l 12(%fp),%a0
 	add.l %d0,%a0
 	move.b #45,(%a0)
-.L10:
+.L31:
 	move.l -4(%fp),%d0
 	move.l 12(%fp),%a0
 	add.l %d0,%a0
 	clr.b (%a0)
 	clr.l -12(%fp)
-	jra .L11
-.L12:
+	jra .L32
+.L33:
 	move.l -12(%fp),%d0
 	move.l 12(%fp),%a0
 	add.l %d0,%a0
@@ -184,7 +320,7 @@ intToStr:
 	add.l %d0,%a0
 	move.b -13(%fp),(%a0)
 	addq.l #1,-12(%fp)
-.L11:
+.L32:
 	move.l -4(%fp),%d0
 	move.l %d0,%d1
 	add.l %d1,%d1
@@ -193,7 +329,7 @@ intToStr:
 	add.l %d1,%d0
 	asr.l #1,%d0
 	cmp.l -12(%fp),%d0
-	jgt .L12
+	jgt .L33
 	nop
 	nop
 	move.l -20(%fp),%d2
@@ -210,13 +346,13 @@ strToNum:
 	jsr isStrNum
 	addq.l #4,%sp
 	tst.l %d0
-	jne .L14
+	jne .L35
 	move.l -4(%fp),%d0
-	jra .L15
-.L14:
+	jra .L36
+.L35:
 	clr.l -8(%fp)
-	jra .L16
-.L17:
+	jra .L37
+.L38:
 	move.l -4(%fp),%d1
 	move.l %d1,%d0
 	add.l %d0,%d0
@@ -234,14 +370,14 @@ strToNum:
 	add.l %a0,%d0
 	add.l %d0,-4(%fp)
 	addq.l #1,-8(%fp)
-.L16:
+.L37:
 	move.l 8(%fp),-(%sp)
 	jsr strlen
 	addq.l #4,%sp
 	cmp.l -8(%fp),%d0
-	jgt .L17
+	jgt .L38
 	move.l -4(%fp),%d0
-.L15:
+.L36:
 	unlk %fp
 	rts
 	.size	strToNum, .-strToNum
@@ -255,33 +391,33 @@ isStrNum:
 	addq.l #4,%sp
 	move.l %d0,-8(%fp)
 	clr.l -4(%fp)
-	jra .L19
-.L23:
+	jra .L40
+.L44:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	cmp.b #57,%d0
-	jle .L20
+	jle .L41
 	moveq #0,%d0
-	jra .L21
-.L20:
+	jra .L42
+.L41:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	cmp.b #47,%d0
-	jgt .L22
+	jgt .L43
 	moveq #0,%d0
-	jra .L21
-.L22:
+	jra .L42
+.L43:
 	addq.l #1,-4(%fp)
-.L19:
+.L40:
 	move.l -4(%fp),%d0
 	cmp.l -8(%fp),%d0
-	jlt .L23
+	jlt .L44
 	moveq #1,%d0
-.L21:
+.L42:
 	unlk %fp
 	rts
 	.size	isStrNum, .-isStrNum
@@ -292,8 +428,8 @@ getString:
 	link.w %fp,#-12
 	clr.l -4(%fp)
 	clr.l -8(%fp)
-	jra .L25
-.L29:
+	jra .L46
+.L50:
 	jsr getCharA
 	move.b %d0,-9(%fp)
 	move.l 8(%fp),%a0
@@ -303,31 +439,31 @@ getString:
 	clr.l -8(%fp)
 	moveq #78,%d0
 	cmp.l -4(%fp),%d0
-	jge .L26
+	jge .L47
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-	jra .L27
-.L26:
+	jra .L48
+.L47:
 	cmp.b #10,-9(%fp)
-	jne .L28
+	jne .L49
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-	jra .L27
-.L28:
+	jra .L48
+.L49:
 	cmp.b #13,-9(%fp)
-	jne .L27
+	jne .L48
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-.L27:
+.L48:
 	move.b -9(%fp),%d0
 	ext.w %d0
 	move.w %d0,%a0
 	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
-.L25:
+.L46:
 	tst.l -8(%fp)
-	jeq .L29
+	jeq .L50
 	move.l 8(%fp),%a0
 	clr.b (%a0)
 	move.l -4(%fp),%d0
@@ -340,8 +476,8 @@ getString:
 printString:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L32
-.L33:
+	jra .L53
+.L54:
 	move.l 8(%fp),%a0
 	add.l -4(%fp),%a0
 	move.b (%a0),%d0
@@ -351,12 +487,12 @@ printString:
 	jsr putCharA
 	addq.l #4,%sp
 	addq.l #1,-4(%fp)
-.L32:
+.L53:
 	move.l 8(%fp),-(%sp)
 	jsr strlen
 	addq.l #4,%sp
 	cmp.l -4(%fp),%d0
-	jhi .L33
+	jhi .L54
 	nop
 	nop
 	unlk %fp
@@ -368,154 +504,18 @@ printString:
 strlen:
 	link.w %fp,#-4
 	clr.l -4(%fp)
-	jra .L35
-.L36:
+	jra .L56
+.L57:
 	addq.l #1,-4(%fp)
-.L35:
+.L56:
 	move.l -4(%fp),%d0
 	move.l 8(%fp),%a0
 	add.l %d0,%a0
 	move.b (%a0),%d0
 	tst.b %d0
-	jne .L36
+	jne .L57
 	move.l -4(%fp),%d0
 	unlk %fp
 	rts
 	.size	strlen, .-strlen
-	.align	2
-	.globl	setLED
-	.type	setLED, @function
-setLED:
-	link.w %fp,#-12
-	move.l 8(%fp),%d0
-	move.b %d0,%d0
-	move.b %d0,-10(%fp)
-	move.l #983068,-4(%fp)
-	move.l #983070,-8(%fp)
-	tst.b -10(%fp)
-	jne .L39
-	move.l -4(%fp),%a0
-	move.b #4,(%a0)
-	jra .L41
-.L39:
-	move.l -8(%fp),%a0
-	move.b #4,(%a0)
-.L41:
-	nop
-	unlk %fp
-	rts
-	.size	setLED, .-setLED
-	.align	2
-	.globl	wait1Sec
-	.type	wait1Sec, @function
-wait1Sec:
-	link.w %fp,#-4
-	move.l #50000,-4(%fp)
-	jra .L43
-.L44:
-	subq.l #1,-4(%fp)
-.L43:
-	tst.l -4(%fp)
-	jne .L44
-	nop
-	nop
-	unlk %fp
-	rts
-	.size	wait1Sec, .-wait1Sec
-	.align	2
-	.globl	getCharA
-	.type	getCharA, @function
-getCharA:
-	link.w %fp,#-12
-	move.l #983042,-6(%fp)
-	move.l #983046,-10(%fp)
-	clr.b -1(%fp)
-	jra .L46
-.L47:
-	move.l -6(%fp),%a0
-	move.b (%a0),-1(%fp)
-	and.b #1,-1(%fp)
-.L46:
-	tst.b -1(%fp)
-	jeq .L47
-	move.l -10(%fp),%a0
-	move.b (%a0),%d0
-	unlk %fp
-	rts
-	.size	getCharA, .-getCharA
-	.align	2
-	.globl	getCharB
-	.type	getCharB, @function
-getCharB:
-	link.w %fp,#-12
-	move.l #983058,-6(%fp)
-	move.l #983062,-10(%fp)
-	clr.b -1(%fp)
-	jra .L50
-.L51:
-	move.l -6(%fp),%a0
-	move.b (%a0),-1(%fp)
-	and.b #1,-1(%fp)
-.L50:
-	tst.b -1(%fp)
-	jeq .L51
-	move.l -10(%fp),%a0
-	move.b (%a0),%d0
-	unlk %fp
-	rts
-	.size	getCharB, .-getCharB
-	.align	2
-	.globl	putCharA
-	.type	putCharA, @function
-putCharA:
-	link.w %fp,#-12
-	move.l 8(%fp),%d0
-	move.b %d0,%d0
-	move.b %d0,-12(%fp)
-	move.l #983042,-6(%fp)
-	move.l #983046,-10(%fp)
-	clr.b -1(%fp)
-	jra .L54
-.L55:
-	move.l -6(%fp),%a0
-	move.b (%a0),%d0
-	move.b %d0,-1(%fp)
-	and.b #4,-1(%fp)
-.L54:
-	tst.b -1(%fp)
-	jeq .L55
-	move.b -12(%fp),%d0
-	move.l -10(%fp),%a0
-	move.b %d0,(%a0)
-	nop
-	unlk %fp
-	rts
-	.size	putCharA, .-putCharA
-	.align	2
-	.globl	putCharB
-	.type	putCharB, @function
-putCharB:
-	link.w %fp,#-12
-	move.l 8(%fp),%d0
-	move.b %d0,%d0
-	move.b %d0,-12(%fp)
-	move.l #983058,-6(%fp)
-	move.l #983062,-10(%fp)
-	clr.b -1(%fp)
-	jra .L57
-.L58:
-	move.l -6(%fp),%a0
-	move.b (%a0),%d0
-	move.b %d0,-1(%fp)
-	and.b #4,-1(%fp)
-.L57:
-	tst.b -1(%fp)
-	jeq .L58
-	move.b -12(%fp),%d0
-	move.l -10(%fp),%a0
-	move.b %d0,(%a0)
-	nop
-	unlk %fp
-	rts
-	.size	putCharB, .-putCharB
 	.ident	"GCC: (GNU) 9.3.1 20200817"
