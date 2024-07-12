@@ -89,16 +89,25 @@ int getString(char * strPtr)
 	{
 		rxChar = getCharA();
 		*strPtr = rxChar;
-		strPtr += 1;
 		strLen += 1;
 		endFlag = 0;
 		if (strLen > 78)
 			endFlag = 1;
 		else if (rxChar == '\n')
+		{
+			*strPtr = 0;
 			endFlag = 1;
+		}
 		else if (rxChar == '\r')
+		{
+			*strPtr = 0;
 			endFlag = 1;
-		putCharA(rxChar);
+		}
+		else
+		{
+			putCharA(rxChar);
+			strPtr += 1;
+		}
 	}
 	*strPtr = 0;
 	return strLen;
