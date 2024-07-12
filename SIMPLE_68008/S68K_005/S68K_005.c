@@ -47,9 +47,9 @@ unsigned int getString(unsigned char * strPtr)
 		endFlag = 0;
 		if (strLen > 78)
 			endFlag = 1;
-		else if (rxChar == '\n)
+		else if (rxChar == '\n')
 			endFlag = 1;
-		else if (rxChar == '\r)
+		else if (rxChar == '\r')
 			endFlag = 1;
 		putCharA(rxChar);
 	}
