@@ -1,3 +1,7 @@
+Sample Game - Guess a number from 1 to 100
+
+Lacks random number generator code
+
 This is an example of a C program that runs on the SIMPLE-68008 card.
 
 You will need a version of gcc built as a cross-compiler for the 68k
