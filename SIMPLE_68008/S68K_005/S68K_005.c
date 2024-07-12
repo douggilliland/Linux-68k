@@ -36,6 +36,12 @@ int main(void)
 	printString(inStr);
 	printString("\n\r");
 	wait1Sec();
+	printString("Test String to number\n\r");
+	int iRtn = strToNum("12345");
+	if iRtn == 12345)
+		printString("string to number = OK");
+	else
+		printString("str to num BAD");
 	while (1)
 	{
 		rxChar = getCharA();
