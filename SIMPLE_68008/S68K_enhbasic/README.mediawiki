@@ -1,6 +1,6 @@
 == Enhanced BASIC ==
 
-* This is a port of Lee Davison's Enhanced Basic for 68000 to Jeff Tranter's TS2 single board computer
+* This is based on a port of Lee Davison's Enhanced Basic for 68000 to Jeff Tranter's TS2 single board computer
 * Runs on SIMPLE-68008 card
 
 * Assembled using the VASM retargetable assembler
