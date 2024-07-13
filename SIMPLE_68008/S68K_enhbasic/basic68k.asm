@@ -165,8 +165,8 @@ code_start
     MOVE.b  #$20,CRA       * Reset Receiver
     MOVE.b  #$10,CRA       * Reset Mode Register Pointer
     
-    MOVE.b  #$80,ACR       * Baud Rate Set #2
-    MOVE.b  #$BB,CSRA      * Set Tx and Rx rates to 9600
+    MOVE.b  #$00,ACR       * Baud Rate Set #2
+    MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
     MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
     MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
     
@@ -176,7 +176,7 @@ code_start
     MOVE.b  #$20,CRB       * Reset Receiver
     MOVE.b  #$10,CRB       * Reset Mode Register Pointer
     
-    MOVE.b  #$BB,CSRB      * Set Tx and Rx rates to 9600
+    MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
     MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
     MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
     
