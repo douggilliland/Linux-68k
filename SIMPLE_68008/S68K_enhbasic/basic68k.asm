@@ -161,29 +161,29 @@ VEC_SV
 
 code_start
                             * Set up ACIA parameters
-    move.b  #$30, CRA       * Reset Transmitter
-    move.b  #$20, CRA       * Reset Receiver
-    move.b  #$10, CRA       * Reset Mode Register Pointer
+    MOVE.b  #$30, CRA       * Reset Transmitter
+    MOVE.b  #$20, CRA       * Reset Receiver
+    MOVE.b  #$10, CRA       * Reset Mode Register Pointer
     
-    move.b  #$80, ACR       * Baud Rate Set #2
-    move.b  #$BB, CSRA      * Set Tx and Rx rates to 9600
-    move.b  #$93, MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    move.b  #$07, MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
+    MOVE.b  #$80, ACR       * Baud Rate Set #2
+    MOVE.b  #$BB, CSRA      * Set Tx and Rx rates to 9600
+    MOVE.b  #$93, MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    MOVE.b  #$07, MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    move.b  #$05, CRA       * Enable Transmit/Recieve
+    MOVE.b  #$05, CRA       * Enable Transmit/Recieve
 
-    move.b  #$30, CRB       * Reset Transmitter
-    move.b  #$20, CRB       * Reset Receiver
-    move.b  #$10, CRB       * Reset Mode Register Pointer
+    MOVE.b  #$30, CRB       * Reset Transmitter
+    MOVE.b  #$20, CRB       * Reset Receiver
+    MOVE.b  #$10, CRB       * Reset Mode Register Pointer
     
-    move.b  #$BB, CSRB      * Set Tx and Rx rates to 9600
-    move.b  #$93, MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    move.b  #$07, MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
+    MOVE.b  #$BB, CSRB      * Set Tx and Rx rates to 9600
+    MOVE.b  #$93, MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    MOVE.b  #$07, MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    move.b  #$05, CRB       * Enable Transmit/Recieve
+    MOVE.b  #$05, CRB       * Enable Transmit/Recieve
 	
-	move.b	#$00, OPC		* Output port configuration (all bit are outs)
-	move.b	#$FC, OPR		* Clear all outputs
+	MOVE.b	#$00, OPC		* Output port configuration (all bit are outs)
+	MOVE.b	#$FC, OPR		* Clear all outputs
 
 * to tell EhBASIC where and how much RAM it has pass the address in a0 and the size
 * in d0. these values are at the end of the .inc file
