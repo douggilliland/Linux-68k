@@ -877,7 +877,7 @@ initDuart:
     move.b  #0x20, CRA       | Reset Receiver
     move.b  #0x10, CRA       | Reset Mode Register Pointer
     
-    move.b  #0x80, ACR       | Baud Rate Set #2
+    move.b  #0x00, ACR       | Baud Rate Set #2
 |    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
     move.b  #0xCC, CSRA      | Set Tx and Rx rates to 38400
     move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
