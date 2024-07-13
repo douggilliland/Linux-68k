@@ -208,7 +208,7 @@
  169               	| Interpreter Loop
  170               	|
  171               	interpLoop:
- 172 804e2 41FA 0724 	    lea     msgPrompt, %a0	| Prompt
+ 172 804e2 41FA 072A 	    lea     msgPrompt, %a0	| Prompt
  173 804e6 6100 004E 	    bsr.w   printString
  174 804ea 13FC 0004 		move.b	#0x04, OPR		| Turn on LED
  174      000F 001E 
@@ -390,7 +390,7 @@
  329 80654 0C00 0000 	    cmp.b   #0, %d0             | Ignore blank lines
  330 80658 6708      	    beq.s   .exit               
  331               	 .invalid:   
- 332 8065a 41FA 0516 	    lea     msgInvalidCommand, %a0
+ 332 8065a 41FA 051C 	    lea     msgInvalidCommand, %a0
  333 8065e 6100 FED6 	    bsr.w   printString
  334               	 .exit:
  335 80662 4CDF 0C00 	    movem.l (%SP)+, %a2-%a3     | Restore registers
@@ -399,15 +399,15 @@
  338               	|||||||||||||||||||||||||||||||
  339               	|| HELP command
  340               	 .help:
- 341 80668 41FA 051D 	    lea     msgHelp, %a0
+ 341 80668 41FA 0523 	    lea     msgHelp, %a0
  342 8066c 6100 FEC8 	    bsr.w   printString
  343 80670 6000 FFF0 	    bra.w   .exit
  344               	 .invalidAddr:
- 345 80674 41FA 0570 	    lea     msgInvalidAddress, %a0
+ 345 80674 41FA 0576 	    lea     msgInvalidAddress, %a0
  346 80678 6100 FEBC 	    bsr.w   printString
  347 8067c 6000 FFE4 	    bra.w   .exit
  348               	 .invalidVal:
- 349 80680 41FA 0576 	    lea     msgInvalidValue, %a0
+ 349 80680 41FA 057C 	    lea     msgInvalidValue, %a0
  350 80684 6100 FEB0 	    bsr.w   printString
  351 80688 6000 FFD8 	    bra.w   .exit
  352               		
@@ -505,7 +505,7 @@
  435               	|
  436               	
  437               	loadSRec:
- 438 80716 41FA 04BE 	    lea     ldSRecMsg, %a0					| "Load S-Record"
+ 438 80716 41FA 04C4 	    lea     ldSRecMsg, %a0					| "Load S-Record"
  439 8071a 6100 FE1A 	    bsr.w   printString
  440               	loadSRecLoop:
  441 8071e 6100 0096 		bsr		setRecType
@@ -777,7 +777,7 @@
  681               	 .line:
  682 80900 200A      	    move.l  %a2, %d0          
  683 80902 6100 010E 	    bsr.w   printHexAddr     	| Starting address of this line
- 684 80906 41FA 0303 	    lea     msgColonSpace, %a0
+ 684 80906 41FA 0309 	    lea     msgColonSpace, %a0
 68K GAS  S68K_002.s 			page 14
 
 
@@ -829,7 +829,7 @@
  730 80976 6100 FB96 	    bsr.w   outChar
  731 8097a 60DA      	    bra.s   .endbytesLoop
  732               	 .endline:
- 733 8097c 41FA 0290 	    lea     msgNewline, %a0
+ 733 8097c 41FA 0296 	    lea     msgNewline, %a0
  734 80980 6100 FBB4 	    bsr.w   printString
  735 80984 4A82      	    tst.l   %d2
  736 80986 6F04      	    ble.s   .end
@@ -993,183 +993,186 @@
  879               	    
  880 80a88 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
  880      000F 0008 
- 881 80a90 13FC 00BB 	    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
- 881      000F 0002 
- 882 80a98 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 882      000F 0000 
- 883 80aa0 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 881               	|    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+ 882 80a90 13FC 00CC 	    move.b  #0xCC, CSRA      | Set Tx and Rx rates to 38400
+ 882      000F 0002 
+ 883 80a98 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
  883      000F 0000 
- 884               	    
- 885 80aa8 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
- 885      000F 0004 
- 886               	
- 887 80ab0 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
- 887      000F 0014 
- 888 80ab8 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
+ 884 80aa0 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 884      000F 0000 
+ 885               	    
+ 886 80aa8 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
+ 886      000F 0004 
+ 887               	
+ 888 80ab0 13FC 0030 	    move.b  #0x30, CRB       | Reset Transmitter
  888      000F 0014 
- 889 80ac0 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
+ 889 80ab8 13FC 0020 	    move.b  #0x20, CRB       | Reset Receiver
  889      000F 0014 
- 890               	    
- 891 80ac8 13FC 00BB 	    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
- 891      000F 0012 
- 892 80ad0 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
- 892      000F 0010 
- 893 80ad8 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
- 893      000F 0010 
- 894               	    
- 895 80ae0 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 890 80ac0 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
+ 890      000F 0014 
+ 891               	    
+ 892               	|    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 893 80ac8 13FC 00CC 	    move.b  #0xcc, CSRB      | Set Tx and Rx rates to 38400
+ 893      000F 0012 
+ 894 80ad0 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+ 894      000F 0010 
+ 895 80ad8 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
+ 895      000F 0010 
 68K GAS  S68K_002.s 			page 18
 
 
- 895      000F 0014 
- 896               		
- 897 80ae8 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
- 897      000F 001A 
- 898 80af0 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
- 898      000F 001E 
- 899 80af8 4E75      	    rts    
- 900               	
- 901               	delay1Sec:
- 902 80afa 203C 0003 		move.l	#200000, %d0	| rough count
- 902      0D40 
- 903               	delay1Loop:
- 904 80b00 5380      		sub.l	#1, %d0			
- 905 80b02 6600 FFFC 		bne		delay1Loop
- 906 80b06 4E75      		rts
- 907               	
- 908               	READINLINE:	  
- 909 80b08 5265 6164 		.ascii  "Reading in line"
- 909      696E 6720 
- 909      696E 206C 
- 909      696E 65
- 910 80b17 0D0A 00   		dc.b CR,LF,EOT
- 911               	L_TO_UPPER_MSG:  
- 912 80b1a 436F 6E76 		.ascii  "Convert line to upper case"
- 912      6572 7420 
- 912      6C69 6E65 
- 912      2074 6F20 
- 912      7570 7065 
- 913 80b34 0D0A 00   		dc.b CR,LF,EOT
- 914               	WRITEOUTLINE:	  
- 915 80b37 5772 6974 		.ascii  "Writing out line"
- 915      696E 6720 
- 915      6F75 7420 
- 915      6C69 6E65 
- 916 80b47 0D0A 00   		dc.b CR,LF,EOT
- 917               	RAM_PASS_MSG:  
- 918 80b4a 5241 4D20 		.ascii  "RAM Test Passed"
- 918      5465 7374 
- 918      2050 6173 
- 918      7365 64
- 919 80b59 0D0A 00   		dc.b CR,LF,EOT
- 920               	msgDepositPrompt:
- 921 80b5c 3A20      	    .ascii	": "
- 922 80b5e 00        		dc.b 	EOT
- 923               	BANNER_MSG:	
- 924 80b5f 5349 4D50 		.ascii  "SIMPLE-68008 CPU"
- 924      4C45 2D36 
- 924      3830 3038 
- 924      2043 5055 
- 925 80b6f 0D0A 00   		dc.b CR,LF,EOT
- 926               	msgInvalidCommand:
- 927 80b72 496E 7661 	    .ascii "Invalid Command"
- 927      6C69 6420 
- 927      436F 6D6D 
- 927      616E 64
- 928 80b81 0D0A 00   		dc.b CR,LF,EOT
- 929               	CRLF_MSG:	
+ 896               	    
+ 897 80ae0 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
+ 897      000F 0014 
+ 898               		
+ 899 80ae8 13FC 0000 		move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
+ 899      000F 001A 
+ 900 80af0 13FC 00FC 		move.b	#0xFC, OPR		 | Clear all outputs
+ 900      000F 001E 
+ 901 80af8 4E75      	    rts    
+ 902               	
+ 903               	delay1Sec:
+ 904 80afa 203C 0003 		move.l	#200000, %d0	| rough count
+ 904      0D40 
+ 905               	delay1Loop:
+ 906 80b00 5380      		sub.l	#1, %d0			
+ 907 80b02 6600 FFFC 		bne		delay1Loop
+ 908 80b06 4E75      		rts
+ 909               	
+ 910               	READINLINE:	  
+ 911 80b08 5265 6164 		.ascii  "Reading in line"
+ 911      696E 6720 
+ 911      696E 206C 
+ 911      696E 65
+ 912 80b17 0D0A 00   		dc.b CR,LF,EOT
+ 913               	L_TO_UPPER_MSG:  
+ 914 80b1a 436F 6E76 		.ascii  "Convert line to upper case"
+ 914      6572 7420 
+ 914      6C69 6E65 
+ 914      2074 6F20 
+ 914      7570 7065 
+ 915 80b34 0D0A 00   		dc.b CR,LF,EOT
+ 916               	WRITEOUTLINE:	  
+ 917 80b37 5772 6974 		.ascii  "Writing out line"
+ 917      696E 6720 
+ 917      6F75 7420 
+ 917      6C69 6E65 
+ 918 80b47 0D0A 00   		dc.b CR,LF,EOT
+ 919               	RAM_PASS_MSG:  
+ 920 80b4a 5241 4D20 		.ascii  "RAM Test Passed"
+ 920      5465 7374 
+ 920      2050 6173 
+ 920      7365 64
+ 921 80b59 0D0A 00   		dc.b CR,LF,EOT
+ 922               	msgDepositPrompt:
+ 923 80b5c 3A20      	    .ascii	": "
+ 924 80b5e 00        		dc.b 	EOT
+ 925               	BANNER_MSG:	
+ 926 80b5f 5349 4D50 		.ascii  "SIMPLE-68008 CPU V1.00"
+ 926      4C45 2D36 
+ 926      3830 3038 
+ 926      2043 5055 
+ 926      2056 312E 
+ 927 80b75 0D0A 00   		dc.b CR,LF,EOT
+ 928               	msgInvalidCommand:
+ 929 80b78 496E 7661 	    .ascii "Invalid Command"
+ 929      6C69 6420 
+ 929      436F 6D6D 
 68K GAS  S68K_002.s 			page 19
 
 
- 930 80b84 0D0A 00   		dc.b CR,LF,EOT
- 931               	msgHelp:
- 932 80b87 4176 6169 	    .ascii	"Available Commands: "
- 932      6C61 626C 
- 932      6520 436F 
- 932      6D6D 616E 
- 932      6473 3A20 
- 933 80b9b 0D0A      		dc.b	CR,LF
- 934 80b9d 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (L)oad     (H)elp"
- 934      7861 6D69 
- 934      6E65 2020 
- 934      2020 2844 
- 934      2965 706F 
- 935 80bd3 0D0A 00   		dc.b	CR,LF,EOT
- 936               	ldSRecMsg:
- 937 80bd6 4C6F 6164 	    .ascii	"Load S-Record"
- 937      2053 2D52 
- 937      6563 6F72 
- 937      64
- 938 80be3 0D0A 00   		dc.b	CR,LF,EOT
- 939               	msgInvalidAddress:
- 940 80be6 496E 7661 	    .ascii	"Invalid Address"
- 940      6C69 6420 
- 940      4164 6472 
- 940      6573 73
- 941 80bf5 0D0A 00   		dc.b 	CR,LF,EOT
- 942               	msgInvalidValue:
- 943 80bf8 496E 7661 	    .ascii	"Invalid Value"
- 943      6C69 6420 
- 943      5661 6C75 
- 943      65
- 944 80c05 0D0A 00   		dc.b	CR,LF,EOT
- 945               	msgPrompt:
- 946 80c08 3E20      		.ascii "> "
- 947 80c0a 00        	    dc.b EOT
- 948               	msgColonSpace:
- 949 80c0b 3A20      	    .ascii ": "
- 950 80c0d 00        	    dc.b EOT
- 951               	msgNewline:
- 952 80c0e 0D0A 00   	    dc.b CR,LF,EOT
- 953               	debug_Srec_Typ_Msg:
- 954 80c11 5320 5265 		.ascii	"S Record Type="
- 954      636F 7264 
- 954      2054 7970 
- 954      653D 
- 955 80c1f 00        	    dc.b EOT
- 956               	debug_Srec_BytCt_Msg:
- 957 80c20 5320 5265 		.ascii	"S Record Byte Count=0x"
- 957      636F 7264 
- 957      2042 7974 
- 957      6520 436F 
- 957      756E 743D 
- 958 80c36 00        	    dc.b EOT
- 959               	debug_Srec_CSum_Msg:
- 960 80c37 5320 5265 		.ascii	"S Record Checksum="
- 960      636F 7264 
- 960      2043 6865 
+ 929      616E 64
+ 930 80b87 0D0A 00   		dc.b CR,LF,EOT
+ 931               	CRLF_MSG:	
+ 932 80b8a 0D0A 00   		dc.b CR,LF,EOT
+ 933               	msgHelp:
+ 934 80b8d 4176 6169 	    .ascii	"Available Commands: "
+ 934      6C61 626C 
+ 934      6520 436F 
+ 934      6D6D 616E 
+ 934      6473 3A20 
+ 935 80ba1 0D0A      		dc.b	CR,LF
+ 936 80ba3 2028 4529 	    .ascii	" (E)xamine    (D)eposit    (R)un     (L)oad     (H)elp"
+ 936      7861 6D69 
+ 936      6E65 2020 
+ 936      2020 2844 
+ 936      2965 706F 
+ 937 80bd9 0D0A 00   		dc.b	CR,LF,EOT
+ 938               	ldSRecMsg:
+ 939 80bdc 4C6F 6164 	    .ascii	"Load S-Record"
+ 939      2053 2D52 
+ 939      6563 6F72 
+ 939      64
+ 940 80be9 0D0A 00   		dc.b	CR,LF,EOT
+ 941               	msgInvalidAddress:
+ 942 80bec 496E 7661 	    .ascii	"Invalid Address"
+ 942      6C69 6420 
+ 942      4164 6472 
+ 942      6573 73
+ 943 80bfb 0D0A 00   		dc.b 	CR,LF,EOT
+ 944               	msgInvalidValue:
+ 945 80bfe 496E 7661 	    .ascii	"Invalid Value"
+ 945      6C69 6420 
+ 945      5661 6C75 
+ 945      65
+ 946 80c0b 0D0A 00   		dc.b	CR,LF,EOT
+ 947               	msgPrompt:
+ 948 80c0e 3E20      		.ascii "> "
+ 949 80c10 00        	    dc.b EOT
+ 950               	msgColonSpace:
+ 951 80c11 3A20      	    .ascii ": "
+ 952 80c13 00        	    dc.b EOT
+ 953               	msgNewline:
+ 954 80c14 0D0A 00   	    dc.b CR,LF,EOT
+ 955               	debug_Srec_Typ_Msg:
+ 956 80c17 5320 5265 		.ascii	"S Record Type="
+ 956      636F 7264 
+ 956      2054 7970 
+ 956      653D 
+ 957 80c25 00        	    dc.b EOT
+ 958               	debug_Srec_BytCt_Msg:
+ 959 80c26 5320 5265 		.ascii	"S Record Byte Count=0x"
+ 959      636F 7264 
+ 959      2042 7974 
+ 959      6520 436F 
+ 959      756E 743D 
+ 960 80c3c 00        	    dc.b EOT
+ 961               	debug_Srec_CSum_Msg:
 68K GAS  S68K_002.s 			page 20
 
 
- 960      636B 7375 
- 960      6D3D 
- 961 80c49 00        	    dc.b EOT
- 962               	debug_S2rec_Addr_Msg:
- 963 80c4a 5332 2052 		.ascii	"S2 Record Address=0x"
- 963      6563 6F72 
- 963      6420 4164 
- 963      6472 6573 
- 963      733D 3078 
- 964 80c5e 00        	    dc.b EOT
- 965               	debug_SXrec_Addr_Msg:
- 966 80c5f 5320 286E 		.ascii	"S (not 2) Record Address=0x"
- 966      6F74 2032 
- 966      2920 5265 
- 966      636F 7264 
- 966      2041 6464 
- 967 80c7a 00        	    dc.b EOT
- 968               	debug_Srec_LDData_Msg:
- 969 80c7b 4C6F 6164 	    .ascii	"Load Data Loop start"
- 969      2044 6174 
- 969      6120 4C6F 
- 969      6F70 2073 
- 969      7461 7274 
- 970 80c8f 0D0A 00   		dc.b 	CR,LF,EOT
- 971               	
- 972               	
- 973               	MAX_LINE_LENGTH = 80
- 974               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
- 975               	varCurAddr = varLineBuf-4
+ 962 80c3d 5320 5265 		.ascii	"S Record Checksum="
+ 962      636F 7264 
+ 962      2043 6865 
+ 962      636B 7375 
+ 962      6D3D 
+ 963 80c4f 00        	    dc.b EOT
+ 964               	debug_S2rec_Addr_Msg:
+ 965 80c50 5332 2052 		.ascii	"S2 Record Address=0x"
+ 965      6563 6F72 
+ 965      6420 4164 
+ 965      6472 6573 
+ 965      733D 3078 
+ 966 80c64 00        	    dc.b EOT
+ 967               	debug_SXrec_Addr_Msg:
+ 968 80c65 5320 286E 		.ascii	"S (not 2) Record Address=0x"
+ 968      6F74 2032 
+ 968      2920 5265 
+ 968      636F 7264 
+ 968      2041 6464 
+ 969 80c80 00        	    dc.b EOT
+ 970               	debug_Srec_LDData_Msg:
+ 971 80c81 4C6F 6164 	    .ascii	"Load Data Loop start"
+ 971      2044 6174 
+ 971      6120 4C6F 
+ 971      6F70 2073 
+ 971      7461 7274 
+ 972 80c95 0D0A 00   		dc.b 	CR,LF,EOT
+ 973               	
+ 974               	
+ 975               	MAX_LINE_LENGTH = 80
+ 976               	varLineBuf = RAM_END+1-1024-MAX_LINE_LENGTH-2
+ 977               	varCurAddr = varLineBuf-4
 68K GAS  S68K_002.s 			page 21
 
 
@@ -1233,11 +1236,11 @@ DEFINED SYMBOLS
 68K GAS  S68K_002.s 			page 22
 
 
-          S68K_002.s:923    .text:0000000000080b5f BANNER_MSG
+          S68K_002.s:925    .text:0000000000080b5f BANNER_MSG
           S68K_002.s:208    .text:0000000000080536 printString1
-          S68K_002.s:917    .text:0000000000080b4a RAM_PASS_MSG
+          S68K_002.s:919    .text:0000000000080b4a RAM_PASS_MSG
           S68K_002.s:171    .text:00000000000804e2 interpLoop
-          S68K_002.s:945    .text:0000000000080c08 msgPrompt
+          S68K_002.s:947    .text:0000000000080c0e msgPrompt
           S68K_002.s:209    .text:0000000000080536 printString
           S68K_002.s:238    .text:0000000000080568 readLine
           S68K_002.s:295    .text:00000000000805fa lineToUpper
@@ -1268,12 +1271,12 @@ DEFINED SYMBOLS
           S68K_002.s:437    .text:0000000000080716 loadSRec
           S68K_002.s:334    .text:0000000000080662 .exit
           S68K_002.s:331    .text:000000000008065a .invalid
-          S68K_002.s:926    .text:0000000000080b72 msgInvalidCommand
-          S68K_002.s:931    .text:0000000000080b87 msgHelp
+          S68K_002.s:928    .text:0000000000080b78 msgInvalidCommand
+          S68K_002.s:933    .text:0000000000080b8d msgHelp
           S68K_002.s:344    .text:0000000000080674 .invalidAddr
-          S68K_002.s:939    .text:0000000000080be6 msgInvalidAddress
+          S68K_002.s:941    .text:0000000000080bec msgInvalidAddress
           S68K_002.s:348    .text:0000000000080680 .invalidVal
-          S68K_002.s:942    .text:0000000000080bf8 msgInvalidValue
+          S68K_002.s:944    .text:0000000000080bfe msgInvalidValue
           S68K_002.s:624    .text:0000000000080896 parseNumber
           S68K_002.s:366    .text:0000000000080698 .exloop
           S68K_002.s:380    .text:00000000000806bc .exrange
@@ -1284,7 +1287,7 @@ DEFINED SYMBOLS
           S68K_002.s:677    .text:00000000000808f8 dumpRAM
           S68K_002.s:402    .text:00000000000806ee .exinterend
           S68K_002.s:409    .text:0000000000080702 .exinterpage
-          S68K_002.s:936    .text:0000000000080bd6 ldSRecMsg
+          S68K_002.s:938    .text:0000000000080bdc ldSRecMsg
           S68K_002.s:440    .text:000000000008071e loadSRecLoop
           S68K_002.s:497    .text:00000000000807b6 setRecType
           S68K_002.s:516    .text:00000000000807d0 setBytCt
@@ -1313,7 +1316,7 @@ DEFINED SYMBOLS
           S68K_002.s:666    .text:00000000000808f2 PNdigit3
           S68K_002.s:681    .text:0000000000080900 .line
           S68K_002.s:816    .text:0000000000080a12 printHexAddr
-          S68K_002.s:948    .text:0000000000080c0b msgColonSpace
+          S68K_002.s:950    .text:0000000000080c11 msgColonSpace
           S68K_002.s:688    .text:0000000000080912 .hexbyte
           S68K_002.s:700    .text:000000000008092e .endbytesShort
           S68K_002.s:715    .text:0000000000080954 .endbytes
@@ -1322,32 +1325,32 @@ DEFINED SYMBOLS
           S68K_002.s:717    .text:0000000000080956 .endbytesLoop
           S68K_002.s:732    .text:000000000008097c .endline
           S68K_002.s:728    .text:0000000000080972 .unprintable
-          S68K_002.s:951    .text:0000000000080c0e msgNewline
+          S68K_002.s:953    .text:0000000000080c14 msgNewline
           S68K_002.s:738    .text:000000000008098c .end
           S68K_002.s:774    .text:00000000000809ca DepCont
           S68K_002.s:758    .text:00000000000809a6 DepLoop
           S68K_002.s:779    .text:00000000000809d4 DepMLine
           S68K_002.s:786    .text:00000000000809ec DepEnd
                             *ABS*:000000000007fbaa varCurAddr
-          S68K_002.s:920    .text:0000000000080b5c msgDepositPrompt
+          S68K_002.s:922    .text:0000000000080b5c msgDepositPrompt
           S68K_002.s:807    .text:0000000000080a08 printHexWord
           S68K_002.s:835    .text:0000000000080a2a printHex_wordentry
           S68K_002.s:831    .text:0000000000080a24 printHex_addrentry
           S68K_002.s:824    .text:0000000000080a1a printHexLong
           S68K_002.s:859    .text:0000000000080a52 PHBsecond
           S68K_002.s:866    .text:0000000000080a66 PHBend
-          S68K_002.s:901    .text:0000000000080afa delay1Sec
-          S68K_002.s:903    .text:0000000000080b00 delay1Loop
-          S68K_002.s:908    .text:0000000000080b08 READINLINE
-          S68K_002.s:911    .text:0000000000080b1a L_TO_UPPER_MSG
-          S68K_002.s:914    .text:0000000000080b37 WRITEOUTLINE
-          S68K_002.s:929    .text:0000000000080b84 CRLF_MSG
-          S68K_002.s:953    .text:0000000000080c11 debug_Srec_Typ_Msg
-          S68K_002.s:956    .text:0000000000080c20 debug_Srec_BytCt_Msg
-          S68K_002.s:959    .text:0000000000080c37 debug_Srec_CSum_Msg
-          S68K_002.s:962    .text:0000000000080c4a debug_S2rec_Addr_Msg
-          S68K_002.s:965    .text:0000000000080c5f debug_SXrec_Addr_Msg
-          S68K_002.s:968    .text:0000000000080c7b debug_Srec_LDData_Msg
+          S68K_002.s:903    .text:0000000000080afa delay1Sec
+          S68K_002.s:905    .text:0000000000080b00 delay1Loop
+          S68K_002.s:910    .text:0000000000080b08 READINLINE
+          S68K_002.s:913    .text:0000000000080b1a L_TO_UPPER_MSG
+          S68K_002.s:916    .text:0000000000080b37 WRITEOUTLINE
+          S68K_002.s:931    .text:0000000000080b8a CRLF_MSG
+          S68K_002.s:955    .text:0000000000080c17 debug_Srec_Typ_Msg
+          S68K_002.s:958    .text:0000000000080c26 debug_Srec_BytCt_Msg
+          S68K_002.s:961    .text:0000000000080c3d debug_Srec_CSum_Msg
+          S68K_002.s:964    .text:0000000000080c50 debug_S2rec_Addr_Msg
+          S68K_002.s:967    .text:0000000000080c65 debug_SXrec_Addr_Msg
+          S68K_002.s:970    .text:0000000000080c81 debug_Srec_LDData_Msg
 
 NO UNDEFINED SYMBOLS
 68K GAS  S68K_002.s 			page 24
