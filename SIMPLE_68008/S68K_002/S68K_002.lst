@@ -991,7 +991,7 @@
  878 80a80 13FC 0010 	    move.b  #0x10, CRA       | Reset Mode Register Pointer
  878      000F 0004 
  879               	    
- 880 80a88 13FC 0080 	    move.b  #0x80, ACR       | Baud Rate Set #2
+ 880 80a88 13FC 0000 	    move.b  #0x00, ACR       | Baud Rate Set #2
  880      000F 0008 
  881               	|    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
  882 80a90 13FC 00CC 	    move.b  #0xCC, CSRA      | Set Tx and Rx rates to 38400
