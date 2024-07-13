@@ -65,7 +65,7 @@ nobrk		EQU	0				* null response to INPUT causes a break
 *************************************************************************************
 * 68681 Duart Register Addresses
 *
-DUART EQU 0x0F0000		* Base Addr of DUART
+DUART EQU $F0000		* Base Addr of DUART
 MRA   EQU DUART+0		* Mode Register A           (R/W)
 SRA   EQU DUART+2       * Status Register A         (r)
 CSRA  EQU DUART+2       * Clock Select Register A   (w)
@@ -160,30 +160,30 @@ VEC_SV
 * turn off simulator key echo
 
 code_start
-                                * Set up ACIA parameters
-    move.b  #$30, CRA       | Reset Transmitter
-    move.b  #$20, CRA       | Reset Receiver
-    move.b  #$10, CRA       | Reset Mode Register Pointer
+                            * Set up ACIA parameters
+    move.b  #$30, CRA       * Reset Transmitter
+    move.b  #$20, CRA       * Reset Receiver
+    move.b  #$10, CRA       * Reset Mode Register Pointer
     
-    move.b  #$80, ACR       | Baud Rate Set #2
-    move.b  #$BB, CSRA      | Set Tx and Rx rates to 9600
-    move.b  #$93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    move.b  #$07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
+    move.b  #$80, ACR       * Baud Rate Set #2
+    move.b  #$BB, CSRA      * Set Tx and Rx rates to 9600
+    move.b  #$93, MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    move.b  #$07, MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    move.b  #$05, CRA       | Enable Transmit/Recieve
+    move.b  #$05, CRA       * Enable Transmit/Recieve
 
-    move.b  #$30, CRB       | Reset Transmitter
-    move.b  #$20, CRB       | Reset Receiver
-    move.b  #$10, CRB       | Reset Mode Register Pointer
+    move.b  #$30, CRB       * Reset Transmitter
+    move.b  #$20, CRB       * Reset Receiver
+    move.b  #$10, CRB       * Reset Mode Register Pointer
     
-    move.b  #$BB, CSRB      | Set Tx and Rx rates to 9600
-    move.b  #$93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    move.b  #$07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
+    move.b  #$BB, CSRB      * Set Tx and Rx rates to 9600
+    move.b  #$93, MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+    move.b  #$07, MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    move.b  #$05, CRB       | Enable Transmit/Recieve
+    move.b  #$05, CRB       * Enable Transmit/Recieve
 	
-	move.b	#$00, OPC		 | Output port configuration (all bit are outs)
-	move.b	#$FC, OPR		 | Clear all outputs
+	move.b	#$00, OPC		* Output port configuration (all bit are outs)
+	move.b	#$FC, OPR		* Clear all outputs
 
 * to tell EhBASIC where and how much RAM it has pass the address in a0 and the size
 * in d0. these values are at the end of the .inc file
