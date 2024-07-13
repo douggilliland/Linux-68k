@@ -14,6 +14,7 @@ int makeSeedFromKeyWait(void);
 int makeSeedFromKeyWait(void)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
+	unsigned char * DUART_RBA = (unsigned char *) DUART_RBA_ADR;
 	int seedCount = 0;
 	unsigned char stat = 0;
 	while (stat == 0)
