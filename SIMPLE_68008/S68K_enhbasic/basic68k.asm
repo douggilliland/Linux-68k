@@ -94,11 +94,11 @@ OPR   EQU DUART+30      * Output port Clear         (W)
 							* RAM offset definitions
 
 * Use this value to run out of ROM
-	ORG		$080800			* past the vectors in a real system
+*	ORG		$080800			* past the vectors in a real system
 * Use this value to run out of RAM
-*	ORG		$000800			* past the vectors in a real system
+	ORG		$000800			* past the vectors in a real system
 
-ACIA_1   =      $000F0000        * Console DUART base address
+*ACIA_1   =      $000F0000        * Console DUART base address
 
          BRA    code_start       * For convenience, so you can start from first address
 
