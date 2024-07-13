@@ -1,10 +1,11 @@
 == Enhanced BASIC ==
 
-* This is based on a port of Lee Davison's Enhanced Basic for 68000 to Jeff Tranter's TS2 single board computer
+* Lee Davison's Enhanced Basic for 68000
+** Ported by Jeff Tranter for his TS2 single board computer
 * Runs on SIMPLE-68008 card
 
-* Assembled using the VASM retargetable assembler
-* THis version is loaded into SRAM from the S68K_002 monitor
+* Assembled using the [https://github.com/douggilliland/Linux-68k/tree/master/vasm VASM retargetable assembler]
+* This build is loaded into SRAM from the S68K_002 monitor
 * In theory, can be built to run from EPROM
 
 == References ==
