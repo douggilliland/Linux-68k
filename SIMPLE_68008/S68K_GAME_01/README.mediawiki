@@ -26,7 +26,6 @@ look like the following:
 SIMPLE-68008 CPU
 RAM Test Passed
  > l
-
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>
 > r2000
 Guess a number from 1 to 99
