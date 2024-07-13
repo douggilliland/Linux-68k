@@ -5,8 +5,8 @@
 
 /* Function Prototypes go here for compiler warning purposes */
 
-/* void wait1Sec(void);
-void setLED(unsigned char LEDVal); */
+void wait1Sec(void);
+void setLED(unsigned char LEDVal);
 int strlen(char *);
 int getString(char *);
 void printString(char * pStr);
