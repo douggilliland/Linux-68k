@@ -400,10 +400,10 @@ F00:0165           MOVE.b  #$20,CRA       * Reset Receiver
 F00:0166           MOVE.b  #$10,CRA       * Reset Mode Register Pointer
                S02:00000868:  13 FC 00 10 00 0F 00 04
 F00:0167           
-F00:0168           MOVE.b  #$80,ACR       * Baud Rate Set #2
-               S02:00000870:  13 FC 00 80 00 0F 00 08
-F00:0169           MOVE.b  #$BB,CSRA      * Set Tx and Rx rates to 9600
-               S02:00000878:  13 FC 00 BB 00 0F 00 02
+F00:0168           MOVE.b  #$00,ACR       * Baud Rate Set #2
+               S02:00000870:  13 FC 00 00 00 0F 00 08
+F00:0169           MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
+               S02:00000878:  13 FC 00 CC 00 0F 00 02
 F00:0170           MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
                S02:00000880:  13 FC 00 93 00 0F 00 00
 F00:0171           MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
@@ -419,8 +419,8 @@ F00:0176           MOVE.b  #$20,CRB       * Reset Receiver
 F00:0177           MOVE.b  #$10,CRB       * Reset Mode Register Pointer
                S02:000008A8:  13 FC 00 10 00 0F 00 14
 F00:0178           
-F00:0179           MOVE.b  #$BB,CSRB      * Set Tx and Rx rates to 9600
-               S02:000008B0:  13 FC 00 BB 00 0F 00 12
+F00:0179           MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
+               S02:000008B0:  13 FC 00 CC 00 0F 00 12
 F00:0180           MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
                S02:000008B8:  13 FC 00 93 00 0F 00 10
 F00:0181           MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
