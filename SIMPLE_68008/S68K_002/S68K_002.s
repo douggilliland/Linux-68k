@@ -878,7 +878,8 @@ initDuart:
     move.b  #0x10, CRA       | Reset Mode Register Pointer
     
     move.b  #0x80, ACR       | Baud Rate Set #2
-    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+|    move.b  #0xBB, CSRA      | Set Tx and Rx rates to 9600
+    move.b  #0xCC, CSRA      | Set Tx and Rx rates to 38400
     move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
     move.b  #0x07, MRA       | Normal Mode, Not CTS/RTS, 1 stop bit
     
@@ -888,7 +889,8 @@ initDuart:
     move.b  #0x20, CRB       | Reset Receiver
     move.b  #0x10, CRB       | Reset Mode Register Pointer
     
-    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+|    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+    move.b  #0xcc, CSRB      | Set Tx and Rx rates to 38400
     move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
     move.b  #0x07, MRB       | Normal Mode, Not CTS/RTS, 1 stop bit
     
@@ -921,7 +923,7 @@ msgDepositPrompt:
     .ascii	": "
 	dc.b 	EOT
 BANNER_MSG:	
-	.ascii  "SIMPLE-68008 CPU"
+	.ascii  "SIMPLE-68008 CPU V1.00"
 	dc.b CR,LF,EOT
 msgInvalidCommand:
     .ascii "Invalid Command"
