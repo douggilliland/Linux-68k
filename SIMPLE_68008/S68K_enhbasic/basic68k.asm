@@ -62,9 +62,9 @@ nobrk		EQU	0				* null response to INPUT causes a break
 * pointer in a3. this means that this could now be run as a task on a multitasking
 * system where memory resources may change.
 
-|||||||||||||||||||||||||||||||||
-| 68681 Duart Register Addresses
-|
+*************************************************************************************
+* 68681 Duart Register Addresses
+*
 DUART EQU 0x0F0000		* Base Addr of DUART
 MRA   EQU DUART+0		* Mode Register A           (R/W)
 SRA   EQU DUART+2       * Status Register A         (r)
