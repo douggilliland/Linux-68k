@@ -7,7 +7,7 @@ basic68k.run: basic68k.inc basic68k.asm
 	# Use lines below when building for ROM
 	srec_cat basic68k.run -fill 0x00 0xc0000 0xc3fff --crop 0xc0000 0xc3fff -Output_Block_Size 16 -o temp
 	mv temp basic68k.run
-	# Use lines below when building for RAM
+# Use lines below when building for RAM
 #	srec_cat basic68k.run -fill 0x00 0x800 0x3fff --crop 0x0800 0x3fff -Output_Block_Size 16 -o temp
 #	mv temp basic68k.run
 
