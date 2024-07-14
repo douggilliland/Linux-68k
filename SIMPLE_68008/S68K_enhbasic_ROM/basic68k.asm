@@ -94,7 +94,9 @@ OPR   EQU DUART+30      * Output port Clear         (W)
 							* RAM offset definitions
 
 * Use this value to run out of ROM
-	ORG		$0C0800			* past the vectors in a real system
+	ORG		$088800			* Base address of EPROM is 0x80000
+							* Top half of 27C512 starts 0x8000 from start of EPROM
+							* past the vector table in a real system
 * Use this value to run out of RAM
 *	ORG		$000800			* past the vectors in a real system
 
