@@ -16,4 +16,4 @@ upload: basic68k.run
 	ascii-xfr -s -l 50 basic68k.run | sed  's/S5/S9/' > /dev/ttyUSB0
 
 clean:
-	$(RM) basic68k.run basic68k_even.run basic68k_odd.run basic68k.lst basic68k.hex
+	$(RM) basic68k.run basic68k_even.run basic68k_odd.run basic68k.lst basic68k.hex combined.hex
