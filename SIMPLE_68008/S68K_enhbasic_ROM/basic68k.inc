@@ -7,7 +7,7 @@ ram_strt	ds.l	$100			* allow 1K for the stack, this should be plenty
 						* for any BASIC program that doesn't do something
 						* silly, it could even be much less.
 ram_base
-LAB_WARM	ds.w	1			* BASIC warm start entry point
+LAB_WARM	ds.w	1		* BASIC warm start entry point
 Wrmjpv	ds.l	1			* BASIC warm start jump vector
 
 Usrjmp	ds.w	1			* USR function JMP address
@@ -181,19 +181,19 @@ comp_f	ds.b	1			* compare function flag, bits 0,1 and 2 used
 						* bit 0 set if <
 
 Nullct	ds.b	1			* nulls output after each line
-TPos		ds.b	1			* BASIC terminal position byte
+TPos	ds.b	1			* BASIC terminal position byte
 TWidth	ds.b	1			* BASIC terminal width byte
-Iclim		ds.b	1			* input column limit
+Iclim	ds.b	1			* input column limit
 ccflag	ds.b	1			* CTRL-C check flag
 ccbyte	ds.b	1			* CTRL-C last received byte
 ccnull	ds.b	1			* CTRL-C last received byte 'life' timer
 
 * these variables for simulator load/save routines
 
-file_byte	ds.b	1			* load/save data byte
+file_byte	ds.b	1		* load/save data byte
 file_id	ds.l	1			* load/save file ID
 
-		even			        * dummy even value and zero pad byte
+		even			    * dummy even value and zero pad byte
 
 prg_strt
 
