@@ -2,7 +2,6 @@ basic68k.hex: basic68k.run
 	srec_cat basic68k.run -Motorola -output basic68k.hex -Intel
 
 basic68k.run: basic68k.inc basic68k.asm
-#	../../vasm/vasmm68k_mot -quiet -m68000 -Fsrec -s19 -L basic68k.lst -o basic68k.run basic68k.asm
 	../../vasm/vasmm68k_mot -quiet -m68000 -Fsrec -s28 -L basic68k.lst -o basic68k.run basic68k.asm
 	# Use lines below when building for ROM
 	srec_cat basic68k.run -fill 0x00 0x88000 0x8ffff --crop 0x88000 0x8ffff -address-length=3 -Output_Block_Size 16 -o temp
