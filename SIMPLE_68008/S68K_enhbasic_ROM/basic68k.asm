@@ -146,7 +146,7 @@ RXNOTREADY:
 * LOAD routine for the TS2 computer (not implemented)
 
 VEC_LD
-	MOVEQ		#$2E,d7			        * error code $2E "Not implemented" error
+	MOVEQ	#$2E,d7			        * error code $2E "Not implemented" error
 	BRA		LAB_XERR			* do error #d7, then warm start
 
 *************************************************************************************
@@ -205,7 +205,7 @@ code_start
 *
 *	a6 -	temp Bpntr				* temporary BASIC execute pointer
 *	a5 -	Bpntr					* BASIC execute (get byte) pointer
-*	a4 -	des_sk				        * descriptor stack pointer
+*	a4 -	des_sk				    * descriptor stack pointer
 *	a3 -	ram_strt				* start of RAM. all RAM references are offsets
 *							* from this value
 *
