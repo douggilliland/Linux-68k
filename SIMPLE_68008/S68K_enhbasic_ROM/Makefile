@@ -6,7 +6,7 @@ basic68k.run: basic68k.inc basic68k.asm
 	# Use lines below when building for ROM
 	srec_cat basic68k.run -fill 0x00 0x88000 0x8ffff --crop 0x88000 0x8ffff -address-length=3 -Output_Block_Size 16 -o temp
 	mv temp basic68k.run
-	srec_cat ../S68K_002/S68K_002.sre basic68k.run -Output combined.hex -Intel
+	srec_cat ../S68K_002/S68K_002.sre basic68k.run -offset \[mi]0x80000 -Output combined.hex -Intel
 # Use lines below when building for RAM
 #	srec_cat basic68k.run -fill 0x00 0x800 0x3fff --crop 0x0800 0x3fff -Output_Block_Size 16 -o temp
 #	mv temp basic68k.run
