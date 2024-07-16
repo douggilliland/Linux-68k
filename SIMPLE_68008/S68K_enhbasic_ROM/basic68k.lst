@@ -96,15 +96,15 @@ F01:0002       * This lot is in RAM
 F01:0003       
 F01:0004               ORG     0			* start of RAM
 F01:0005        
-F01:0006       ram_strt	ds.l	$100			* allow 1K for the stack, this should be plenty
-F01:0007       						* for any BASIC program that doesn't do something
-F01:0008       						* silly, it could even be much less.
+F01:0006       ram_strt	ds.l	$100	* allow 1K for the stack, this should be plenty
+F01:0007       							* for any BASIC program that doesn't do something
+F01:0008       							* silly, it could even be much less.
 F01:0009       ram_base
-F01:0010       LAB_WARM	ds.w	1			* BASIC warm start entry point
-F01:0011       Wrmjpv	ds.l	1			* BASIC warm start jump vector
+F01:0010       LAB_WARM	ds.w	1		* BASIC warm start entry point
+F01:0011       Wrmjpv		ds.l	1		* BASIC warm start jump vector
 F01:0012       
-F01:0013       Usrjmp	ds.w	1			* USR function JMP address
-F01:0014       Usrjpv	ds.l	1			* USR function JMP vector
+F01:0013       Usrjmp		ds.w	1		* USR function JMP address
+F01:0014       Usrjpv		ds.l	1		* USR function JMP vector
 F01:0015       
 F01:0016       * system dependant i/o vectors
 F01:0017       * these are in RAM and are set at start-up
@@ -124,9 +124,9 @@ F01:0030
 F01:0031       V_CTLC	ds.w	1			* save CTRL-C check entry point
 F01:0032       V_CTLCv	ds.l	1			* save CTRL-C check jump vector
 F01:0033       
-F01:0034       Itemp		ds.l	1			* temporary integer	(for GOTO etc)
+F01:0034       Itemp	ds.l	1			* temporary integer	(for GOTO etc)
 F01:0035       
-F01:0036       Smeml		ds.l	1			* start of memory		(start of program)
+F01:0036       Smeml	ds.l	1			* start of memory		(start of program)
 F01:0037       
 F01:0038       * the program is stored as a series of lines each line having the following format
 F01:0039       *
@@ -134,9 +134,9 @@ F01:0040       *		ds.l	1			* pointer to the next line or $00000000 if [EOT]
 F01:0041       *		ds.l	1			* line number
 F01:0042       *		ds.b	n			* program bytes
 F01:0043       *		dc.b	$00			* [EOL] marker, there will be a second $00 byte, if
-F01:0044       *						* needed, to pad the line to an even number of bytes
+F01:0044       *							* needed, to pad the line to an even number of bytes
 F01:0045       
-F01:0046       Sfncl		ds.l	1			* start of functions	(end of Program)
+F01:0046       Sfncl		ds.l	1		* start of functions	(end of Program)
 F01:0047       
 F01:0048       * the functions are stored as function name, function execute pointer and function
 F01:0049       * variable name
@@ -145,14 +145,14 @@ F01:0051       *		ds.l	1			* name
 F01:0052       *		ds.l	1			* execute pointer
 F01:0053       *		ds.l	1			* function variable
 F01:0054       
-F01:0055       Svarl		ds.l	1			* start of variables	(end of functions)
+F01:0055       Svarl		ds.l	1		* start of variables	(end of functions)
 F01:0056       
 F01:0057       * the variables are stored as variable name, variable value
 F01:0058       *
 F01:0059       *		ds.l	1			* name
 F01:0060       *		ds.l	1			* packed float or integer value
 F01:0061       
-F01:0062       Sstrl		ds.l	1			* start of strings	(end of variables)
+F01:0062       Sstrl		ds.l	1		* start of strings	(end of variables)
 F01:0063       
 F01:0064       * the strings are stored as string name, string pointer and string length
 F01:0065       *
@@ -186,14 +186,14 @@ F01:0092       * .. if string
 F01:0093       
 F01:0094       Earryl	ds.l	1			* end of arrays		(start of free mem)
 F01:0095       Sstorl	ds.l	1			* string storage		(moving down)
-F01:0096       Ememl		ds.l	1			* end of memory		(upper bound of RAM)
+F01:0096       Ememl	ds.l	1			* end of memory		(upper bound of RAM)
 F01:0097       Sutill	ds.l	1			* string utility ptr
 F01:0098       Clinel	ds.l	1			* current line		(Basic line number)
 F01:0099       Blinel	ds.l	1			* break line		(Basic line number)
 F01:0100       
 F01:0101       Cpntrl	ds.l	1			* continue pointer
 F01:0102       Dlinel	ds.l	1			* current DATA line
-F01:0103       Dptrl		ds.l	1			* DATA pointer
+F01:0103       Dptrl	ds.l	1			* DATA pointer
 F01:0104       Rdptrl	ds.l	1			* read pointer
 F01:0105       Varname	ds.l	1			* current var name
 F01:0106       Cvaral	ds.l	1			* current var address
@@ -216,16 +216,16 @@ F01:0122       FAC2_m	ds.l	1			* FAC2 mantissa1
 F01:0123       FAC2_e	ds.l	1			* FAC2 exponent
 F01:0124       FAC2_s	EQU	FAC2_e+1		* FAC2 sign (b7)
 F01:0125       FAC_sc	EQU	FAC2_e+2		* FAC sign comparison, Acc#1 vs #2
-F01:0126       flag		EQU	FAC2_e+3		* flag byte for divide routine
+F01:0126       flag		EQU	FAC2_e+3	* flag byte for divide routine
 F01:0127       
-F01:0128       PRNlword	ds.l	1			* PRNG seed long word
+F01:0128       PRNlword	ds.l	1		* PRNG seed long word
 F01:0129       
 F01:0130       ut1_pl	ds.l	1			* utility pointer 1
 F01:0131       
-F01:0132       Asptl		ds.l	1			* array size/pointer
+F01:0132       Asptl	ds.l	1			* array size/pointer
 F01:0133       Astrtl	ds.l	1			* array start pointer
 F01:0134       
-F01:0135       numexp	EQU	Astrtl		* string to float number exponent count
+F01:0135       numexp	EQU	Astrtl			* string to float number exponent count
 F01:0136       expcnt	EQU	Astrtl+1		* string to float exponent count
 F01:0137       
 F01:0138       expneg	EQU	Astrtl+3		* string to float eval exponent -ve flag
@@ -233,28 +233,28 @@ F01:0139
 F01:0140       func_l	ds.l	1			* function pointer
 F01:0141       
 F01:0142       
-F01:0143       						* these two need to be a word aligned pair !
+F01:0143       							* these two need to be a word aligned pair !
 F01:0144       Defdim	ds.w	1			* default DIM flag
-F01:0145       cosout	EQU	Defdim		* flag which CORDIC output (re-use byte)
+F01:0145       cosout	EQU	Defdim			* flag which CORDIC output (re-use byte)
 F01:0146       Dtypef	EQU	Defdim+1		* data type flag, $80=string, $40=integer, $00=float
 F01:0147       
 F01:0148       
-F01:0149       Binss		ds.l	4			* number to bin string start (32 chrs)
+F01:0149       Binss	ds.l	4			* number to bin string start (32 chrs)
 F01:0150       
-F01:0151       Decss		ds.l	1			* number to decimal string start (16 chrs)
+F01:0151       Decss	ds.l	1			* number to decimal string start (16 chrs)
 F01:0152       		ds.w	1			*
-F01:0153       Usdss		ds.w	1			* unsigned decimal string start (10 chrs)
+F01:0153       Usdss	ds.w	1			* unsigned decimal string start (10 chrs)
 F01:0154       
-F01:0155       Hexss		ds.l	2			* number to hex string start (8 chrs)
+F01:0155       Hexss	ds.l	2			* number to hex string start (8 chrs)
 F01:0156       
 F01:0157       BHsend	ds.w	1			* bin/decimal/hex string end
 F01:0158       
 F01:0159       
-F01:0160       prstk		ds.b	1			* stacked function index
+F01:0160       prstk	ds.b	1			* stacked function index
 F01:0161       
 F01:0162       tpower	ds.b	1			* remember CORDIC power
 F01:0163       
-F01:0164       Asrch		ds.b	1			* scan-between-quotes flag, alt search character
+F01:0164       Asrch	ds.b	1			* scan-between-quotes flag, alt search character
 F01:0165       
 F01:0166       Dimcnt	ds.b	1			* # of dimensions
 F01:0167       
@@ -262,9 +262,9 @@ F01:0168       Breakf	ds.b	1			* break flag, $00=END else=break
 F01:0169       Oquote	ds.b	1			* open quote flag (Flag: DATA; LIST; memory)
 F01:0170       Gclctd	ds.b	1			* garbage collected flag
 F01:0171       Sufnxf	ds.b	1			* subscript/FNX flag, 1xxx xxx = FN(0xxx xxx)
-F01:0172       Imode		ds.b	1			* input mode flag, $00=INPUT, $98=READ
+F01:0172       Imode	ds.b	1			* input mode flag, $00=INPUT, $98=READ
 F01:0173       
-F01:0174       Cflag		ds.b	1			* comparison evaluation flag
+F01:0174       Cflag	ds.b	1			* comparison evaluation flag
 F01:0175       
 F01:0176       TabSiz	ds.b	1			* TAB step size
 F01:0177       
@@ -274,19 +274,19 @@ F01:0180       						* bit 1 set if =
 F01:0181       						* bit 0 set if <
 F01:0182       
 F01:0183       Nullct	ds.b	1			* nulls output after each line
-F01:0184       TPos		ds.b	1			* BASIC terminal position byte
+F01:0184       TPos	ds.b	1			* BASIC terminal position byte
 F01:0185       TWidth	ds.b	1			* BASIC terminal width byte
-F01:0186       Iclim		ds.b	1			* input column limit
+F01:0186       Iclim	ds.b	1			* input column limit
 F01:0187       ccflag	ds.b	1			* CTRL-C check flag
 F01:0188       ccbyte	ds.b	1			* CTRL-C last received byte
 F01:0189       ccnull	ds.b	1			* CTRL-C last received byte 'life' timer
 F01:0190       
 F01:0191       * these variables for simulator load/save routines
 F01:0192       
-F01:0193       file_byte	ds.b	1			* load/save data byte
-F01:0194       file_id	ds.l	1			* load/save file ID
+F01:0193       file_byte	ds.b	1		* load/save data byte
+F01:0194       file_id		ds.l	1		* load/save file ID
 F01:0195       
-F01:0196       		even			        * dummy even value and zero pad byte
+F01:0196       		even			    * dummy even value and zero pad byte
 F01:0197       
 F01:0198       prg_strt
 F01:0199       
@@ -374,7 +374,7 @@ F00:0145       *
 F00:0146       * LOAD routine for the TS2 computer (not implemented)
 F00:0147       
 F00:0148       VEC_LD
-F00:0149       	MOVEQ		#$2E,d7			        * error code $2E "Not implemented" error
+F00:0149       	MOVEQ	#$2E,d7			        * error code $2E "Not implemented" error
                S02:0008884C:  7E 2E
 F00:0150       	BRA		LAB_XERR			* do error #d7, then warm start
                S02:0008884E:  60 00 01 B6
@@ -456,7 +456,7 @@ F00:0204       * Register use :- (must improve this !!)
 F00:0205       *
 F00:0206       *	a6 -	temp Bpntr				* temporary BASIC execute pointer
 F00:0207       *	a5 -	Bpntr					* BASIC execute (get byte) pointer
-F00:0208       *	a4 -	des_sk				        * descriptor stack pointer
+F00:0208       *	a4 -	des_sk				    * descriptor stack pointer
 F00:0209       *	a3 -	ram_strt				* start of RAM. all RAM references are offsets
 F00:0210       *							* from this value
 F00:0211       *
