@@ -96,7 +96,7 @@ OPR   EQU DUART+30      * Output port Clear         (W)
 * Use this value to run out of ROM
 	ORG		$088800			* Base address of EPROM is 0x80000
 							* Top half of 27C512 starts 0x8000 from start of EPROM
-							* past the vector table in a real system
+							* 0x800 past the vector table in a real system
 * Use this value to run out of RAM
 *	ORG		$000800			* past the vectors in a real system
 
@@ -186,6 +186,9 @@ code_start
 	
 	MOVE.b	#$00,OPC		* Output port configuration (all bit are outs)
 	MOVE.b	#$FC,OPR		* Clear all outputs
+	
+	MOVE.b	#'1',d0
+	bsr		VEC_OUT
 
 * to tell EhBASIC where and how much RAM it has pass the address in a0 and the size
 * in d0. these values are at the end of the .inc file
@@ -195,6 +198,8 @@ code_start
 
 * end of simulator specific code
 
+	MOVE.b	#'2',d0
+	bsr		VEC_OUT
 
 ****************************************************************************************
 ****************************************************************************************
@@ -224,6 +229,8 @@ LAB_COLD
         trap            #14                             * Call TRAP14 handler
 
 LAB_sizok
+	MOVE.b	#'3',d0
+	bsr		VEC_OUT
 	MOVEA.l	a0,a3				* copy RAM base to a3
 	ADDA.l	d0,a0				* a0 is top of RAM
 	MOVE.l	a0,Ememl(a3)		* set end of mem
