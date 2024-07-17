@@ -50,11 +50,12 @@ IVR2 = IPL2_Vect / 4
 	| Set DUART interrupt mask to enable transmit interrupt
 	move.b	#0x01, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+	move.w	#0x2700, %sr		| Disable interrupts
 	rts
 
 	.ORG	0x1100
 enInts:
-	move.w	#0x2000, %sr		| Enable interrupts
+	move.w	#0x2500, %sr		| Enable interrupts
 	rts
 	
 	.ORG	0x1200
@@ -72,5 +73,5 @@ IntLev2:
 skipCRes:
 	move.b	%d0, (%a0)
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-|	move.w	#0x2000, %sr			| Enable interrupts
+|	move.w	#0x2500, %sr			| Enable interrupts
 	rte
