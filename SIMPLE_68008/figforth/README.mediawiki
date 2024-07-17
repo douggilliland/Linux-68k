@@ -26,8 +26,10 @@ Load S-Record
 == Build ==
 
 * Build it using the VASM 68k cross-assembler
-* make clean
-* make
+** Using Linux VirtualBox under Windows
+* From the command line
+** make clean
+** make
 
 == History ==
 
