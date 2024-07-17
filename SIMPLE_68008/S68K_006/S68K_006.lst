@@ -75,19 +75,20 @@
   56      0000 0000 
   57               	IntLev2:
   58 1200 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-  59 1204 207C 0000 		movea.l	#charTempPtr, %a0			| Get the character to write out
+  59 1204 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
   59      0600 
-  60 120a 1010      		move.b	(%a0), %d0					| Put char in d0
-  61 120c 227C 000F 		movea.l	#DUART, %a1					| DUART base address
+  60 120a 1010      		move.b	(%a0), %d0				| Put char in d0
+  61 120c 227C 000F 		movea.l	#DUART, %a1				| DUART base address
   61      0000 
-  62 1212 1340 0006 		move.b	%d0, 6(%a1)					| Write out the character
-  63 1216 5200      		add.b	#1, %d0						| Increment character
-  64 1218 0C00 007A 		cmp.b	#'z', %d0					| Go up to z
+  62 1212 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
+  63 1216 5200      		add.b	#1, %d0					| Increment character
+  64 1218 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
   65 121c 6F00 0006 		ble		skipCRes
-  66 1220 10BC 0020 		move.b	#' ', (%a0)		| Start character is a space	
+  66 1220 103C 0020 		move.b	#' ', %d0				| Start character is a space	
   67               	skipCRes:
-  68 1224 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  69 1228 4E73      		rte
+  68 1224 1080      		move.b	%d0, (%a0)
+  69 1226 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  70 122a 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
