@@ -76,7 +76,7 @@ Primitive words are located at 2000-2500H, with the six-byte inner interpreter a
 Most of the constants relate to hardware and it seemed desirable to locate these on the USER page, So a new primitive, 
 (USERCONSTANT) was defined that requires no modification to FORTH source material,but gets constants from the USER page. The rest of the kernal runs from 2700-3000H. 
 The conditional compiler, math words, output words, and VLIST run from 3000-3400H. Disc I/O and boot-up code runs from 3400-3700H. 
-FORTH is entered by a jump to the COLD label (at 364E).or the warm start at the label WARM (at 368A).
+FORTH is entered by a jump to the COLD label (at TBD-see above).or the warm start at the label WARM (at YBD-see above).
 
 The 1802 model used as a starting point assumed 128-byte buffer blocks. Modifications were made in +BUF to handle automatically 1024, 512, and 256 byte buffers as well. 
 "84" was replaced by "B/BUF 4 + ". Similarly, the null word X, was modified to handle 1, 2, 4, as well as the original 8 buffers/screen, "7" was replaced by "B/SCR 1 -", 
