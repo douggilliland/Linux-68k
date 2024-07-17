@@ -48,8 +48,8 @@
   40      0600 
   41 100a 10BC 0020 		move.b	#' ', (%a0)		| Start character is a space
   42               		| Fill the interrupt vector table entry for Level 2 interrupt
-  43 100e 203C 0000 		move.l	#IntLev2, %d0
-  43      0000 
+  43 100e 203C 0000 		move.l	#0x1500, %d0
+  43      1500 
   44 1014 207C 0000 		movea.l	#IPL2_Vect, %a0
   44      0100 
   45 101a 2080      		move.l	%d0, (%a0)
@@ -67,21 +67,26 @@
   52 102e 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
   53 1032 4E75      		rts
   54               	
-  55               	IntLev2:
-  56 1034 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-  57 1038 207C 0000 		movea.l	#charTempPtr, %a0			| Get the character to write out
-  57      0600 
-  58 103e 1010      		move.b	(%a0), %d0					| Put char in d0
-  59 1040 227C 000F 		movea.l	#DUART, %a1					| DUART base address
-  59      0000 
-  60 1046 1340 0006 		move.b	%d0, 6(%a1)					| Write out the character
-  61 104a 5200      		add.b	#1, %d0						| Increment character
-  62 104c 0C00 007A 		cmp.b	#'z', %d0					| Go up to z
-  63 1050 6F00 0006 		ble		skipCRes
-  64 1054 10BC 0020 		move.b	#' ', (%a0)		| Start character is a space	
-  65               	skipCRes:
-  66 1058 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  67 105c 4E73      		rte
+  55 1034 0000 0000 		.ORG	0x1500
+  55      0000 0000 
+  55      0000 0000 
+  55      0000 0000 
+  55      0000 0000 
+  56               	IntLev2:
+  57 1500 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
+  58 1504 207C 0000 		movea.l	#charTempPtr, %a0			| Get the character to write out
+  58      0600 
+  59 150a 1010      		move.b	(%a0), %d0					| Put char in d0
+  60 150c 227C 000F 		movea.l	#DUART, %a1					| DUART base address
+  60      0000 
+  61 1512 1340 0006 		move.b	%d0, 6(%a1)					| Write out the character
+  62 1516 5200      		add.b	#1, %d0						| Increment character
+  63 1518 0C00 007A 		cmp.b	#'z', %d0					| Go up to z
+  64 151c 6F00 0006 		ble		skipCRes
+  65 1520 10BC 0020 		move.b	#' ', (%a0)		| Start character is a space	
+  66               	skipCRes:
+  67 1524 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  68 1528 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
@@ -112,7 +117,7 @@ DEFINED SYMBOLS
           S68K_006.s:33     *ABS*:0000000000000600 charTempPtr
           S68K_006.s:34     *ABS*:0000000000000100 IPL2_Vect
           S68K_006.s:35     *ABS*:0000000000000040 IVR2
-          S68K_006.s:55     .text:0000000000001034 IntLev2
-          S68K_006.s:65     .text:0000000000001058 skipCRes
+          S68K_006.s:56     .text:0000000000001500 IntLev2
+          S68K_006.s:66     .text:0000000000001524 skipCRes
 
 NO UNDEFINED SYMBOLS
