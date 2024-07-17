@@ -337,10 +337,6 @@ parseLine:
     movem.l (%SP)+, %a2-%a3     | Restore registers
     rts
 
-.runBASIC:
-	lea		0x88800, %a0
-	jsr		(%a0)
-	rts
 
 |||||||||||||||||||||||||||||||
 || HELP command
@@ -419,6 +415,11 @@ parseLine:
     bsr.w   dumpRAM             | Dump 16 lines of RAM
     add.l   #0x100, %a3         | Move up the current address by 256
     bra.s   .exinterend
+
+.runBASIC:
+	lea		0x88800, %a0
+	jsr		(%a0)
+	rts
 
 |||||||||||||||||||||||||||||
 || Load S Record
