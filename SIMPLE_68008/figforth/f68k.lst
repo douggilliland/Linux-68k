@@ -73,7 +73,7 @@ F00:0072       *
 F00:0073       * MEMORY ALLOCATION
 F00:0074       *
 F00:0075       BM	EQU	$1000		*BOTTOM OF MEMORY
-F00:0076       EM	EQU	$F800		*TOP OF MEMORY
+F00:0076       EM	EQU	$FF00		*TOP OF MEMORY
 F00:0077       NSCR	EQU	2		*NUMBER OF 1024 BYTE SCREENS
 F00:0078       KBBUF	EQU	256		*DATA BYTES PER DISK BUFFER
 F00:0079       BSCRN	EQU	$400/KBBUF	* BUFFERS/SCREEN
@@ -3621,2865 +3621,2868 @@ F00:1979       	DC.W	DMINU	* ENDIF
 F00:1980       NUMB3	DC.W	SEMIS
                S02:00002C14:  22 50
 F00:1981       *
-F00:1982       	DC.B	$85	* -FIND (0-3) SUCCESS
+F00:1982       * -FIND (0-3) SUCCESS
+F00:1983       	DC.B	$85
                S02:00002C16:  85
-F00:1983 E1007 	DC.B	'-FIN' * (0-1) FAILURE
+F00:1984       * (0-1) FAILURE
+F00:1985       	DC.B	'-FIN'
                S02:00002C17:  2D 46 49 4E
-F00:1984       	DC.B	$80+'D'
+F00:1986       	DC.B	$80+'D'
                S02:00002C1B:  C4
-F00:1985       	DC.W	NUMB-$09
+F00:1987       	DC.W	NUMB-$09
                S02:00002C1C:  2B BD
-F00:1986       DFIND	DC.W	DOCOL
+F00:1988       DFIND	DC.W	DOCOL
                S02:00002C1E:  25 00
-F00:1987       	DC.W	BL
+F00:1989       	DC.W	BL
                S02:00002C20:  25 30
-F00:1988       	DC.W	WORD
+F00:1990       	DC.W	WORD
                S02:00002C22:  2B 28
-F00:1989       	DC.W	HERE
+F00:1991       	DC.W	HERE
                S02:00002C24:  27 16
-F00:1990       	DC.W	CONT
+F00:1992       	DC.W	CONT
                S02:00002C26:  25 E0
-F00:1991       	DC.W	AT
+F00:1993       	DC.W	AT
                S02:00002C28:  23 96
-F00:1992       	DC.W	AT
+F00:1994       	DC.W	AT
                S02:00002C2A:  23 96
-F00:1993       	DC.W	PFIND
+F00:1995       	DC.W	PFIND
                S02:00002C2C:  20 DE
-F00:1994       	DC.W	DUP
+F00:1996       	DC.W	DUP
                S02:00002C2E:  23 5A
-F00:1995       	DC.W	ZEQU
+F00:1997       	DC.W	ZEQU
                S02:00002C30:  22 A2
-F00:1996       	DC.W	ZBRAN	* IF
+F00:1998       	DC.W	ZBRAN	* IF
                S02:00002C32:  20 42
-F00:1997       	DC.W	DFIN1-*
+F00:1999       	DC.W	DFIN1-*
                S02:00002C34:  00 0A
-F00:1998       	DC.W	DROP
+F00:2000       	DC.W	DROP
                S02:00002C36:  23 32
-F00:1999       	DC.W	HERE
+F00:2001       	DC.W	HERE
                S02:00002C38:  27 16
-F00:2000       	DC.W	LATES
+F00:2002       	DC.W	LATES
                S02:00002C3A:  27 E8
-F00:2001       	DC.W	PFIND	* ENDIF
+F00:2003       	DC.W	PFIND	* ENDIF
                S02:00002C3C:  20 DE
-F00:2002       DFIN1	DC.W	SEMIS
+F00:2004       DFIN1	DC.W	SEMIS
                S02:00002C3E:  22 50
-F00:2003       *F
-F00:2004       *F	DC.B	$87	* (ABORT)
-F00:2005       *F	DC.B	'(ABORT'
-F00:2006       *F	DC.B	$80+')'
-F00:2007       *F	DC.W	DFIND-8
-F00:2008       *F  PABOR	DC.W	DOCOL
-F00:2009       *F	DC.W	ABORT
-F00:2010       *F	DC.W	SEMIS
-F00:2011       *
-F00:2012       	DC.B	$85	* ERROR
+F00:2005       *F
+F00:2006       *F	DC.B	$87	* (ABORT)
+F00:2007       *F	DC.B	'(ABORT'
+F00:2008       *F	DC.B	$80+')'
+F00:2009       *F	DC.W	DFIND-8
+F00:2010       *F  PABOR	DC.W	DOCOL
+F00:2011       *F	DC.W	ABORT
+F00:2012       *F	DC.W	SEMIS
+F00:2013       *
+F00:2014       	DC.B	$85	* ERROR
                S02:00002C40:  85
-F00:2013       	DC.B	'ERRO'
+F00:2015       	DC.B	'ERRO'
                S02:00002C41:  45 52 52 4F
-F00:2014       	DC.B	$80+'R'
+F00:2016       	DC.B	$80+'R'
                S02:00002C45:  D2
-F00:2015       	DC.W	DFIND-8
+F00:2017       	DC.W	DFIND-8
                S02:00002C46:  2C 16
-F00:2016       ERROR	DC.W	DOCOL
+F00:2018       ERROR	DC.W	DOCOL
                S02:00002C48:  25 00
-F00:2017       	DC.W	WARN
+F00:2019       	DC.W	WARN
                S02:00002C4A:  25 76
-F00:2018       	DC.W	AT
+F00:2020       	DC.W	AT
                S02:00002C4C:  23 96
-F00:2019       	DC.W	ZLESS
+F00:2021       	DC.W	ZLESS
                S02:00002C4E:  22 BA
-F00:2020       	DC.W	ZBRAN	* IF
+F00:2022       	DC.W	ZBRAN	* IF
                S02:00002C50:  20 42
-F00:2021       	DC.W	ERRO1-*
+F00:2023       	DC.W	ERRO1-*
                S02:00002C52:  00 04
-F00:2022       	DC.W	ABORT	* ENDIF
+F00:2024       	DC.W	ABORT	* ENDIF
                S02:00002C54:  2F 52
-F00:2023       ERRO1	DC.W	HERE
+F00:2025       ERRO1	DC.W	HERE
                S02:00002C56:  27 16
-F00:2024       	DC.W	COUNT
+F00:2026       	DC.W	COUNT
                S02:00002C58:  29 7A
-F00:2025       	DC.W	TYPE
+F00:2027       	DC.W	TYPE
                S02:00002C5A:  29 8E
-F00:2026       	DC.W	PDOTQ
+F00:2028       	DC.W	PDOTQ
                S02:00002C5C:  29 F0
-F00:2027       	DC.B	3
+F00:2029       	DC.B	3
                S02:00002C5E:  03
-F00:2028       	DC.B	'  ?'
+F00:2030       	DC.B	'  ?'
                S02:00002C5F:  20 20 3F
-F00:2029       	DC.W	MESS
+F00:2031       	DC.W	MESS
                S02:00002C62:  35 48
-F00:2030       	DC.W	SPSTO
+F00:2032       	DC.W	SPSTO
                S02:00002C64:  22 2C
-F00:2031       	DC.W	INN,AT,BLK,AT
+F00:2033       	DC.W	INN,AT,BLK,AT
                S02:00002C66:  25 B0
                S02:00002C68:  23 96
                S02:00002C6A:  25 A6
                S02:00002C6C:  23 96
-F00:2032       	DC.W	QUIT
+F00:2034       	DC.W	QUIT
                S02:00002C6E:  2F 20
-F00:2033       	DC.W	SEMIS
+F00:2035       	DC.W	SEMIS
                S02:00002C70:  22 50
-F00:2034       *
-F00:2035       	DC.B	$83	* MIN
+F00:2036       *
+F00:2037       	DC.B	$83	* MIN
                S02:00002C72:  83
-F00:2036       	DC.B	'MI'
+F00:2038       	DC.B	'MI'
                S02:00002C73:  4D 49
-F00:2037       	DC.B	$80+'N'
+F00:2039       	DC.B	$80+'N'
                S02:00002C75:  CE
-F00:2038       	DC.W	ERROR-8
+F00:2040       	DC.W	ERROR-8
                S02:00002C76:  2C 40
-F00:2039       MIN	DC.W	DOCOL,OVER,OVER
+F00:2041       MIN	DC.W	DOCOL,OVER,OVER
                S02:00002C78:  25 00
                S02:00002C7A:  23 1C
                S02:00002C7C:  23 1C
-F00:2040       	DC.W	GREAT
+F00:2042       	DC.W	GREAT
                S02:00002C7E:  27 78
-F00:2041       	DC.W	ZBRAN	* IF
+F00:2043       	DC.W	ZBRAN	* IF
                S02:00002C80:  20 42
-F00:2042       	DC.W	MIN1-*
+F00:2044       	DC.W	MIN1-*
                S02:00002C82:  00 04
-F00:2043       	DC.W	SWAP	* ENDIF
+F00:2045       	DC.W	SWAP	* ENDIF
                S02:00002C84:  23 44
-F00:2044       MIN1	DC.W	DROP
+F00:2046       MIN1	DC.W	DROP
                S02:00002C86:  23 32
-F00:2045       	DC.W	SEMIS
+F00:2047       	DC.W	SEMIS
                S02:00002C88:  22 50
-F00:2046       *
-F00:2047       	DC.B	$83	* ID.
+F00:2048       *
+F00:2049       	DC.B	$83	* ID.
                S02:00002C8A:  83
-F00:2048       	DC.B	'ID'
+F00:2050       	DC.B	'ID'
                S02:00002C8B:  49 44
-F00:2049       	DC.B	$80+'.'
+F00:2051       	DC.B	$80+'.'
                S02:00002C8D:  AE
-F00:2050       	DC.W	MIN-6
+F00:2052       	DC.W	MIN-6
                S02:00002C8E:  2C 72
-F00:2051       IDDOT	DC.W	DOCOL
+F00:2053       IDDOT	DC.W	DOCOL
                S02:00002C90:  25 00
-F00:2052       	DC.W	PAD
+F00:2054       	DC.W	PAD
                S02:00002C92:  2B 14
-F00:2053       	DC.W	LIT
-               S02:00002C94:  20 06
-F00:2054       	DC.W	$20
-               S02:00002C96:  00 20
 F00:2055       	DC.W	LIT
+               S02:00002C94:  20 06
+F00:2056       	DC.W	$20
+               S02:00002C96:  00 20
+F00:2057       	DC.W	LIT
                S02:00002C98:  20 06
-F00:2056       	DC.W	$5F
+F00:2058       	DC.W	$5F
                S02:00002C9A:  00 5F
-F00:2057       	DC.W	FILL
+F00:2059       	DC.W	FILL
                S02:00002C9C:  23 D2
-F00:2058       	DC.W	DUP
+F00:2060       	DC.W	DUP
                S02:00002C9E:  23 5A
-F00:2059       	DC.W	PFA
+F00:2061       	DC.W	PFA
                S02:00002CA0:  28 2C
-F00:2060       	DC.W	LFA
+F00:2062       	DC.W	LFA
                S02:00002CA2:  27 F8
-F00:2061       	DC.W	OVER
+F00:2063       	DC.W	OVER
                S02:00002CA4:  23 1C
-F00:2062       	DC.W	SUBB
+F00:2064       	DC.W	SUBB
                S02:00002CA6:  27 54
-F00:2063       	DC.W	PAD
+F00:2065       	DC.W	PAD
                S02:00002CA8:  2B 14
-F00:2064       	DC.W	SWAP
+F00:2066       	DC.W	SWAP
                S02:00002CAA:  23 44
-F00:2065       	DC.W	CMOVE
+F00:2067       	DC.W	CMOVE
                S02:00002CAC:  21 86
-F00:2066       	DC.W	PAD
+F00:2068       	DC.W	PAD
                S02:00002CAE:  2B 14
-F00:2067       	DC.W	COUNT
+F00:2069       	DC.W	COUNT
                S02:00002CB0:  29 7A
-F00:2068       	DC.W	LIT
+F00:2070       	DC.W	LIT
                S02:00002CB2:  20 06
-F00:2069       	DC.W	$001F
+F00:2071       	DC.W	$001F
                S02:00002CB4:  00 1F
-F00:2070       	DC.W	ANDD
+F00:2072       	DC.W	ANDD
                S02:00002CB6:  21 E4
-F00:2071       	DC.W	TYPE
+F00:2073       	DC.W	TYPE
                S02:00002CB8:  29 8E
-F00:2072       	DC.W	SPACE
+F00:2074       	DC.W	SPACE
                S02:00002CBA:  27 9A
-F00:2073       	DC.W	SEMIS
+F00:2075       	DC.W	SEMIS
                S02:00002CBC:  22 50
-F00:2074       *
-F00:2075       	DC.B	0,$86	* CREATE
+F00:2076       *
+F00:2077       	DC.B	0,$86	* CREATE
                S02:00002CBE:  00
                S02:00002CBF:  86
-F00:2076       	DC.B	'CREAT'
+F00:2078       	DC.B	'CREAT'
                S02:00002CC0:  43 52 45 41 54
-F00:2077       	DC.B	$80+'E'
+F00:2079       	DC.B	$80+'E'
                S02:00002CC5:  C5
-F00:2078       	DC.W	IDDOT-6
+F00:2080       	DC.W	IDDOT-6
                S02:00002CC6:  2C 8A
-F00:2079       CREAT	DC.W	DOCOL
+F00:2081       CREAT	DC.W	DOCOL
                S02:00002CC8:  25 00
-F00:2080       	DC.W	DICTL	* ADDITION
+F00:2082       	DC.W	DICTL	* ADDITION
                S02:00002CCA:  26 76
-F00:2081       	DC.W	AT
+F00:2083       	DC.W	AT
                S02:00002CCC:  23 96
-F00:2082       	DC.W	HERE
+F00:2084       	DC.W	HERE
                S02:00002CCE:  27 16
-F00:2083       	DC.W	LIT,$30
+F00:2085       	DC.W	LIT,$30
                S02:00002CD0:  20 06
                S02:00002CD2:  00 30
-F00:2084       	DC.W	PLUS
+F00:2086       	DC.W	PLUS
                S02:00002CD4:  22 D0
-F00:2085       	DC.W	LESS
+F00:2087       	DC.W	LESS
                S02:00002CD6:  27 6C
-F00:2086       	DC.W	TWO,QERR
+F00:2088       	DC.W	TWO,QERR
                S02:00002CD8:  25 1E
                S02:00002CDA:  28 56
-F00:2087       	DC.W	DFIND
+F00:2089       	DC.W	DFIND
                S02:00002CDC:  2C 1E
-F00:2088       	DC.W	ZBRAN	* IF
+F00:2090       	DC.W	ZBRAN	* IF
                S02:00002CDE:  20 42
-F00:2089       	DC.W	CREA1-*
+F00:2091       	DC.W	CREA1-*
                S02:00002CE0:  00 10
-F00:2090       	DC.W	DROP
+F00:2092       	DC.W	DROP
                S02:00002CE2:  23 32
-F00:2091       	DC.W	NFA
+F00:2093       	DC.W	NFA
                S02:00002CE4:  28 16
-F00:2092       	DC.W	IDDOT
+F00:2094       	DC.W	IDDOT
                S02:00002CE6:  2C 90
-F00:2093       	DC.W	LIT,4
+F00:2095       	DC.W	LIT,4
                S02:00002CE8:  20 06
                S02:00002CEA:  00 04
-F00:2094       	DC.W	MESS
+F00:2096       	DC.W	MESS
                S02:00002CEC:  35 48
-F00:2095       	DC.W	SPACE	* ENDIF
+F00:2097       	DC.W	SPACE	* ENDIF
                S02:00002CEE:  27 9A
-F00:2096       CREA1	DC.W	HERE	* ADDITION
+F00:2098       CREA1	DC.W	HERE	* ADDITION
                S02:00002CF0:  27 16
-F00:2097       	DC.W	DUP
+F00:2099       	DC.W	DUP
                S02:00002CF2:  23 5A
-F00:2098       	DC.W	CAT
+F00:2100       	DC.W	CAT
                S02:00002CF4:  23 A8
-F00:2099       	DC.W	XORR
+F00:2101       	DC.W	XORR
                S02:00002CF6:  22 08
-F00:2100       	DC.W	ONE
+F00:2102       	DC.W	ONE
                S02:00002CF8:  25 16
-F00:2101       	DC.W	ANDD
+F00:2103       	DC.W	ANDD
                S02:00002CFA:  21 E4
-F00:2102       	DC.W	ZEQU
+F00:2104       	DC.W	ZEQU
                S02:00002CFC:  22 A2
-F00:2103       	DC.W	ZBRAN
+F00:2105       	DC.W	ZBRAN
                S02:00002CFE:  20 42
-F00:2104       	DC.W	CREA2-*
+F00:2106       	DC.W	CREA2-*
                S02:00002D00:  00 1C
-F00:2105       	DC.W	HERE
+F00:2107       	DC.W	HERE
                S02:00002D02:  27 16
-F00:2106       	DC.W	DUP
+F00:2108       	DC.W	DUP
                S02:00002D04:  23 5A
-F00:2107       	DC.W	DUP
+F00:2109       	DC.W	DUP
                S02:00002D06:  23 5A
-F00:2108       	DC.W	ONEP
+F00:2110       	DC.W	ONEP
                S02:00002D08:  26 F8
-F00:2109       	DC.W	OVER
+F00:2111       	DC.W	OVER
                S02:00002D0A:  23 1C
-F00:2110       	DC.W	CAT
+F00:2112       	DC.W	CAT
                S02:00002D0C:  23 A8
-F00:2111       	DC.W	ONEP
+F00:2113       	DC.W	ONEP
                S02:00002D0E:  26 F8
-F00:2112       	DC.W	CMOVE
+F00:2114       	DC.W	CMOVE
                S02:00002D10:  21 86
-F00:2113       	DC.W	ZERO
+F00:2115       	DC.W	ZERO
                S02:00002D12:  25 0E
-F00:2114       	DC.W	SWAP
+F00:2116       	DC.W	SWAP
                S02:00002D14:  23 44
-F00:2115       	DC.W	CSTOR
+F00:2117       	DC.W	CSTOR
                S02:00002D16:  23 EE
-F00:2116       	DC.W	ONE
+F00:2118       	DC.W	ONE
                S02:00002D18:  25 16
-F00:2117       	DC.W	ALLOT
+F00:2119       	DC.W	ALLOT
                S02:00002D1A:  27 26
-F00:2118       CREA2	DC.W	HERE
+F00:2120       CREA2	DC.W	HERE
                S02:00002D1C:  27 16
-F00:2119       	DC.W	DUP
+F00:2121       	DC.W	DUP
                S02:00002D1E:  23 5A
-F00:2120       	DC.W	CAT
+F00:2122       	DC.W	CAT
                S02:00002D20:  23 A8
-F00:2121       	DC.W	WIDTH
+F00:2123       	DC.W	WIDTH
                S02:00002D22:  25 68
-F00:2122       	DC.W	AT
+F00:2124       	DC.W	AT
                S02:00002D24:  23 96
-F00:2123       	DC.W	MIN
+F00:2125       	DC.W	MIN
                S02:00002D26:  2C 78
-F00:2124       	DC.W	ONEP
+F00:2126       	DC.W	ONEP
                S02:00002D28:  26 F8
-F00:2125       	DC.W	ALLOT
+F00:2127       	DC.W	ALLOT
                S02:00002D2A:  27 26
-F00:2126       	DC.W	DUP
+F00:2128       	DC.W	DUP
                S02:00002D2C:  23 5A
-F00:2127       	DC.W	LIT,$A0
+F00:2129       	DC.W	LIT,$A0
                S02:00002D2E:  20 06
                S02:00002D30:  00 A0
-F00:2128       	DC.W	TOGGL
+F00:2130       	DC.W	TOGGL
                S02:00002D32:  23 84
-F00:2129       	DC.W	HERE
+F00:2131       	DC.W	HERE
                S02:00002D34:  27 16
-F00:2130       	DC.W	ONE
+F00:2132       	DC.W	ONE
                S02:00002D36:  25 16
-F00:2131       	DC.W	SUBB
+F00:2133       	DC.W	SUBB
                S02:00002D38:  27 54
-F00:2132       	DC.W	LIT,$80
+F00:2134       	DC.W	LIT,$80
                S02:00002D3A:  20 06
                S02:00002D3C:  00 80
-F00:2133       	DC.W	TOGGL
+F00:2135       	DC.W	TOGGL
                S02:00002D3E:  23 84
-F00:2134       	DC.W	LATES
+F00:2136       	DC.W	LATES
                S02:00002D40:  27 E8
-F00:2135       	DC.W	COMMA
+F00:2137       	DC.W	COMMA
                S02:00002D42:  27 32
-F00:2136       	DC.W	CURR
+F00:2138       	DC.W	CURR
                S02:00002D44:  25 EE
-F00:2137       	DC.W	AT
+F00:2139       	DC.W	AT
                S02:00002D46:  23 96
-F00:2138       	DC.W	STORE
+F00:2140       	DC.W	STORE
                S02:00002D48:  23 BC
-F00:2139       	DC.W	HERE
+F00:2141       	DC.W	HERE
                S02:00002D4A:  27 16
-F00:2140       	DC.W	TWOP
+F00:2142       	DC.W	TWOP
                S02:00002D4C:  27 06
-F00:2141       	DC.W	COMMA
+F00:2143       	DC.W	COMMA
                S02:00002D4E:  27 32
-F00:2142       	DC.W	SEMIS
+F00:2144       	DC.W	SEMIS
                S02:00002D50:  22 50
-F00:2143       *
-F00:2144       	DC.B	$C1	* :(COLON)
+F00:2145       *
+F00:2146       	DC.B	$C1	* :(COLON)
                S02:00002D52:  C1
-F00:2145       	DC.B	$80+':'
+F00:2147       	DC.B	$80+':'
                S02:00002D53:  BA
-F00:2146       	DC.W	CREAT-$09
+F00:2148       	DC.W	CREAT-$09
                S02:00002D54:  2C BF
-F00:2147       COLON	DC.W	DOCOL
+F00:2149       COLON	DC.W	DOCOL
                S02:00002D56:  25 00
-F00:2148       	DC.W	QEXEC,SCSP,CURR
+F00:2150       	DC.W	QEXEC,SCSP,CURR
                S02:00002D58:  28 88
                S02:00002D5A:  28 42
                S02:00002D5C:  25 EE
-F00:2149       	DC.W	AT,CONT,STORE
+F00:2151       	DC.W	AT,CONT,STORE
                S02:00002D5E:  23 96
                S02:00002D60:  25 E0
                S02:00002D62:  23 BC
-F00:2150       	DC.W	CREAT,RBRAC
+F00:2152       	DC.W	CREAT,RBRAC
                S02:00002D64:  2C C8
                S02:00002D66:  29 10
-F00:2151       	DC.W	LIT
+F00:2153       	DC.W	LIT
                S02:00002D68:  20 06
-F00:2152       	DC.W	0-2
+F00:2154       	DC.W	0-2
                S02:00002D6A:  FF FE
-F00:2153       	DC.W	DP,PSTOR
+F00:2155       	DC.W	DP,PSTOR
                S02:00002D6C:  25 8C
                S02:00002D6E:  23 6C
-F00:2154       	DC.W	COMP,DOCOL,SEMIS
+F00:2156       	DC.W	COMP,DOCOL,SEMIS
                S02:00002D70:  28 EC
                S02:00002D72:  25 00
                S02:00002D74:  22 50
-F00:2155       *
-F00:2156       	DC.B	$85	* SCODE
+F00:2157       *
+F00:2158       	DC.B	$85	* SCODE
                S02:00002D76:  85
-F00:2157       	DC.B	'!COD'
+F00:2159       	DC.B	'!COD'
                S02:00002D77:  21 43 4F 44
-F00:2158       	DC.B	$80+'E'
+F00:2160       	DC.B	$80+'E'
                S02:00002D7B:  C5
-F00:2159       	DC.W	COLON-$4
+F00:2161       	DC.W	COLON-$4
                S02:00002D7C:  2D 52
-F00:2160       SCODE	DC.W	DOCOL
+F00:2162       SCODE	DC.W	DOCOL
                S02:00002D7E:  25 00
-F00:2161       	DC.W	CREAT
+F00:2163       	DC.W	CREAT
                S02:00002D80:  2C C8
-F00:2162       	DC.W	SMUDG
+F00:2164       	DC.W	SMUDG
                S02:00002D82:  29 26
-F00:2163       	DC.W	LATES
+F00:2165       	DC.W	LATES
                S02:00002D84:  27 E8
-F00:2164       	DC.W	PFA
+F00:2166       	DC.W	PFA
                S02:00002D86:  28 2C
-F00:2165       	DC.W	CFA
+F00:2167       	DC.W	CFA
                S02:00002D88:  28 08
-F00:2166       	DC.W	STORE
+F00:2168       	DC.W	STORE
                S02:00002D8A:  23 BC
-F00:2167       	DC.W	COMMA
+F00:2169       	DC.W	COMMA
                S02:00002D8C:  27 32
-F00:2168       	DC.W	SEMIS
+F00:2170       	DC.W	SEMIS
                S02:00002D8E:  22 50
-F00:2169       *
-F00:2170       	DC.B	0,$88	* CONSTANT
+F00:2171       *
+F00:2172       	DC.B	0,$88	* CONSTANT
                S02:00002D90:  00
                S02:00002D91:  88
-F00:2171       	DC.B	'CONSTAN'
+F00:2173       	DC.B	'CONSTAN'
                S02:00002D92:  43 4F 4E 53 54 41 4E
-F00:2172       	DC.B	$80+'T'
+F00:2174       	DC.B	$80+'T'
                S02:00002D99:  D4
-F00:2173       	DC.W	SCODE-8
+F00:2175       	DC.W	SCODE-8
                S02:00002D9A:  2D 76
-F00:2174       CONST	DC.W	DOCOL
+F00:2176       CONST	DC.W	DOCOL
                S02:00002D9C:  25 00
-F00:2175       	DC.W	LIT,DOCON
+F00:2177       	DC.W	LIT,DOCON
                S02:00002D9E:  20 06
                S02:00002DA0:  24 B4
-F00:2176       	DC.W	SCODE
+F00:2178       	DC.W	SCODE
                S02:00002DA2:  2D 7E
-F00:2177       	DC.W	SEMIS
+F00:2179       	DC.W	SEMIS
                S02:00002DA4:  22 50
-F00:2178       *
-F00:2179       	DC.B	0,$88	* VARIABLE
+F00:2180       *
+F00:2181       	DC.B	0,$88	* VARIABLE
                S02:00002DA6:  00
                S02:00002DA7:  88
-F00:2180       	DC.B	'VARIABL'
+F00:2182       	DC.B	'VARIABL'
                S02:00002DA8:  56 41 52 49 41 42 4C
-F00:2181       	DC.B	$80+'E'
+F00:2183       	DC.B	$80+'E'
                S02:00002DAF:  C5
-F00:2182       	DC.W	CONST-$0B
+F00:2184       	DC.W	CONST-$0B
                S02:00002DB0:  2D 91
-F00:2183       VARIA	DC.W	DOCOL
+F00:2185       VARIA	DC.W	DOCOL
                S02:00002DB2:  25 00
-F00:2184       	DC.W	LIT,DOVAR
+F00:2186       	DC.W	LIT,DOVAR
                S02:00002DB4:  20 06
                S02:00002DB6:  24 A0
-F00:2185       	DC.W	SCODE
+F00:2187       	DC.W	SCODE
                S02:00002DB8:  2D 7E
-F00:2186       	DC.W	SEMIS
+F00:2188       	DC.W	SEMIS
                S02:00002DBA:  22 50
-F00:2187       *
-F00:2188       	DC.B	0,$84	* USER
+F00:2189       *
+F00:2190       	DC.B	0,$84	* USER
                S02:00002DBC:  00
                S02:00002DBD:  84
-F00:2189       	DC.B	'USE'
+F00:2191       	DC.B	'USE'
                S02:00002DBE:  55 53 45
-F00:2190       	DC.B	$80+'R'
+F00:2192       	DC.B	$80+'R'
                S02:00002DC1:  D2
-F00:2191       	DC.W	VARIA-$0B
+F00:2193       	DC.W	VARIA-$0B
                S02:00002DC2:  2D A7
-F00:2192       USER	DC.W	DOCOL
+F00:2194       USER	DC.W	DOCOL
                S02:00002DC4:  25 00
-F00:2193       	DC.W	LIT,DOUSE
+F00:2195       	DC.W	LIT,DOUSE
                S02:00002DC6:  20 06
                S02:00002DC8:  24 C8
-F00:2194       	DC.W	SCODE
+F00:2196       	DC.W	SCODE
                S02:00002DCA:  2D 7E
-F00:2195       	DC.W	SEMIS
+F00:2197       	DC.W	SEMIS
                S02:00002DCC:  22 50
-F00:2196       *
-F00:2197       	DC.B	$87	* <BUILDS
+F00:2198       *
+F00:2199       	DC.B	$87	* <BUILDS
                S02:00002DCE:  87
-F00:2198       	DC.B	'<BUILD'
+F00:2200       	DC.B	'<BUILD'
                S02:00002DCF:  3C 42 55 49 4C 44
-F00:2199       	DC.B	$80+'S'
+F00:2201       	DC.B	$80+'S'
                S02:00002DD5:  D3
-F00:2200       	DC.W	USER-7
+F00:2202       	DC.W	USER-7
                S02:00002DD6:  2D BD
-F00:2201       BUILD	DC.W	DOCOL
+F00:2203       BUILD	DC.W	DOCOL
                S02:00002DD8:  25 00
-F00:2202       	DC.W	ZERO
+F00:2204       	DC.W	ZERO
                S02:00002DDA:  25 0E
-F00:2203       	DC.W	CONST
+F00:2205       	DC.W	CONST
                S02:00002DDC:  2D 9C
-F00:2204       	DC.W	SEMIS
+F00:2206       	DC.W	SEMIS
                S02:00002DDE:  22 50
-F00:2205       *
-F00:2206       	DC.B	$85	* DOES>
+F00:2207       *
+F00:2208       	DC.B	$85	* DOES>
                S02:00002DE0:  85
-F00:2207       	DC.B	'DOES'
+F00:2209       	DC.B	'DOES'
                S02:00002DE1:  44 4F 45 53
-F00:2208       	DC.B	$80+'>'
+F00:2210       	DC.B	$80+'>'
                S02:00002DE5:  BE
-F00:2209       	DC.W	BUILD-$0A
+F00:2211       	DC.W	BUILD-$0A
                S02:00002DE6:  2D CE
-F00:2210       DOES	DC.W	DOCOL
+F00:2212       DOES	DC.W	DOCOL
                S02:00002DE8:  25 00
-F00:2211       	DC.W	FROMR
+F00:2213       	DC.W	FROMR
                S02:00002DEA:  22 84
-F00:2212       	DC.W	LATES
+F00:2214       	DC.W	LATES
                S02:00002DEC:  27 E8
-F00:2213       	DC.W	PFA
+F00:2215       	DC.W	PFA
                S02:00002DEE:  28 2C
-F00:2214       	DC.W	STORE
+F00:2216       	DC.W	STORE
                S02:00002DF0:  23 BC
-F00:2215       	DC.W	PSCOD
+F00:2217       	DC.W	PSCOD
                S02:00002DF2:  29 64
-F00:2216       DODOE	MOVE.W	A4,-(A7)
+F00:2218       DODOE	MOVE.W	A4,-(A7)
                S02:00002DF4:  3F 0C
-F00:2217       	MOVE.W	(A5)+,A4
+F00:2219       	MOVE.W	(A5)+,A4
                S02:00002DF6:  38 5D
-F00:2218       	MOVE.W	A5,-(A3)
+F00:2220       	MOVE.W	A5,-(A3)
                S02:00002DF8:  37 0D
-F00:2219       	MOVE.W	(A4)+,A5
+F00:2221       	MOVE.W	(A4)+,A5
                S02:00002DFA:  3A 5C
-F00:2220       	MOVE.W	(A5)+,A0
+F00:2222       	MOVE.W	(A5)+,A0
                S02:00002DFC:  30 5D
-F00:2221       	JMP	(A0)
+F00:2223       	JMP	(A0)
                S02:00002DFE:  4E D0
-F00:2222       *
-F00:2223       	DC.B	$C7	* LITERAL
+F00:2224       *
+F00:2225       	DC.B	$C7	* LITERAL
                S02:00002E00:  C7
-F00:2224       	DC.B	'LITERA'
+F00:2226       	DC.B	'LITERA'
                S02:00002E01:  4C 49 54 45 52 41
-F00:2225       	DC.B	$80+'L'
+F00:2227       	DC.B	$80+'L'
                S02:00002E07:  CC
-F00:2226       	DC.W	DOES-$08
+F00:2228       	DC.W	DOES-$08
                S02:00002E08:  2D E0
-F00:2227       LITER	DC.W	DOCOL
+F00:2229       LITER	DC.W	DOCOL
                S02:00002E0A:  25 00
-F00:2228       	DC.W	STATE
+F00:2230       	DC.W	STATE
                S02:00002E0C:  25 FA
-F00:2229       	DC.W	AT
+F00:2231       	DC.W	AT
                S02:00002E0E:  23 96
-F00:2230       	DC.W	ZBRAN	* IF
+F00:2232       	DC.W	ZBRAN	* IF
                S02:00002E10:  20 42
-F00:2231       	DC.W	LITE1-*
+F00:2233       	DC.W	LITE1-*
                S02:00002E12:  00 08
-F00:2232       	DC.W	COMP
+F00:2234       	DC.W	COMP
                S02:00002E14:  28 EC
-F00:2233       	DC.W	LIT
+F00:2235       	DC.W	LIT
                S02:00002E16:  20 06
-F00:2234       	DC.W	COMMA	* ENDIF
+F00:2236       	DC.W	COMMA	* ENDIF
                S02:00002E18:  27 32
-F00:2235       LITE1	DC.W	SEMIS
+F00:2237       LITE1	DC.W	SEMIS
                S02:00002E1A:  22 50
-F00:2236       *
-F00:2237       	DC.B	0,$C8	* DLITERAL
+F00:2238       *
+F00:2239       	DC.B	0,$C8	* DLITERAL
                S02:00002E1C:  00
                S02:00002E1D:  C8
-F00:2238       	DC.B	'DLITERA'
+F00:2240       	DC.B	'DLITERA'
                S02:00002E1E:  44 4C 49 54 45 52 41
-F00:2239       	DC.B	$80+'L'
+F00:2241       	DC.B	$80+'L'
                S02:00002E25:  CC
-F00:2240       	DC.W	LITER-$0A
+F00:2242       	DC.W	LITER-$0A
                S02:00002E26:  2E 00
-F00:2241       DLITE	DC.W	DOCOL
+F00:2243       DLITE	DC.W	DOCOL
                S02:00002E28:  25 00
-F00:2242       	DC.W	STATE
+F00:2244       	DC.W	STATE
                S02:00002E2A:  25 FA
-F00:2243       	DC.W	AT
+F00:2245       	DC.W	AT
                S02:00002E2C:  23 96
-F00:2244       	DC.W	ZBRAN	* IF
+F00:2246       	DC.W	ZBRAN	* IF
                S02:00002E2E:  20 42
-F00:2245       	DC.W	DLIT1-*
+F00:2247       	DC.W	DLIT1-*
                S02:00002E30:  00 08
-F00:2246       	DC.W	SWAP
+F00:2248       	DC.W	SWAP
                S02:00002E32:  23 44
-F00:2247       	DC.W	LITER
+F00:2249       	DC.W	LITER
                S02:00002E34:  2E 0A
-F00:2248       	DC.W	LITER 	* ENDIF
+F00:2250       	DC.W	LITER 	* ENDIF
                S02:00002E36:  2E 0A
-F00:2249       DLIT1	DC.W	SEMIS
+F00:2251       DLIT1	DC.W	SEMIS
                S02:00002E38:  22 50
-F00:2250       *
-F00:2251       	DC.B	0,$86	* ?STACK
+F00:2252       *
+F00:2253       	DC.B	0,$86	* ?STACK
                S02:00002E3A:  00
                S02:00002E3B:  86
-F00:2252       	DC.B	'?STAC'
+F00:2254       	DC.B	'?STAC'
                S02:00002E3C:  3F 53 54 41 43
-F00:2253       	DC.B	$80+'K'
+F00:2255       	DC.B	$80+'K'
                S02:00002E41:  CB
-F00:2254       	DC.W	DLITE-$0B
+F00:2256       	DC.W	DLITE-$0B
                S02:00002E42:  2E 1D
-F00:2255       QSTAC	DC.W	DOCOL
+F00:2257       QSTAC	DC.W	DOCOL
                S02:00002E44:  25 00
-F00:2256       	DC.W	SZERO
+F00:2258       	DC.W	SZERO
                S02:00002E46:  25 48
-F00:2257       	DC.W	AT
+F00:2259       	DC.W	AT
                S02:00002E48:  23 96
-F00:2258       	DC.W	DUP
+F00:2260       	DC.W	DUP
                S02:00002E4A:  23 5A
-F00:2259       	DC.W	SPAT
+F00:2261       	DC.W	SPAT
                S02:00002E4C:  22 1A
-F00:2260       	DC.W	LESS
+F00:2262       	DC.W	LESS
                S02:00002E4E:  27 6C
-F00:2261       	DC.W	ONE
+F00:2263       	DC.W	ONE
                S02:00002E50:  25 16
-F00:2262       	DC.W	QERR
+F00:2264       	DC.W	QERR
                S02:00002E52:  28 56
-F00:2263       	DC.W	LIT
+F00:2265       	DC.W	LIT
                S02:00002E54:  20 06
-F00:2264       	DC.W	$100
+F00:2266       	DC.W	$100
                S02:00002E56:  01 00
-F00:2265       	DC.W	PLUS
+F00:2267       	DC.W	PLUS
                S02:00002E58:  22 D0
-F00:2266       	DC.W	SPAT
+F00:2268       	DC.W	SPAT
                S02:00002E5A:  22 1A
-F00:2267       	DC.W	LESS
+F00:2269       	DC.W	LESS
                S02:00002E5C:  27 6C
-F00:2268       	DC.W	LIT
+F00:2270       	DC.W	LIT
                S02:00002E5E:  20 06
-F00:2269       	DC.W	7
+F00:2271       	DC.W	7
                S02:00002E60:  00 07
-F00:2270       	DC.W	QERR
+F00:2272       	DC.W	QERR
                S02:00002E62:  28 56
-F00:2271       	DC.W	SEMIS
+F00:2273       	DC.W	SEMIS
                S02:00002E64:  22 50
-F00:2272       *
-F00:2273       	DC.B	$89	* INTERPRET
+F00:2274       *
+F00:2275       	DC.B	$89	* INTERPRET
                S02:00002E66:  89
-F00:2274       	DC.B	'INTERPRE'
+F00:2276       	DC.B	'INTERPRE'
                S02:00002E67:  49 4E 54 45 52 50 52 45
-F00:2275       	DC.B	$80+'T'
+F00:2277       	DC.B	$80+'T'
                S02:00002E6F:  D4
-F00:2276       	DC.W	QSTAC-$09
+F00:2278       	DC.W	QSTAC-$09
                S02:00002E70:  2E 3B
-F00:2277       INTER	DC.W	DOCOL
+F00:2279       INTER	DC.W	DOCOL
                S02:00002E72:  25 00
-F00:2278       REP SET *	*BEGIN
-F00:2279       	DC.W	DFIND
+F00:2280       REP SET *	*BEGIN
+F00:2281       	DC.W	DFIND
                S02:00002E74:  2C 1E
-F00:2280       	DC.W	ZBRAN	* IF
+F00:2282       	DC.W	ZBRAN	* IF
                S02:00002E76:  20 42
-F00:2281       	DC.W	INTE2-*
+F00:2283       	DC.W	INTE2-*
                S02:00002E78:  00 1E
-F00:2282       	DC.W	STATE
+F00:2284       	DC.W	STATE
                S02:00002E7A:  25 FA
-F00:2283       	DC.W	AT
+F00:2285       	DC.W	AT
                S02:00002E7C:  23 96
-F00:2284       	DC.W	LESS
+F00:2286       	DC.W	LESS
                S02:00002E7E:  27 6C
-F00:2285       	DC.W	ZBRAN	* IF
+F00:2287       	DC.W	ZBRAN	* IF
                S02:00002E80:  20 42
-F00:2286       	DC.W	INTE3-*
+F00:2288       	DC.W	INTE3-*
                S02:00002E82:  00 0A
-F00:2287       	DC.W	CFA
+F00:2289       	DC.W	CFA
                S02:00002E84:  28 08
-F00:2288       	DC.W	COMMA
+F00:2290       	DC.W	COMMA
                S02:00002E86:  27 32
-F00:2289       	DC.W	BRAN	* ELSE
+F00:2291       	DC.W	BRAN	* ELSE
                S02:00002E88:  20 2C
-F00:2290       	DC.W	INTE4-*
+F00:2292       	DC.W	INTE4-*
                S02:00002E8A:  00 06
-F00:2291       INTE3	DC.W	CFA
+F00:2293       INTE3	DC.W	CFA
                S02:00002E8C:  28 08
-F00:2292       	DC.W	EXEC 	* ENDIF
+F00:2294       	DC.W	EXEC 	* ENDIF
                S02:00002E8E:  20 1A
-F00:2293       INTE4	DC.W	QSTAC
+F00:2295       INTE4	DC.W	QSTAC
                S02:00002E90:  2E 44
-F00:2294       	DC.W	BRAN	* ELSE
+F00:2296       	DC.W	BRAN	* ELSE
                S02:00002E92:  20 2C
-F00:2295       	DC.W	INTE5-*
+F00:2297       	DC.W	INTE5-*
                S02:00002E94:  00 1C
-F00:2296       INTE2	DC.W	HERE
+F00:2298       INTE2	DC.W	HERE
                S02:00002E96:  27 16
-F00:2297       	DC.W	NUMB
+F00:2299       	DC.W	NUMB
                S02:00002E98:  2B C6
-F00:2298       	DC.W	DPL
+F00:2300       	DC.W	DPL
                S02:00002E9A:  26 10
-F00:2299       	DC.W	AT
+F00:2301       	DC.W	AT
                S02:00002E9C:  23 96
-F00:2300       	DC.W	ONEP
+F00:2302       	DC.W	ONEP
                S02:00002E9E:  26 F8
-F00:2301       	DC.W	ZBRAN	* IF
+F00:2303       	DC.W	ZBRAN	* IF
                S02:00002EA0:  20 42
-F00:2302       	DC.W	INTE6-*
+F00:2304       	DC.W	INTE6-*
                S02:00002EA2:  00 08
-F00:2303       	DC.W	DLITE
+F00:2305       	DC.W	DLITE
                S02:00002EA4:  2E 28
-F00:2304       	DC.W	BRAN	* ELSE
+F00:2306       	DC.W	BRAN	* ELSE
                S02:00002EA6:  20 2C
-F00:2305       	DC.W	INTE7-*
+F00:2307       	DC.W	INTE7-*
                S02:00002EA8:  00 06
-F00:2306       INTE6	DC.W	DROP
+F00:2308       INTE6	DC.W	DROP
                S02:00002EAA:  23 32
-F00:2307       	DC.W	LITER 	* ENDIF
+F00:2309       	DC.W	LITER 	* ENDIF
                S02:00002EAC:  2E 0A
-F00:2308       INTE7	DC.W	QSTAC 	* ENDIF
+F00:2310       INTE7	DC.W	QSTAC 	* ENDIF
                S02:00002EAE:  2E 44
-F00:2309       INTE5	DC.W	BRAN	* AGAIN
+F00:2311       INTE5	DC.W	BRAN	* AGAIN
                S02:00002EB0:  20 2C
-F00:2310       	DC.W	REP-*
+F00:2312       	DC.W	REP-*
                S02:00002EB2:  FF C2
-F00:2311       	DC.W	SEMIS
+F00:2313       	DC.W	SEMIS
                S02:00002EB4:  22 50
-F00:2312       *
-F00:2313       	DC.B	0,$8A	* VOCABULARY
+F00:2314       *
+F00:2315       	DC.B	0,$8A	* VOCABULARY
                S02:00002EB6:  00
                S02:00002EB7:  8A
-F00:2314       	DC.B	'VOCABULAR'
+F00:2316       	DC.B	'VOCABULAR'
                S02:00002EB8:  56 4F 43 41 42 55 4C 41 52
-F00:2315       	DC.B	$80+'Y'
+F00:2317       	DC.B	$80+'Y'
                S02:00002EC1:  D9
-F00:2316       	DC.W	INTER-$0C
+F00:2318       	DC.W	INTER-$0C
                S02:00002EC2:  2E 66
-F00:2317       VOCAB	DC.W	DOCOL
+F00:2319       VOCAB	DC.W	DOCOL
                S02:00002EC4:  25 00
-F00:2318       	DC.W	BUILD
+F00:2320       	DC.W	BUILD
                S02:00002EC6:  2D D8
-F00:2319       	DC.W	LIT
+F00:2321       	DC.W	LIT
                S02:00002EC8:  20 06
-F00:2320       	DC.W	$81A0	* FAKE HEADER
+F00:2322       	DC.W	$81A0	* FAKE HEADER
                S02:00002ECA:  81 A0
-F00:2321       	DC.W	COMMA
+F00:2323       	DC.W	COMMA
                S02:00002ECC:  27 32
-F00:2322       	DC.W	CURR
+F00:2324       	DC.W	CURR
                S02:00002ECE:  25 EE
-F00:2323       	DC.W	AT
+F00:2325       	DC.W	AT
                S02:00002ED0:  23 96
-F00:2324       	DC.W	CFA
+F00:2326       	DC.W	CFA
                S02:00002ED2:  28 08
-F00:2325       	DC.W	COMMA
+F00:2327       	DC.W	COMMA
                S02:00002ED4:  27 32
-F00:2326       	DC.W	HERE
+F00:2328       	DC.W	HERE
                S02:00002ED6:  27 16
-F00:2327       	DC.W	VOCL
+F00:2329       	DC.W	VOCL
                S02:00002ED8:  25 9C
-F00:2328       	DC.W	AT
+F00:2330       	DC.W	AT
                S02:00002EDA:  23 96
-F00:2329       	DC.W	COMMA
+F00:2331       	DC.W	COMMA
                S02:00002EDC:  27 32
-F00:2330       	DC.W	VOCL
+F00:2332       	DC.W	VOCL
                S02:00002EDE:  25 9C
-F00:2331       	DC.W	STORE
+F00:2333       	DC.W	STORE
                S02:00002EE0:  23 BC
-F00:2332       	DC.W	DOES
+F00:2334       	DC.W	DOES
                S02:00002EE2:  2D E8
-F00:2333       DOVOC	DC.W	TWOP
+F00:2335       DOVOC	DC.W	TWOP
                S02:00002EE4:  27 06
-F00:2334       	DC.W	CONT
+F00:2336       	DC.W	CONT
                S02:00002EE6:  25 E0
-F00:2335       	DC.W	STORE
+F00:2337       	DC.W	STORE
                S02:00002EE8:  23 BC
-F00:2336       	DC.W	SEMIS
+F00:2338       	DC.W	SEMIS
                S02:00002EEA:  22 50
-F00:2337       *
-F00:2338       	DC.B	$C5	* FORTH
+F00:2339       *
+F00:2340       	DC.B	$C5	* FORTH
                S02:00002EEC:  C5
-F00:2339       	DC.B	'FORT'
+F00:2341       	DC.B	'FORT'
                S02:00002EED:  46 4F 52 54
-F00:2340       	DC.B	$80+'H'
+F00:2342       	DC.B	$80+'H'
                S02:00002EF1:  C8
-F00:2341       	DC.W	VOCAB-$0D
+F00:2343       	DC.W	VOCAB-$0D
                S02:00002EF2:  2E B7
-F00:2342       FORTH	DC.W	DODOE
+F00:2344       FORTH	DC.W	DODOE
                S02:00002EF4:  2D F4
-F00:2343       	DC.W	DOVOC
+F00:2345       	DC.W	DOVOC
                S02:00002EF6:  2E E4
-F00:2344       	DC.W	$81A0
+F00:2346       	DC.W	$81A0
                S02:00002EF8:  81 A0
-F00:2345        
-F00:2346       	DC.W	DR0-6	* COLD START VALUE ONLY
+F00:2347        
+F00:2348       	DC.W	DR0-6	* COLD START VALUE ONLY
                S02:00002EFA:  36 F6
-F00:2347       *     CHANGED EACH TIME A DEF IS APPENDED
-F00:2348       *     TO THE FORTH VOCABULARY
-F00:2349       VCLINK	DC.W	0000	* END OF VOCABULARY LIST
+F00:2349       *     CHANGED EACH TIME A DEF IS APPENDED
+F00:2350       *     TO THE FORTH VOCABULARY
+F00:2351       VCLINK	DC.W	0000	* END OF VOCABULARY LIST
                S02:00002EFC:  00 00
-F00:2350       *
-F00:2351       	DC.B	$8B	* DEFINITIONS
+F00:2352       *
+F00:2353       	DC.B	$8B	* DEFINITIONS
                S02:00002EFE:  8B
-F00:2352       	DC.B	'DEFINITION'
+F00:2354       	DC.B	'DEFINITION'
                S02:00002EFF:  44 45 46 49 4E 49 54 49 4F 4E
-F00:2353       	DC.B	$80+'S'
+F00:2355       	DC.B	$80+'S'
                S02:00002F09:  D3
-F00:2354       	DC.W	FORTH-8
+F00:2356       	DC.W	FORTH-8
                S02:00002F0A:  2E EC
-F00:2355       DEFIN	DC.W	DOCOL
+F00:2357       DEFIN	DC.W	DOCOL
                S02:00002F0C:  25 00
-F00:2356       	DC.W	CONT
+F00:2358       	DC.W	CONT
                S02:00002F0E:  25 E0
-F00:2357       	DC.W	AT
+F00:2359       	DC.W	AT
                S02:00002F10:  23 96
-F00:2358       	DC.W	CURR
+F00:2360       	DC.W	CURR
                S02:00002F12:  25 EE
-F00:2359       	DC.W	STORE
+F00:2361       	DC.W	STORE
                S02:00002F14:  23 BC
-F00:2360       	DC.W	SEMIS
+F00:2362       	DC.W	SEMIS
                S02:00002F16:  22 50
-F00:2361       *
-F00:2362       	DC.B	0,$84	* QUIT
+F00:2363       *
+F00:2364       	DC.B	0,$84	* QUIT
                S02:00002F18:  00
                S02:00002F19:  84
-F00:2363       	DC.B	'QUI'
+F00:2365       	DC.B	'QUI'
                S02:00002F1A:  51 55 49
-F00:2364       	DC.B	$80+'T'
+F00:2366       	DC.B	$80+'T'
                S02:00002F1D:  D4
-F00:2365       	DC.W	DEFIN-$0E
+F00:2367       	DC.W	DEFIN-$0E
                S02:00002F1E:  2E FE
-F00:2366       QUIT	DC.W	DOCOL
+F00:2368       QUIT	DC.W	DOCOL
                S02:00002F20:  25 00
-F00:2367       	DC.W	ZERO
+F00:2369       	DC.W	ZERO
                S02:00002F22:  25 0E
-F00:2368       	DC.W	BLK
+F00:2370       	DC.W	BLK
                S02:00002F24:  25 A6
-F00:2369       	DC.W	STORE
+F00:2371       	DC.W	STORE
                S02:00002F26:  23 BC
-F00:2370       	DC.W	LBRAC
+F00:2372       	DC.W	LBRAC
                S02:00002F28:  29 02
-F00:2371       REP SET *	*BEGIN
-F00:2372       	DC.W	RPSTO
+F00:2373       REP SET *	*BEGIN
+F00:2374       	DC.W	RPSTO
                S02:00002F2A:  22 3E
-F00:2373       	DC.W	CR
+F00:2375       	DC.W	CR
                S02:00002F2C:  24 82
-F00:2374       	DC.W	QUERY
+F00:2376       	DC.W	QUERY
                S02:00002F2E:  2A 82
-F00:2375       	DC.W	INTER
+F00:2377       	DC.W	INTER
                S02:00002F30:  2E 72
-F00:2376       	DC.W	STATE
+F00:2378       	DC.W	STATE
                S02:00002F32:  25 FA
-F00:2377       	DC.W	AT
+F00:2379       	DC.W	AT
                S02:00002F34:  23 96
-F00:2378       	DC.W	ZEQU
+F00:2380       	DC.W	ZEQU
                S02:00002F36:  22 A2
-F00:2379       	DC.W	ZBRAN	* IF
+F00:2381       	DC.W	ZBRAN	* IF
                S02:00002F38:  20 42
-F00:2380       	DC.W	QUIT2-*
+F00:2382       	DC.W	QUIT2-*
                S02:00002F3A:  00 0A
-F00:2381       	DC.W	PDOTQ
+F00:2383       	DC.W	PDOTQ
                S02:00002F3C:  29 F0
-F00:2382       	DC.B	5
+F00:2384       	DC.B	5
                S02:00002F3E:  05
-F00:2383 E1007 	DC.B	'   OK' * ENDIF
+F00:2385       * ENDIF
+F00:2386       	DC.B	'   OK'
                S02:00002F3F:  20 20 20 4F 4B
-F00:2384       QUIT2	DC.W	BRAN	* AGAIN
+F00:2387       QUIT2	DC.W	BRAN	* AGAIN
                S02:00002F44:  20 2C
-F00:2385       	DC.W	REP-*
+F00:2388       	DC.W	REP-*
                S02:00002F46:  FF E4
-F00:2386       	DC.W	SEMIS
+F00:2389       	DC.W	SEMIS
                S02:00002F48:  22 50
-F00:2387       *
-F00:2388       	DC.B	$85	* ABORT
+F00:2390       *
+F00:2391       	DC.B	$85	* ABORT
                S02:00002F4A:  85
-F00:2389       	DC.B	'ABOR'
+F00:2392       	DC.B	'ABOR'
                S02:00002F4B:  41 42 4F 52
-F00:2390       	DC.B	$80+'T'
+F00:2393       	DC.B	$80+'T'
                S02:00002F4F:  D4
-F00:2391       	DC.W	QUIT-7
+F00:2394       	DC.W	QUIT-7
                S02:00002F50:  2F 19
-F00:2392       ABORT	DC.W	DOCOL
+F00:2395       ABORT	DC.W	DOCOL
                S02:00002F52:  25 00
-F00:2393       	DC.W	SPSTO
+F00:2396       	DC.W	SPSTO
                S02:00002F54:  22 2C
-F00:2394       	DC.W	DEC
+F00:2397       	DC.W	DEC
                S02:00002F56:  29 4E
-F00:2395       *F	DC.W	QSTAC
-F00:2396       	DC.W	CR
+F00:2398       *F	DC.W	QSTAC
+F00:2399       	DC.W	CR
                S02:00002F58:  24 82
-F00:2397       *F	DC.W	DOTCPU
-F00:2398       	DC.W	PDOTQ
+F00:2400       *F	DC.W	DOTCPU
+F00:2401       	DC.W	PDOTQ
                S02:00002F5A:  29 F0
-F00:2399       	DC.B	$15
+F00:2402       	DC.B	$15
                S02:00002F5C:  15
-F00:2400       	DC.B	'68000 fig-FORTH V'
+F00:2403       	DC.B	'68000 fig-FORTH V'
                S02:00002F5D:  36 38 30 30 30 20 66 69 67 2D 46 4F 52 54 48 20
                S02:00002F6D:  56
-F00:2401       	DC.B	FIGREL+'0'
+F00:2404       	DC.B	FIGREL+'0'
                S02:00002F6E:  31
-F00:2402       	DC.B	'.'
+F00:2405       	DC.B	'.'
                S02:00002F6F:  2E
-F00:2403       	DC.B	FIGREV+'0'
+F00:2406       	DC.B	FIGREV+'0'
                S02:00002F70:  30
-F00:2404       	DC.B	' '
+F00:2407       	DC.B	' '
                S02:00002F71:  20
-F00:2405       	DC.W	FORTH
+F00:2408       	DC.W	FORTH
                S02:00002F72:  2E F4
-F00:2406       	DC.W	DEFIN
+F00:2409       	DC.W	DEFIN
                S02:00002F74:  2F 0C
-F00:2407       	DC.W	DR0
+F00:2410       	DC.W	DR0
                S02:00002F76:  36 FC
-F00:2408       	DC.W	QUIT
+F00:2411       	DC.W	QUIT
                S02:00002F78:  2F 20
-F00:2409       	DC.W	SEMIS
+F00:2412       	DC.W	SEMIS
                S02:00002F7A:  22 50
-F00:2410       *
-F00:2411       	DC.B	$C1	*	;
+F00:2413       *
+F00:2414       	DC.B	$C1	*	;
                S02:00002F7C:  C1
-F00:2412       	DC.B	$80+';'
+F00:2415       	DC.B	$80+';'
                S02:00002F7D:  BB
-F00:2413       	DC.W	ABORT-8
+F00:2416       	DC.W	ABORT-8
                S02:00002F7E:  2F 4A
-F00:2414       SEMI	DC.W	DOCOL
+F00:2417       SEMI	DC.W	DOCOL
                S02:00002F80:  25 00
-F00:2415       	DC.W	QCSP
+F00:2418       	DC.W	QCSP
                S02:00002F82:  28 B4
-F00:2416       	DC.W	COMP
+F00:2419       	DC.W	COMP
                S02:00002F84:  28 EC
-F00:2417       	DC.W	SEMIS
-               S02:00002F86:  22 50
-F00:2418       	DC.W	SMUDG 
-               S02:00002F88:  29 26
-F00:2419       	DC.W	LBRAC
-               S02:00002F8A:  29 02
 F00:2420       	DC.W	SEMIS
+               S02:00002F86:  22 50
+F00:2421       	DC.W	SMUDG 
+               S02:00002F88:  29 26
+F00:2422       	DC.W	LBRAC
+               S02:00002F8A:  29 02
+F00:2423       	DC.W	SEMIS
                S02:00002F8C:  22 50
-F00:2421       *
-F00:2422       	DC.B	0,$C2	* ."
+F00:2424       *
+F00:2425       	DC.B	0,$C2	* ."
                S02:00002F8E:  00
                S02:00002F8F:  C2
-F00:2423       	DC.B	'.'
+F00:2426       	DC.B	'.'
                S02:00002F90:  2E
-F00:2424       	DC.B	$80+'"'
+F00:2427       	DC.B	$80+'"'
                S02:00002F91:  A2
-F00:2425       	DC.W	SEMI-4
+F00:2428       	DC.W	SEMI-4
                S02:00002F92:  2F 7C
-F00:2426       DOTQ	DC.W	DOCOL
+F00:2429       DOTQ	DC.W	DOCOL
                S02:00002F94:  25 00
-F00:2427       	DC.W	LIT
+F00:2430       	DC.W	LIT
                S02:00002F96:  20 06
-F00:2428       	DC.W	$22
+F00:2431       	DC.W	$22
                S02:00002F98:  00 22
-F00:2429       	DC.W	STATE
+F00:2432       	DC.W	STATE
                S02:00002F9A:  25 FA
-F00:2430       	DC.W	AT
+F00:2433       	DC.W	AT
                S02:00002F9C:  23 96
-F00:2431       	DC.W	ZBRAN	* IF
+F00:2434       	DC.W	ZBRAN	* IF
                S02:00002F9E:  20 42
-F00:2432       	DC.W	DOTQ1-*
+F00:2435       	DC.W	DOTQ1-*
                S02:00002FA0:  00 1A
-F00:2433       	DC.W	COMP
+F00:2436       	DC.W	COMP
                S02:00002FA2:  28 EC
-F00:2434       	DC.W	PDOTQ
+F00:2437       	DC.W	PDOTQ
                S02:00002FA4:  29 F0
-F00:2435       	DC.W	WORD
+F00:2438       	DC.W	WORD
                S02:00002FA6:  2B 28
-F00:2436       	DC.W	HERE
+F00:2439       	DC.W	HERE
                S02:00002FA8:  27 16
-F00:2437       	DC.W	CAT
+F00:2440       	DC.W	CAT
                S02:00002FAA:  23 A8
-F00:2438       	DC.W	TWOP
+F00:2441       	DC.W	TWOP
                S02:00002FAC:  27 06
-F00:2439       	DC.W	LIT
+F00:2442       	DC.W	LIT
                S02:00002FAE:  20 06
-F00:2440       	DC.W	$FFFE
+F00:2443       	DC.W	$FFFE
                S02:00002FB0:  FF FE
-F00:2441       	DC.W	ANDD
+F00:2444       	DC.W	ANDD
                S02:00002FB2:  21 E4
-F00:2442       	DC.W	ALLOT
+F00:2445       	DC.W	ALLOT
                S02:00002FB4:  27 26
-F00:2443       	DC.W	BRAN	* ELSE
+F00:2446       	DC.W	BRAN	* ELSE
                S02:00002FB6:  20 2C
-F00:2444       	DC.W	DOTQ2-*
+F00:2447       	DC.W	DOTQ2-*
                S02:00002FB8:  00 0A
-F00:2445       DOTQ1	DC.W	WORD
+F00:2448       DOTQ1	DC.W	WORD
                S02:00002FBA:  2B 28
-F00:2446       	DC.W	HERE
+F00:2449       	DC.W	HERE
                S02:00002FBC:  27 16
-F00:2447       	DC.W	COUNT
+F00:2450       	DC.W	COUNT
                S02:00002FBE:  29 7A
-F00:2448       	DC.W	TYPE	* ENDIF
+F00:2451       	DC.W	TYPE	* ENDIF
                S02:00002FC0:  29 8E
-F00:2449       DOTQ2	DC.W	SEMIS
+F00:2452       DOTQ2	DC.W	SEMIS
                S02:00002FC2:  22 50
-F00:2450       *
-F00:2451       	DC.B	$C1	* BRA
+F00:2453       *
+F00:2454       	DC.B	$C1	* BRA
                S02:00002FC4:  C1
-F00:2452       	DC.B	$80+'('
+F00:2455       	DC.B	$80+'('
                S02:00002FC5:  A8
-F00:2453       	DC.W	DOTQ-5
+F00:2456       	DC.W	DOTQ-5
                S02:00002FC6:  2F 8F
-F00:2454       BRA	DC.W	DOCOL
+F00:2457       BRA	DC.W	DOCOL
                S02:00002FC8:  25 00
-F00:2455       	DC.W	LIT
+F00:2458       	DC.W	LIT
                S02:00002FCA:  20 06
-F00:2456       	DC.B	0
+F00:2459       	DC.B	0
                S02:00002FCC:  00
-F00:2457       	DC.B	')'
+F00:2460       	DC.B	')'
                S02:00002FCD:  29
-F00:2458       	DC.W	WORD
+F00:2461       	DC.W	WORD
                S02:00002FCE:  2B 28
-F00:2459       	DC.W	SEMIS
+F00:2462       	DC.W	SEMIS
                S02:00002FD0:  22 50
-F00:2460       *
-F00:2461       	DC.B	$89	* IMMEDIATE
+F00:2463       *
+F00:2464       	DC.B	$89	* IMMEDIATE
                S02:00002FD2:  89
-F00:2462       	DC.B	'IMMEDIAT'
+F00:2465       	DC.B	'IMMEDIAT'
                S02:00002FD3:  49 4D 4D 45 44 49 41 54
-F00:2463       	DC.B	$80+'E'
+F00:2466       	DC.B	$80+'E'
                S02:00002FDB:  C5
-F00:2464       	DC.W	BRA-4
+F00:2467       	DC.W	BRA-4
                S02:00002FDC:  2F C4
-F00:2465       IMMED	DC.W	DOCOL
+F00:2468       IMMED	DC.W	DOCOL
                S02:00002FDE:  25 00
-F00:2466       	DC.W	LATES
+F00:2469       	DC.W	LATES
                S02:00002FE0:  27 E8
-F00:2467       	DC.W	LIT,$40
+F00:2470       	DC.W	LIT,$40
                S02:00002FE2:  20 06
                S02:00002FE4:  00 40
-F00:2468       	DC.W	TOGGL
+F00:2471       	DC.W	TOGGL
                S02:00002FE6:  23 84
-F00:2469       	DC.W	SEMIS
+F00:2472       	DC.W	SEMIS
                S02:00002FE8:  22 50
-F00:2470       *
-F00:2471       	DC.B	$C9	* [COMPILE]
+F00:2473       *
+F00:2474       	DC.B	$C9	* [COMPILE]
                S02:00002FEA:  C9
-F00:2472       	DC.B	'[COMPILE'
+F00:2475       	DC.B	'[COMPILE'
                S02:00002FEB:  5B 43 4F 4D 50 49 4C 45
-F00:2473       	DC.B	$80+']'
+F00:2476       	DC.B	$80+']'
                S02:00002FF3:  DD
-F00:2474       	DC.W	IMMED-$0C
+F00:2477       	DC.W	IMMED-$0C
                S02:00002FF4:  2F D2
-F00:2475       BCOMP	DC.W	DOCOL
+F00:2478       BCOMP	DC.W	DOCOL
                S02:00002FF6:  25 00
-F00:2476       	DC.W	DFIND
+F00:2479       	DC.W	DFIND
                S02:00002FF8:  2C 1E
-F00:2477       	DC.W	ZEQU
+F00:2480       	DC.W	ZEQU
                S02:00002FFA:  22 A2
-F00:2478       	DC.W	ZERO
+F00:2481       	DC.W	ZERO
                S02:00002FFC:  25 0E
-F00:2479       	DC.W	QERR
+F00:2482       	DC.W	QERR
                S02:00002FFE:  28 56
-F00:2480       	DC.W	DROP
+F00:2483       	DC.W	DROP
                S02:00003000:  23 32
-F00:2481       	DC.W	CFA
+F00:2484       	DC.W	CFA
                S02:00003002:  28 08
-F00:2482       	DC.W	COMMA
+F00:2485       	DC.W	COMMA
                S02:00003004:  27 32
-F00:2483       	DC.W	SEMIS
+F00:2486       	DC.W	SEMIS
                S02:00003006:  22 50
-F00:2484       *
-F00:2485       	DC.B	$C1	* '   ( TICK )
+F00:2487       *
+F00:2488       	DC.B	$C1	* '   ( TICK )
                S02:00003008:  C1
-F00:2486       	DC.B	$A7
+F00:2489       	DC.B	$A7
                S02:00003009:  A7
-F00:2487       	DC.W	BCOMP-$0C
+F00:2490       	DC.W	BCOMP-$0C
                S02:0000300A:  2F EA
-F00:2488       TICK	DC.W	DOCOL
+F00:2491       TICK	DC.W	DOCOL
                S02:0000300C:  25 00
-F00:2489       	DC.W	DFIND
+F00:2492       	DC.W	DFIND
                S02:0000300E:  2C 1E
-F00:2490       	DC.W	ZEQU
+F00:2493       	DC.W	ZEQU
                S02:00003010:  22 A2
-F00:2491       	DC.W	ZERO
+F00:2494       	DC.W	ZERO
                S02:00003012:  25 0E
-F00:2492       	DC.W	QERR
+F00:2495       	DC.W	QERR
                S02:00003014:  28 56
-F00:2493       	DC.W	DROP
+F00:2496       	DC.W	DROP
                S02:00003016:  23 32
-F00:2494       	DC.W	LITER
+F00:2497       	DC.W	LITER
                S02:00003018:  2E 0A
-F00:2495       	DC.W	SEMIS
+F00:2498       	DC.W	SEMIS
                S02:0000301A:  22 50
-F00:2496       *
-F00:2497       	DC.B	0,$86	* FORGET
+F00:2499       *
+F00:2500       	DC.B	0,$86	* FORGET
                S02:0000301C:  00
                S02:0000301D:  86
-F00:2498       	DC.B	'FORGE'
+F00:2501       	DC.B	'FORGE'
                S02:0000301E:  46 4F 52 47 45
-F00:2499       	DC.B	$80+'T'
+F00:2502       	DC.B	$80+'T'
                S02:00003023:  D4
-F00:2500       	DC.W	TICK-4
+F00:2503       	DC.W	TICK-4
                S02:00003024:  30 08
-F00:2501       FORG	DC.W	DOCOL
+F00:2504       FORG	DC.W	DOCOL
                S02:00003026:  25 00
-F00:2502       	DC.W	CURR,AT
+F00:2505       	DC.W	CURR,AT
                S02:00003028:  25 EE
                S02:0000302A:  23 96
-F00:2503       	DC.W	CONT,AT
+F00:2506       	DC.W	CONT,AT
                S02:0000302C:  25 E0
                S02:0000302E:  23 96
-F00:2504       	DC.W	SUBB
+F00:2507       	DC.W	SUBB
                S02:00003030:  27 54
-F00:2505       	DC.W	LIT,$18
+F00:2508       	DC.W	LIT,$18
                S02:00003032:  20 06
                S02:00003034:  00 18
-F00:2506       	DC.W	QERR
+F00:2509       	DC.W	QERR
                S02:00003036:  28 56
-F00:2507       	DC.W	TICK
+F00:2510       	DC.W	TICK
                S02:00003038:  30 0C
-F00:2508       	DC.W	DUP
+F00:2511       	DC.W	DUP
                S02:0000303A:  23 5A
-F00:2509       	DC.W	FENCE
+F00:2512       	DC.W	FENCE
                S02:0000303C:  25 82
-F00:2510       	DC.W	AT
+F00:2513       	DC.W	AT
                S02:0000303E:  23 96
-F00:2511       	DC.W	LESS
+F00:2514       	DC.W	LESS
                S02:00003040:  27 6C
-F00:2512       	DC.W	LIT,$15
+F00:2515       	DC.W	LIT,$15
                S02:00003042:  20 06
                S02:00003044:  00 15
-F00:2513       	DC.W	QERR
+F00:2516       	DC.W	QERR
                S02:00003046:  28 56
-F00:2514       	DC.W	DUP
+F00:2517       	DC.W	DUP
                S02:00003048:  23 5A
-F00:2515       	DC.W	NFA
+F00:2518       	DC.W	NFA
                S02:0000304A:  28 16
-F00:2516       	DC.W	DP,STORE
+F00:2519       	DC.W	DP,STORE
                S02:0000304C:  25 8C
                S02:0000304E:  23 BC
-F00:2517       	DC.W	LFA,AT
+F00:2520       	DC.W	LFA,AT
                S02:00003050:  27 F8
                S02:00003052:  23 96
-F00:2518       	DC.W	CURR,AT,STORE
+F00:2521       	DC.W	CURR,AT,STORE
                S02:00003054:  25 EE
                S02:00003056:  23 96
                S02:00003058:  23 BC
-F00:2519       	DC.W	SEMIS
+F00:2522       	DC.W	SEMIS
                S02:0000305A:  22 50
-F00:2520       *
-F00:2521       	DC.B	0,$84	* BACK
+F00:2523       *
+F00:2524       	DC.B	0,$84	* BACK
                S02:0000305C:  00
                S02:0000305D:  84
-F00:2522       	DC.B	'BAC'
+F00:2525       	DC.B	'BAC'
                S02:0000305E:  42 41 43
-F00:2523       	DC.B	$80+'K'
+F00:2526       	DC.B	$80+'K'
                S02:00003061:  CB
-F00:2524       	DC.W	FORG-$09
+F00:2527       	DC.W	FORG-$09
                S02:00003062:  30 1D
-F00:2525       BACK	DC.W	DOCOL
+F00:2528       BACK	DC.W	DOCOL
                S02:00003064:  25 00
-F00:2526       	DC.W	HERE
+F00:2529       	DC.W	HERE
                S02:00003066:  27 16
-F00:2527       	DC.W	SUBB
+F00:2530       	DC.W	SUBB
                S02:00003068:  27 54
-F00:2528       	DC.W	COMMA
+F00:2531       	DC.W	COMMA
                S02:0000306A:  27 32
-F00:2529       	DC.W	SEMIS
+F00:2532       	DC.W	SEMIS
                S02:0000306C:  22 50
-F00:2530       *
-F00:2531       	DC.B	$C5	* BEGIN
+F00:2533       *
+F00:2534       	DC.B	$C5	* BEGIN
                S02:0000306E:  C5
-F00:2532       	DC.B	'BEGI'
+F00:2535       	DC.B	'BEGI'
                S02:0000306F:  42 45 47 49
-F00:2533       	DC.B	$80+'N'
+F00:2536       	DC.B	$80+'N'
                S02:00003073:  CE
-F00:2534       	DC.W	BACK-7
+F00:2537       	DC.W	BACK-7
                S02:00003074:  30 5D
-F00:2535       BEGIN	DC.W	DOCOL
+F00:2538       BEGIN	DC.W	DOCOL
                S02:00003076:  25 00
-F00:2536       	DC.W	QCOMP
+F00:2539       	DC.W	QCOMP
                S02:00003078:  28 70
-F00:2537       	DC.W	HERE
+F00:2540       	DC.W	HERE
                S02:0000307A:  27 16
-F00:2538       	DC.W	ONE
+F00:2541       	DC.W	ONE
                S02:0000307C:  25 16
-F00:2539       	DC.W	SEMIS
+F00:2542       	DC.W	SEMIS
                S02:0000307E:  22 50
-F00:2540       *
-F00:2541       	DC.B	$C5	* ENDIF
+F00:2543       *
+F00:2544       	DC.B	$C5	* ENDIF
                S02:00003080:  C5
-F00:2542       	DC.B	'ENDI'
+F00:2545       	DC.B	'ENDI'
                S02:00003081:  45 4E 44 49
-F00:2543       	DC.B	$80+'F'
+F00:2546       	DC.B	$80+'F'
                S02:00003085:  C6
-F00:2544       	DC.W	BEGIN-8
+F00:2547       	DC.W	BEGIN-8
                S02:00003086:  30 6E
-F00:2545       ENDIFF	DC.W	DOCOL
+F00:2548       ENDIFF	DC.W	DOCOL
                S02:00003088:  25 00
-F00:2546       	DC.W	QCOMP
+F00:2549       	DC.W	QCOMP
                S02:0000308A:  28 70
-F00:2547       	DC.W	TWO,QPAIR
+F00:2550       	DC.W	TWO,QPAIR
                S02:0000308C:  25 1E
                S02:0000308E:  28 A0
-F00:2548       	DC.W	HERE
+F00:2551       	DC.W	HERE
                S02:00003090:  27 16
-F00:2549       	DC.W	OVER
+F00:2552       	DC.W	OVER
                S02:00003092:  23 1C
-F00:2550       	DC.W	SUBB
+F00:2553       	DC.W	SUBB
                S02:00003094:  27 54
-F00:2551       	DC.W	SWAP
+F00:2554       	DC.W	SWAP
                S02:00003096:  23 44
-F00:2552       	DC.W	STORE
+F00:2555       	DC.W	STORE
                S02:00003098:  23 BC
-F00:2553       	DC.W	SEMIS
+F00:2556       	DC.W	SEMIS
                S02:0000309A:  22 50
-F00:2554       *
-F00:2555       	DC.B	0,$C4	* THEN
+F00:2557       *
+F00:2558       	DC.B	0,$C4	* THEN
                S02:0000309C:  00
                S02:0000309D:  C4
-F00:2556       	DC.B	'THE'
+F00:2559       	DC.B	'THE'
                S02:0000309E:  54 48 45
-F00:2557       	DC.B	$80+'N'
+F00:2560       	DC.B	$80+'N'
                S02:000030A1:  CE
-F00:2558       	DC.W	ENDIFF-8
+F00:2561       	DC.W	ENDIFF-8
                S02:000030A2:  30 80
-F00:2559       THEN	DC.W	DOCOL
+F00:2562       THEN	DC.W	DOCOL
                S02:000030A4:  25 00
-F00:2560       	DC.W	ENDIFF
+F00:2563       	DC.W	ENDIFF
                S02:000030A6:  30 88
-F00:2561       	DC.W	SEMIS
+F00:2564       	DC.W	SEMIS
                S02:000030A8:  22 50
-F00:2562       *
-F00:2563       	DC.B	0,$C2	* DO
+F00:2565       *
+F00:2566       	DC.B	0,$C2	* DO
                S02:000030AA:  00
                S02:000030AB:  C2
-F00:2564       	DC.B	'D'
+F00:2567       	DC.B	'D'
                S02:000030AC:  44
-F00:2565       	DC.B	$80+'O'
+F00:2568       	DC.B	$80+'O'
                S02:000030AD:  CF
-F00:2566       	DC.W	THEN-7
+F00:2569       	DC.W	THEN-7
                S02:000030AE:  30 9D
-F00:2567       DO	DC.W	DOCOL
+F00:2570       DO	DC.W	DOCOL
                S02:000030B0:  25 00
-F00:2568       	DC.W	COMP
+F00:2571       	DC.W	COMP
                S02:000030B2:  28 EC
-F00:2569       	DC.W	XDO
+F00:2572       	DC.W	XDO
                S02:000030B4:  20 90
-F00:2570       	DC.W	HERE
+F00:2573       	DC.W	HERE
                S02:000030B6:  27 16
-F00:2571       	DC.W	THREE
+F00:2574       	DC.W	THREE
                S02:000030B8:  25 26
-F00:2572       	DC.W	SEMIS
+F00:2575       	DC.W	SEMIS
                S02:000030BA:  22 50
-F00:2573       *
-F00:2574       	DC.B	0,$C4	* LOOP
+F00:2576       *
+F00:2577       	DC.B	0,$C4	* LOOP
                S02:000030BC:  00
                S02:000030BD:  C4
-F00:2575       	DC.B	'LOO'
+F00:2578       	DC.B	'LOO'
                S02:000030BE:  4C 4F 4F
-F00:2576       	DC.B	$80+'P'
+F00:2579       	DC.B	$80+'P'
                S02:000030C1:  D0
-F00:2577       	DC.W	DO-5
+F00:2580       	DC.W	DO-5
                S02:000030C2:  30 AB
-F00:2578       LOOP	DC.W	DOCOL
+F00:2581       LOOP	DC.W	DOCOL
                S02:000030C4:  25 00
-F00:2579       	DC.W	THREE,QPAIR
+F00:2582       	DC.W	THREE,QPAIR
                S02:000030C6:  25 26
                S02:000030C8:  28 A0
-F00:2580       	DC.W	COMP
+F00:2583       	DC.W	COMP
                S02:000030CA:  28 EC
-F00:2581       	DC.W	XLOOP
+F00:2584       	DC.W	XLOOP
                S02:000030CC:  20 5A
-F00:2582       	DC.W	BACK
+F00:2585       	DC.W	BACK
                S02:000030CE:  30 64
-F00:2583       	DC.W	SEMIS
+F00:2586       	DC.W	SEMIS
                S02:000030D0:  22 50
-F00:2584       *
-F00:2585       	DC.B	$C5	* +LOOP
+F00:2587       *
+F00:2588       	DC.B	$C5	* +LOOP
                S02:000030D2:  C5
-F00:2586       	DC.B	'+LOO'
+F00:2589       	DC.B	'+LOO'
                S02:000030D3:  2B 4C 4F 4F
-F00:2587       	DC.B	$80+'P'
+F00:2590       	DC.B	$80+'P'
                S02:000030D7:  D0
-F00:2588       	DC.W	LOOP-7
+F00:2591       	DC.W	LOOP-7
                S02:000030D8:  30 BD
-F00:2589       PLOOP	DC.W	DOCOL
+F00:2592       PLOOP	DC.W	DOCOL
                S02:000030DA:  25 00
-F00:2590       	DC.W	THREE,QPAIR
+F00:2593       	DC.W	THREE,QPAIR
                S02:000030DC:  25 26
                S02:000030DE:  28 A0
-F00:2591       	DC.W	COMP
+F00:2594       	DC.W	COMP
                S02:000030E0:  28 EC
-F00:2592       	DC.W	XPLOO
+F00:2595       	DC.W	XPLOO
                S02:000030E2:  20 80
-F00:2593       	DC.W	BACK
+F00:2596       	DC.W	BACK
                S02:000030E4:  30 64
-F00:2594       	DC.W	SEMIS
+F00:2597       	DC.W	SEMIS
                S02:000030E6:  22 50
-F00:2595       *
-F00:2596       	DC.B	$C5	* UNTIL
+F00:2598       *
+F00:2599       	DC.B	$C5	* UNTIL
                S02:000030E8:  C5
-F00:2597       	DC.B	'UNTI'
+F00:2600       	DC.B	'UNTI'
                S02:000030E9:  55 4E 54 49
-F00:2598       	DC.B	$80+'L'
+F00:2601       	DC.B	$80+'L'
                S02:000030ED:  CC
-F00:2599       	DC.W	PLOOP-8
+F00:2602       	DC.W	PLOOP-8
                S02:000030EE:  30 D2
-F00:2600       UNTIL	DC.W	DOCOL
+F00:2603       UNTIL	DC.W	DOCOL
                S02:000030F0:  25 00
-F00:2601       	DC.W	ONE,QPAIR
+F00:2604       	DC.W	ONE,QPAIR
                S02:000030F2:  25 16
                S02:000030F4:  28 A0
-F00:2602       	DC.W	COMP
+F00:2605       	DC.W	COMP
                S02:000030F6:  28 EC
-F00:2603       	DC.W	ZBRAN,BACK
+F00:2606       	DC.W	ZBRAN,BACK
                S02:000030F8:  20 42
                S02:000030FA:  30 64
-F00:2604       	DC.W	SEMIS
+F00:2607       	DC.W	SEMIS
                S02:000030FC:  22 50
-F00:2605       *
-F00:2606       	DC.B	$C3	* END
+F00:2608       *
+F00:2609       	DC.B	$C3	* END
                S02:000030FE:  C3
-F00:2607       	DC.B	'EN'
+F00:2610       	DC.B	'EN'
                S02:000030FF:  45 4E
-F00:2608       	DC.B	$80+'D'
+F00:2611       	DC.B	$80+'D'
                S02:00003101:  C4
-F00:2609       	DC.W	UNTIL-8
+F00:2612       	DC.W	UNTIL-8
                S02:00003102:  30 E8
-F00:2610       ENDD	DC.W	DOCOL
+F00:2613       ENDD	DC.W	DOCOL
                S02:00003104:  25 00
-F00:2611       	DC.W	UNTIL
+F00:2614       	DC.W	UNTIL
                S02:00003106:  30 F0
-F00:2612       	DC.W	SEMIS
+F00:2615       	DC.W	SEMIS
                S02:00003108:  22 50
-F00:2613       *
-F00:2614       	DC.B	$C5	* AGAIN
+F00:2616       *
+F00:2617       	DC.B	$C5	* AGAIN
                S02:0000310A:  C5
-F00:2615       	DC.B	'AGAI'
+F00:2618       	DC.B	'AGAI'
                S02:0000310B:  41 47 41 49
-F00:2616       	DC.B	$80+'N'
+F00:2619       	DC.B	$80+'N'
                S02:0000310F:  CE
-F00:2617       	DC.W	ENDD-6
+F00:2620       	DC.W	ENDD-6
                S02:00003110:  30 FE
-F00:2618       AGAIN	DC.W	DOCOL
+F00:2621       AGAIN	DC.W	DOCOL
                S02:00003112:  25 00
-F00:2619       	DC.W	ONE,QPAIR
+F00:2622       	DC.W	ONE,QPAIR
                S02:00003114:  25 16
                S02:00003116:  28 A0
-F00:2620       	DC.W	COMP
+F00:2623       	DC.W	COMP
                S02:00003118:  28 EC
-F00:2621       	DC.W	BRAN,BACK
+F00:2624       	DC.W	BRAN,BACK
                S02:0000311A:  20 2C
                S02:0000311C:  30 64
-F00:2622       	DC.W	SEMIS
+F00:2625       	DC.W	SEMIS
                S02:0000311E:  22 50
-F00:2623       *
-F00:2624       	DC.B	0,$C6	* REPEAT
+F00:2626       *
+F00:2627       	DC.B	0,$C6	* REPEAT
                S02:00003120:  00
                S02:00003121:  C6
-F00:2625       	DC.B	'REPEA'
+F00:2628       	DC.B	'REPEA'
                S02:00003122:  52 45 50 45 41
-F00:2626       	DC.B	$80+'T'
+F00:2629       	DC.B	$80+'T'
                S02:00003127:  D4
-F00:2627       	DC.W	AGAIN-8
+F00:2630       	DC.W	AGAIN-8
                S02:00003128:  31 0A
-F00:2628       REPEA	DC.W	DOCOL
+F00:2631       REPEA	DC.W	DOCOL
                S02:0000312A:  25 00
-F00:2629       	DC.W	TOR,TOR
+F00:2632       	DC.W	TOR,TOR
                S02:0000312C:  22 74
                S02:0000312E:  22 74
-F00:2630       	DC.W	AGAIN
+F00:2633       	DC.W	AGAIN
                S02:00003130:  31 12
-F00:2631       	DC.W	FROMR
+F00:2634       	DC.W	FROMR
                S02:00003132:  22 84
-F00:2632       	DC.W	FROMR
+F00:2635       	DC.W	FROMR
                S02:00003134:  22 84
-F00:2633       	DC.W	TWO
+F00:2636       	DC.W	TWO
                S02:00003136:  25 1E
-F00:2634       	DC.W	SUBB
+F00:2637       	DC.W	SUBB
                S02:00003138:  27 54
-F00:2635       	DC.W	ENDIFF,SEMIS
+F00:2638       	DC.W	ENDIFF,SEMIS
                S02:0000313A:  30 88
                S02:0000313C:  22 50
-F00:2636       *
-F00:2637       	DC.B	0,$C2	* IF
+F00:2639       *
+F00:2640       	DC.B	0,$C2	* IF
                S02:0000313E:  00
                S02:0000313F:  C2
-F00:2638       	DC.B	'I'
+F00:2641       	DC.B	'I'
                S02:00003140:  49
-F00:2639       	DC.B	$80+'F'
+F00:2642       	DC.B	$80+'F'
                S02:00003141:  C6
-F00:2640       	DC.W	REPEA-$09
+F00:2643       	DC.W	REPEA-$09
                S02:00003142:  31 21
-F00:2641       IFF	DC.W	DOCOL
+F00:2644       IFF	DC.W	DOCOL
                S02:00003144:  25 00
-F00:2642       	DC.W	COMP
+F00:2645       	DC.W	COMP
                S02:00003146:  28 EC
-F00:2643       	DC.W	ZBRAN
+F00:2646       	DC.W	ZBRAN
                S02:00003148:  20 42
-F00:2644       	DC.W	HERE
+F00:2647       	DC.W	HERE
                S02:0000314A:  27 16
-F00:2645       	DC.W	ZERO
+F00:2648       	DC.W	ZERO
                S02:0000314C:  25 0E
-F00:2646       	DC.W	COMMA
+F00:2649       	DC.W	COMMA
                S02:0000314E:  27 32
-F00:2647       	DC.W	TWO,SEMIS
+F00:2650       	DC.W	TWO,SEMIS
                S02:00003150:  25 1E
                S02:00003152:  22 50
-F00:2648       *
-F00:2649       	DC.B	0,$C4	* ELSE
+F00:2651       *
+F00:2652       	DC.B	0,$C4	* ELSE
                S02:00003154:  00
                S02:00003155:  C4
-F00:2650       	DC.B	'ELS'
+F00:2653       	DC.B	'ELS'
                S02:00003156:  45 4C 53
-F00:2651       	DC.B	$80+'E'
+F00:2654       	DC.B	$80+'E'
                S02:00003159:  C5
-F00:2652       	DC.W	IFF-5
+F00:2655       	DC.W	IFF-5
                S02:0000315A:  31 3F
-F00:2653       ELSEE	DC.W	DOCOL,TWO
+F00:2656       ELSEE	DC.W	DOCOL,TWO
                S02:0000315C:  25 00
                S02:0000315E:  25 1E
-F00:2654       	DC.W	QPAIR,COMP
+F00:2657       	DC.W	QPAIR,COMP
                S02:00003160:  28 A0
                S02:00003162:  28 EC
-F00:2655       	DC.W	BRAN,HERE
+F00:2658       	DC.W	BRAN,HERE
                S02:00003164:  20 2C
                S02:00003166:  27 16
-F00:2656       	DC.W	ZERO,COMMA
+F00:2659       	DC.W	ZERO,COMMA
                S02:00003168:  25 0E
                S02:0000316A:  27 32
-F00:2657       	DC.W	SWAP,TWO
+F00:2660       	DC.W	SWAP,TWO
                S02:0000316C:  23 44
                S02:0000316E:  25 1E
-F00:2658       	DC.W	ENDIFF,TWO
+F00:2661       	DC.W	ENDIFF,TWO
                S02:00003170:  30 88
                S02:00003172:  25 1E
-F00:2659       	DC.W	SEMIS
+F00:2662       	DC.W	SEMIS
                S02:00003174:  22 50
-F00:2660       *
-F00:2661       	DC.B	$C5	* WHILE
+F00:2663       *
+F00:2664       	DC.B	$C5	* WHILE
                S02:00003176:  C5
-F00:2662       	DC.B	'WHIL'
+F00:2665       	DC.B	'WHIL'
                S02:00003177:  57 48 49 4C
-F00:2663       	DC.B	$80+'E'
+F00:2666       	DC.B	$80+'E'
                S02:0000317B:  C5
-F00:2664       	DC.W	ELSEE-7
+F00:2667       	DC.W	ELSEE-7
                S02:0000317C:  31 55
-F00:2665       WHILE	DC.W	DOCOL,IFF
+F00:2668       WHILE	DC.W	DOCOL,IFF
                S02:0000317E:  25 00
                S02:00003180:  31 44
-F00:2666       	DC.W	TWOP,SEMIS
+F00:2669       	DC.W	TWOP,SEMIS
                S02:00003182:  27 06
                S02:00003184:  22 50
-F00:2667       *
-F00:2668       	DC.B	0,$82	* +-
+F00:2670       *
+F00:2671       	DC.B	0,$82	* +-
                S02:00003186:  00
                S02:00003187:  82
-F00:2669       	DC.B	'+'
+F00:2672       	DC.B	'+'
                S02:00003188:  2B
-F00:2670       	DC.B	$80+'-'
+F00:2673       	DC.B	$80+'-'
                S02:00003189:  AD
-F00:2671       	DC.W	WHILE-8
+F00:2674       	DC.W	WHILE-8
                S02:0000318A:  31 76
-F00:2672       PM	DC.W	DOCOL
+F00:2675       PM	DC.W	DOCOL
                S02:0000318C:  25 00
-F00:2673       	DC.W	ZLESS
+F00:2676       	DC.W	ZLESS
                S02:0000318E:  22 BA
-F00:2674       	DC.W	ZBRAN	* IF
+F00:2677       	DC.W	ZBRAN	* IF
                S02:00003190:  20 42
-F00:2675       	DC.W	PM1-*
+F00:2678       	DC.W	PM1-*
                S02:00003192:  00 04
-F00:2676       	DC.W	MINUS 	* ENDIF
+F00:2679       	DC.W	MINUS 	* ENDIF
                S02:00003194:  22 E4
-F00:2677       PM1	DC.W	SEMIS
+F00:2680       PM1	DC.W	SEMIS
                S02:00003196:  22 50
-F00:2678       *
-F00:2679       	DC.B	$83	* D+-
+F00:2681       *
+F00:2682       	DC.B	$83	* D+-
                S02:00003198:  83
-F00:2680       	DC.B	'D+'
+F00:2683       	DC.B	'D+'
                S02:00003199:  44 2B
-F00:2681       	DC.B	$80+'-'
+F00:2684       	DC.B	$80+'-'
                S02:0000319B:  AD
-F00:2682       	DC.W	PM-5
+F00:2685       	DC.W	PM-5
                S02:0000319C:  31 87
-F00:2683       DPM	DC.W	DOCOL
+F00:2686       DPM	DC.W	DOCOL
                S02:0000319E:  25 00
-F00:2684       	DC.W	ZLESS
+F00:2687       	DC.W	ZLESS
                S02:000031A0:  22 BA
-F00:2685       	DC.W	ZBRAN	* IF
+F00:2688       	DC.W	ZBRAN	* IF
                S02:000031A2:  20 42
-F00:2686       	DC.W	DPM1-*
+F00:2689       	DC.W	DPM1-*
                S02:000031A4:  00 04
-F00:2687       	DC.W	DMINU 	* ENDIF
+F00:2690       	DC.W	DMINU 	* ENDIF
                S02:000031A6:  23 0A
-F00:2688       DPM1	DC.W	SEMIS
+F00:2691       DPM1	DC.W	SEMIS
                S02:000031A8:  22 50
-F00:2689       *
-F00:2690       	DC.B	$83	* ABS
+F00:2692       *
+F00:2693       	DC.B	$83	* ABS
                S02:000031AA:  83
-F00:2691       	DC.B	'AB'
+F00:2694       	DC.B	'AB'
                S02:000031AB:  41 42
-F00:2692       	DC.B	$80+'S'
+F00:2695       	DC.B	$80+'S'
                S02:000031AD:  D3
-F00:2693       	DC.W	DPM-6
+F00:2696       	DC.W	DPM-6
                S02:000031AE:  31 98
-F00:2694       ABS	DC.W	DOCOL
+F00:2697       ABS	DC.W	DOCOL
                S02:000031B0:  25 00
-F00:2695       	DC.W	DUP
+F00:2698       	DC.W	DUP
                S02:000031B2:  23 5A
-F00:2696       	DC.W	PM
+F00:2699       	DC.W	PM
                S02:000031B4:  31 8C
-F00:2697       	DC.W	SEMIS
+F00:2700       	DC.W	SEMIS
                S02:000031B6:  22 50
-F00:2698       *
-F00:2699       	DC.B	0,$84	* DABS
+F00:2701       *
+F00:2702       	DC.B	0,$84	* DABS
                S02:000031B8:  00
                S02:000031B9:  84
-F00:2700       	DC.B	'DAB'
+F00:2703       	DC.B	'DAB'
                S02:000031BA:  44 41 42
-F00:2701       	DC.B	$80+'S'
+F00:2704       	DC.B	$80+'S'
                S02:000031BD:  D3
-F00:2702       	DC.W	ABS-6
+F00:2705       	DC.W	ABS-6
                S02:000031BE:  31 AA
-F00:2703       DABS	DC.W	DOCOL
+F00:2706       DABS	DC.W	DOCOL
                S02:000031C0:  25 00
-F00:2704       	DC.W	DUP
+F00:2707       	DC.W	DUP
                S02:000031C2:  23 5A
-F00:2705       	DC.W	DPM
+F00:2708       	DC.W	DPM
                S02:000031C4:  31 9E
-F00:2706       	DC.W	SEMIS
+F00:2709       	DC.W	SEMIS
                S02:000031C6:  22 50
-F00:2707       *
-F00:2708       	DC.B	$83	* MAX
+F00:2710       *
+F00:2711       	DC.B	$83	* MAX
                S02:000031C8:  83
-F00:2709       	DC.B	'MA'
+F00:2712       	DC.B	'MA'
                S02:000031C9:  4D 41
-F00:2710       	DC.B	$80+'X'
+F00:2713       	DC.B	$80+'X'
                S02:000031CB:  D8
-F00:2711       	DC.W	DABS-7
+F00:2714       	DC.W	DABS-7
                S02:000031CC:  31 B9
-F00:2712       MAX	DC.W	DOCOL,OVER,OVER
+F00:2715       MAX	DC.W	DOCOL,OVER,OVER
                S02:000031CE:  25 00
                S02:000031D0:  23 1C
                S02:000031D2:  23 1C
-F00:2713       	DC.W	LESS
+F00:2716       	DC.W	LESS
                S02:000031D4:  27 6C
-F00:2714       	DC.W	ZBRAN	* IF
+F00:2717       	DC.W	ZBRAN	* IF
                S02:000031D6:  20 42
-F00:2715       	DC.W	MAX1-*
+F00:2718       	DC.W	MAX1-*
                S02:000031D8:  00 04
-F00:2716       	DC.W	SWAP 	* ENDIF
+F00:2719       	DC.W	SWAP 	* ENDIF
                S02:000031DA:  23 44
-F00:2717       MAX1	DC.W	DROP
+F00:2720       MAX1	DC.W	DROP
                S02:000031DC:  23 32
-F00:2718       	DC.W	SEMIS
+F00:2721       	DC.W	SEMIS
                S02:000031DE:  22 50
-F00:2719       *
-F00:2720       	DC.B	0,$82	* M*
+F00:2722       *
+F00:2723       	DC.B	0,$82	* M*
                S02:000031E0:  00
                S02:000031E1:  82
-F00:2721       	DC.B	'M'
+F00:2724       	DC.B	'M'
                S02:000031E2:  4D
-F00:2722       	DC.B	$80+'*'
+F00:2725       	DC.B	$80+'*'
                S02:000031E3:  AA
-F00:2723       	DC.W	MAX-6
+F00:2726       	DC.W	MAX-6
                S02:000031E4:  31 C8
-F00:2724       MSTAR	DC.W	DOCOL,OVER,OVER
+F00:2727       MSTAR	DC.W	DOCOL,OVER,OVER
                S02:000031E6:  25 00
                S02:000031E8:  23 1C
                S02:000031EA:  23 1C
-F00:2725       	DC.W	XORR
+F00:2728       	DC.W	XORR
                S02:000031EC:  22 08
-F00:2726       	DC.W	TOR
+F00:2729       	DC.W	TOR
                S02:000031EE:  22 74
-F00:2727       	DC.W	ABS
+F00:2730       	DC.W	ABS
                S02:000031F0:  31 B0
-F00:2728       	DC.W	SWAP
+F00:2731       	DC.W	SWAP
                S02:000031F2:  23 44
-F00:2729       	DC.W	ABS
+F00:2732       	DC.W	ABS
                S02:000031F4:  31 B0
-F00:2730       	DC.W	USTAR
+F00:2733       	DC.W	USTAR
                S02:000031F6:  21 B8
-F00:2731       	DC.W	FROMR
+F00:2734       	DC.W	FROMR
                S02:000031F8:  22 84
-F00:2732       	DC.W	DPM
+F00:2735       	DC.W	DPM
                S02:000031FA:  31 9E
-F00:2733       	DC.W	SEMIS
+F00:2736       	DC.W	SEMIS
                S02:000031FC:  22 50
-F00:2734       *
-F00:2735       	DC.B	0,$82	* M/
+F00:2737       *
+F00:2738       	DC.B	0,$82	* M/
                S02:000031FE:  00
                S02:000031FF:  82
-F00:2736       	DC.B	'M'
+F00:2739       	DC.B	'M'
                S02:00003200:  4D
-F00:2737       	DC.B	$80+'/'
+F00:2740       	DC.B	$80+'/'
                S02:00003201:  AF
-F00:2738       	DC.W	MSTAR-5
+F00:2741       	DC.W	MSTAR-5
                S02:00003202:  31 E1
-F00:2739       MSLAS	DC.W	DOCOL
+F00:2742       MSLAS	DC.W	DOCOL
                S02:00003204:  25 00
-F00:2740       	DC.W	OVER
+F00:2743       	DC.W	OVER
                S02:00003206:  23 1C
-F00:2741       	DC.W	TOR
+F00:2744       	DC.W	TOR
                S02:00003208:  22 74
-F00:2742       	DC.W	TOR
+F00:2745       	DC.W	TOR
                S02:0000320A:  22 74
-F00:2743       	DC.W	DABS
+F00:2746       	DC.W	DABS
                S02:0000320C:  31 C0
-F00:2744       	DC.W	RR
+F00:2747       	DC.W	RR
                S02:0000320E:  22 92
-F00:2745       	DC.W	ABS
+F00:2748       	DC.W	ABS
                S02:00003210:  31 B0
-F00:2746       	DC.W	USLAS
+F00:2749       	DC.W	USLAS
                S02:00003212:  21 CC
-F00:2747       	DC.W	FROMR
+F00:2750       	DC.W	FROMR
                S02:00003214:  22 84
-F00:2748       	DC.W	RR
+F00:2751       	DC.W	RR
                S02:00003216:  22 92
-F00:2749       	DC.W	XORR
+F00:2752       	DC.W	XORR
                S02:00003218:  22 08
-F00:2750       	DC.W	PM
-               S02:0000321A:  31 8C
-F00:2751       	DC.W	SWAP
-               S02:0000321C:  23 44
-F00:2752       	DC.W	FROMR
-               S02:0000321E:  22 84
 F00:2753       	DC.W	PM
-               S02:00003220:  31 8C
+               S02:0000321A:  31 8C
 F00:2754       	DC.W	SWAP
+               S02:0000321C:  23 44
+F00:2755       	DC.W	FROMR
+               S02:0000321E:  22 84
+F00:2756       	DC.W	PM
+               S02:00003220:  31 8C
+F00:2757       	DC.W	SWAP
                S02:00003222:  23 44
-F00:2755       	DC.W	SEMIS
+F00:2758       	DC.W	SEMIS
                S02:00003224:  22 50
-F00:2756       *
-F00:2757       	DC.B	$81	* *
+F00:2759       *
+F00:2760       	DC.B	$81	* *
                S02:00003226:  81
-F00:2758       	DC.B	$80+'*'
+F00:2761       	DC.B	$80+'*'
                S02:00003227:  AA
-F00:2759       	DC.W	MSLAS-5
+F00:2762       	DC.W	MSLAS-5
                S02:00003228:  31 FF
-F00:2760       STAR	DC.W	DOCOL
+F00:2763       STAR	DC.W	DOCOL
                S02:0000322A:  25 00
-F00:2761       	DC.W	USTAR
+F00:2764       	DC.W	USTAR
                S02:0000322C:  21 B8
-F00:2762       	DC.W	DROP
+F00:2765       	DC.W	DROP
                S02:0000322E:  23 32
-F00:2763       	DC.W	SEMIS
+F00:2766       	DC.W	SEMIS
                S02:00003230:  22 50
-F00:2764       *
-F00:2765       	DC.B	0,$84	* /MOD
+F00:2767       *
+F00:2768       	DC.B	0,$84	* /MOD
                S02:00003232:  00
                S02:00003233:  84
-F00:2766       	DC.B	'/MO'
+F00:2769       	DC.B	'/MO'
                S02:00003234:  2F 4D 4F
-F00:2767       	DC.B	$80+'D'
+F00:2770       	DC.B	$80+'D'
                S02:00003237:  C4
-F00:2768       	DC.W	STAR-4
+F00:2771       	DC.W	STAR-4
                S02:00003238:  32 26
-F00:2769       SLMOD	DC.W	DOCOL
+F00:2772       SLMOD	DC.W	DOCOL
                S02:0000323A:  25 00
-F00:2770       	DC.W	TOR
+F00:2773       	DC.W	TOR
                S02:0000323C:  22 74
-F00:2771       	DC.W	STOD
+F00:2774       	DC.W	STOD
                S02:0000323E:  24 18
-F00:2772       	DC.W	FROMR
+F00:2775       	DC.W	FROMR
                S02:00003240:  22 84
-F00:2773       	DC.W	MSLAS
+F00:2776       	DC.W	MSLAS
                S02:00003242:  32 04
-F00:2774       	DC.W	SEMIS
+F00:2777       	DC.W	SEMIS
                S02:00003244:  22 50
-F00:2775       *
-F00:2776       	DC.B	$81	* /
+F00:2778       *
+F00:2779       	DC.B	$81	* /
                S02:00003246:  81
-F00:2777       	DC.B	$80+'/'
+F00:2780       	DC.B	$80+'/'
                S02:00003247:  AF
-F00:2778       	DC.W	SLMOD-7
+F00:2781       	DC.W	SLMOD-7
                S02:00003248:  32 33
-F00:2779       SLASH	DC.W	DOCOL
+F00:2782       SLASH	DC.W	DOCOL
                S02:0000324A:  25 00
-F00:2780       	DC.W	SLMOD
+F00:2783       	DC.W	SLMOD
                S02:0000324C:  32 3A
-F00:2781       	DC.W	SWAP
+F00:2784       	DC.W	SWAP
                S02:0000324E:  23 44
-F00:2782       	DC.W	DROP
+F00:2785       	DC.W	DROP
                S02:00003250:  23 32
-F00:2783       	DC.W	SEMIS
+F00:2786       	DC.W	SEMIS
                S02:00003252:  22 50
-F00:2784       *
-F00:2785       	DC.B	$83	* MOD
+F00:2787       *
+F00:2788       	DC.B	$83	* MOD
                S02:00003254:  83
-F00:2786       	DC.B	'MO'
+F00:2789       	DC.B	'MO'
                S02:00003255:  4D 4F
-F00:2787       	DC.B	$80+'D'
+F00:2790       	DC.B	$80+'D'
                S02:00003257:  C4
-F00:2788       	DC.W	SLASH-4
+F00:2791       	DC.W	SLASH-4
                S02:00003258:  32 46
-F00:2789       MODD	DC.W	DOCOL
+F00:2792       MODD	DC.W	DOCOL
                S02:0000325A:  25 00
-F00:2790       	DC.W	SLMOD
+F00:2793       	DC.W	SLMOD
                S02:0000325C:  32 3A
-F00:2791       	DC.W	DROP
+F00:2794       	DC.W	DROP
                S02:0000325E:  23 32
-F00:2792       	DC.W	SEMIS
+F00:2795       	DC.W	SEMIS
                S02:00003260:  22 50
-F00:2793       *
-F00:2794       	DC.B	$85	* */MOD
+F00:2796       *
+F00:2797       	DC.B	$85	* */MOD
                S02:00003262:  85
-F00:2795       	DC.B	'*/MO'
+F00:2798       	DC.B	'*/MO'
                S02:00003263:  2A 2F 4D 4F
-F00:2796       	DC.B	$80+'D'
+F00:2799       	DC.B	$80+'D'
                S02:00003267:  C4
-F00:2797       	DC.W	MODD-6
+F00:2800       	DC.W	MODD-6
                S02:00003268:  32 54
-F00:2798       SSMOD	DC.W	DOCOL
+F00:2801       SSMOD	DC.W	DOCOL
                S02:0000326A:  25 00
-F00:2799       	DC.W	TOR
+F00:2802       	DC.W	TOR
                S02:0000326C:  22 74
-F00:2800       	DC.W	MSTAR
+F00:2803       	DC.W	MSTAR
                S02:0000326E:  31 E6
-F00:2801       	DC.W	FROMR
+F00:2804       	DC.W	FROMR
                S02:00003270:  22 84
-F00:2802       	DC.W	MSLAS
+F00:2805       	DC.W	MSLAS
                S02:00003272:  32 04
-F00:2803       	DC.W	SEMIS
+F00:2806       	DC.W	SEMIS
                S02:00003274:  22 50
-F00:2804       *
-F00:2805       	DC.B	0,$82	* */
+F00:2807       *
+F00:2808       	DC.B	0,$82	* */
                S02:00003276:  00
                S02:00003277:  82
-F00:2806       	DC.B	'*'
+F00:2809       	DC.B	'*'
                S02:00003278:  2A
-F00:2807       	DC.B	$80+'/'
+F00:2810       	DC.B	$80+'/'
                S02:00003279:  AF
-F00:2808       	DC.W	SSMOD-8
+F00:2811       	DC.W	SSMOD-8
                S02:0000327A:  32 62
-F00:2809       SSLA	DC.W	DOCOL
+F00:2812       SSLA	DC.W	DOCOL
                S02:0000327C:  25 00
-F00:2810       	DC.W	SSMOD
+F00:2813       	DC.W	SSMOD
                S02:0000327E:  32 6A
-F00:2811       	DC.W	SWAP
+F00:2814       	DC.W	SWAP
                S02:00003280:  23 44
-F00:2812       	DC.W	DROP
+F00:2815       	DC.W	DROP
                S02:00003282:  23 32
-F00:2813       	DC.W	SEMIS
+F00:2816       	DC.W	SEMIS
                S02:00003284:  22 50
-F00:2814       *
-F00:2815       	DC.B	$85	* M/MOD
+F00:2817       *
+F00:2818       	DC.B	$85	* M/MOD
                S02:00003286:  85
-F00:2816       	DC.B	'M/MO'
+F00:2819       	DC.B	'M/MO'
                S02:00003287:  4D 2F 4D 4F
-F00:2817       	DC.B	$80+'D'
+F00:2820       	DC.B	$80+'D'
                S02:0000328B:  C4
-F00:2818       	DC.W	SSLA-5
+F00:2821       	DC.W	SSLA-5
                S02:0000328C:  32 77
-F00:2819       MSMOD	DC.W	DOCOL
+F00:2822       MSMOD	DC.W	DOCOL
                S02:0000328E:  25 00
-F00:2820       	DC.W	TOR
+F00:2823       	DC.W	TOR
                S02:00003290:  22 74
-F00:2821       	DC.W	ZERO
+F00:2824       	DC.W	ZERO
                S02:00003292:  25 0E
-F00:2822       	DC.W	RR
+F00:2825       	DC.W	RR
                S02:00003294:  22 92
-F00:2823       	DC.W	USLAS
+F00:2826       	DC.W	USLAS
                S02:00003296:  21 CC
-F00:2824       	DC.W	FROMR
+F00:2827       	DC.W	FROMR
                S02:00003298:  22 84
-F00:2825       	DC.W	SWAP
+F00:2828       	DC.W	SWAP
                S02:0000329A:  23 44
-F00:2826       	DC.W	TOR
+F00:2829       	DC.W	TOR
                S02:0000329C:  22 74
-F00:2827       	DC.W	USLAS
+F00:2830       	DC.W	USLAS
                S02:0000329E:  21 CC
-F00:2828       	DC.W	FROMR
+F00:2831       	DC.W	FROMR
                S02:000032A0:  22 84
-F00:2829       	DC.W	SEMIS
+F00:2832       	DC.W	SEMIS
                S02:000032A2:  22 50
-F00:2830       *
-F00:2831       	DC.B	0,$86	* SPACES
+F00:2833       *
+F00:2834       	DC.B	0,$86	* SPACES
                S02:000032A4:  00
                S02:000032A5:  86
-F00:2832       	DC.B	'SPACE'
+F00:2835       	DC.B	'SPACE'
                S02:000032A6:  53 50 41 43 45
-F00:2833       	DC.B	$80+'S'
+F00:2836       	DC.B	$80+'S'
                S02:000032AB:  D3
-F00:2834       	DC.W	MSMOD-8
+F00:2837       	DC.W	MSMOD-8
                S02:000032AC:  32 86
-F00:2835       SPACS	DC.W	DOCOL,ZERO
+F00:2838       SPACS	DC.W	DOCOL,ZERO
                S02:000032AE:  25 00
                S02:000032B0:  25 0E
-F00:2836       	DC.W	MAX,DDUP
+F00:2839       	DC.W	MAX,DDUP
                S02:000032B2:  31 CE
                S02:000032B4:  27 AA
-F00:2837       	DC.W	ZBRAN	* IF
+F00:2840       	DC.W	ZBRAN	* IF
                S02:000032B6:  20 42
-F00:2838       	DC.W	SPAX1-*
+F00:2841       	DC.W	SPAX1-*
                S02:000032B8:  00 0C
-F00:2839       	DC.W	ZERO,XDO	* DO
+F00:2842       	DC.W	ZERO,XDO	* DO
                S02:000032BA:  25 0E
                S02:000032BC:  20 90
-F00:2840       SPAX2	DC.W	SPACE
+F00:2843       SPAX2	DC.W	SPACE
                S02:000032BE:  27 9A
-F00:2841       	DC.W	XLOOP 	* LOOP ENDIF
+F00:2844       	DC.W	XLOOP 	* LOOP ENDIF
                S02:000032C0:  20 5A
-F00:2842       	DC.W	SPAX2-*
+F00:2845       	DC.W	SPAX2-*
                S02:000032C2:  FF FC
-F00:2843       SPAX1	DC.W	SEMIS
+F00:2846       SPAX1	DC.W	SEMIS
                S02:000032C4:  22 50
-F00:2844       *
-F00:2845       	DC.B	0,$82	* <#
+F00:2847       *
+F00:2848       	DC.B	0,$82	* <#
                S02:000032C6:  00
                S02:000032C7:  82
-F00:2846       	DC.B	'<'
+F00:2849       	DC.B	'<'
                S02:000032C8:  3C
-F00:2847       	DC.B	$80+'#'
+F00:2850       	DC.B	$80+'#'
                S02:000032C9:  A3
-F00:2848       	DC.W	SPACS-$09
+F00:2851       	DC.W	SPACS-$09
                S02:000032CA:  32 A5
-F00:2849       BDIGS	DC.W	DOCOL,PAD
+F00:2852       BDIGS	DC.W	DOCOL,PAD
                S02:000032CC:  25 00
                S02:000032CE:  2B 14
-F00:2850       	DC.W	HLD,STORE
+F00:2853       	DC.W	HLD,STORE
                S02:000032D0:  26 38
                S02:000032D2:  23 BC
-F00:2851       	DC.W	SEMIS
+F00:2854       	DC.W	SEMIS
                S02:000032D4:  22 50
-F00:2852       *
-F00:2853       	DC.B	0,$82	* #>
+F00:2855       *
+F00:2856       	DC.B	0,$82	* #>
                S02:000032D6:  00
                S02:000032D7:  82
-F00:2854       	DC.B	'#'
+F00:2857       	DC.B	'#'
                S02:000032D8:  23
-F00:2855       	DC.B	$80+'>'
+F00:2858       	DC.B	$80+'>'
                S02:000032D9:  BE
-F00:2856       	DC.W	BDIGS-5
+F00:2859       	DC.W	BDIGS-5
                S02:000032DA:  32 C7
-F00:2857       EDIGS	DC.W	DOCOL,DROP
+F00:2860       EDIGS	DC.W	DOCOL,DROP
                S02:000032DC:  25 00
                S02:000032DE:  23 32
-F00:2858       	DC.W	DROP,HLD
+F00:2861       	DC.W	DROP,HLD
                S02:000032E0:  23 32
                S02:000032E2:  26 38
-F00:2859       	DC.W	AT,PAD
+F00:2862       	DC.W	AT,PAD
                S02:000032E4:  23 96
                S02:000032E6:  2B 14
-F00:2860       	DC.W	OVER,SUBB
+F00:2863       	DC.W	OVER,SUBB
                S02:000032E8:  23 1C
                S02:000032EA:  27 54
-F00:2861       	DC.W	SEMIS
+F00:2864       	DC.W	SEMIS
                S02:000032EC:  22 50
-F00:2862       *
-F00:2863       	DC.B	0,$84	* SIGN
+F00:2865       *
+F00:2866       	DC.B	0,$84	* SIGN
                S02:000032EE:  00
                S02:000032EF:  84
-F00:2864       	DC.B	'SIG'
+F00:2867       	DC.B	'SIG'
                S02:000032F0:  53 49 47
-F00:2865       	DC.B	$80+'N'
+F00:2868       	DC.B	$80+'N'
                S02:000032F3:  CE
-F00:2866       	DC.W	EDIGS-5
+F00:2869       	DC.W	EDIGS-5
                S02:000032F4:  32 D7
-F00:2867       SIGN	DC.W	DOCOL,ROT
+F00:2870       SIGN	DC.W	DOCOL,ROT
                S02:000032F6:  25 00
                S02:000032F8:  27 86
-F00:2868       	DC.W	ZLESS
+F00:2871       	DC.W	ZLESS
                S02:000032FA:  22 BA
-F00:2869       	DC.W	ZBRAN	* IF
+F00:2872       	DC.W	ZBRAN	* IF
                S02:000032FC:  20 42
-F00:2870       	DC.W	SIGN1-*
+F00:2873       	DC.W	SIGN1-*
                S02:000032FE:  00 08
-F00:2871       	DC.W	LIT,$2D
+F00:2874       	DC.W	LIT,$2D
                S02:00003300:  20 06
                S02:00003302:  00 2D
-F00:2872       	DC.W	HOLD 	* ENDIF
+F00:2875       	DC.W	HOLD 	* ENDIF
                S02:00003304:  2A FC
-F00:2873       SIGN1	DC.W	SEMIS
+F00:2876       SIGN1	DC.W	SEMIS
                S02:00003306:  22 50
-F00:2874       *
-F00:2875       	DC.B	$81	* #
+F00:2877       *
+F00:2878       	DC.B	$81	* #
                S02:00003308:  81
-F00:2876       	DC.B	$80+'#'
+F00:2879       	DC.B	$80+'#'
                S02:00003309:  A3
-F00:2877       	DC.W	SIGN-7
+F00:2880       	DC.W	SIGN-7
                S02:0000330A:  32 EF
-F00:2878       DIG	DC.W	DOCOL,BASE
+F00:2881       DIG	DC.W	DOCOL,BASE
                S02:0000330C:  25 00
                S02:0000330E:  26 06
-F00:2879       	DC.W	AT,MSMOD
+F00:2882       	DC.W	AT,MSMOD
                S02:00003310:  23 96
                S02:00003312:  32 8E
-F00:2880       	DC.W	ROT,LIT,9
+F00:2883       	DC.W	ROT,LIT,9
                S02:00003314:  27 86
                S02:00003316:  20 06
                S02:00003318:  00 09
-F00:2881       	DC.W	OVER,LESS
+F00:2884       	DC.W	OVER,LESS
                S02:0000331A:  23 1C
                S02:0000331C:  27 6C
-F00:2882       	DC.W	ZBRAN	* IF
+F00:2885       	DC.W	ZBRAN	* IF
                S02:0000331E:  20 42
-F00:2883       	DC.W	DIG1-*
+F00:2886       	DC.W	DIG1-*
                S02:00003320:  00 08
-F00:2884       	DC.W	LIT,7
+F00:2887       	DC.W	LIT,7
                S02:00003322:  20 06
                S02:00003324:  00 07
-F00:2885       	DC.W	PLUS 	* ENDIF
+F00:2888       	DC.W	PLUS 	* ENDIF
                S02:00003326:  22 D0
-F00:2886       DIG1	DC.W	LIT,$30
+F00:2889       DIG1	DC.W	LIT,$30
                S02:00003328:  20 06
                S02:0000332A:  00 30
-F00:2887       	DC.W	PLUS,HOLD
+F00:2890       	DC.W	PLUS,HOLD
                S02:0000332C:  22 D0
                S02:0000332E:  2A FC
-F00:2888       	DC.W	SEMIS
+F00:2891       	DC.W	SEMIS
                S02:00003330:  22 50
-F00:2889       *
-F00:2890       	DC.B	0,$82	* #S
+F00:2892       *
+F00:2893       	DC.B	0,$82	* #S
                S02:00003332:  00
                S02:00003333:  82
-F00:2891       	DC.B	'#'
+F00:2894       	DC.B	'#'
                S02:00003334:  23
-F00:2892       	DC.B	$80+'S'
+F00:2895       	DC.B	$80+'S'
                S02:00003335:  D3
-F00:2893       	DC.W	DIG-4
+F00:2896       	DC.W	DIG-4
                S02:00003336:  33 08
-F00:2894       DIGS	DC.W	DOCOL
+F00:2897       DIGS	DC.W	DOCOL
                S02:00003338:  25 00
-F00:2895       REP SET *	*BEGIN
-F00:2896       	DC.W	DIG
+F00:2898       REP SET *	*BEGIN
+F00:2899       	DC.W	DIG
                S02:0000333A:  33 0C
-F00:2897       	DC.W	OVER,OVER
+F00:2900       	DC.W	OVER,OVER
                S02:0000333C:  23 1C
                S02:0000333E:  23 1C
-F00:2898       	DC.W	ORR,ZEQU
+F00:2901       	DC.W	ORR,ZEQU
                S02:00003340:  21 F6
                S02:00003342:  22 A2
-F00:2899       	DC.W	ZBRAN	* UNTIL
+F00:2902       	DC.W	ZBRAN	* UNTIL
                S02:00003344:  20 42
-F00:2900       	DC.W	REP-*
+F00:2903       	DC.W	REP-*
                S02:00003346:  FF F4
-F00:2901       	DC.W	SEMIS
+F00:2904       	DC.W	SEMIS
                S02:00003348:  22 50
-F00:2902       *
-F00:2903       	DC.B	$83	* D.R
+F00:2905       *
+F00:2906       	DC.B	$83	* D.R
                S02:0000334A:  83
-F00:2904       	DC.B	'D.'
+F00:2907       	DC.B	'D.'
                S02:0000334B:  44 2E
-F00:2905       	DC.B	$80+'R'
+F00:2908       	DC.B	$80+'R'
                S02:0000334D:  D2
-F00:2906       	DC.W	DIGS-5
+F00:2909       	DC.W	DIGS-5
                S02:0000334E:  33 33
-F00:2907       DDOTR	DC.W	DOCOL,TOR
+F00:2910       DDOTR	DC.W	DOCOL,TOR
                S02:00003350:  25 00
                S02:00003352:  22 74
-F00:2908       	DC.W	SWAP,OVER
+F00:2911       	DC.W	SWAP,OVER
                S02:00003354:  23 44
                S02:00003356:  23 1C
-F00:2909       	DC.W	DABS,BDIGS
+F00:2912       	DC.W	DABS,BDIGS
                S02:00003358:  31 C0
                S02:0000335A:  32 CC
-F00:2910       	DC.W	DIGS,SIGN
+F00:2913       	DC.W	DIGS,SIGN
                S02:0000335C:  33 38
                S02:0000335E:  32 F6
-F00:2911       	DC.W	EDIGS,FROMR
+F00:2914       	DC.W	EDIGS,FROMR
                S02:00003360:  32 DC
                S02:00003362:  22 84
-F00:2912       	DC.W	OVER,SUBB
+F00:2915       	DC.W	OVER,SUBB
                S02:00003364:  23 1C
                S02:00003366:  27 54
-F00:2913       	DC.W	SPACS,TYPE
+F00:2916       	DC.W	SPACS,TYPE
                S02:00003368:  32 AE
                S02:0000336A:  29 8E
-F00:2914       	DC.W	SEMIS
+F00:2917       	DC.W	SEMIS
                S02:0000336C:  22 50
-F00:2915       *
-F00:2916       	DC.B	0,$82	* D.
+F00:2918       *
+F00:2919       	DC.B	0,$82	* D.
                S02:0000336E:  00
                S02:0000336F:  82
-F00:2917       	DC.B	'D'
+F00:2920       	DC.B	'D'
                S02:00003370:  44
-F00:2918       	DC.B	$80+'.'
+F00:2921       	DC.B	$80+'.'
                S02:00003371:  AE
-F00:2919       	DC.W	DDOTR-6
+F00:2922       	DC.W	DDOTR-6
                S02:00003372:  33 4A
-F00:2920       DDOT	DC.W	DOCOL,ZERO
+F00:2923       DDOT	DC.W	DOCOL,ZERO
                S02:00003374:  25 00
                S02:00003376:  25 0E
-F00:2921       	DC.W	DDOTR,SPACE
+F00:2924       	DC.W	DDOTR,SPACE
                S02:00003378:  33 50
                S02:0000337A:  27 9A
-F00:2922       	DC.W	SEMIS
+F00:2925       	DC.W	SEMIS
                S02:0000337C:  22 50
-F00:2923       *
-F00:2924       	DC.B	0,$82	* .R
+F00:2926       *
+F00:2927       	DC.B	0,$82	* .R
                S02:0000337E:  00
                S02:0000337F:  82
-F00:2925       	DC.B	'.'
+F00:2928       	DC.B	'.'
                S02:00003380:  2E
-F00:2926       	DC.B	$80+'R'
+F00:2929       	DC.B	$80+'R'
                S02:00003381:  D2
-F00:2927       	DC.W	DDOT-5
+F00:2930       	DC.W	DDOT-5
                S02:00003382:  33 6F
-F00:2928       DOTR	DC.W	DOCOL,TOR
+F00:2931       DOTR	DC.W	DOCOL,TOR
                S02:00003384:  25 00
                S02:00003386:  22 74
-F00:2929       	DC.W	STOD,FROMR
+F00:2932       	DC.W	STOD,FROMR
                S02:00003388:  24 18
                S02:0000338A:  22 84
-F00:2930       	DC.W	DDOTR,SEMIS
+F00:2933       	DC.W	DDOTR,SEMIS
                S02:0000338C:  33 50
                S02:0000338E:  22 50
-F00:2931       *
-F00:2932       *
-F00:2933       	DC.B	$81	* .
+F00:2934       *
+F00:2935       *
+F00:2936       	DC.B	$81	* .
                S02:00003390:  81
-F00:2934       	DC.B	$80+'.'
+F00:2937       	DC.B	$80+'.'
                S02:00003391:  AE
-F00:2935       	DC.W	DOTR-5
+F00:2938       	DC.W	DOTR-5
                S02:00003392:  33 7F
-F00:2936       DOT	DC.W	DOCOL,STOD
+F00:2939       DOT	DC.W	DOCOL,STOD
                S02:00003394:  25 00
                S02:00003396:  24 18
-F00:2937       	DC.W	DDOT,SEMIS
+F00:2940       	DC.W	DDOT,SEMIS
                S02:00003398:  33 74
                S02:0000339A:  22 50
-F00:2938       *
-F00:2939       	DC.B	$81	* ?
+F00:2941       *
+F00:2942       	DC.B	$81	* ?
                S02:0000339C:  81
-F00:2940       	DC.B	$80+'?'
+F00:2943       	DC.B	$80+'?'
                S02:0000339D:  BF
-F00:2941       	DC.W	DOT-4
+F00:2944       	DC.W	DOT-4
                S02:0000339E:  33 90
-F00:2942       QUES	DC.W	DOCOL
+F00:2945       QUES	DC.W	DOCOL
                S02:000033A0:  25 00
-F00:2943       	DC.W	AT
+F00:2946       	DC.W	AT
                S02:000033A2:  23 96
-F00:2944       	DC.W	DOT
+F00:2947       	DC.W	DOT
                S02:000033A4:  33 94
-F00:2945       	DC.W	SEMIS
+F00:2948       	DC.W	SEMIS
                S02:000033A6:  22 50
-F00:2946       *F
-F00:2947       *F	DC.B	0,$82	* U.
-F00:2948       *F	DC.B	'U'
-F00:2949       *F	DC.B	$80+'.'
-F00:2950       *F	DC.W	QUES-4
-F00:2951       *F UDOT	DC.W	DOCOL,ZERO
-F00:2952       *F	DC.W	DDOT,SEMIS
-F00:2953       *
-F00:2954       	DC.B	$85	* VLIST
+F00:2949       *F
+F00:2950       *F	DC.B	0,$82	* U.
+F00:2951       *F	DC.B	'U'
+F00:2952       *F	DC.B	$80+'.'
+F00:2953       *F	DC.W	QUES-4
+F00:2954       *F UDOT	DC.W	DOCOL,ZERO
+F00:2955       *F	DC.W	DDOT,SEMIS
+F00:2956       *
+F00:2957       	DC.B	$85	* VLIST
                S02:000033A8:  85
-F00:2955       	DC.B	'VLIS'
+F00:2958       	DC.B	'VLIS'
                S02:000033A9:  56 4C 49 53
-F00:2956       	DC.B	$80+'T'
+F00:2959       	DC.B	$80+'T'
                S02:000033AD:  D4
-F00:2957       	DC.W	QUES-4
+F00:2960       	DC.W	QUES-4
                S02:000033AE:  33 9C
-F00:2958       VLIST	DC.W	DOCOL,LIT,$80
+F00:2961       VLIST	DC.W	DOCOL,LIT,$80
                S02:000033B0:  25 00
                S02:000033B2:  20 06
                S02:000033B4:  00 80
-F00:2959       	DC.W	OUTT,STORE
+F00:2962       	DC.W	OUTT,STORE
                S02:000033B6:  25 BA
                S02:000033B8:  23 BC
-F00:2960       	DC.W	CONT
+F00:2963       	DC.W	CONT
                S02:000033BA:  25 E0
-F00:2961       	DC.W	AT,AT
+F00:2964       	DC.W	AT,AT
                S02:000033BC:  23 96
                S02:000033BE:  23 96
-F00:2962       REP SET *	*BEGIN
-F00:2963       	DC.W	OUTT
+F00:2965       REP SET *	*BEGIN
+F00:2966       	DC.W	OUTT
                S02:000033C0:  25 BA
-F00:2964       	DC.W	AT,CSLL
+F00:2967       	DC.W	AT,CSLL
                S02:000033C2:  23 96
                S02:000033C4:  26 EE
-F00:2965       	DC.W	GREAT
+F00:2968       	DC.W	GREAT
                S02:000033C6:  27 78
-F00:2966       	DC.W	ZBRAN	* IF
+F00:2969       	DC.W	ZBRAN	* IF
                S02:000033C8:  20 42
-F00:2967       	DC.W	VLIS2-*
+F00:2970       	DC.W	VLIS2-*
                S02:000033CA:  00 0C
-F00:2968       	DC.W	CR,LIT,$0E
+F00:2971       	DC.W	CR,LIT,$0E
                S02:000033CC:  24 82
                S02:000033CE:  20 06
                S02:000033D0:  00 0E
-F00:2969       	DC.W	OUTT
+F00:2972       	DC.W	OUTT
                S02:000033D2:  25 BA
-F00:2970       	DC.W	STORE 	* ENDIF
+F00:2973       	DC.W	STORE 	* ENDIF
                S02:000033D4:  23 BC
-F00:2971       VLIS2	DC.W	DUP
+F00:2974       VLIS2	DC.W	DUP
                S02:000033D6:  23 5A
-F00:2972       	DC.W	IDDOT,SPACE
+F00:2975       	DC.W	IDDOT,SPACE
                S02:000033D8:  2C 90
                S02:000033DA:  27 9A
-F00:2973       	DC.W	SPACE,PFA
+F00:2976       	DC.W	SPACE,PFA
                S02:000033DC:  27 9A
                S02:000033DE:  28 2C
-F00:2974       	DC.W	LFA,AT
+F00:2977       	DC.W	LFA,AT
                S02:000033E0:  27 F8
                S02:000033E2:  23 96
-F00:2975       	DC.W	DUP,ZEQU
+F00:2978       	DC.W	DUP,ZEQU
                S02:000033E4:  23 5A
                S02:000033E6:  22 A2
-F00:2976       	DC.W	QTERM
+F00:2979       	DC.W	QTERM
                S02:000033E8:  24 6C
-F00:2977       	DC.W	ORR
+F00:2980       	DC.W	ORR
                S02:000033EA:  21 F6
-F00:2978       	DC.W	ZBRAN	* UNTIL
+F00:2981       	DC.W	ZBRAN	* UNTIL
                S02:000033EC:  20 42
-F00:2979       	DC.W	REP-*
+F00:2982       	DC.W	REP-*
                S02:000033EE:  FF D2
-F00:2980       	DC.W	DROP,SEMIS
+F00:2983       	DC.W	DROP,SEMIS
                S02:000033F0:  23 32
                S02:000033F2:  22 50
-F00:2981       *
-F00:2982       * --------------------------------------------------
-F00:2983       * DISK INTERFACE HIGH-LEVEL ROUTINES
 F00:2984       *
-F00:2985       	DC.B	0,$84	* +BUF  ( ADVANCE BUFFER )
+F00:2985       * --------------------------------------------------
+F00:2986       * DISK INTERFACE HIGH-LEVEL ROUTINES
+F00:2987       *
+F00:2988       	DC.B	0,$84	* +BUF  ( ADVANCE BUFFER )
                S02:000033F4:  00
                S02:000033F5:  84
-F00:2986       	DC.B	'+BU'
+F00:2989       	DC.B	'+BU'
                S02:000033F6:  2B 42 55
-F00:2987       	DC.B	$80+'F'
+F00:2990       	DC.B	$80+'F'
                S02:000033F9:  C6
-F00:2988       	DC.W	VLIST-8
+F00:2991       	DC.W	VLIST-8
                S02:000033FA:  33 A8
-F00:2989       PBUF	DC.W	DOCOL
+F00:2992       PBUF	DC.W	DOCOL
                S02:000033FC:  25 00
-F00:2990       	DC.W	BBUF
+F00:2993       	DC.W	BBUF
                S02:000033FE:  26 D8
-F00:2991       	DC.W	LIT,4,PLUS
+F00:2994       	DC.W	LIT,4,PLUS
                S02:00003400:  20 06
                S02:00003402:  00 04
                S02:00003404:  22 D0
-F00:2992       	DC.W	PLUS,DUP
+F00:2995       	DC.W	PLUS,DUP
                S02:00003406:  22 D0
                S02:00003408:  23 5A
-F00:2993       	DC.W	LIMIT,EQUAL
+F00:2996       	DC.W	LIMIT,EQUAL
                S02:0000340A:  26 50
                S02:0000340C:  27 60
-F00:2994       	DC.W	ZBRAN
+F00:2997       	DC.W	ZBRAN
                S02:0000340E:  20 42
-F00:2995       	DC.W	PBUF1-*
+F00:2998       	DC.W	PBUF1-*
                S02:00003410:  00 06
-F00:2996       	DC.W	DROP,FIRST
+F00:2999       	DC.W	DROP,FIRST
                S02:00003412:  23 32
                S02:00003414:  26 44
-F00:2997       PBUF1	DC.W	DUP,PREV
+F00:3000       PBUF1	DC.W	DUP,PREV
                S02:00003416:  23 5A
                S02:00003418:  26 66
-F00:2998       	DC.W	AT,SUBB
+F00:3001       	DC.W	AT,SUBB
                S02:0000341A:  23 96
                S02:0000341C:  27 54
-F00:2999       	DC.W	SEMIS
+F00:3002       	DC.W	SEMIS
                S02:0000341E:  22 50
-F00:3000       
-F00:3001       	DC.B	0,$86	* UPDATE
+F00:3003       
+F00:3004       	DC.B	0,$86	* UPDATE
                S02:00003420:  00
                S02:00003421:  86
-F00:3002       	DC.B	'UPDAT'
+F00:3005       	DC.B	'UPDAT'
                S02:00003422:  55 50 44 41 54
-F00:3003       	DC.B	$80+'E'
+F00:3006       	DC.B	$80+'E'
                S02:00003427:  C5
-F00:3004       	DC.W	PBUF-7
+F00:3007       	DC.W	PBUF-7
                S02:00003428:  33 F5
-F00:3005       UPDAT	DC.W	DOCOL,PREV
+F00:3008       UPDAT	DC.W	DOCOL,PREV
                S02:0000342A:  25 00
                S02:0000342C:  26 66
-F00:3006       	DC.W	AT,AT
+F00:3009       	DC.W	AT,AT
                S02:0000342E:  23 96
                S02:00003430:  23 96
-F00:3007       	DC.W	LIT,$8000
+F00:3010       	DC.W	LIT,$8000
                S02:00003432:  20 06
                S02:00003434:  80 00
-F00:3008       	DC.W	ORR
+F00:3011       	DC.W	ORR
                S02:00003436:  21 F6
-F00:3009       	DC.W	PREV,AT
+F00:3012       	DC.W	PREV,AT
                S02:00003438:  26 66
                S02:0000343A:  23 96
-F00:3010       	DC.W	STORE,SEMIS
+F00:3013       	DC.W	STORE,SEMIS
                S02:0000343C:  23 BC
                S02:0000343E:  22 50
-F00:3011       *
-F00:3012       	DC.B	$8D	* EMPTY-BUFFERS
+F00:3014       *
+F00:3015       	DC.B	$8D	* EMPTY-BUFFERS
                S02:00003440:  8D
-F00:3013       	DC.B	'EMPTY-BUFFER'
+F00:3016       	DC.B	'EMPTY-BUFFER'
                S02:00003441:  45 4D 50 54 59 2D 42 55 46 46 45 52
-F00:3014       	DC.B	$80+'S'
+F00:3017       	DC.B	$80+'S'
                S02:0000344D:  D3
-F00:3015       	DC.W	UPDAT-$09
+F00:3018       	DC.W	UPDAT-$09
                S02:0000344E:  34 21
-F00:3016       MTBUF	DC.W	DOCOL,FIRST
+F00:3019       MTBUF	DC.W	DOCOL,FIRST
                S02:00003450:  25 00
                S02:00003452:  26 44
-F00:3017       	DC.W	LIMIT,OVER
+F00:3020       	DC.W	LIMIT,OVER
                S02:00003454:  26 50
                S02:00003456:  23 1C
-F00:3018       	DC.W	SUBB,ERASEE
+F00:3021       	DC.W	SUBB,ERASEE
                S02:00003458:  27 54
                S02:0000345A:  2A DA
-F00:3019       	DC.W	SEMIS
+F00:3022       	DC.W	SEMIS
                S02:0000345C:  22 50
-F00:3020       *
-F00:3021       	DC.B	0,$86	* BUFFER
+F00:3023       *
+F00:3024       	DC.B	0,$86	* BUFFER
                S02:0000345E:  00
                S02:0000345F:  86
-F00:3022       	DC.B	'BUFFE'
+F00:3025       	DC.B	'BUFFE'
                S02:00003460:  42 55 46 46 45
-F00:3023       	DC.B	$80+'R'
+F00:3026       	DC.B	$80+'R'
                S02:00003465:  D2
-F00:3024       	DC.W	MTBUF-$10
+F00:3027       	DC.W	MTBUF-$10
                S02:00003466:  34 40
-F00:3025       BUFFE	DC.W	DOCOL,USE
+F00:3028       BUFFE	DC.W	DOCOL,USE
                S02:00003468:  25 00
                S02:0000346A:  26 5A
-F00:3026       	DC.W	AT,DUP
+F00:3029       	DC.W	AT,DUP
                S02:0000346C:  23 96
                S02:0000346E:  23 5A
-F00:3027       	DC.W	TOR
+F00:3030       	DC.W	TOR
                S02:00003470:  22 74
-F00:3028       REP SET *	*BEGIN
-F00:3029       	DC.W	PBUF 	* WON'T WORK IF SINGLE BUFFER
+F00:3031       REP SET *	*BEGIN
+F00:3032       	DC.W	PBUF 	* WON'T WORK IF SINGLE BUFFER
                S02:00003472:  33 FC
-F00:3030       	DC.W	ZBRAN
+F00:3033       	DC.W	ZBRAN
                S02:00003474:  20 42
-F00:3031       	DC.W	REP-*	* UNTIL
+F00:3034       	DC.W	REP-*	* UNTIL
                S02:00003476:  FF FC
-F00:3032       	DC.W	USE,STORE
+F00:3035       	DC.W	USE,STORE
                S02:00003478:  26 5A
                S02:0000347A:  23 BC
-F00:3033       	DC.W	RR,AT
+F00:3036       	DC.W	RR,AT
                S02:0000347C:  22 92
                S02:0000347E:  23 96
-F00:3034       	DC.W	ZLESS
+F00:3037       	DC.W	ZLESS
                S02:00003480:  22 BA
-F00:3035       	DC.W	ZBRAN
+F00:3038       	DC.W	ZBRAN
                S02:00003482:  20 42
-F00:3036       	DC.W	BUFF2-*
+F00:3039       	DC.W	BUFF2-*
                S02:00003484:  00 14
-F00:3037       	DC.W	RR,TWOP
+F00:3040       	DC.W	RR,TWOP
                S02:00003486:  22 92
                S02:00003488:  27 06
-F00:3038       	DC.W	RR,AT
+F00:3041       	DC.W	RR,AT
                S02:0000348A:  22 92
                S02:0000348C:  23 96
-F00:3039       	DC.W	LIT,$7FFF
+F00:3042       	DC.W	LIT,$7FFF
                S02:0000348E:  20 06
                S02:00003490:  7F FF
-F00:3040       	DC.W	ANDD,ZERO
+F00:3043       	DC.W	ANDD,ZERO
                S02:00003492:  21 E4
                S02:00003494:  25 0E
-F00:3041       	DC.W	RSLW
+F00:3044       	DC.W	RSLW
                S02:00003496:  36 C8
-F00:3042       BUFF2	DC.W	RR,STORE
+F00:3045       BUFF2	DC.W	RR,STORE
                S02:00003498:  22 92
                S02:0000349A:  23 BC
-F00:3043       	DC.W	RR,PREV
+F00:3046       	DC.W	RR,PREV
                S02:0000349C:  22 92
                S02:0000349E:  26 66
-F00:3044       	DC.W	STORE,FROMR
+F00:3047       	DC.W	STORE,FROMR
                S02:000034A0:  23 BC
                S02:000034A2:  22 84
-F00:3045       	DC.W	TWOP,SEMIS
+F00:3048       	DC.W	TWOP,SEMIS
                S02:000034A4:  27 06
                S02:000034A6:  22 50
-F00:3046       *
-F00:3047       	DC.B	$85	* BLOCK
+F00:3049       *
+F00:3050       	DC.B	$85	* BLOCK
                S02:000034A8:  85
-F00:3048       	DC.B	'BLOC'
+F00:3051       	DC.B	'BLOC'
                S02:000034A9:  42 4C 4F 43
-F00:3049       	DC.B	$80+'K'
+F00:3052       	DC.B	$80+'K'
                S02:000034AD:  CB
-F00:3050       	DC.W	BUFFE-$09
+F00:3053       	DC.W	BUFFE-$09
                S02:000034AE:  34 5F
-F00:3051       BLOCK	DC.W	DOCOL,OFSET
+F00:3054       BLOCK	DC.W	DOCOL,OFSET
                S02:000034B0:  25 00
                S02:000034B2:  25 D2
-F00:3052       	DC.W	AT,PLUS
+F00:3055       	DC.W	AT,PLUS
                S02:000034B4:  23 96
                S02:000034B6:  22 D0
-F00:3053       	DC.W	TOR,PREV
+F00:3056       	DC.W	TOR,PREV
                S02:000034B8:  22 74
                S02:000034BA:  26 66
-F00:3054       	DC.W	AT,DUP
+F00:3057       	DC.W	AT,DUP
                S02:000034BC:  23 96
                S02:000034BE:  23 5A
-F00:3055       	DC.W	AT,RR
+F00:3058       	DC.W	AT,RR
                S02:000034C0:  23 96
                S02:000034C2:  22 92
-F00:3056       	DC.W	SUBB
+F00:3059       	DC.W	SUBB
                S02:000034C4:  27 54
-F00:3057       	DC.W	DUP,PLUS
+F00:3060       	DC.W	DUP,PLUS
                S02:000034C6:  23 5A
                S02:000034C8:  22 D0
-F00:3058       	DC.W	ZBRAN	* IF
+F00:3061       	DC.W	ZBRAN	* IF
                S02:000034CA:  20 42
-F00:3059       	DC.W	BLOC1-*
+F00:3062       	DC.W	BLOC1-*
                S02:000034CC:  00 34
-F00:3060       REP SET *	*BEGIN
-F00:3061       	DC.W	PBUF,ZEQU
+F00:3063       REP SET *	*BEGIN
+F00:3064       	DC.W	PBUF,ZEQU
                S02:000034CE:  33 FC
                S02:000034D0:  22 A2
-F00:3062       	DC.W	ZBRAN
+F00:3065       	DC.W	ZBRAN
                S02:000034D2:  20 42
-F00:3063       	DC.W	BLOC3-*	*IF
+F00:3066       	DC.W	BLOC3-*	*IF
                S02:000034D4:  00 14
-F00:3064       	DC.W	DROP,RR
+F00:3067       	DC.W	DROP,RR
                S02:000034D6:  23 32
                S02:000034D8:  22 92
-F00:3065       	DC.W	BUFFE,DUP
+F00:3068       	DC.W	BUFFE,DUP
                S02:000034DA:  34 68
                S02:000034DC:  23 5A
-F00:3066       	DC.W	RR,ONE
+F00:3069       	DC.W	RR,ONE
                S02:000034DE:  22 92
                S02:000034E0:  25 16
-F00:3067       	DC.W	RSLW
+F00:3070       	DC.W	RSLW
                S02:000034E2:  36 C8
-F00:3068       	DC.W	TWO,SUBB	*ENDIF
+F00:3071       	DC.W	TWO,SUBB	*ENDIF
                S02:000034E4:  25 1E
                S02:000034E6:  27 54
-F00:3069       BLOC3	DC.W	DUP,AT
+F00:3072       BLOC3	DC.W	DUP,AT
                S02:000034E8:  23 5A
                S02:000034EA:  23 96
-F00:3070       	DC.W	RR,SUBB
+F00:3073       	DC.W	RR,SUBB
                S02:000034EC:  22 92
                S02:000034EE:  27 54
-F00:3071       	DC.W	DUP,PLUS
+F00:3074       	DC.W	DUP,PLUS
                S02:000034F0:  23 5A
                S02:000034F2:  22 D0
-F00:3072       	DC.W	ZEQU
+F00:3075       	DC.W	ZEQU
                S02:000034F4:  22 A2
-F00:3073       	DC.W	ZBRAN
+F00:3076       	DC.W	ZBRAN
                S02:000034F6:  20 42
-F00:3074       	DC.W	REP-*	* UNTIL
+F00:3077       	DC.W	REP-*	* UNTIL
                S02:000034F8:  FF D6
-F00:3075       	DC.W	DUP,PREV
+F00:3078       	DC.W	DUP,PREV
                S02:000034FA:  23 5A
                S02:000034FC:  26 66
-F00:3076       	DC.W	STORE
+F00:3079       	DC.W	STORE
                S02:000034FE:  23 BC
-F00:3077       BLOC1	DC.W	FROMR,DROP
+F00:3080       BLOC1	DC.W	FROMR,DROP
                S02:00003500:  22 84
                S02:00003502:  23 32
-F00:3078       	DC.W	TWOP,SEMIS
+F00:3081       	DC.W	TWOP,SEMIS
                S02:00003504:  27 06
                S02:00003506:  22 50
-F00:3079       *
-F00:3080       	DC.B	0,$86	* (LINE)
+F00:3082       *
+F00:3083       	DC.B	0,$86	* (LINE)
                S02:00003508:  00
                S02:00003509:  86
-F00:3081       	DC.B	'(LINE'
+F00:3084       	DC.B	'(LINE'
                S02:0000350A:  28 4C 49 4E 45
-F00:3082       	DC.B	$80+')'
+F00:3085       	DC.B	$80+')'
                S02:0000350F:  A9
-F00:3083       	DC.W	BLOCK-8
+F00:3086       	DC.W	BLOCK-8
                S02:00003510:  34 A8
-F00:3084       PLINE	DC.W	DOCOL
+F00:3087       PLINE	DC.W	DOCOL
                S02:00003512:  25 00
-F00:3085       	DC.W	TOR
+F00:3088       	DC.W	TOR
                S02:00003514:  22 74
-F00:3086       	DC.W	CSLL
+F00:3089       	DC.W	CSLL
                S02:00003516:  26 EE
-F00:3087       	DC.W	BBUF
+F00:3090       	DC.W	BBUF
                S02:00003518:  26 D8
-F00:3088       	DC.W	SSMOD
+F00:3091       	DC.W	SSMOD
                S02:0000351A:  32 6A
-F00:3089       	DC.W	FROMR
+F00:3092       	DC.W	FROMR
                S02:0000351C:  22 84
-F00:3090       	DC.W	BSCR
+F00:3093       	DC.W	BSCR
                S02:0000351E:  26 E4
-F00:3091       	DC.W	STAR
+F00:3094       	DC.W	STAR
                S02:00003520:  32 2A
-F00:3092       	DC.W	PLUS
+F00:3095       	DC.W	PLUS
                S02:00003522:  22 D0
-F00:3093       	DC.W	BLOCK
+F00:3096       	DC.W	BLOCK
                S02:00003524:  34 B0
-F00:3094       	DC.W	PLUS
+F00:3097       	DC.W	PLUS
                S02:00003526:  22 D0
-F00:3095       	DC.W	CSLL
+F00:3098       	DC.W	CSLL
                S02:00003528:  26 EE
-F00:3096       	DC.W	SEMIS
+F00:3099       	DC.W	SEMIS
                S02:0000352A:  22 50
-F00:3097       *
-F00:3098       	DC.B	$85	* .LINE
+F00:3100       *
+F00:3101       	DC.B	$85	* .LINE
                S02:0000352C:  85
-F00:3099       	DC.B	'.LIN'
+F00:3102       	DC.B	'.LIN'
                S02:0000352D:  2E 4C 49 4E
-F00:3100       	DC.B	$80+'E'
+F00:3103       	DC.B	$80+'E'
                S02:00003531:  C5
-F00:3101       	DC.W	PLINE-$09
+F00:3104       	DC.W	PLINE-$09
                S02:00003532:  35 09
-F00:3102       DLINE	DC.W	DOCOL
+F00:3105       DLINE	DC.W	DOCOL
                S02:00003534:  25 00
-F00:3103       	DC.W	PLINE
+F00:3106       	DC.W	PLINE
                S02:00003536:  35 12
-F00:3104       	DC.W	DTRAI
+F00:3107       	DC.W	DTRAI
                S02:00003538:  29 BC
-F00:3105       	DC.W	TYPE
+F00:3108       	DC.W	TYPE
                S02:0000353A:  29 8E
-F00:3106       	DC.W	SEMIS
+F00:3109       	DC.W	SEMIS
                S02:0000353C:  22 50
-F00:3107       *
-F00:3108       	DC.B	$87	* MESSAGE
+F00:3110       *
+F00:3111       	DC.B	$87	* MESSAGE
                S02:0000353E:  87
-F00:3109       	DC.B	'MESSAG'
+F00:3112       	DC.B	'MESSAG'
                S02:0000353F:  4D 45 53 53 41 47
-F00:3110       	DC.B	$80+'E'
+F00:3113       	DC.B	$80+'E'
                S02:00003545:  C5
-F00:3111       	DC.W	DLINE-8
+F00:3114       	DC.W	DLINE-8
                S02:00003546:  35 2C
-F00:3112       MESS	DC.W	DOCOL
+F00:3115       MESS	DC.W	DOCOL
                S02:00003548:  25 00
-F00:3113       	DC.W	WARN
+F00:3116       	DC.W	WARN
                S02:0000354A:  25 76
-F00:3114       	DC.W	AT
+F00:3117       	DC.W	AT
                S02:0000354C:  23 96
-F00:3115       	DC.W	ZBRAN	* IF
-               S02:0000354E:  20 42
-F00:3116       	DC.W	MESS1-*
-               S02:00003550:  00 1C
-F00:3117       	DC.W	DDUP
-               S02:00003552:  27 AA
 F00:3118       	DC.W	ZBRAN	* IF
+               S02:0000354E:  20 42
+F00:3119       	DC.W	MESS1-*
+               S02:00003550:  00 1C
+F00:3120       	DC.W	DDUP
+               S02:00003552:  27 AA
+F00:3121       	DC.W	ZBRAN	* IF
                S02:00003554:  20 42
-F00:3119       	DC.W	MESS2-*
+F00:3122       	DC.W	MESS2-*
                S02:00003556:  00 12
-F00:3120       	DC.W	LIT,4
+F00:3123       	DC.W	LIT,4
                S02:00003558:  20 06
                S02:0000355A:  00 04
-F00:3121       	DC.W	OFSET
+F00:3124       	DC.W	OFSET
                S02:0000355C:  25 D2
-F00:3122       	DC.W	AT
+F00:3125       	DC.W	AT
                S02:0000355E:  23 96
-F00:3123       	DC.W	BSCR
+F00:3126       	DC.W	BSCR
                S02:00003560:  26 E4
-F00:3124       	DC.W	SLASH
+F00:3127       	DC.W	SLASH
                S02:00003562:  32 4A
-F00:3125       	DC.W	SUBB
+F00:3128       	DC.W	SUBB
                S02:00003564:  27 54
-F00:3126       	DC.W	DLINE 	* ENDIF
+F00:3129       	DC.W	DLINE 	* ENDIF
                S02:00003566:  35 34
-F00:3127       MESS2	DC.W	BRAN	* ELSE
+F00:3130       MESS2	DC.W	BRAN	* ELSE
                S02:00003568:  20 2C
-F00:3128       	DC.W	MESS3-*
+F00:3131       	DC.W	MESS3-*
                S02:0000356A:  00 0C
-F00:3129       MESS1	DC.W	PDOTQ
+F00:3132       MESS1	DC.W	PDOTQ
                S02:0000356C:  29 F0
-F00:3130       	DC.B	5
+F00:3133       	DC.B	5
                S02:0000356E:  05
-F00:3131       	DC.B	'MSG #'
+F00:3134       	DC.B	'MSG #'
                S02:0000356F:  4D 53 47 20 23
-F00:3132       	DC.W	DOT 	* ENDIF
+F00:3135       	DC.W	DOT 	* ENDIF
                S02:00003574:  33 94
-F00:3133       MESS3	DC.W	SEMIS
+F00:3136       MESS3	DC.W	SEMIS
                S02:00003576:  22 50
-F00:3134       *
-F00:3135       *F FLUSH	DC.W	DOCOL
-F00:3136       *F	DC.W	NOBUF,ONEP
-F00:3137       *F	DC.W	ZERO,XDO
-F00:3138       *F FLUS1	DC.W	ZERO,BUFFE
-F00:3139       *F	DC.W	DROP
-F00:3140       *F	DC.W	XLOOP
-F00:3141       *	DC.W	FLUS1-*
-F00:3142       *F	DC.W	SEMIS
-F00:3143       	DC.B	0,$84	* LOAD
+F00:3137       *
+F00:3138       *F FLUSH	DC.W	DOCOL
+F00:3139       *F	DC.W	NOBUF,ONEP
+F00:3140       *F	DC.W	ZERO,XDO
+F00:3141       *F FLUS1	DC.W	ZERO,BUFFE
+F00:3142       *F	DC.W	DROP
+F00:3143       *F	DC.W	XLOOP
+F00:3144       *	DC.W	FLUS1-*
+F00:3145       *F	DC.W	SEMIS
+F00:3146       	DC.B	0,$84	* LOAD
                S02:00003578:  00
                S02:00003579:  84
-F00:3144       	DC.B	'LOA'
+F00:3147       	DC.B	'LOA'
                S02:0000357A:  4C 4F 41
-F00:3145       	DC.B	$80+'D'
+F00:3148       	DC.B	$80+'D'
                S02:0000357D:  C4
-F00:3146       	DC.W	MESS-$0A
+F00:3149       	DC.W	MESS-$0A
                S02:0000357E:  35 3E
-F00:3147       LOAD	DC.W	DOCOL,BLK
+F00:3150       LOAD	DC.W	DOCOL,BLK
                S02:00003580:  25 00
                S02:00003582:  25 A6
-F00:3148       	DC.W	AT,TOR
+F00:3151       	DC.W	AT,TOR
                S02:00003584:  23 96
                S02:00003586:  22 74
-F00:3149       	DC.W	INN,AT
+F00:3152       	DC.W	INN,AT
                S02:00003588:  25 B0
                S02:0000358A:  23 96
-F00:3150       	DC.W	TOR,ZERO
+F00:3153       	DC.W	TOR,ZERO
                S02:0000358C:  22 74
                S02:0000358E:  25 0E
-F00:3151       	DC.W	INN,STORE
+F00:3154       	DC.W	INN,STORE
                S02:00003590:  25 B0
                S02:00003592:  23 BC
-F00:3152       	DC.W	BSCR,STAR
+F00:3155       	DC.W	BSCR,STAR
                S02:00003594:  26 E4
                S02:00003596:  32 2A
-F00:3153       	DC.W	BLK,STORE	* BLK <- SCR * B/SCR
+F00:3156       	DC.W	BLK,STORE	* BLK <- SCR * B/SCR
                S02:00003598:  25 A6
                S02:0000359A:  23 BC
-F00:3154       	DC.W	INTER 	* INTERPRET FROM OTHER SCREEN
+F00:3157       	DC.W	INTER 	* INTERPRET FROM OTHER SCREEN
                S02:0000359C:  2E 72
-F00:3155       	DC.W	FROMR,INN
+F00:3158       	DC.W	FROMR,INN
                S02:0000359E:  22 84
                S02:000035A0:  25 B0
-F00:3156       	DC.W	STORE
+F00:3159       	DC.W	STORE
                S02:000035A2:  23 BC
-F00:3157       	DC.W	FROMR,BLK
+F00:3160       	DC.W	FROMR,BLK
                S02:000035A4:  22 84
                S02:000035A6:  25 A6
-F00:3158       	DC.W	STORE
+F00:3161       	DC.W	STORE
                S02:000035A8:  23 BC
-F00:3159       	DC.W	SEMIS
+F00:3162       	DC.W	SEMIS
                S02:000035AA:  22 50
-F00:3160       *
-F00:3161       	DC.B	$C3	* -->
+F00:3163       *
+F00:3164       	DC.B	$C3	* -->
                S02:000035AC:  C3
-F00:3162       	DC.B	'--'
+F00:3165       	DC.B	'--'
                S02:000035AD:  2D 2D
-F00:3163       	DC.B	$80+'>'
+F00:3166       	DC.B	$80+'>'
                S02:000035AF:  BE
-F00:3164       	DC.W	LOAD-7
+F00:3167       	DC.W	LOAD-7
                S02:000035B0:  35 79
-F00:3165       ARROW	DC.W	DOCOL
+F00:3168       ARROW	DC.W	DOCOL
                S02:000035B2:  25 00
-F00:3166       	DC.W	QLOAD
+F00:3169       	DC.W	QLOAD
                S02:000035B4:  28 D2
-F00:3167       	DC.W	ZERO
+F00:3170       	DC.W	ZERO
                S02:000035B6:  25 0E
-F00:3168       	DC.W	INN
+F00:3171       	DC.W	INN
                S02:000035B8:  25 B0
-F00:3169       	DC.W	STORE
+F00:3172       	DC.W	STORE
                S02:000035BA:  23 BC
-F00:3170       	DC.W	BSCR
+F00:3173       	DC.W	BSCR
                S02:000035BC:  26 E4
-F00:3171       	DC.W	BLK
+F00:3174       	DC.W	BLK
                S02:000035BE:  25 A6
-F00:3172       	DC.W	AT
+F00:3175       	DC.W	AT
                S02:000035C0:  23 96
-F00:3173       	DC.W	OVER
+F00:3176       	DC.W	OVER
                S02:000035C2:  23 1C
-F00:3174       	DC.W	MODD
+F00:3177       	DC.W	MODD
                S02:000035C4:  32 5A
-F00:3175       	DC.W	SUBB
+F00:3178       	DC.W	SUBB
                S02:000035C6:  27 54
-F00:3176       	DC.W	BLK
+F00:3179       	DC.W	BLK
                S02:000035C8:  25 A6
-F00:3177       	DC.W	PSTOR
+F00:3180       	DC.W	PSTOR
                S02:000035CA:  23 6C
-F00:3178       	DC.W	SEMIS
+F00:3181       	DC.W	SEMIS
                S02:000035CC:  22 50
-F00:3179       *
-F00:3180       	DC.B	0,$84	* LIST
+F00:3182       *
+F00:3183       	DC.B	0,$84	* LIST
                S02:000035CE:  00
                S02:000035CF:  84
-F00:3181       	DC.B	'LIS'
+F00:3184       	DC.B	'LIS'
                S02:000035D0:  4C 49 53
-F00:3182       	DC.B	$80+'T'
+F00:3185       	DC.B	$80+'T'
                S02:000035D3:  D4
-F00:3183       	DC.W	ARROW-6
+F00:3186       	DC.W	ARROW-6
                S02:000035D4:  35 AC
-F00:3184       LIST	DC.W	DOCOL,DEC
+F00:3187       LIST	DC.W	DOCOL,DEC
                S02:000035D6:  25 00
                S02:000035D8:  29 4E
-F00:3185       	DC.W	CR,DUP
+F00:3188       	DC.W	CR,DUP
                S02:000035DA:  24 82
                S02:000035DC:  23 5A
-F00:3186       	DC.W	SCR,STORE
+F00:3189       	DC.W	SCR,STORE
                S02:000035DE:  25 C4
                S02:000035E0:  23 BC
-F00:3187       	DC.W	PDOTQ
+F00:3190       	DC.W	PDOTQ
                S02:000035E2:  29 F0
-F00:3188       	DC.B	5
+F00:3191       	DC.B	5
                S02:000035E4:  05
-F00:3189       	DC.B	'SCR #'
+F00:3192       	DC.B	'SCR #'
                S02:000035E5:  53 43 52 20 23
-F00:3190       	DC.W	DOT
+F00:3193       	DC.W	DOT
                S02:000035EA:  33 94
-F00:3191       	DC.W	LIT,$10
+F00:3194       	DC.W	LIT,$10
                S02:000035EC:  20 06
                S02:000035EE:  00 10
-F00:3192       	DC.W	ZERO,XDO
+F00:3195       	DC.W	ZERO,XDO
                S02:000035F0:  25 0E
                S02:000035F2:  20 90
-F00:3193       LIST1	DC.W	CR,RR	*IDO
+F00:3196       LIST1	DC.W	CR,RR	*IDO
                S02:000035F4:  24 82
                S02:000035F6:  22 92
-F00:3194       	DC.W	THREE
+F00:3197       	DC.W	THREE
                S02:000035F8:  25 26
-F00:3195       	DC.W	DOTR,SPACE
+F00:3198       	DC.W	DOTR,SPACE
                S02:000035FA:  33 84
                S02:000035FC:  27 9A
-F00:3196       	DC.W	RR,SCR	*IDO
+F00:3199       	DC.W	RR,SCR	*IDO
                S02:000035FE:  22 92
                S02:00003600:  25 C4
-F00:3197       	DC.W	AT,DLINE
+F00:3200       	DC.W	AT,DLINE
                S02:00003602:  23 96
                S02:00003604:  35 34
-F00:3198       *F	DC.W	QTERM
-F00:3199       *F	DC.W	ZBRAN,LIST2-*	* ?TERMINAL IF
-F00:3200       *F	DC.W	LEAVE 	* LEAVE
-F00:3201       LIST2	DC.W	XLOOP	* ENDIF
+F00:3201       *F	DC.W	QTERM
+F00:3202       *F	DC.W	ZBRAN,LIST2-*	* ?TERMINAL IF
+F00:3203       *F	DC.W	LEAVE 	* LEAVE
+F00:3204       LIST2	DC.W	XLOOP	* ENDIF
                S02:00003606:  20 5A
-F00:3202       	DC.W	LIST1-*
+F00:3205       	DC.W	LIST1-*
                S02:00003608:  FF EC
-F00:3203       	DC.W	CR,SEMIS
+F00:3206       	DC.W	CR,SEMIS
                S02:0000360A:  24 82
                S02:0000360C:  22 50
-F00:3204       *
-F00:3205       	DC.B	$85	* INDEX
+F00:3207       *
+F00:3208       	DC.B	$85	* INDEX
                S02:0000360E:  85
-F00:3206       	DC.B	'INDE'
+F00:3209       	DC.B	'INDE'
                S02:0000360F:  49 4E 44 45
-F00:3207       	DC.B	$80+'X'
+F00:3210       	DC.B	$80+'X'
                S02:00003613:  D8
-F00:3208       	DC.W	LIST-7
+F00:3211       	DC.W	LIST-7
                S02:00003614:  35 CF
-F00:3209       INDEX	DC.W	DOCOL
+F00:3212       INDEX	DC.W	DOCOL
                S02:00003616:  25 00
-F00:3210       	DC.W	CR
+F00:3213       	DC.W	CR
                S02:00003618:  24 82
-F00:3211       	DC.W	ONEP,SWAP
+F00:3214       	DC.W	ONEP,SWAP
                S02:0000361A:  26 F8
                S02:0000361C:  23 44
-F00:3212       	DC.W	XDO
+F00:3215       	DC.W	XDO
                S02:0000361E:  20 90
-F00:3213       INDE1	DC.W	CR,RR 	* IDO
+F00:3216       INDE1	DC.W	CR,RR 	* IDO
                S02:00003620:  24 82
                S02:00003622:  22 92
-F00:3214       	DC.W	THREE
+F00:3217       	DC.W	THREE
                S02:00003624:  25 26
-F00:3215       	DC.W	DOTR,SPACE
+F00:3218       	DC.W	DOTR,SPACE
                S02:00003626:  33 84
                S02:00003628:  27 9A
-F00:3216       	DC.W	ZERO,RR 	* IDO
+F00:3219       	DC.W	ZERO,RR 	* IDO
                S02:0000362A:  25 0E
                S02:0000362C:  22 92
-F00:3217       	DC.W	DLINE,QTERM
+F00:3220       	DC.W	DLINE,QTERM
                S02:0000362E:  35 34
                S02:00003630:  24 6C
-F00:3218       	DC.W	ZBRAN
+F00:3221       	DC.W	ZBRAN
                S02:00003632:  20 42
-F00:3219       	DC.W	INDE2-*
+F00:3222       	DC.W	INDE2-*
                S02:00003634:  00 04
-F00:3220       	DC.W	LEAVE
+F00:3223       	DC.W	LEAVE
                S02:00003636:  22 62
-F00:3221       INDE2	DC.W	XLOOP
+F00:3224       INDE2	DC.W	XLOOP
                S02:00003638:  20 5A
-F00:3222       	DC.W	INDE1-*
+F00:3225       	DC.W	INDE1-*
                S02:0000363A:  FF E6
-F00:3223       	DC.W	SEMIS
+F00:3226       	DC.W	SEMIS
                S02:0000363C:  22 50
-F00:3224       *F
-F00:3225       *F	DC.B	$85	* TRIAD
-F00:3226       *F	DC.B	'TRIA'
-F00:3227       *F	DC.B	$80+'D'
-F00:3228       *F	DC.W	INDEX-8
-F00:3229       *F TRIAD	DC.W	DOCOL,LIT,FF
-F00:3230       *F	DC.W	EMIT,LIT,3
-F00:3231       *F	DC.W	SLASH,LIT,3
-F00:3232       *F	DC.W	STAR,LIT,3
-F00:3233       *F	DC.W	OVER,PLUS
-F00:3234       *F	DC.W	SWAP,XDO
-F00:3235       *F TRIA1	DC.W	CR,IDO
-F00:3236       *F	DC.W	LIST,QTERM	* ?TERMINAL
-F00:3237       *F	DC.W	ZBRAN,TRIA2-*	*IF
-F00:3238       *F	DC.W	LEAVE 	* LEAVE
-F00:3239       *F TRIA2	DC.W	XLOOP,TRIA1-*
-F00:3240       *F     ENDIF
-F00:3241       *F	DC.W	CR,LIT,15
-F00:3242       *F	DC.W	MESS,CR,SEMIS
-F00:3243       *F
-F00:3244       *F	DC.B	0,$84	* .CPU
-F00:3245       *F	DC.B	'.CP'
-F00:3246       *F	DC.B	$80+'U'
-F00:3247       *F	DC.W	TRIAD-8
-F00:3248       *F DOTCPU	DC.W	DOCOL,BASE,AT
-F00:3249       *F	DC.W	LIT,36
-F00:3250       *F	DC.W	BASE,STORE
-F00:3251       *F	DC.W	LIT,$22
-F00:3252       *F	DC.W	PORIG,TAT
-F00:3253       *F	DC.W	DDOT
-F00:3254       *F	DC.W	BASE,STORE,SEMIS
-F00:3255       *F
-F00:3256       *F	DC.B	0,$84	* TASK
-F00:3257       *F	DC.B	'TAS'
-F00:3258       *F	DC.B	$80+'K'
-F00:3259       *F	DC.W	DOTCPU-7
-F00:3260       *F TASK	DC.W	DOCOL,SEMIS
-F00:3261       *F
-F00:3262       *F	DC.B	0,$84	* WARM
-F00:3263       *F	DC.B	'WAR'
-F00:3264       *F	DC.B	$80+'M'
-F00:3265       *F	DC.W	INDEX-8
-F00:3266       *F WARM	DC.W	DOCOL
-F00:3267       *F	DC.W	MTBUF
-F00:3268       *F	DC.W	ABORT
-F00:3269       *
-F00:3270       	DC.B	0,$84	* COLD
+F00:3227       *F
+F00:3228       *F	DC.B	$85	* TRIAD
+F00:3229       *F	DC.B	'TRIA'
+F00:3230       *F	DC.B	$80+'D'
+F00:3231       *F	DC.W	INDEX-8
+F00:3232       *F TRIAD	DC.W	DOCOL,LIT,FF
+F00:3233       *F	DC.W	EMIT,LIT,3
+F00:3234       *F	DC.W	SLASH,LIT,3
+F00:3235       *F	DC.W	STAR,LIT,3
+F00:3236       *F	DC.W	OVER,PLUS
+F00:3237       *F	DC.W	SWAP,XDO
+F00:3238       *F TRIA1	DC.W	CR,IDO
+F00:3239       *F	DC.W	LIST,QTERM	* ?TERMINAL
+F00:3240       *F	DC.W	ZBRAN,TRIA2-*	*IF
+F00:3241       *F	DC.W	LEAVE 	* LEAVE
+F00:3242       *F TRIA2	DC.W	XLOOP,TRIA1-*
+F00:3243       *F     ENDIF
+F00:3244       *F	DC.W	CR,LIT,15
+F00:3245       *F	DC.W	MESS,CR,SEMIS
+F00:3246       *F
+F00:3247       *F	DC.B	0,$84	* .CPU
+F00:3248       *F	DC.B	'.CP'
+F00:3249       *F	DC.B	$80+'U'
+F00:3250       *F	DC.W	TRIAD-8
+F00:3251       *F DOTCPU	DC.W	DOCOL,BASE,AT
+F00:3252       *F	DC.W	LIT,36
+F00:3253       *F	DC.W	BASE,STORE
+F00:3254       *F	DC.W	LIT,$22
+F00:3255       *F	DC.W	PORIG,TAT
+F00:3256       *F	DC.W	DDOT
+F00:3257       *F	DC.W	BASE,STORE,SEMIS
+F00:3258       *F
+F00:3259       *F	DC.B	0,$84	* TASK
+F00:3260       *F	DC.B	'TAS'
+F00:3261       *F	DC.B	$80+'K'
+F00:3262       *F	DC.W	DOTCPU-7
+F00:3263       *F TASK	DC.W	DOCOL,SEMIS
+F00:3264       *F
+F00:3265       *F	DC.B	0,$84	* WARM
+F00:3266       *F	DC.B	'WAR'
+F00:3267       *F	DC.B	$80+'M'
+F00:3268       *F	DC.W	INDEX-8
+F00:3269       *F WARM	DC.W	DOCOL
+F00:3270       *F	DC.W	MTBUF
+F00:3271       *F	DC.W	ABORT
+F00:3272       *
+F00:3273       	DC.B	0,$84	* COLD
                S02:0000363E:  00
                S02:0000363F:  84
-F00:3271       	DC.B	'COL'
+F00:3274       	DC.B	'COL'
                S02:00003640:  43 4F 4C
-F00:3272       	DC.B	$80+'D'
+F00:3275       	DC.B	$80+'D'
                S02:00003643:  C4
-F00:3273       	DC.W	INDEX-8
+F00:3276       	DC.W	INDEX-8
                S02:00003644:  36 0E
-F00:3274       COLD	DC.W	2+*
+F00:3277       COLD	DC.W	2+*
                S02:00003646:  36 48
-F00:3275       	MOVE.W	#COLDUS,A0	* BOOTLIST
+F00:3278       	MOVE.W	#COLDUS,A0	* BOOTLIST
                S02:00003648:  30 7C 36 90
-F00:3276       	MOVE.W	(A0),$2F00	* TOP NFA
+F00:3279       	MOVE.W	(A0),$2F00	* TOP NFA
                S02:0000364C:  31 D0 2F 00
-F00:3277       	MOVE.W	4(A0),A6	* SET USER POINTER REG
+F00:3280       	MOVE.W	4(A0),A6	* SET USER POINTER REG
                S02:00003650:  3C 68 00 04
-F00:3278       	MOVE.W	A6,A1 		* WORK COPY OF USER PNTR
+F00:3281       	MOVE.W	A6,A1 		* WORK COPY OF USER PNTR
                S02:00003654:  32 4E
-F00:3279       	MOVE.W	#$0A,D0		* MOVE ELEVEN BOOTUPS
+F00:3282       	MOVE.W	#$0A,D0		* MOVE ELEVEN BOOTUPS
                S02:00003656:  30 3C 00 0A
-F00:3280       COLD1	MOVE.W	(A0)+,(A1)+	* ONE AT A TIME
+F00:3283       COLD1	MOVE.W	(A0)+,(A1)+	* ONE AT A TIME
                S02:0000365A:  32 D8
-F00:3281       	DBF	D0,COLD1	* UNTIL DONE,
+F00:3284       	DBF	D0,COLD1	* UNTIL DONE,
                S02:0000365C:  51 C8 FF FC
-F00:3282       	ADD.W	#$1E,A1		* POINT TO BYTE US+34
+F00:3285       	ADD.W	#$1E,A1		* POINT TO BYTE US+34
                S02:00003660:  43 E9 00 1E
-F00:3283       	MOVE.W	#$0D,D0		* MOVE 14 MORE BOOTUPS
+F00:3286       	MOVE.W	#$0D,D0		* MOVE 14 MORE BOOTUPS
                S02:00003664:  30 3C 00 0D
-F00:3284       COLD2	MOVE.W	(A0)+,(A1)+	* ONE AT A TIME
+F00:3287       COLD2	MOVE.W	(A0)+,(A1)+	* ONE AT A TIME
                S02:00003668:  32 D8
-F00:3285       	DBF	D0,COLD2	* UNTIL DONE
+F00:3288       	DBF	D0,COLD2	* UNTIL DONE
                S02:0000366A:  51 C8 FF FC
-F00:3286       	MOVE.W	$36(A6),D0	* GET LIMIT
+F00:3289       	MOVE.W	$36(A6),D0	* GET LIMIT
                S02:0000366E:  30 2E 00 36
-F00:3287       	MOVE.W	$34(A6),A0	* GET FIRST
+F00:3290       	MOVE.W	$34(A6),A0	* GET FIRST
                S02:00003672:  30 6E 00 34
-F00:3288       	SUB.W	A0,D0 		* CALC BUFFER AREA BYTES
+F00:3291       	SUB.W	A0,D0 		* CALC BUFFER AREA BYTES
                S02:00003676:  90 48
-F00:3289       	SUBQ.W	#1,D0 		* LOOP PREDECREMENT
+F00:3292       	SUBQ.W	#1,D0 		* LOOP PREDECREMENT
                S02:00003678:  53 40
-F00:3290       COLD3	MOVE.B	#0,(A0)+	* FILL AREA WITH 00
+F00:3293       COLD3	MOVE.B	#0,(A0)+	* FILL AREA WITH 00
                S02:0000367A:  10 FC 00 00
-F00:3291       	DBF	D0,COLD3	* UNTIL DONE
+F00:3294       	DBF	D0,COLD3	* UNTIL DONE
                S02:0000367E:  51 C8 FF FA
-F00:3292       	BRA.S	GFRTH
+F00:3295       	BRA.S	GFRTH
                S02:00003682:  60 04
-F00:3293       WARM	DC.W	$3C78,COLDUS+4	* THE ASSEMBLER COULD NOT HANDLE THE NEXT
+F00:3296       WARM	DC.W	$3C78,COLDUS+4	* THE ASSEMBLER COULD NOT HANDLE THE NEXT
                S02:00003684:  3C 78
                S02:00003686:  36 94
-F00:3294       				* INSTRUCTION FOLLOWING MANTEI
-F00:3295       				* BECAUSE COLDUS+4 IS A FORWARD REFERENCE
-F00:3296       *	MOVE.W	COLDUS+4.W,A6	* SET USER
-F00:3297       GFRTH	MOVE.W	#ABORT+2,A4	* SET IP REGISTER
+F00:3297       				* INSTRUCTION FOLLOWING MANTEI
+F00:3298       				* BECAUSE COLDUS+4 IS A FORWARD REFERENCE
+F00:3299       *	MOVE.W	COLDUS+4.W,A6	* SET USER
+F00:3300       GFRTH	MOVE.W	#ABORT+2,A4	* SET IP REGISTER
                S02:00003688:  38 7C 2F 54
-F00:3298       	JMP	RPSTO+2 	* JUMP TO RP! CODE
+F00:3301       	JMP	RPSTO+2 	* JUMP TO RP! CODE
                S02:0000368C:  4E F8 22 40
-F00:3299       *
-F00:3300       COLDUS	DC.W	DR0-6
+F00:3302       *
+F00:3303       COLDUS	DC.W	DR0-6
                S02:00003690:  36 F6
-F00:3301       	DC.W	BSIN	* BKSPKEY, DEPENDS ON KEYBOARD
+F00:3304       	DC.W	BSIN	* BKSPKEY, DEPENDS ON KEYBOARD
                S02:00003692:  00 7F
-F00:3302       	DC.W	USPAG	* USER PAGE
+F00:3305       	DC.W	USPAG	* USER PAGE
                S02:00003694:  1A 00
-F00:3303       	DC.W	INITS0	* COMPUTATION STACK
+F00:3306       	DC.W	INITS0	* COMPUTATION STACK
                S02:00003696:  19 FE
-F00:3304       	DC.W	INITR0	* RETURN STACK
+F00:3307       	DC.W	INITR0	* RETURN STACK
                S02:00003698:  1B FE
-F00:3305       	DC.W	BUFE	* TIB
+F00:3308       	DC.W	BUFE	* TIB
                S02:0000369A:  18 20
-F00:3306       	DC.W	$001F	* WIDTH
+F00:3309       	DC.W	$001F	* WIDTH
                S02:0000369C:  00 1F
-F00:3307       	DC.W	$0000	* WARNING
+F00:3310       	DC.W	$0000	* WARNING
                S02:0000369E:  00 00
-F00:3308       	DC.W	INITDP	* COLD FENCE
+F00:3311       	DC.W	INITDP	* COLD FENCE
                S02:000036A0:  37 06
-F00:3309       	DC.W	INITDP	* DP
+F00:3312       	DC.W	INITDP	* DP
                S02:000036A2:  37 06
-F00:3310       	DC.W	VCLINK	* VOC-LINK SHOULD NOT BE CHANGED
+F00:3313       	DC.W	VCLINK	* VOC-LINK SHOULD NOT BE CHANGED
                S02:000036A4:  2E FC
-F00:3311       	DC.W	BM	* FIRST
+F00:3314       	DC.W	BM	* FIRST
                S02:000036A6:  10 00
-F00:3312       	DC.W	BUFE	* LIMIT
+F00:3315       	DC.W	BUFE	* LIMIT
                S02:000036A8:  18 20
-F00:3313       	DC.W	BM	* USED
+F00:3316       	DC.W	BM	* USED
                S02:000036AA:  10 00
-F00:3314       	DC.W	BM	* PREV
+F00:3317       	DC.W	BM	* PREV
                S02:000036AC:  10 00
-F00:3315       	DC.W	EM	* DICTLIMIT
-               S02:000036AE:  F8 00
-F00:3316       	DC.W	BSOUT	* BKSPEMIT,COULD NEED CHANGE
+F00:3318       	DC.W	EM	* DICTLIMIT
+               S02:000036AE:  FF 00
+F00:3319       	DC.W	BSOUT	* BKSPEMIT,COULD NEED CHANGE
                S02:000036B0:  00 08
-F00:3317       	DC.W	XEMIT	* ADDRESS OF EMIT CODE SUBROUTINE
+F00:3320       	DC.W	XEMIT	* ADDRESS OF EMIT CODE SUBROUTINE
                S02:000036B2:  1C 00
-F00:3318       	DC.W	XKEY	* IDEM OF KEY
+F00:3321       	DC.W	XKEY	* IDEM OF KEY
                S02:000036B4:  1C 14
-F00:3319       	DC.W	XQTERM	* IDEM OF ?TERMINAL
+F00:3322       	DC.W	XQTERM	* IDEM OF ?TERMINAL
                S02:000036B6:  1C 3A
-F00:3320       	DC.W	XCR	* IDEM OF CR
+F00:3323       	DC.W	XCR	* IDEM OF CR
                S02:000036B8:  1C 2C
-F00:3321       	DC.W	XRSLW	* IDEM OF R/W
+F00:3324       	DC.W	XRSLW	* IDEM OF R/W
                S02:000036BA:  1C 4A
-F00:3322       	DC.W	KBBUF	* B/BUF
+F00:3325       	DC.W	KBBUF	* B/BUF
                S02:000036BC:  01 00
-F00:3323       	DC.W	BSCRN	* B/SCR
+F00:3326       	DC.W	BSCRN	* B/SCR
                S02:000036BE:  00 04
-F00:3324       	DC.W	$0040	* C/L
+F00:3327       	DC.W	$0040	* C/L
                S02:000036C0:  00 40
-F00:3325       *
-F00:3326       	DC.B	$83	* R/W  ( FORTH DISK PRIMATIVE )
+F00:3328       *
+F00:3329       	DC.B	$83	* R/W  ( FORTH DISK PRIMATIVE )
                S02:000036C2:  83
-F00:3327       	DC.B	'R/'
+F00:3330       	DC.B	'R/'
                S02:000036C3:  52 2F
-F00:3328       	DC.B	$80+'W'
+F00:3331       	DC.B	$80+'W'
                S02:000036C5:  D7
-F00:3329       	DC.W	COLD-7
+F00:3332       	DC.W	COLD-7
                S02:000036C6:  36 3F
-F00:3330       RSLW	DC.W	2+*
+F00:3333       RSLW	DC.W	2+*
                S02:000036C8:  36 CA
-F00:3331       	MOVE.W	72(A6),A0
+F00:3334       	MOVE.W	72(A6),A0
                S02:000036CA:  30 6E 00 48
-F00:3332       	JSR	(A0)
+F00:3335       	JSR	(A0)
                S02:000036CE:  4E 90
-F00:3333       	MOVE.W	(A4)+,A5
+F00:3336       	MOVE.W	(A4)+,A5
                S02:000036D0:  3A 5C
-F00:3334       	MOVE.W	(A5)+,A0
+F00:3337       	MOVE.W	(A5)+,A0
                S02:000036D2:  30 5D
-F00:3335       	JMP	(A0)
+F00:3338       	JMP	(A0)
                S02:000036D4:  4E D0
-F00:3336       *
-F00:3337       *-------------------------------------------------------
-F00:3338       *
-F00:3339       * ALTERNATIVE R/W IF TOTALLY IN CORE
-F00:3340       *
-F00:3341       *RSLW	DC.W	DOCOL
-F00:3342       *	DC.W	DROP,DROP,DROP
-F00:3343       *	DC.W	SEMIS
-F00:3344       *
-F00:3345       *--------------------------------------------------------
-F00:3346       *
-F00:3347       	DC.B	0,$86	* ORIGIN
+F00:3339       *
+F00:3340       *-------------------------------------------------------
+F00:3341       *
+F00:3342       * ALTERNATIVE R/W IF TOTALLY IN CORE
+F00:3343       *
+F00:3344       *RSLW	DC.W	DOCOL
+F00:3345       *	DC.W	DROP,DROP,DROP
+F00:3346       *	DC.W	SEMIS
+F00:3347       *
+F00:3348       *--------------------------------------------------------
+F00:3349       *
+F00:3350       	DC.B	0,$86	* ORIGIN
                S02:000036D6:  00
                S02:000036D7:  86
-F00:3348       	DC.B	'ORIGI'
+F00:3351       	DC.B	'ORIGI'
                S02:000036D8:  4F 52 49 47 49
-F00:3349       	DC.B	$80+'N'
+F00:3352       	DC.B	$80+'N'
                S02:000036DD:  CE
-F00:3350       	DC.W	RSLW-6
+F00:3353       	DC.W	RSLW-6
                S02:000036DE:  36 C2
-F00:3351       ORIG	DC.W	DOCON
+F00:3354       ORIG	DC.W	DOCON
                S02:000036E0:  24 B4
-F00:3352       	DC.W	COLDUS-$0C
+F00:3355       	DC.W	COLDUS-$0C
                S02:000036E2:  36 84
-F00:3353       *
-F00:3354       	DC.B	$87	* +ORIGIN
+F00:3356       *
+F00:3357       	DC.B	$87	* +ORIGIN
                S02:000036E4:  87
-F00:3355       	DC.B	'+ORIGI'
+F00:3358       	DC.B	'+ORIGI'
                S02:000036E5:  2B 4F 52 49 47 49
-F00:3356       	DC.B	$80+'N'
+F00:3359       	DC.B	$80+'N'
                S02:000036EB:  CE
-F00:3357       	DC.W	ORIG-$09
+F00:3360       	DC.W	ORIG-$09
                S02:000036EC:  36 D7
-F00:3358       PORIG	DC.W	DOCOL
+F00:3361       PORIG	DC.W	DOCOL
                S02:000036EE:  25 00
-F00:3359       	DC.W	ORIG
+F00:3362       	DC.W	ORIG
                S02:000036F0:  36 E0
-F00:3360       	DC.W	PLUS
+F00:3363       	DC.W	PLUS
                S02:000036F2:  22 D0
-F00:3361       	DC.W	SEMIS
+F00:3364       	DC.W	SEMIS
                S02:000036F4:  22 50
-F00:3362       *
-F00:3363       	DC.B	$83	* DR0
+F00:3365       *
+F00:3366       	DC.B	$83	* DR0
                S02:000036F6:  83
-F00:3364       	DC.B	'DR'
+F00:3367       	DC.B	'DR'
                S02:000036F7:  44 52
-F00:3365       	DC.B	$80+'0'
+F00:3368       	DC.B	$80+'0'
                S02:000036F9:  B0
-F00:3366       	DC.W	PORIG-$0A
+F00:3369       	DC.W	PORIG-$0A
                S02:000036FA:  36 E4
-F00:3367       DR0	DC.W	DOCOL
+F00:3370       DR0	DC.W	DOCOL
                S02:000036FC:  25 00
-F00:3368       	DC.W	ZERO
+F00:3371       	DC.W	ZERO
                S02:000036FE:  25 0E
-F00:3369       	DC.W	OFSET
+F00:3372       	DC.W	OFSET
                S02:00003700:  25 D2
-F00:3370       	DC.W	STORE
+F00:3373       	DC.W	STORE
                S02:00003702:  23 BC
-F00:3371       	DC.W	SEMIS
+F00:3374       	DC.W	SEMIS
                S02:00003704:  22 50
-F00:3372       *
-F00:3373       INITDP	EQU	*	* START OF USER DICTIONARY
-F00:3374       *
-F00:3375       *	  MEMORY MAP
-F00:3376       * THE FOLLOWING EQUATES ARE NOT REFERENCED ELSEWHERE )
-F00:3377       * IT IS INTENDED FOR THE USER OF THE FORTH SYSTEM
-F00:3378       *
-F00:3379       *		LOCATION 	CONTENTS
-F00:3380       *  		--------        --------
-F00:3381       MCOLD	EQU	COLD+2 		*COLD START ENTRY POINT
-F00:3382       MWARM	EQU	WARM 		*WARM START ENTRY POINT
-F00:3383       *MA2	EQU	COLDUS 		*COLD START PARAMETERS
-F00:3384       * 68000 REGISTER A6		*USER VARIABLES' BASE 'REG'
-F00:3385       * 68000 REGISTER A7 		*RETURN STACK 'REGISTER'
-F00:3386       *
-F00:3387       * NO 'NEXT' ENTRY BECAUSE THE ADDRESS INTERPRETER IS
-F00:3388       *  APPENDED TO EACH INSTRUCTION
-F00:3389       * ALSO NO DEBUG SUPPORT ENTRY
-F00:3390       *
-F00:3391       MFIRST	EQU	BM		*START DISK BUFFERS
-F00:3392       *MEND	EQU	BUFE		*END DISK BUFFERS
-F00:3393       				* (5TH USER VARIABLE)
-F00:3394       				* = (TIB)
-F00:3395       				* I  TERMINAL INPUT
-F00:3396       				* I  BUFFER
-F00:3397       				* V
-F00:3398       				* A (A3 POINTS HERE)
-F00:3399       				* I
-F00:3400       				* I  USER STACK
-F00:3401       *MISO	EQU	INITS0		* COLD (SP) VALUE = (S0)
-F00:3402       				* (3TH USER VARIABLE)
-F00:3403       *MUSPAG	EQU	USPAG		* A6 POINTS HERE
-F00:3404       				* I  USER VARIABLES
-F00:3405       				* V
-F00:3406       				* A (A7 POINTS HERE)
-F00:3407       				* I
-F00:3408       				* I RETURN STACK
-F00:3409       *MIRO	EQU	INITR0		* COLD (RP) VALUE = (R0)
-F00:3410       				*
-F00:3411       *MIO	EQU	IOARE		* (ROOM LEFT FOR I/O ROUTINES)
-F00:3412       				*
-F00:3413       *MDP0	EQU	DP0		* START FORTH DICTIONARY
-F00:3414       *MIDP	EQU	*		* END INITIAL FORTH DICTIONARY
-F00:3415       				* = COLD (DP) VALUE
-F00:3416       				* = COLD (FENCE) VALUE
-F00:3417       				* I  NEW
-F00:3418       				* I  DEFINITIONS
-F00:3419       				* V
-F00:3420       *MLIMIT	EQU	EM		* LAST MEMORY LOC USED + 1
-F00:3421       				* = [COLDUS+$1A]	
-F00:3422       *
-F00:3423       *
-F00:3424       *
-F00:3425       	END
-F00:3426       
+F00:3375       *
+F00:3376       INITDP	EQU	*	* START OF USER DICTIONARY
+F00:3377       *
+F00:3378       *	  MEMORY MAP
+F00:3379       * THE FOLLOWING EQUATES ARE NOT REFERENCED ELSEWHERE )
+F00:3380       * IT IS INTENDED FOR THE USER OF THE FORTH SYSTEM
+F00:3381       *
+F00:3382       *		LOCATION 	CONTENTS
+F00:3383       *  		--------        --------
+F00:3384       MCOLD	EQU	COLD+2 		*COLD START ENTRY POINT
+F00:3385       MWARM	EQU	WARM 		*WARM START ENTRY POINT
+F00:3386       *MA2	EQU	COLDUS 		*COLD START PARAMETERS
+F00:3387       * 68000 REGISTER A6		*USER VARIABLES' BASE 'REG'
+F00:3388       * 68000 REGISTER A7 		*RETURN STACK 'REGISTER'
+F00:3389       *
+F00:3390       * NO 'NEXT' ENTRY BECAUSE THE ADDRESS INTERPRETER IS
+F00:3391       *  APPENDED TO EACH INSTRUCTION
+F00:3392       * ALSO NO DEBUG SUPPORT ENTRY
+F00:3393       *
+F00:3394       MFIRST	EQU	BM		*START DISK BUFFERS
+F00:3395       *MEND	EQU	BUFE		*END DISK BUFFERS
+F00:3396       				* (5TH USER VARIABLE)
+F00:3397       				* = (TIB)
+F00:3398       				* I  TERMINAL INPUT
+F00:3399       				* I  BUFFER
+F00:3400       				* V
+F00:3401       				* A (A3 POINTS HERE)
+F00:3402       				* I
+F00:3403       				* I  USER STACK
+F00:3404       *MISO	EQU	INITS0		* COLD (SP) VALUE = (S0)
+F00:3405       				* (3TH USER VARIABLE)
+F00:3406       *MUSPAG	EQU	USPAG		* A6 POINTS HERE
+F00:3407       				* I  USER VARIABLES
+F00:3408       				* V
+F00:3409       				* A (A7 POINTS HERE)
+F00:3410       				* I
+F00:3411       				* I RETURN STACK
+F00:3412       *MIRO	EQU	INITR0		* COLD (RP) VALUE = (R0)
+F00:3413       				*
+F00:3414       *MIO	EQU	IOARE		* (ROOM LEFT FOR I/O ROUTINES)
+F00:3415       				*
+F00:3416       *MDP0	EQU	DP0		* START FORTH DICTIONARY
+F00:3417       *MIDP	EQU	*		* END INITIAL FORTH DICTIONARY
+F00:3418       				* = COLD (DP) VALUE
+F00:3419       				* = COLD (FENCE) VALUE
+F00:3420       				* I  NEW
+F00:3421       				* I  DEFINITIONS
+F00:3422       				* V
+F00:3423       *MLIMIT	EQU	EM		* LAST MEMORY LOC USED + 1
+F00:3424       				* = [COLDUS+$1A]	
+F00:3425       *
+F00:3426       *
+F00:3427       *
+F00:3428       	END
+F00:3429       
 
 
 Sections:
@@ -6850,7 +6853,7 @@ RTS EXPR(512=0x200) EQU
 BSCRN EXPR(4=0x4) EQU 
 KBBUF EXPR(256=0x100) EQU 
 NSCR EXPR(2=0x2) EQU 
-EM EXPR(63488=0xf800) EQU 
+EM EXPR(65280=0xff00) EQU 
 BM EXPR(4096=0x1000) EQU 
 FF EXPR(12=0xc) UNUSED EQU 
 LF EXPR(10=0xa) EQU 
@@ -6864,7 +6867,7 @@ FIGREL EXPR(1=0x1) EQU
 _MOVEMBYTES EXPR(0=0x0) INTERNAL 
  MOVEMSIZE EXPR(0=0x0) INTERNAL 
 _MOVEMREGS EXPR(0=0x0) INTERNAL 
-__LINE__ EXPR(3425=0xd61) INTERNAL 
+__LINE__ EXPR(3428=0xd64) INTERNAL 
 __FO EXPR(0=0x0) INTERNAL 
 __RS EXPR(0=0x0) INTERNAL 
 REPTN EXPR(-1=0xffffffff) INTERNAL 
