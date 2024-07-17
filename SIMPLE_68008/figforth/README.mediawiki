@@ -71,6 +71,7 @@ This version of FORTH implements the fig-FORTH model presented in the FORTH Inte
 The listing presented here after is identical to the version 1.0 of Kenneth Mantei, except that this is in standard Motorola assembler format. 
 The transcription was done by members of the Dutch fig chapter, as it was felt that this format would greatly enhance the usability. 
 Then this introduction was made to match the new listing. 
+
 It is a 64 K version, using conventional two-byte addresses, which does not make use of the 32-bit addressing capabilities of the 68000. 
 Primitive words are located at 2000-2500H, with the six-byte inner interpreter appended to each word. Constants and variables run from 2500-2700H. 
 Most of the constants relate to hardware and it seemed desirable to locate these on the USER page, So a new primitive, 
