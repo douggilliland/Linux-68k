@@ -65,40 +65,41 @@
   51 1028 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
   51      000A 
   52 102e 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-  53 1032 4E75      		rts
-  54               	
-  55 1034 0000 0000 		.ORG	0x1100
-  55      0000 0000 
-  55      0000 0000 
-  55      0000 0000 
-  55      0000 0000 
-  56               	enInts:
-  57 1100 46FC 2000 		move.w	#0x2000, %sr		| Enable interrupts
-  58 1104 4E75      		rts
-  59               		
-  60 1106 0000 0000 		.ORG	0x1200
-  60      0000 0000 
-  60      0000 0000 
-  60      0000 0000 
-  60      0000 0000 
-  61               	IntLev2:
-  62 1200 46FC 2700 		move.w	#0x2700, %sr			| Disable interrupts
-  63 1204 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-  64 1208 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
-  64      0600 
-  65 120e 1010      		move.b	(%a0), %d0				| Put char in d0
-  66 1210 227C 000F 		movea.l	#DUART, %a1				| DUART base address
-  66      0000 
-  67 1216 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
-  68 121a 5200      		add.b	#1, %d0					| Increment character
-  69 121c 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
-  70 1220 6F00 0006 		ble		skipCRes
-  71 1224 103C 0020 		move.b	#' ', %d0				| Start character is a space	
-  72               	skipCRes:
-  73 1228 1080      		move.b	%d0, (%a0)
-  74 122a 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  75               	|	move.w	#0x2000, %sr			| Enable interrupts
-  76 122e 4E73      		rte
+  53 1032 46FC 2700 		move.w	#0x2700, %sr		| Disable interrupts
+  54 1036 4E75      		rts
+  55               	
+  56 1038 0000 0000 		.ORG	0x1100
+  56      0000 0000 
+  56      0000 0000 
+  56      0000 0000 
+  56      0000 0000 
+  57               	enInts:
+  58 1100 46FC 2500 		move.w	#0x2500, %sr		| Enable interrupts
+  59 1104 4E75      		rts
+  60               		
+  61 1106 0000 0000 		.ORG	0x1200
+  61      0000 0000 
+  61      0000 0000 
+  61      0000 0000 
+  61      0000 0000 
+  62               	IntLev2:
+  63 1200 46FC 2700 		move.w	#0x2700, %sr			| Disable interrupts
+  64 1204 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
+  65 1208 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
+  65      0600 
+  66 120e 1010      		move.b	(%a0), %d0				| Put char in d0
+  67 1210 227C 000F 		movea.l	#DUART, %a1				| DUART base address
+  67      0000 
+  68 1216 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
+  69 121a 5200      		add.b	#1, %d0					| Increment character
+  70 121c 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
+  71 1220 6F00 0006 		ble		skipCRes
+  72 1224 103C 0020 		move.b	#' ', %d0				| Start character is a space	
+  73               	skipCRes:
+  74 1228 1080      		move.b	%d0, (%a0)
+  75 122a 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  76               	|	move.w	#0x2500, %sr			| Enable interrupts
+  77 122e 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
@@ -129,8 +130,8 @@ DEFINED SYMBOLS
           S68K_006.s:33     *ABS*:0000000000000600 charTempPtr
           S68K_006.s:34     *ABS*:0000000000000100 IPL2_Vect
           S68K_006.s:35     *ABS*:0000000000000040 IVR2
-          S68K_006.s:56     .text:0000000000001100 enInts
-          S68K_006.s:61     .text:0000000000001200 IntLev2
-          S68K_006.s:72     .text:0000000000001228 skipCRes
+          S68K_006.s:57     .text:0000000000001100 enInts
+          S68K_006.s:62     .text:0000000000001200 IntLev2
+          S68K_006.s:73     .text:0000000000001228 skipCRes
 
 NO UNDEFINED SYMBOLS
