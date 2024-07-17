@@ -2,7 +2,7 @@
 
 * Brings up a small Forth system
 * Runs on [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Computer]
-* It loads into RAM from TUTOR
+* It loads into RAM from S68K_002
 * Start address is '''$3648'''
 
 == Build ==
