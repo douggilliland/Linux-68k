@@ -2,7 +2,7 @@
 
 * Brings up a small Forth system
 * Runs on [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Computer]
-* Fig-forth loads into SRAM from S68K_002 monitor as S-Record file
+* Fig-forth loads into SRAM from [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 monitor] as S-Record file
 * Start address is '''$3648'''
 
 <pre>
