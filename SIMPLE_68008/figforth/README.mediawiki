@@ -2,8 +2,26 @@
 
 * Brings up a small Forth system
 * Runs on [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Computer]
-* It loads into RAM from TUTOR
+* Fig-forth loads into SRAM from [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 monitor] as S-Record file
 * Start address is '''$3648'''
+
+<pre>
+SIMPLE-68008 CPU V1.00
+RAM Test Passed
+> l
+Load S-Record
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>
+> r3648
+
+68000 fig-FORTH V1.0
+    OK
+    OK
+    OK
+1 2 3     OK
++    OK
++    OK
+. 6    OK
+</pre>
 
 == Build ==
 
@@ -20,6 +38,8 @@
 * Modifications Doug Gilliland 2022
 ** Fixed a source file line
 ** Updated [https://github.com/douggilliland/Linux-68k/blob/master/TS2/figforth/Makefile make file] path to vasm
+* Modifications Doug Gilliland 2024
+** Changed serial code from 6850 ACIA to 68681 DUART
 
 == Source ==
 
