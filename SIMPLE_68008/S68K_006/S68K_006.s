@@ -59,7 +59,7 @@ enInts:
 	
 	.ORG	0x1200
 IntLev2:
-	move.w	#0x2700, %sr		| Enable interrupts
+	move.w	#0x2700, %sr			| Disable interrupts
     movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
 	movea.l	#charTempPtr, %a0		| Get the character to write out
 	move.b	(%a0), %d0				| Put char in d0
@@ -72,5 +72,5 @@ IntLev2:
 skipCRes:
 	move.b	%d0, (%a0)
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-	move.w	#0x2000, %sr		| Enable interrupts
+|	move.w	#0x2000, %sr			| Enable interrupts
 	rte
