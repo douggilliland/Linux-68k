@@ -338,7 +338,8 @@ parseLine:
     rts
 
 .runBASIC:
-	jsr		0x88800
+	lea		0x88800, %a0
+	jsr		(%a0)
 	rts
 
 |||||||||||||||||||||||||||||||
