@@ -326,6 +326,8 @@ parseLine:
     beq.w   .help
     cmp.b   #'L', %d0           | Help command
     beq.w   loadSRec
+	cmp.b	#'B', %d0           | BASIC
+	beq		.runBASIC
     cmp.b   #0, %d0             | Ignore blank lines
     beq.s   .exit               
  .invalid:   
@@ -334,6 +336,10 @@ parseLine:
  .exit:
     movem.l (%SP)+, %a2-%a3     | Restore registers
     rts
+
+.runBASIC:
+	jsr		0x88800
+	rts
 
 |||||||||||||||||||||||||||||||
 || HELP command
