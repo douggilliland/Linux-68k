@@ -419,8 +419,9 @@ parseLine:
 BasicStart = 0x84800
 .runBASIC:
 	lea		BasicStart, %a0
-	cmp.w	#0x6056, (%a0)
-	bne.s	skipBasic			| Not supported
+	move.w	(%a0),%d0
+	cmp.w	#0x6056, %d0
+	bne		skipBasic			| Not supported
 	jsr		(%a0)
 BasicStart:
 	rts
