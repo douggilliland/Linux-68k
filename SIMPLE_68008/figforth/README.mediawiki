@@ -1,13 +1,15 @@
 == FIGForth ==
 
 * Brings up a small Forth system
-* Runs on [https://github.com/douggilliland/Retro-Computers/tree/master/68000/TS2_FPGA TS2_FPGA Retro-Computer]
+* Runs on [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68008 Computer]
 * It loads into RAM from TUTOR
 * Start address is '''$3648'''
 
 == Build ==
 
 * Build it using the VASM 68k cross-assembler
+* make clean
+* make
 
 == History ==
 
