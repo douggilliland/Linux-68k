@@ -40,7 +40,7 @@ IVR2 = IPL2_Vect / 4
 	movea.l	#charTempPtr, %a0
 	move.b	#' ', (%a0)		| Start character is a space
 	| Fill the interrupt vector table entry for Level 2 interrupt
-	move.l	#IntLev2, %d0
+	move.l	#0x1500, %d0
 	movea.l	#IPL2_Vect, %a0
 	move.l	%d0, (%a0)
 	move.l 	#IVR2, %d0
@@ -52,6 +52,7 @@ IVR2 = IPL2_Vect / 4
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
 	rts
 
+	.ORG	0x1500
 IntLev2:
     movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
 	movea.l	#charTempPtr, %a0			| Get the character to write out
