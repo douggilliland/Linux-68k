@@ -56,14 +56,15 @@ IVR2 = IPL2_Vect / 4
 	.ORG	0x1200
 IntLev2:
     movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-	movea.l	#charTempPtr, %a0			| Get the character to write out
-	move.b	(%a0), %d0					| Put char in d0
-	movea.l	#DUART, %a1					| DUART base address
-	move.b	%d0, 6(%a1)					| Write out the character
-	add.b	#1, %d0						| Increment character
-	cmp.b	#'z', %d0					| Go up to z
+	movea.l	#charTempPtr, %a0		| Get the character to write out
+	move.b	(%a0), %d0				| Put char in d0
+	movea.l	#DUART, %a1				| DUART base address
+	move.b	%d0, 6(%a1)				| Write out the character
+	add.b	#1, %d0					| Increment character
+	cmp.b	#'z', %d0				| Go up to z
 	ble		skipCRes
-	move.b	#' ', (%a0)		| Start character is a space	
+	move.b	#' ', %d0				| Start character is a space	
 skipCRes:
+	move.b	%d0, (%a0)
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
 	rte
