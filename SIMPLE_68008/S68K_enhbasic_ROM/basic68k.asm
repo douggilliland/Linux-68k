@@ -162,32 +162,32 @@ VEC_SV
 * turn off simulator key echo
 
 code_start
-                            * Set up ACIA parameters
-    MOVE.b  #$30,CRA       * Reset Transmitter
-    MOVE.b  #$20,CRA       * Reset Receiver
-    MOVE.b  #$10,CRA       * Reset Mode Register Pointer
+*                            * Set up ACIA parameters
+*    MOVE.b  #$30,CRA       * Reset Transmitter
+*    MOVE.b  #$20,CRA       * Reset Receiver
+*    MOVE.b  #$10,CRA       * Reset Mode Register Pointer
     
-    MOVE.b  #$00,ACR       * Baud Rate Set #2
-    MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
-    MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
+*    MOVE.b  #$00,ACR       * Baud Rate Set #2
+*    MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
+*    MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+*    MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    MOVE.b  #$05,CRA       * Enable Transmit/Recieve
+*    MOVE.b  #$05,CRA       * Enable Transmit/Recieve
 
-    MOVE.b  #$30,CRB       * Reset Transmitter
-    MOVE.b  #$20,CRB       * Reset Receiver
-    MOVE.b  #$10,CRB       * Reset Mode Register Pointer
+*    MOVE.b  #$30,CRB       * Reset Transmitter
+*    MOVE.b  #$20,CRB       * Reset Receiver
+*    MOVE.b  #$10,CRB       * Reset Mode Register Pointer
     
-    MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
-    MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-    MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
+*    MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
+*    MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
+*    MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
     
-    MOVE.b  #$05,CRB       * Enable Transmit/Recieve
+*    MOVE.b  #$05,CRB       * Enable Transmit/Recieve
 	
-	MOVE.b	#$00,OPC		* Output port configuration (all bit are outs)
-	MOVE.b	#$FC,OPR		* Clear all outputs
+*	MOVE.b	#$00,OPC		* Output port configuration (all bit are outs)
+*	MOVE.b	#$FC,OPR		* Clear all outputs
 	
-	MOVE.b	#'1',d0
+	MOVE.b	#'1',d0			* Got here
 	bsr		VEC_OUT
 
 * to tell EhBASIC where and how much RAM it has pass the address in a0 and the size
@@ -198,7 +198,7 @@ code_start
 
 * end of simulator specific code
 
-	MOVE.b	#'2',d0
+	MOVE.b	#'2',d0		* RAM pointers set
 	bsr		VEC_OUT
 
 ****************************************************************************************
@@ -229,7 +229,7 @@ LAB_COLD
         trap            #14                             * Call TRAP14 handler
 
 LAB_sizok
-	MOVE.b	#'3',d0
+	MOVE.b	#' ',d0
 	bsr		VEC_OUT
 	MOVEA.l	a0,a3				* copy RAM base to a3
 	ADDA.l	d0,a0				* a0 is top of RAM
