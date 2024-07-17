@@ -38,6 +38,8 @@ Load S-Record
 * Modifications Doug Gilliland 2022
 ** Fixed a source file line
 ** Updated [https://github.com/douggilliland/Linux-68k/blob/master/TS2/figforth/Makefile make file] path to vasm
+* Modifications Doug Gilliland 2024
+** Changed serial code from 6850 ACIA to 68681 DUART
 
 == Source ==
 
