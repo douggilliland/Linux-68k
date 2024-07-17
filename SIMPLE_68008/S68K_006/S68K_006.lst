@@ -74,7 +74,7 @@
   56      0000 0000 
   56      0000 0000 
   57               	enInts:
-  58 1100 46FC 2000 		move.w	#0x2000, %sr		| Enable interrupts
+  58 1100 46FC 2100 		move.w	#0x2100, %sr		| Enable interrupts
   59 1104 4E75      		rts
   60               		
   61 1106 0000 0000 		.ORG	0x1200
