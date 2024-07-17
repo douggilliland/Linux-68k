@@ -34,12 +34,11 @@ Load S-Record
 * Jeff Tranter made one small source change and added a Makefile
 * Note that the FIG standard has been superseeded by F79, F83 and ANSI
 * What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available
-* A print out of this once was available from our user group and a photocopy can still be had from me
 * Modifications Doug Gilliland 2022
 ** Fixed a source file line
 ** Updated [https://github.com/douggilliland/Linux-68k/blob/master/TS2/figforth/Makefile make file] path to vasm
 * Modifications Doug Gilliland 2024
-** Changed serial code from 6850 ACIA to 68681 DUART
+** Changed serial port code from 6850 ACIA to 68681 DUART
 
 == Source ==
 
