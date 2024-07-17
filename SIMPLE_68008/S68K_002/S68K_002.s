@@ -416,9 +416,13 @@ parseLine:
     add.l   #0x100, %a3         | Move up the current address by 256
     bra.s   .exinterend
 
+BasicStart = 0x84800
 .runBASIC:
-	lea		0x88800, %a0
+	lea		BasicStart, %a0
+	cmp.w	#0x6056, (%a0)
+	bne.s	skipBasic			| Not supported
 	jsr		(%a0)
+BasicStart:
 	rts
 
 |||||||||||||||||||||||||||||
@@ -941,7 +945,7 @@ CRLF_MSG:
 msgHelp:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
-    .ascii	" (E)xamine    (D)eposit    (R)un     (L)oad     (H)elp"
+    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (H)elp"
 	dc.b	CR,LF,EOT
 ldSRecMsg:
     .ascii	"Load S-Record"
