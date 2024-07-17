@@ -26,20 +26,22 @@ Load S-Record
 == Build ==
 
 * Build it using the VASM 68k cross-assembler
-* make clean
-* make
+** Using Linux VirtualBox under Windows
+* From the command line
+** make clean
+** make
 
 == History ==
 
 * Jeff Tranter made one small source change and added a Makefile
 * Note that the FIG standard has been superseeded by F79, F83 and ANSI
 * What has survived is the FIG implementation model, where you start with an assembly source listing, not assuming any Forth tools available
-* A print out of this once was available from our user group and a photocopy can still be had from me
 * Modifications Doug Gilliland 2022
 ** Fixed a source file line
 ** Updated [https://github.com/douggilliland/Linux-68k/blob/master/TS2/figforth/Makefile make file] path to vasm
 * Modifications Doug Gilliland 2024
-** Changed serial code from 6850 ACIA to 68681 DUART
+** Changed serial port code from 6850 ACIA to 68681 DUART
+** Configured for more SRAM (limited to less than 64K by the original software design)
 
 == Source ==
 
@@ -70,12 +72,13 @@ This version of FORTH implements the fig-FORTH model presented in the FORTH Inte
 The listing presented here after is identical to the version 1.0 of Kenneth Mantei, except that this is in standard Motorola assembler format. 
 The transcription was done by members of the Dutch fig chapter, as it was felt that this format would greatly enhance the usability. 
 Then this introduction was made to match the new listing. 
+
 It is a 64 K version, using conventional two-byte addresses, which does not make use of the 32-bit addressing capabilities of the 68000. 
 Primitive words are located at 2000-2500H, with the six-byte inner interpreter appended to each word. Constants and variables run from 2500-2700H. 
 Most of the constants relate to hardware and it seemed desirable to locate these on the USER page, So a new primitive, 
 (USERCONSTANT) was defined that requires no modification to FORTH source material,but gets constants from the USER page. The rest of the kernal runs from 2700-3000H. 
 The conditional compiler, math words, output words, and VLIST run from 3000-3400H. Disc I/O and boot-up code runs from 3400-3700H. 
-FORTH is entered by a jump to the COLD label (at 364E).or the warm start at the label WARM (at 368A).
+FORTH is entered by a jump to the COLD label (at TBD-see above).or the warm start at the label WARM (at YBD-see above).
 
 The 1802 model used as a starting point assumed 128-byte buffer blocks. Modifications were made in +BUF to handle automatically 1024, 512, and 256 byte buffers as well. 
 "84" was replaced by "B/BUF 4 + ". Similarly, the null word X, was modified to handle 1, 2, 4, as well as the original 8 buffers/screen, "7" was replaced by "B/SCR 1 -", 
