@@ -421,9 +421,9 @@ BasicStart = 0x84800
 	lea		BasicStart, %a0
 	move.w	(%a0),%d0
 	cmp.w	#0x6056, %d0
-	bne		skipBasic			| Not supported
+	bne.s	skipBasic			| Not supported
 	jsr		(%a0)
-BasicStart:
+skipBasic:
 	rts
 
 |||||||||||||||||||||||||||||
