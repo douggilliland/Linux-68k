@@ -1,7 +1,5 @@
-| S68K_002.s - 68K Monitor with extensions
-|	Adds S Record loader
-| Borrowed init code from 
-|  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
+| S68K_004.s - Assembly language example code
+|	Uses S Record loader
 
 CODE_START	= 0x001000	| Start of code
 RAM_END		= 0x07FFFF	| 512KB SRAM
