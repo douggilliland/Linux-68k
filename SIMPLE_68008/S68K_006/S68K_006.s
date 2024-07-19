@@ -40,13 +40,13 @@ IVR2 = IPL2_Vect / 4
 	movea.l	#charTempPtr, %a0
 	move.b	#' ', (%a0)			| Start character is a space
 	| Fill the interrupt vector table entry for Level 2 interrupt
-	move.l	#0x1200, %d0
 	movea.l	#IPL2_Vect, %a0
+	move.l	#0x1200, %d0
 	move.l	%d0, (%a0)
-	move.l 	#IVR2, %d0
+	move.b 	#IVR2, %d0
 	| Set DUART interrupt vector
 	movea.l	#DUART, %a0			| DUART base address
-	move.l	%d0, 24(%a0)		| Interrupt Vector Register
+	move.b	%d0, 24(%a0)		| Interrupt Vector Register
 	| Set DUART interrupt mask to enable transmit interrupt
 	move.b	#0x01, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
