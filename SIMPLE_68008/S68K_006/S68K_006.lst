@@ -48,27 +48,27 @@
   40      0600 
   41 100a 10BC 0020 		move.b	#' ', (%a0)			| Start character is a space
   42               		| Fill the interrupt vector table entry for Level 2 interrupt
-  43 100e 203C 0000 		move.l	#0x1200, %d0
-  43      1200 
-  44 1014 207C 0000 		movea.l	#IPL2_Vect, %a0
-  44      0100 
+  43 100e 207C 0000 		movea.l	#IPL2_Vect, %a0
+  43      0100 
+  44 1014 203C 0000 		move.l	#0x1200, %d0
+  44      1200 
   45 101a 2080      		move.l	%d0, (%a0)
-  46 101c 7040      		move.l 	#IVR2, %d0
+  46 101c 103C 0040 		move.b 	#IVR2, %d0
   47               		| Set DUART interrupt vector
-  48 101e 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  48 1020 207C 000F 		movea.l	#DUART, %a0			| DUART base address
   48      0000 
-  49 1024 2140 0018 		move.l	%d0, 24(%a0)		| Interrupt Vector Register
+  49 1026 1140 0018 		move.b	%d0, 24(%a0)		| Interrupt Vector Register
 68K GAS  S68K_006.s 			page 2
 
 
   50               		| Set DUART interrupt mask to enable transmit interrupt
-  51 1028 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
+  51 102a 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
   51      000A 
-  52 102e 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-  53 1032 46FC 2700 		move.w	#0x2700, %sr		| Disable interrupts
-  54 1036 4E75      		rts
+  52 1030 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+  53 1034 46FC 2700 		move.w	#0x2700, %sr		| Disable interrupts
+  54 1038 4E75      		rts
   55               	
-  56 1038 0000 0000 		.ORG	0x1100
+  56 103a 0000 0000 		.ORG	0x1100
   56      0000 0000 
   56      0000 0000 
   56      0000 0000 
