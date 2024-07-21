@@ -35,14 +35,14 @@ IPL2_Vect = 0x100
 IVR2 = IPL2_Vect / 4
 
 	.ORG	CODE_START
+	move.w	#0x2700, %sr		| Disable interrupts
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
-	| Set the start character (a space)
+	| Set the start character (a '1')
 	movea.l	#charTempPtr, %a0
-	move.b	#' ', (%a0)			| Start character is a space
+	move.b	#'1', (%a0)			| Start character is a space
 	| Fill the interrupt vector table entry for Level 2 interrupt
 	movea.l	#IPL2_Vect, %a0
-	move.l	#0x1200, %d0
-	move.l	%d0, (%a0)
+	move.l	#0x1200, (%a0)
 	move.b 	#IVR2, %d0
 	| Set DUART interrupt vector
 	movea.l	#DUART, %a0			| DUART base address
@@ -50,7 +50,6 @@ IVR2 = IPL2_Vect / 4
 	| Set DUART interrupt mask to enable transmit interrupt
 	move.b	#0x01, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-	move.w	#0x2700, %sr		| Disable interrupts
 	rts
 
 	.ORG	0x1100
@@ -60,7 +59,6 @@ enInts:
 	
 	.ORG	0x1200
 IntLev2:
-	move.w	#0x2700, %sr			| Disable interrupts
     movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
 	movea.l	#charTempPtr, %a0		| Get the character to write out
 	move.b	(%a0), %d0				| Put char in d0
@@ -69,9 +67,9 @@ IntLev2:
 	add.b	#1, %d0					| Increment character
 	cmp.b	#'z', %d0				| Go up to z
 	ble		skipCRes
-	move.b	#' ', %d0				| Start character is a space	
+	move.b	#'1', %d0				| Start character is a '1'
 skipCRes:
 	move.b	%d0, (%a0)
+	move.b	#0x01, 10(%a0)			| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-|	move.w	#0x2500, %sr			| Enable interrupts
 	rte
