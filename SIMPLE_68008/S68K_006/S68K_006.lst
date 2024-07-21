@@ -95,7 +95,7 @@
   70 1220 103C 0031 		move.b	#'1', %d0				| Start character is a '1'
   71               	skipCRes:
   72 1224 1080      		move.b	%d0, (%a0)
-  73 1226 117C 0001 		move.b	#0x001, 10(%a0)			| Interrupt Mask Register
+  73 1226 117C 0000 		move.b	#0x00, 10(%a0)			| Interrupt Mask Register
   73      000A 
   74 122c 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
   75 1230 4E73      		rte
