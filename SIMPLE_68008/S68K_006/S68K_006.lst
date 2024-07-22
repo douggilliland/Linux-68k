@@ -96,13 +96,13 @@
   71 1212 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
   72 1216 5200      		add.b	#1, %d0					| Increment character
   73 1218 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
-  74 121c 6F00 0002 		ble		skipCRes
-  75               	|	move.b	#'1', %d0				| Start character is a '1'
+  74 121c 6F00 0006 		ble		skipCRes
+  75 1220 103C 0032 		move.b	#'2', %d0				| Start character is a '1'
   76               	skipCRes:
-  77               	|	move.b	%d0, (%a0)
+  77 1224 1080      		move.b	%d0, (%a0)
   78               	|	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
-  79 1220 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  80 1224 4E73      		rte
+  79 1226 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  80 122a 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
@@ -136,6 +136,6 @@ DEFINED SYMBOLS
           S68K_006.s:47     .text:0000000000001020 fillTable
           S68K_006.s:61     .text:0000000000001100 enInts
           S68K_006.s:66     .text:0000000000001200 IntLev2
-          S68K_006.s:76     .text:0000000000001220 skipCRes
+          S68K_006.s:76     .text:0000000000001224 skipCRes
 
 NO UNDEFINED SYMBOLS
