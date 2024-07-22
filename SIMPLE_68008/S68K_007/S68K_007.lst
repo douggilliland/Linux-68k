@@ -1,0 +1,120 @@
+68K GAS  S68K_007.s 			page 1
+
+
+   1               	| S68K_007.s - Interrupt test code
+   2               	| Interrupt on receive data present and send back character
+   3               	| Read in a character with every interrupt
+   4               	
+   5               	CODE_START	= 0x001000	| Start of code
+   6               	RAM_END		= 0x07FFFF	| 512KB SRAM
+   7               	
+   8               	|||||||||||||||||||||||||||||||||
+   9               	| 68681 Duart Register Addresses
+  10               	
+  11               	DUART = 0x0F0000	  | Base Addr of DUART
+  12               	MRA   = DUART+0		  | Mode Register A           (R/W)
+  13               	SRA   = DUART+2       | Status Register A         (r)
+  14               	CSRA  = DUART+2       | Clock Select Register A   (w)
+  15               	CRA   = DUART+4       | Commands Register A       (w)
+  16               	RBA   = DUART+6       | Receiver Buffer A         (r)
+  17               	TBA   = DUART+6       | Transmitter Buffer A      (w)
+  18               	ACR   = DUART+8       | Aux. Control Register     (R/W)
+  19               	ISR   = DUART+10      | Interrupt Status Register (R)
+  20               	IMR   = DUART+10      | Interrupt Mask Register   (W)
+  21               	MRB   = DUART+16      | Mode Register B           (R/W)
+  22               	SRB   = DUART+18      | Status Register B         (R)
+  23               	CSRB  = DUART+18      | Clock Select Register B   (W)
+  24               	CRB   = DUART+20      | Commands Register B       (W)
+  25               	RBB   = DUART+22      | Reciever Buffer B         (R)
+  26               	TBB   = DUART+22      | Transmitter Buffer B      (W)
+  27               	IVR   = DUART+24      | Interrupt Vector Register (R/W)
+  28               	OPC   = DUART+26      | Output port config        (W)
+  29               	INU   = DUART+26      | Input port (unlatched)    (R)
+  30               	OPS   = DUART+28      | Output port Set           (W)
+  31               	OPR   = DUART+30      | Output port Clear         (W)
+  32               	
+  33               	DUART_Vect = 0x100
+  34               	DUART_VR = DUART_Vect / 4
+  35               	
+  36 0000 0000 0000 		.ORG	CODE_START
+  36      0000 0000 
+  36      0000 0000 
+  36      0000 0000 
+  36      0000 0000 
+  37 1000 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
+  38 1004 007C 0700 		ori.w	#0x0700, %sr		| Disable interrupts
+  39               		| Fill the interrupt vector table entry for DUART interrupt
+  40 1008 207C 0000 		movea.l	#DUART_Vect, %a0
+  40      0100 
+  41 100e 203C 0000 		move.l	#0x1200, %d0
+  41      1200 
+  42 1014 2080      		move.l	%d0, (%a0)
+  43 1016 103C 0040 		move.b 	#DUART_VR, %d0
+  44               		| Set DUART interrupt vector
+  45 101a 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  45      0000 
+  46 1020 1140 0018 		move.b	%d0, 24(%a0)		| Interrupt Vector Register
+  47               		| Set DUART interrupt mask to enable Receive Character interrupt
+  48 1024 117C 0002 		move.b	#0x02, 10(%a0)		| Interrupt Mask Register
+  48      000A 
+  49 102a 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+68K GAS  S68K_007.s 			page 2
+
+
+  50 102e 4E75      		rts
+  51               	
+  52 1030 0000 0000 		.ORG	0x1100
+  52      0000 0000 
+  52      0000 0000 
+  52      0000 0000 
+  52      0000 0000 
+  53               	enInts:
+  54 1100 027C F8FF 		andi.w	#0xF8FF, %sr		| Enable interrupts
+  55 1104 4E75      		rts
+  56               		
+  57 1106 0000 0000 		.ORG	0x1200
+  57      0000 0000 
+  57      0000 0000 
+  57      0000 0000 
+  57      0000 0000 
+  58               	IntLev2:
+  59 1200 48E7 8080 	    movem.l %d0/%a0, -(%SP)     | Save changed registers
+  60 1204 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  60      0000 
+  61 120a 1028 0006 		move.b	6(%a0), %d0			| Put char in d0
+  62 120e 1140 0006 		move.b	%d0, 6(%a0)			| Write out the character
+  63 1212 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
+  64 1216 4E73      		rte
+68K GAS  S68K_007.s 			page 3
+
+
+DEFINED SYMBOLS
+          S68K_007.s:5      *ABS*:0000000000001000 CODE_START
+          S68K_007.s:6      *ABS*:000000000007ffff RAM_END
+          S68K_007.s:11     *ABS*:00000000000f0000 DUART
+          S68K_007.s:12     *ABS*:00000000000f0000 MRA
+          S68K_007.s:13     *ABS*:00000000000f0002 SRA
+          S68K_007.s:14     *ABS*:00000000000f0002 CSRA
+          S68K_007.s:15     *ABS*:00000000000f0004 CRA
+          S68K_007.s:16     *ABS*:00000000000f0006 RBA
+          S68K_007.s:17     *ABS*:00000000000f0006 TBA
+          S68K_007.s:18     *ABS*:00000000000f0008 ACR
+          S68K_007.s:19     *ABS*:00000000000f000a ISR
+          S68K_007.s:20     *ABS*:00000000000f000a IMR
+          S68K_007.s:21     *ABS*:00000000000f0010 MRB
+          S68K_007.s:22     *ABS*:00000000000f0012 SRB
+          S68K_007.s:23     *ABS*:00000000000f0012 CSRB
+          S68K_007.s:24     *ABS*:00000000000f0014 CRB
+          S68K_007.s:25     *ABS*:00000000000f0016 RBB
+          S68K_007.s:26     *ABS*:00000000000f0016 TBB
+          S68K_007.s:27     *ABS*:00000000000f0018 IVR
+          S68K_007.s:28     *ABS*:00000000000f001a OPC
+          S68K_007.s:29     *ABS*:00000000000f001a INU
+          S68K_007.s:30     *ABS*:00000000000f001c OPS
+          S68K_007.s:31     *ABS*:00000000000f001e OPR
+          S68K_007.s:33     *ABS*:0000000000000100 DUART_Vect
+          S68K_007.s:34     *ABS*:0000000000000040 DUART_VR
+          S68K_007.s:53     .text:0000000000001100 enInts
+          S68K_007.s:58     .text:0000000000001200 IntLev2
+
+NO UNDEFINED SYMBOLS
