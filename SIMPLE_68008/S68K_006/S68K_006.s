@@ -43,6 +43,7 @@ DUART_VR = 0x40
 	| Fill the interrupt vector table entry for DUART interrupt
 	movea.l	#DUART_Vect, %a0
 	move.l	#0x1200, %d0
+	move.l	%d0, (%a0)
 fillTable:
 |	move.l	%d0, (%a0)+
 |	cmp.l	#0x400,%a0
