@@ -35,7 +35,7 @@ IPL2_Vect = 0x100
 IVR2 = IPL2_Vect / 4
 
 	.ORG	CODE_START
-	move.w	#0x2700, %sr		| Disable interrupts
+	ori.w	#0x0700, %sr		| Disable interrupts
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
 	| Set the start character (a '1')
 	movea.l	#charTempPtr, %a0
