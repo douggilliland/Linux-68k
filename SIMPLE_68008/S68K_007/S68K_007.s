@@ -47,11 +47,13 @@ DUART_VR = DUART_Vect / 4
 	| Set DUART interrupt mask to enable Receive Character interrupt
 	move.b	#0x02, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-	rts
+|	rts
 
-	.ORG	0x1100
+|	.ORG	0x1100
 enInts:
 	andi.w	#0xF8FF, %sr		| Enable interrupts
+wait4vr:
+	bra		wait4vr
 	rts
 	
 	.ORG	0x1200
