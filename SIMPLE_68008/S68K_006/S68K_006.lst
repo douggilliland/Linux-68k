@@ -99,11 +99,10 @@
   73 121c 6F00 0006 		ble		skipCRes
   74 1220 103C 0031 		move.b	#'1', %d0				| Start character is a '1'
   75               	skipCRes:
-  76 1224 1080      		move.b	%d0, (%a0)
-  77 1226 137C 0000 		move.b	#0x00, 10(%a1)			| Interrupt Mask Register
-  77      000A 
-  78 122c 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  79 1230 4E73      		rte
+  76               	|	move.b	%d0, (%a0)
+  77               	|	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
+  78 1224 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  79 1228 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
