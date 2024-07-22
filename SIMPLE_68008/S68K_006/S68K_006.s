@@ -31,8 +31,8 @@ OPS   = DUART+28      | Output port Set           (W)
 OPR   = DUART+30      | Output port Clear         (W)
 
 charTempPtr = 0x600
-DUART_Vect = 0x100
-DUART_VR = DUART_Vect / 4
+DUART_Vect = 0x40
+DUART_VR = 0x40
 
 	.ORG	CODE_START
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
