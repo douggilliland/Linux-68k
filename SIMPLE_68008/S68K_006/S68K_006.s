@@ -48,7 +48,7 @@ DUART_VR = DUART_Vect / 4
 	movea.l	#DUART, %a0			| DUART base address
 	move.b	%d0, 24(%a0)		| Interrupt Vector Register
 	| Set DUART interrupt mask to enable Transmit Empty interrupt
-	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
+	move.b	#0x01, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
 	rts
 
