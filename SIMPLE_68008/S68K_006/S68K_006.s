@@ -31,7 +31,7 @@ OPS   = DUART+28      | Output port Set           (W)
 OPR   = DUART+30      | Output port Clear         (W)
 
 charTempPtr = 0x600
-DUART_Vect = 0x40
+DUART_Vect = 0x100
 DUART_VR = 0x40
 
 	.ORG	CODE_START
@@ -44,9 +44,9 @@ DUART_VR = 0x40
 	movea.l	#DUART_Vect, %a0
 	move.l	#0x1200, %d0
 fillTable:
-	move.l	%d0, (%a0)+
-	cmp.l	#0x400,%a0
-	blt		fillTable
+|	move.l	%d0, (%a0)+
+|	cmp.l	#0x400,%a0
+|	blt		fillTable
 	move.b 	#DUART_VR, %d0
 	| Set DUART interrupt vector
 	movea.l	#DUART, %a0			| DUART base address
@@ -71,7 +71,7 @@ IntLev2:
 	add.b	#1, %d0					| Increment character
 	cmp.b	#'z', %d0				| Go up to z
 	ble		skipCRes
-	move.b	#'1', %d0				| Start character is a '1'
+|	move.b	#'1', %d0				| Start character is a '1'
 skipCRes:
 |	move.b	%d0, (%a0)
 |	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
