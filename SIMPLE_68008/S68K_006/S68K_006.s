@@ -54,7 +54,7 @@ IVR2 = IPL2_Vect / 4
 
 	.ORG	0x1100
 enInts:
-	move.w	#0x2100, %sr		| Enable interrupts
+	andi.w	#0xF8FF, %sr		| Enable interrupts
 	rts
 	
 	.ORG	0x1200
