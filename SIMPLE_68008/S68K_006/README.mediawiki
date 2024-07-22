@@ -1,4 +1,4 @@
-= Interrupt code for SIMPLE-68008 =
+= Interrupt Test Code for SIMPLE-68008 =
 
 * Test interrupt from DUART
 ** Using transmit empty interrupt
