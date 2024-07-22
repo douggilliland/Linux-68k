@@ -34,8 +34,8 @@
   31               	OPR   = DUART+30      | Output port Clear         (W)
   32               	
   33               	charTempPtr = 0x600
-  34               	DUART_Vect = 0x100
-  35               	DUART_VR = DUART_Vect / 4
+  34               	DUART_Vect = 0x40
+  35               	DUART_VR = 0x40
   36               	
   37 0000 0000 0000 		.ORG	CODE_START
   37      0000 0000 
@@ -50,7 +50,7 @@
   42 100e 10BC 0031 		move.b	#'1', (%a0)			| Start character is a space
   43               		| Fill the interrupt vector table entry for DUART interrupt
   44 1012 207C 0000 		movea.l	#DUART_Vect, %a0
-  44      0100 
+  44      0040 
   45 1018 203C 0000 		move.l	#0x1200, %d0
   45      1200 
   46               	fillTable:
@@ -132,7 +132,7 @@ DEFINED SYMBOLS
           S68K_006.s:30     *ABS*:00000000000f001c OPS
           S68K_006.s:31     *ABS*:00000000000f001e OPR
           S68K_006.s:33     *ABS*:0000000000000600 charTempPtr
-          S68K_006.s:34     *ABS*:0000000000000100 DUART_Vect
+          S68K_006.s:34     *ABS*:0000000000000040 DUART_Vect
           S68K_006.s:35     *ABS*:0000000000000040 DUART_VR
           S68K_006.s:46     .text:000000000000101e fillTable
           S68K_006.s:60     .text:0000000000001100 enInts
