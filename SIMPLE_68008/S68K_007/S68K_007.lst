@@ -61,30 +61,28 @@
 68K GAS  S68K_007.s 			page 2
 
 
-  50 102e 4E75      		rts
+  50               	|	rts
   51               	
-  52 1030 0000 0000 		.ORG	0x1100
-  52      0000 0000 
-  52      0000 0000 
-  52      0000 0000 
-  52      0000 0000 
+  52               	|	.ORG	0x1100
   53               	enInts:
-  54 1100 027C F8FF 		andi.w	#0xF8FF, %sr		| Enable interrupts
-  55 1104 4E75      		rts
-  56               		
-  57 1106 0000 0000 		.ORG	0x1200
-  57      0000 0000 
-  57      0000 0000 
-  57      0000 0000 
-  57      0000 0000 
-  58               	IntLev2:
-  59 1200 48E7 8080 	    movem.l %d0/%a0, -(%SP)     | Save changed registers
-  60 1204 207C 000F 		movea.l	#DUART, %a0			| DUART base address
-  60      0000 
-  61 120a 1028 0006 		move.b	6(%a0), %d0			| Put char in d0
-  62 120e 1140 0006 		move.b	%d0, 6(%a0)			| Write out the character
-  63 1212 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
-  64 1216 4E73      		rte
+  54 102e 027C F8FF 		andi.w	#0xF8FF, %sr		| Enable interrupts
+  55               	wait4vr:
+  56 1032 6000 FFFE 		bra		wait4vr
+  57 1036 4E75      		rts
+  58               		
+  59 1038 0000 0000 		.ORG	0x1200
+  59      0000 0000 
+  59      0000 0000 
+  59      0000 0000 
+  59      0000 0000 
+  60               	IntLev2:
+  61 1200 48E7 8080 	    movem.l %d0/%a0, -(%SP)     | Save changed registers
+  62 1204 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  62      0000 
+  63 120a 1028 0006 		move.b	6(%a0), %d0			| Put char in d0
+  64 120e 1140 0006 		move.b	%d0, 6(%a0)			| Write out the character
+  65 1212 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
+  66 1216 4E73      		rte
 68K GAS  S68K_007.s 			page 3
 
 
@@ -114,7 +112,8 @@ DEFINED SYMBOLS
           S68K_007.s:31     *ABS*:00000000000f001e OPR
           S68K_007.s:33     *ABS*:0000000000000100 DUART_Vect
           S68K_007.s:34     *ABS*:0000000000000040 DUART_VR
-          S68K_007.s:53     .text:0000000000001100 enInts
-          S68K_007.s:58     .text:0000000000001200 IntLev2
+          S68K_007.s:53     .text:000000000000102e enInts
+          S68K_007.s:55     .text:0000000000001032 wait4vr
+          S68K_007.s:60     .text:0000000000001200 IntLev2
 
 NO UNDEFINED SYMBOLS
