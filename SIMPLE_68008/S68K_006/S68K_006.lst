@@ -34,8 +34,8 @@
   31               	OPR   = DUART+30      | Output port Clear         (W)
   32               	
   33               	charTempPtr = 0x600
-  34               	IPL2_Vect = 0x100
-  35               	IVR2 = IPL2_Vect / 4
+  34               	DUART_Vect = 0x100
+  35               	DUART_VR = DUART_Vect / 4
   36               	
   37 0000 0000 0000 		.ORG	CODE_START
   37      0000 0000 
@@ -48,12 +48,12 @@
   41 1008 207C 0000 		movea.l	#charTempPtr, %a0
   41      0600 
   42 100e 10BC 0031 		move.b	#'1', (%a0)			| Start character is a space
-  43               		| Fill the interrupt vector table entry for Level 2 interrupt
-  44 1012 207C 0000 		movea.l	#IPL2_Vect, %a0
+  43               		| Fill the interrupt vector table entry for DUART interrupt
+  44 1012 207C 0000 		movea.l	#DUART_Vect, %a0
   44      0100 
   45 1018 20BC 0000 		move.l	#0x1200, (%a0)
   45      1200 
-  46 101e 103C 0040 		move.b 	#IVR2, %d0
+  46 101e 103C 0040 		move.b 	#DUART_VR, %d0
   47               		| Set DUART interrupt vector
   48 1022 207C 000F 		movea.l	#DUART, %a0			| DUART base address
   48      0000 
@@ -85,9 +85,9 @@
   62 1200 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
   63 1204 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
   63      0600 
-  64 120a 1010      		move.b	(%a0), %d0				| Put char in d0
-  65 120c 227C 000F 		movea.l	#DUART, %a1				| DUART base address
-  65      0000 
+  64 120a 227C 000F 		movea.l	#DUART, %a1				| DUART base address
+  64      0000 
+  65 1210 1010      		move.b	(%a0), %d0				| Put char in d0
   66 1212 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
   67 1216 5200      		add.b	#1, %d0					| Increment character
   68 1218 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
@@ -95,7 +95,7 @@
   70 1220 103C 0031 		move.b	#'1', %d0				| Start character is a '1'
   71               	skipCRes:
   72 1224 1080      		move.b	%d0, (%a0)
-  73 1226 117C 0000 		move.b	#0x00, 10(%a0)			| Interrupt Mask Register
+  73 1226 137C 0000 		move.b	#0x00, 10(%a1)			| Interrupt Mask Register
   73      000A 
   74 122c 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
   75 1230 4E73      		rte
@@ -127,8 +127,8 @@ DEFINED SYMBOLS
           S68K_006.s:30     *ABS*:00000000000f001c OPS
           S68K_006.s:31     *ABS*:00000000000f001e OPR
           S68K_006.s:33     *ABS*:0000000000000600 charTempPtr
-          S68K_006.s:34     *ABS*:0000000000000100 IPL2_Vect
-          S68K_006.s:35     *ABS*:0000000000000040 IVR2
+          S68K_006.s:34     *ABS*:0000000000000100 DUART_Vect
+          S68K_006.s:35     *ABS*:0000000000000040 DUART_VR
           S68K_006.s:56     .text:0000000000001100 enInts
           S68K_006.s:61     .text:0000000000001200 IntLev2
           S68K_006.s:71     .text:0000000000001224 skipCRes
