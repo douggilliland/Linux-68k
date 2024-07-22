@@ -51,54 +51,59 @@
   43               		| Fill the interrupt vector table entry for DUART interrupt
   44 1012 207C 0000 		movea.l	#DUART_Vect, %a0
   44      0100 
-  45 1018 20BC 0000 		move.l	#0x1200, (%a0)
+  45 1018 203C 0000 		move.l	#0x1200, %d0
   45      1200 
-  46 101e 103C 0040 		move.b 	#DUART_VR, %d0
-  47               		| Set DUART interrupt vector
-  48 1022 207C 000F 		movea.l	#DUART, %a0			| DUART base address
-  48      0000 
-  49 1028 1140 0018 		move.b	%d0, 24(%a0)		| Interrupt Vector Register
+  46               	fillTable:
+  47 101e 20C0      		move.l	%d0, (%a0)+
+  48 1020 B1FC 0000 		cmp.l	#0x400,%a0
+  48      0400 
+  49 1026 6D00 FFF6 		blt		fillTable
 68K GAS  S68K_006.s 			page 2
 
 
-  50               		| Set DUART interrupt mask to enable Transmit Empty interrupt
-  51 102c 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
-  51      000A 
-  52 1032 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-  53 1036 4E75      		rts
-  54               	
-  55 1038 0000 0000 		.ORG	0x1100
-  55      0000 0000 
-  55      0000 0000 
-  55      0000 0000 
-  55      0000 0000 
-  56               	enInts:
-  57 1100 027C F8FF 		andi.w	#0xF8FF, %sr		| Enable interrupts
-  58 1104 4E75      		rts
-  59               		
-  60 1106 0000 0000 		.ORG	0x1200
-  60      0000 0000 
-  60      0000 0000 
-  60      0000 0000 
-  60      0000 0000 
-  61               	IntLev2:
-  62 1200 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-  63 1204 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
-  63      0600 
-  64 120a 227C 000F 		movea.l	#DUART, %a1				| DUART base address
-  64      0000 
-  65 1210 1010      		move.b	(%a0), %d0				| Put char in d0
-  66 1212 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
-  67 1216 5200      		add.b	#1, %d0					| Increment character
-  68 1218 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
-  69 121c 6F00 0006 		ble		skipCRes
-  70 1220 103C 0031 		move.b	#'1', %d0				| Start character is a '1'
-  71               	skipCRes:
-  72 1224 1080      		move.b	%d0, (%a0)
-  73 1226 137C 0000 		move.b	#0x00, 10(%a1)			| Interrupt Mask Register
-  73      000A 
-  74 122c 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
-  75 1230 4E73      		rte
+  50 102a 103C 0040 		move.b 	#DUART_VR, %d0
+  51               		| Set DUART interrupt vector
+  52 102e 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  52      0000 
+  53 1034 1140 0018 		move.b	%d0, 24(%a0)		| Interrupt Vector Register
+  54               		| Set DUART interrupt mask to enable Transmit Empty interrupt
+  55 1038 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
+  55      000A 
+  56 103e 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+  57 1042 4E75      		rts
+  58               	
+  59 1044 0000 0000 		.ORG	0x1100
+  59      0000 0000 
+  59      0000 0000 
+  59      0000 0000 
+  59      0000 0000 
+  60               	enInts:
+  61 1100 027C F8FF 		andi.w	#0xF8FF, %sr		| Enable interrupts
+  62 1104 4E75      		rts
+  63               		
+  64 1106 0000 0000 		.ORG	0x1200
+  64      0000 0000 
+  64      0000 0000 
+  64      0000 0000 
+  64      0000 0000 
+  65               	IntLev2:
+  66 1200 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
+  67 1204 207C 0000 		movea.l	#charTempPtr, %a0		| Get the character to write out
+  67      0600 
+  68 120a 227C 000F 		movea.l	#DUART, %a1				| DUART base address
+  68      0000 
+  69 1210 1010      		move.b	(%a0), %d0				| Put char in d0
+  70 1212 1340 0006 		move.b	%d0, 6(%a1)				| Write out the character
+  71 1216 5200      		add.b	#1, %d0					| Increment character
+  72 1218 0C00 007A 		cmp.b	#'z', %d0				| Go up to z
+  73 121c 6F00 0006 		ble		skipCRes
+  74 1220 103C 0031 		move.b	#'1', %d0				| Start character is a '1'
+  75               	skipCRes:
+  76 1224 1080      		move.b	%d0, (%a0)
+  77 1226 137C 0000 		move.b	#0x00, 10(%a1)			| Interrupt Mask Register
+  77      000A 
+  78 122c 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+  79 1230 4E73      		rte
 68K GAS  S68K_006.s 			page 3
 
 
@@ -129,8 +134,9 @@ DEFINED SYMBOLS
           S68K_006.s:33     *ABS*:0000000000000600 charTempPtr
           S68K_006.s:34     *ABS*:0000000000000100 DUART_Vect
           S68K_006.s:35     *ABS*:0000000000000040 DUART_VR
-          S68K_006.s:56     .text:0000000000001100 enInts
-          S68K_006.s:61     .text:0000000000001200 IntLev2
-          S68K_006.s:71     .text:0000000000001224 skipCRes
+          S68K_006.s:46     .text:000000000000101e fillTable
+          S68K_006.s:60     .text:0000000000001100 enInts
+          S68K_006.s:65     .text:0000000000001200 IntLev2
+          S68K_006.s:75     .text:0000000000001224 skipCRes
 
 NO UNDEFINED SYMBOLS
