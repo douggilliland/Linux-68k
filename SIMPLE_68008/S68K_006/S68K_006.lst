@@ -62,7 +62,7 @@
 
 
   50               		| Set DUART interrupt mask to enable Transmit Empty interrupt
-  51 102c 117C 0008 		move.b	#0x08, 10(%a0)		| Interrupt Mask Register
+  51 102c 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
   51      000A 
   52 1032 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
   53 1036 4E75      		rts
