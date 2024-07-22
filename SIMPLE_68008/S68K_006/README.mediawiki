@@ -2,6 +2,7 @@
 
 * Test interrupt from DUART
 ** Using transmit empty interrupt
+** Pulls interrupt vector from DUART
 * Runs from RAM
 * Send out alphabet looping
 * Downloaded as S Records
