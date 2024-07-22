@@ -73,7 +73,7 @@ IntLev2:
 	ble		skipCRes
 	move.b	#'1', %d0				| Start character is a '1'
 skipCRes:
-	move.b	%d0, (%a0)
-	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
+|	move.b	%d0, (%a0)
+|	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
 	rte
