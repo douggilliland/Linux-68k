@@ -1,6 +1,6 @@
-| S68K_006.s - Interrupt test code
-| Interrupt on transmit empty
-| Send out a character with every interrupt
+| S68K_007.s - Interrupt test code
+| Interrupt on receive data present and send back character
+| Read in a character with every interrupt
 
 CODE_START	= 0x001000	| Start of code
 RAM_END		= 0x07FFFF	| 512KB SRAM
@@ -30,30 +30,22 @@ INU   = DUART+26      | Input port (unlatched)    (R)
 OPS   = DUART+28      | Output port Set           (W)
 OPR   = DUART+30      | Output port Clear         (W)
 
-charTempPtr = 0x600
 DUART_Vect = 0x100
-DUART_VR = 0x40
+DUART_VR = DUART_Vect / 4
 
 	.ORG	CODE_START
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
 	ori.w	#0x0700, %sr		| Disable interrupts
-	| Set the start character (a '1')
-	movea.l	#charTempPtr, %a0
-	move.b	#'1', (%a0)			| Start character is a space
 	| Fill the interrupt vector table entry for DUART interrupt
 	movea.l	#DUART_Vect, %a0
 	move.l	#0x1200, %d0
 	move.l	%d0, (%a0)
-fillTable:
-|	move.l	%d0, (%a0)+
-|	cmp.l	#0x400,%a0
-|	blt		fillTable
 	move.b 	#DUART_VR, %d0
 	| Set DUART interrupt vector
 	movea.l	#DUART, %a0			| DUART base address
 	move.b	%d0, 24(%a0)		| Interrupt Vector Register
-	| Set DUART interrupt mask to enable Transmit Empty interrupt
-	move.b	#0x01, 10(%a0)		| Interrupt Mask Register
+	| Set DUART interrupt mask to enable Receive Character interrupt
+	move.b	#0x02, 10(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
 	rts
 
@@ -64,17 +56,9 @@ enInts:
 	
 	.ORG	0x1200
 IntLev2:
-    movem.l %d0/%a0-%a1, -(%SP)     | Save changed registers
-	movea.l	#charTempPtr, %a0		| Get the character to write out
-	movea.l	#DUART, %a1				| DUART base address
-	move.b	(%a0), %d0				| Put char in d0
-	move.b	%d0, 6(%a1)				| Write out the character
-	add.b	#1, %d0					| Increment character
-	cmp.b	#'z', %d0				| Go up to z
-	ble		skipCRes
-	move.b	#'2', %d0				| Start character is a '1'
-skipCRes:
-	move.b	%d0, (%a0)
-|	move.b	#0x00, 10(%a1)			| Interrupt Mask Register
-    movem.l (%SP)+, %d0/%a0-%a1     | Restore registers
+    movem.l %d0/%a0, -(%SP)     | Save changed registers
+	movea.l	#DUART, %a0			| DUART base address
+	move.b	6(%a0), %d0			| Put char in d0
+	move.b	%d0, 6(%a0)			| Write out the character
+    movem.l (%SP)+, %d0/%a0		| Restore registers
 	rte

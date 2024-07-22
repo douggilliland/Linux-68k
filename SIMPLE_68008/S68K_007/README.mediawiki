@@ -1,0 +1,10 @@
+= Interrupt Test Code for SIMPLE-68008 =
+
+* Test interrupt from DUART
+** Using transmit empty interrupt
+* Runs from RAM
+* Send out alphabet looping
+* Downloaded as S Records
+** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
+* R1000 to run setup
+* R1100 to enable interrupts
