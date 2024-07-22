@@ -42,7 +42,11 @@ DUART_VR = DUART_Vect / 4
 	move.b	#'1', (%a0)			| Start character is a space
 	| Fill the interrupt vector table entry for DUART interrupt
 	movea.l	#DUART_Vect, %a0
-	move.l	#0x1200, (%a0)
+	move.l	#0x1200, %d0
+fillTable:
+	move.l	%d0, (%a0)+
+	cmp.l	#0x400,%a0
+	blt		fillTable
 	move.b 	#DUART_VR, %d0
 	| Set DUART interrupt vector
 	movea.l	#DUART, %a0			| DUART base address
