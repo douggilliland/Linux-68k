@@ -42,8 +42,8 @@
   37      0000 0000 
   37      0000 0000 
   37      0000 0000 
-  38 1000 007C 0700 		ori.w	#0x0700, %sr		| Disable interrupts
-  39 1004 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
+  38 1000 48E7 80C0 	    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
+  39 1004 007C 0700 		ori.w	#0x0700, %sr		| Disable interrupts
   40               		| Set the start character (a '1')
   41 1008 207C 0000 		movea.l	#charTempPtr, %a0
   41      0600 
@@ -61,8 +61,8 @@
 68K GAS  S68K_006.s 			page 2
 
 
-  50               		| Set DUART interrupt mask to enable transmit interrupt
-  51 102c 117C 0001 		move.b	#0x01, 10(%a0)		| Interrupt Mask Register
+  50               		| Set DUART interrupt mask to enable Transmit Empty interrupt
+  51 102c 117C 0008 		move.b	#0x08, 10(%a0)		| Interrupt Mask Register
   51      000A 
   52 1032 4CDF 0301 	    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
   53 1036 4E75      		rts
