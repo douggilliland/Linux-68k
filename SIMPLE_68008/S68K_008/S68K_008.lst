@@ -11,30 +11,30 @@
    8               	| 68681 Duart Register Addresses
    9               	
   10               	DUART = 0x0F0000	  | Base Addr of DUART
-  11               	MRA   = DUART+0		  | Mode Register A           (R/W)
-  12               	SRA   = DUART+2       | Status Register A         (r)
-  13               	CSRA  = DUART+2       | Clock Select Register A   (w)
-  14               	CRA   = DUART+4       | Command Register A        (w)
-  15               	RBA   = DUART+6       | Receiver Buffer A         (r)
-  16               	TBA   = DUART+6       | Transmitter Buffer A      (w)
-  17               	ACR   = DUART+8       | Aux. Control Register     (R/W)
-  18               	ISR   = DUART+10      | Interrupt Status Register (R)
-  19               	IMR   = DUART+10      | Interrupt Mask Register   (W)
-  20               	CTU   = DUART+12	  | Counter Timer Upper		  (R/W)
-  21               	CTL   = DUART+14	  | Counter Timer Lower		  (R/W)
-  22               	MRB   = DUART+16      | Mode Register B           (R/W)
-  23               	SRB   = DUART+18      | Status Register B         (R)
-  24               	CSRB  = DUART+18      | Clock Select Register B   (W)
-  25               	CRB   = DUART+20      | Command Register B        (W)
-  26               	RBB   = DUART+22      | Reciever Buffer B         (R)
-  27               	TBB   = DUART+22      | Transmitter Buffer B      (W)
-  28               	IVR   = DUART+24      | Interrupt Vector Register (R/W)
-  29               	OPC   = DUART+26      | Output port config        (W)
-  30               	INU   = DUART+26      | Input port (unlatched)    (R)
-  31               	OPS   = DUART+28      | Output port Set           (W)
-  32               	OPS   = DUART+28      | Start Counter             (R)
-  33               	OPR   = DUART+30      | Output port Clear         (W)
-  34               	OPR   = DUART+30      | Stop Counter	          (R)
+  11               	MRA   = 0	| Mode Register A           (R/W)
+  12               	SRA   = 2   | Status Register A         (r)
+  13               	CSRA  = 2   | Clock Select Register A   (w)
+  14               	CRA   = 4   | Command Register A        (w)
+  15               	RBA   = 6   | Receiver Buffer A         (r)
+  16               	TBA   = 6   | Transmitter Buffer A      (w)
+  17               	ACR   = 8   | Aux. Control Register     (R/W)
+  18               	ISR   = 10  | Interrupt Status Register (R)
+  19               	IMR   = 10  | Interrupt Mask Register   (W)
+  20               	CTU   = 12	| Counter Timer Upper		  (R/W)
+  21               	CTL   = 14	| Counter Timer Lower		  (R/W)
+  22               	MRB   = 16  | Mode Register B           (R/W)
+  23               	SRB   = 18  | Status Register B         (R)
+  24               	CSRB  = 18  | Clock Select Register B   (W)
+  25               	CRB   = 20  | Command Register B        (W)
+  26               	RBB   = 22  | Reciever Buffer B         (R)
+  27               	TBB   = 22  | Transmitter Buffer B      (W)
+  28               	IVR   = 24  | Interrupt Vector Register (R/W)
+  29               	OPC   = 26  | Output port config        (W)
+  30               	INU   = 26  | Input port (unlatched)    (R)
+  31               	OPS   = 28  | Output port Set           (W)
+  32               	STC   = 28  | Start Counter             (R)
+  33               	OPR   = 30  | Output port Clear         (W)
+  34               	SPC   = 30  | Stop Counter	          (R)
   35               	
   36               	DUART_Vect = 0x100
   37               	DUART_VR = DUART_Vect / 4
@@ -57,21 +57,21 @@
   48               		| Set DUART interrupt vector
   49 101a 207C 000F 		movea.l	#DUART, %a0			| DUART base address
   49      0000 
-  50 1020 1140 0018 		move.b	%d0, 24(%a0)		| Interrupt Vector Register
+  50 1020 1140 0018 		move.b	%d0, IVR(%a0)		| Interrupt Vector Register
 68K GAS  S68K_008.s 			page 2
 
 
-  51 1024 1028 0008 		move.b	8(%a0), %d0			| Read ACR
-  52 1028 0200 007F 		andi.b	#0x7f, %d0			| Mask ACR bits
+  51 1024 1028 0008 		move.b	ACR(%a0), %d0		| Read ACR
+  52 1028 0200 008F 		andi.b	#0x8f, %d0			| Mask ACR bits
   53 102c 0000 0030 		ori.b	#0x30, %d0			| XTAL X1, X2
-  54 1030 1140 0008 		move.b	%d0, 8(%a0)			| Write back ACR
-  55 1034 117C 000F 		move.b	#0x0F, 12(%a0)		| Write Counter Upper
+  54 1030 1140 0008 		move.b	%d0, ACR(%a0)		| Write back ACR
+  55 1034 117C 000F 		move.b	#0x0F, CTU(%a0)		| Write Counter Upper
   55      000C 
-  56 103a 117C 0000 		move.b	#0x00, 14(%a0)		| Write Counter Lower
+  56 103a 117C 0000 		move.b	#0x00, CTL(%a0)		| Write Counter Lower
   56      000E 
-  57 1040 1028 001C 		move.b	28(%a0),%d0			| Start Counter
+  57 1040 1028 001C 		move.b	STC(%a0), %d0		| Start Counter
   58               		| Set DUART interrupt mask to enable Counter/Timer interrupt
-  59 1044 117C 0008 		move.b	#0x08, 10(%a0)		| Interrupt Mask Register
+  59 1044 117C 0008 		move.b	#0x08, IMR(%a0)		| Interrupt Mask Register
   59      000A 
   60 104a 21FC 0000 		move.l	#0x0, BIG_CTR		| Clear the big counter
   60      0000 0604 
@@ -86,17 +86,18 @@
   65      0000 0000 
   66               	IntLev2:
   67 1200 48E7 8080 	    movem.l %d0/%a0, -(%SP)     | Save changed registers
-  68 1204 207C 000F 		movea.l	#DUART, %a0			| DUART base address
-  68      0000 
-  69 120a 117C 000F 		move.b	#0x0F, 12(%a0)		| Write Counter Upper
-  69      000C 
-  70 1210 117C 0000 		move.b	#0x00, 14(%a0)		| Write Counter Lower
-  70      000E 
-  71 1216 1028 001C 		move.b	28(%a0), %d0		| Start Counter with read
-  72 121a 06B8 0000 		addi.l	#1, BIG_CTR			| Increment the big counter
-  72      0001 0604 
-  73 1222 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
-  74 1226 4E73      		rte
+  68 1204 1028 001E 		move.b	SPC(%a0), %d0		| Stop Counter with dummy read
+  69 1208 207C 000F 		movea.l	#DUART, %a0			| DUART base address
+  69      0000 
+  70 120e 117C 000F 		move.b	#0x0F, CTU(%a0)		| Write Counter Upper
+  70      000C 
+  71 1214 117C 0000 		move.b	#0x00, CTL(%a0)		| Write Counter Lower
+  71      000E 
+  72 121a 1028 001C 		move.b	STC(%a0), %d0		| Start Counter with dummy read
+  73 121e 06B8 0000 		addi.l	#1, BIG_CTR			| Increment the big counter
+  73      0001 0604 
+  74 1226 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
+  75 122a 4E73      		rte
 68K GAS  S68K_008.s 			page 3
 
 
@@ -104,28 +105,30 @@ DEFINED SYMBOLS
           S68K_008.s:4      *ABS*:0000000000001000 CODE_START
           S68K_008.s:5      *ABS*:000000000007ffff RAM_END
           S68K_008.s:10     *ABS*:00000000000f0000 DUART
-          S68K_008.s:11     *ABS*:00000000000f0000 MRA
-          S68K_008.s:12     *ABS*:00000000000f0002 SRA
-          S68K_008.s:13     *ABS*:00000000000f0002 CSRA
-          S68K_008.s:14     *ABS*:00000000000f0004 CRA
-          S68K_008.s:15     *ABS*:00000000000f0006 RBA
-          S68K_008.s:16     *ABS*:00000000000f0006 TBA
-          S68K_008.s:17     *ABS*:00000000000f0008 ACR
-          S68K_008.s:18     *ABS*:00000000000f000a ISR
-          S68K_008.s:19     *ABS*:00000000000f000a IMR
-          S68K_008.s:20     *ABS*:00000000000f000c CTU
-          S68K_008.s:21     *ABS*:00000000000f000e CTL
-          S68K_008.s:22     *ABS*:00000000000f0010 MRB
-          S68K_008.s:23     *ABS*:00000000000f0012 SRB
-          S68K_008.s:24     *ABS*:00000000000f0012 CSRB
-          S68K_008.s:25     *ABS*:00000000000f0014 CRB
-          S68K_008.s:26     *ABS*:00000000000f0016 RBB
-          S68K_008.s:27     *ABS*:00000000000f0016 TBB
-          S68K_008.s:28     *ABS*:00000000000f0018 IVR
-          S68K_008.s:29     *ABS*:00000000000f001a OPC
-          S68K_008.s:30     *ABS*:00000000000f001a INU
-          S68K_008.s:31     *ABS*:00000000000f001c OPS
-          S68K_008.s:33     *ABS*:00000000000f001e OPR
+          S68K_008.s:11     *ABS*:0000000000000000 MRA
+          S68K_008.s:12     *ABS*:0000000000000002 SRA
+          S68K_008.s:13     *ABS*:0000000000000002 CSRA
+          S68K_008.s:14     *ABS*:0000000000000004 CRA
+          S68K_008.s:15     *ABS*:0000000000000006 RBA
+          S68K_008.s:16     *ABS*:0000000000000006 TBA
+          S68K_008.s:17     *ABS*:0000000000000008 ACR
+          S68K_008.s:18     *ABS*:000000000000000a ISR
+          S68K_008.s:19     *ABS*:000000000000000a IMR
+          S68K_008.s:20     *ABS*:000000000000000c CTU
+          S68K_008.s:21     *ABS*:000000000000000e CTL
+          S68K_008.s:22     *ABS*:0000000000000010 MRB
+          S68K_008.s:23     *ABS*:0000000000000012 SRB
+          S68K_008.s:24     *ABS*:0000000000000012 CSRB
+          S68K_008.s:25     *ABS*:0000000000000014 CRB
+          S68K_008.s:26     *ABS*:0000000000000016 RBB
+          S68K_008.s:27     *ABS*:0000000000000016 TBB
+          S68K_008.s:28     *ABS*:0000000000000018 IVR
+          S68K_008.s:29     *ABS*:000000000000001a OPC
+          S68K_008.s:30     *ABS*:000000000000001a INU
+          S68K_008.s:31     *ABS*:000000000000001c OPS
+          S68K_008.s:32     *ABS*:000000000000001c STC
+          S68K_008.s:33     *ABS*:000000000000001e OPR
+          S68K_008.s:34     *ABS*:000000000000001e SPC
           S68K_008.s:36     *ABS*:0000000000000100 DUART_Vect
           S68K_008.s:37     *ABS*:0000000000000040 DUART_VR
           S68K_008.s:38     *ABS*:0000000000000604 BIG_CTR
