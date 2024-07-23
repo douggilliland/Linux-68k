@@ -72,5 +72,6 @@ IntLev2:
 	move.b	#0x00, CTL(%a0)		| Write Counter Lower
 |	move.b	STC(%a0), %d0		| Start Counter with dummy read enables int
 	addi.l	#1, BIG_CTR			| Increment the big counter
+	move.b	#0x00, IMR(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0		| Restore registers
 	rte
