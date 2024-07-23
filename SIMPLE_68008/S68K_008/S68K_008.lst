@@ -69,7 +69,7 @@
   55      000C 
   56 103a 117C 0000 		move.b	#0x00, 14(%a0)		| Write Counter Lower
   56      000E 
-  57 1040 10B8 001C 		move.b	28, (%a0)			| Start Counter
+  57 1040 1028 001C 		move.b	28(%a0),%d0			| Start Counter
   58               		| Set DUART interrupt mask to enable Counter/Timer interrupt
   59 1044 117C 0008 		move.b	#0x08, 10(%a0)		| Interrupt Mask Register
   59      000A 
