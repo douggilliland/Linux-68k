@@ -97,8 +97,10 @@
   73               	|	move.b	STC(%a0), %d0		| Start Counter with dummy read enables int
   74 121a 06B8 0000 		addi.l	#1, BIG_CTR			| Increment the big counter
   74      0001 0604 
-  75 1222 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
-  76 1226 4E73      		rte
+  75 1222 117C 0000 		move.b	#0x00, IMR(%a0)		| Interrupt Mask Register
+  75      000A 
+  76 1228 4CDF 0101 	    movem.l (%SP)+, %d0/%a0		| Restore registers
+  77 122c 4E73      		rte
 68K GAS  S68K_008.s 			page 3
 
 
