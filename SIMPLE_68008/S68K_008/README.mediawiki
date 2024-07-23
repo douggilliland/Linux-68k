@@ -1,0 +1,7 @@
+= Interrupt Test Code for SIMPLE-68008 =
+
+* Test timer/counter interrupt from DUART
+* Runs from RAM
+* Downloaded as S Records
+** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
+* R1000 to run setup
