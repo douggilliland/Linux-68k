@@ -54,7 +54,7 @@ BIG_CTR = 0x604
 	move.b	%d0, 8(%a0)			| Write back ACR
 	move.b	#0x0F, 12(%a0)		| Write Counter Upper
 	move.b	#0x00, 14(%a0)		| Write Counter Lower
-	move.b	28, (%a0)			| Start Counter
+	move.b	28(%a0),%d0			| Start Counter
 	| Set DUART interrupt mask to enable Counter/Timer interrupt
 	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
 	move.l	#0x0, BIG_CTR		| Clear the big counter
