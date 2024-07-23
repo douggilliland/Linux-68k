@@ -66,11 +66,11 @@ INTRTN = 0x1200
 	.ORG	INTRTN
 IntLev2:
     movem.l %d0/%a0, -(%SP)     | Save changed registers
-	move.b	SPC(%a0), %d0		| Stop Counter with dummy read clears int
 	movea.l	#DUART, %a0			| DUART base address
+	move.b	SPC(%a0), %d0		| Stop Counter with dummy read clears int
 	move.b	#0x0F, CTU(%a0)		| Write Counter Upper
 	move.b	#0x00, CTL(%a0)		| Write Counter Lower
-|	move.b	STC(%a0), %d0		| Start Counter with dummy read enables int
+	move.b	STC(%a0), %d0		| Start Counter with dummy read enables int
 	addi.l	#1, BIG_CTR			| Increment the big counter
 	move.b	#0x00, IMR(%a0)		| Interrupt Mask Register
     movem.l (%SP)+, %d0/%a0		| Restore registers
