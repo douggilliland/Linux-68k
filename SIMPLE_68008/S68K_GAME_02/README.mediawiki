@@ -1,6 +1,7 @@
-Sample Game - Guess a number from 1 to 100
+= Sample Game =
 
-Lacks random number generator code
+* Guess a number from 1 to 100
+* Adds random number generator code
 
 This is an example of a C program that runs on the SIMPLE-68008 card.
 
