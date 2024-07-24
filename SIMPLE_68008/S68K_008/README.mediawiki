@@ -1,8 +1,15 @@
 = Interrupt Test Code for SIMPLE-68008 =
 
 * Test timer/counter interrupt from DUART
+** Makes a 60 Hz Counter in memory
 * Runs from RAM
 * Downloaded as S Records
 ** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
 * R1000 to run setup
-* Long counter at 0x604 (-0x607)
+* Use timer function in DUART
+* 3.6864 MHz / 16 = 23400
+* 23,400 / 60 (Hz) / 2 per cycle = 1920 count = 0x780
+* Increment a long in 0x604(-0x607)
+* 60 Hz is 0x780 divisor
+* Stop timer to clear timer
+* Restart timer to set up interrupt on next timer edge
