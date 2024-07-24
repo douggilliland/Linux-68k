@@ -9,13 +9,13 @@
 THis code exercises the SIMPLE-68008 card.
 
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_001.s S68K_001] - Simple monitor + SRAM test 
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_002.s S68K_002] - Simple Monitor plus S Record Loader
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_003.s S68K_003] - Downloadable Assembly code example (Blink LED on DUART O2 pin)
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_004.s S68K_004] - Downloadable C code example (Blink LED)
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_005.s S68K_005] - Downloadable C code example (Echo Char, print string)
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_006.s S68K_006] - Test Transmit interrupt
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_007.s S68K_007] - Test Receive interrupt
-* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_008.s S68K_008] - 50 Hz timer interrupt
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_002/S68K_002.s S68K_002] - Simple Monitor plus S Record Loader
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_003/S68K_003.s S68K_003] - Downloadable Assembly code example (Blink LED on DUART O2 pin)
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_004/S68K_004.s S68K_004] - Downloadable C code example (Blink LED)
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_005/S68K_005.s S68K_005] - Downloadable C code example (Echo Char, print string)
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_006/S68K_006.s S68K_006] - Test Transmit interrupt
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_007/S68K_007.s S68K_007] - Test Receive interrupt
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_008/S68K_008.s S68K_008] - 50 Hz timer interrupt
 * [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_enhbasic S68K_enhbasic] -Enhanced BASIC running from SRAM
 * [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_enhbasic_ROM S68K_enhbasic_ROM] - Enhanced BASIC bundled with S68K_002 monitor] - Running from 32KB ROM, 'B' to run BASIC 
 * [ https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/figforth figForth] - Runs from SRAM
