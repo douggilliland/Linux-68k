@@ -6,6 +6,8 @@
 
 == Builds of 68K Code ==
 
+THis code exercises the SIMPLE-68008 card.
+
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_001.s S68K_001] - Simple monitor + SRAM test 
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_002.s S68K_002] - Simple Monitor plus S Record Loader
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_001/S68K_003.s S68K_003] - Downloadable Assembly code example
