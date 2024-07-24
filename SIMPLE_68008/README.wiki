@@ -13,6 +13,7 @@ THis code exercises the SIMPLE-68008 card.
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_003/S68K_003.s S68K_003] - Downloadable Assembly code example (Blink LED on DUART O2 pin)
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_004/S68K_004.s S68K_004] - Downloadable C code example (Blink LED)
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_005/S68K_005.s S68K_005] - Downloadable C code example (Echo Char, print string)
+** C code libraries as .h files which get included just below main()
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_006/S68K_006.s S68K_006] - Test Transmit interrupt
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_007/S68K_007.s S68K_007] - Test Receive interrupt
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_008/S68K_008.s S68K_008] - 50 Hz timer interrupt
