@@ -17,8 +17,8 @@ TBA   = 6   | Transmitter Buffer A      (w)
 ACR   = 8   | Aux. Control Register     (R/W)
 ISR   = 10  | Interrupt Status Register (R)
 IMR   = 10  | Interrupt Mask Register   (W)
-CTU   = 12	| Counter Timer Upper		  (R/W)
-CTL   = 14	| Counter Timer Lower		  (R/W)
+CTU   = 12	| Counter Timer Upper		(R/W)
+CTL   = 14	| Counter Timer Lower		(R/W)
 MRB   = 16  | Mode Register B           (R/W)
 SRB   = 18  | Status Register B         (R)
 CSRB  = 18  | Clock Select Register B   (W)
@@ -37,6 +37,8 @@ DUART_Vect = 0x100
 DUART_VR = DUART_Vect / 4
 BIG_CTR = 0x604
 INTRTN = 0x1200
+UP60HZ = 0x07
+LO60HZ = 0x80
 
 	.ORG	CODE_START
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
@@ -54,8 +56,8 @@ INTRTN = 0x1200
 	andi.b	#0x8f, %d0			| Mask ACR bits
 	ori.b	#0x70, %d0			| Timer mode using XTAL X1, X2 dive by 16
 	move.b	%d0, ACR(%a0)		| Write back ACR
-	move.b	#0x0F, CTU(%a0)		| Write Counter Upper
-	move.b	#0x00, CTL(%a0)		| Write Counter Lower
+	move.b	#UP60HZ, CTU(%a0)	| Write Timer Upper
+	move.b	#LO60HZ, CTL(%a0)	| Write Timer Lower
 	move.b	STC(%a0), %d0		| Start Counter
 	| Set DUART interrupt mask to enable Counter/Timer interrupt
 	move.b	#0x08, IMR(%a0)		| Interrupt Mask Register
@@ -68,8 +70,6 @@ IntLev2:
     movem.l %d0/%a0, -(%SP)     | Save changed registers
 	movea.l	#DUART, %a0			| DUART base address
 	move.b	SPC(%a0), %d0		| Stop Counter with dummy read clears int
-	move.b	#0x0F, CTU(%a0)		| Write Counter Upper
-	move.b	#0x00, CTL(%a0)		| Write Counter Lower
 	move.b	STC(%a0), %d0		| Start Counter with dummy read enables int
 	addi.l	#1, BIG_CTR			| Increment the big counter
 |	move.b	#0x08, IMR(%a0)		| Interrupt Mask Register
