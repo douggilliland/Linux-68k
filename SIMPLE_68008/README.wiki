@@ -21,6 +21,8 @@ This code exercises the SIMPLE-68008 card.
 * [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_enhbasic_ROM S68K_enhbasic_ROM] - Enhanced BASIC bundled with S68K_002 monitor] - Running from 32KB ROM, 'B' to run BASIC 
 * [ https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/figforth figForth] - Runs from SRAM
 * [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_GAME_01 S68K_GAME_01] - Guess a number (1-99) game in C
+* [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_GAME_02 S68K_GAME_02] - Guess a number (1-99) game in C with random number
+** C code libraries as .h files which get included at top just below main() which stubs to code
 
 == Environment ==
 
