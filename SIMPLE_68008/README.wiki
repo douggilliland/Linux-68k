@@ -35,6 +35,7 @@ THis code exercises the SIMPLE-68008 card.
 * Some of the code is built using the VASM cross-compiled tool
 ** Assembly code only
 ** More normal assembly language syntax
+* EnhBASIC is compiled with VASM assembler
 * Outputs of both toolchains can be combined with srec_cat tool
 
 == Fix error from no longer being allowed to use ID/Pwd ==
