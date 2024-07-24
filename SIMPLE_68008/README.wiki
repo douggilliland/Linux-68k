@@ -26,6 +26,11 @@ THis code exercises the SIMPLE-68008 card.
 * Code built on Oracle VM VirtualBox
 ** Host machine is a Windows box
 ** Running MINT Linux OS
+* Some of the code is built using the m68K cross-compiled toolchain
+** Used to create C code
+* Some of the code is built using the VASM cross-compiled tool
+** Assembly code only
+** Weirder assembly language syntax
 
 == Fix error from no longer being allowed to use ID/Pwd ==
 
