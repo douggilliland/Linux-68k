@@ -9,6 +9,23 @@ char getCharA(void);
 char getCharB(void);
 void putCharA(char);
 void putCharB(char);
+int makeSeedFromKeyWait(void);
+
+int makeSeedFromKeyWait(void)
+{
+	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
+	unsigned char * DUART_RBA = (unsigned char *) DUART_RBA_ADR;
+	int seedCount = 0;
+	unsigned char stat = 0;
+	while (stat == 0)
+	{
+		stat = *DUART_SRA;
+		stat &= 1;
+		seedCount += 1;
+	}
+	seedCount += *DUART_RBA;
+	return(seedCount);
+}
 
 char getCharA(void)
 {
