@@ -2,7 +2,7 @@
 /* First Game for the SIMPLE-68008					*/
 /* Number guessing game								*/
 
-#include "SIMPLE_68008.h"
+#include "../S68K_clibs/SIMPLE_68008.h"
 #include "main.h"
 
 /* Putting main() here before defines 
@@ -15,8 +15,8 @@ int main(void)
 
 /* These includes have card specific code			*/
 /* Make some standardized library calls				*/
-#include "S68K_Serial.h"
-#include "S68K_Strings.h"
+#include "../S68K_clibs/S68K_Serial.h"
+#include "../S68K_clibs/S68K_Strings.h"
 
 int playGame(void)
 {
