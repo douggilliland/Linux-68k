@@ -29,7 +29,7 @@ THis code exercises the SIMPLE-68008 card.
 
 === Tool and Toolchains ===
 
-* Some of the code is built using the m68K cross-compiled toolchain
+* Most of my code is built using the m68K cross-compiled toolchain
 ** Used to create C code and most of the assembly code
 ** Weirder assembly language syntax
 * Some of the code is built using the VASM cross-compiled tool
