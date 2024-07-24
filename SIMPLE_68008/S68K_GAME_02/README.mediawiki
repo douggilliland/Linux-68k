@@ -6,8 +6,7 @@
 
 == Build ==
 
-* You will need a version of gcc built as a cross-compiler for the 68k
-platform
+* You will need a version of gcc built as a cross-compiler for the 68k platform
 ** I used gcc version 7.5.0
 * Build the code using the provided make file
 ** It gets linked at address $2000
