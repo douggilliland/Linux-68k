@@ -1,6 +1,6 @@
 = Sample Game =
 
-* This is an example of a C program that runs on the SIMPLE-68008 card.
+* This is an example of a C program that runs on the SIMPLE-68008 card
 * Guess a number from 1 to 100
 * Adds random number generator code
 
