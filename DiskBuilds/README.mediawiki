@@ -1,6 +1,6 @@
-= PDP-11 Disks= 
+= PDP-11 Disks = 
 
-* See license files
 * Unix v7
 * BSD 2.11
 * RSTS
+* See license files
