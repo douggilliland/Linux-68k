@@ -29,6 +29,8 @@ int playGame(void)
 	printString("Hit a key to create random number\n\r");
 	randomSeed = makeSeedFromKeyWait();
 	randomNumber = randomSeed % 100;
+	printString("Random number : ");
+	printInt(randomNumber);
 	printString("\n\r");
 	while (1)
 	{

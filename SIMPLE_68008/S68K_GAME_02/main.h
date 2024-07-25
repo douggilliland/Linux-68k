@@ -10,6 +10,7 @@ void printString(char * pStr);
 int isStrNum(char *);
 int strToNum(char *);
 void intToStr(int, char*);
+void printInt(int);
 /* From S68K_Serial.h */
 char getCharA(void);
 char getCharB(void);
