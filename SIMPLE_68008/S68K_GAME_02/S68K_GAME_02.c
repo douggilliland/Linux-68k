@@ -40,9 +40,9 @@ int playGame(void)
 		getString(inStr);
 		printString("\n\r");
 		iRtn = strToNum(inStr);
-		printString("You guessed : ");
+/* 		printString("You guessed : ");
 		printInt(iRtn);
-		printString("\n\r");
+		printString("\n\r"); */
 		if (iRtn > randomNumber)
 			printString("Number is too high\n\r");
 		else if (iRtn < randomNumber)
