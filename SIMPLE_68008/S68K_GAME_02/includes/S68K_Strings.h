@@ -17,6 +17,14 @@ char getCharA(void);
 char getCharB(void);
 void putCharA(char);
 void putCharB(char);
+void printInt(int);
+
+void printInt(int num)
+{
+	char inStr[80];
+	intToStr(num, inStr);
+	printString(inStr);
+}
 
 void intToStr(int num, char* str)
 {
