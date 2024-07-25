@@ -446,14 +446,12 @@ strlen:
 .LC5:
 	.string	"\n\r"
 .LC6:
-	.string	"You guessed : "
-.LC7:
 	.string	"Number is too high\n\r"
-.LC8:
+.LC7:
 	.string	"Number is too low\n\r"
-.LC9:
+.LC8:
 	.string	"Good job, you got it in "
-.LC10:
+.LC9:
 	.string	" tries\n\r"
 	.text
 	.align	2
@@ -508,19 +506,10 @@ playGame:
 	jsr strToNum
 	addq.l #4,%sp
 	move.l %d0,-16(%fp)
-	pea .LC6
-	jsr printString
-	addq.l #4,%sp
-	move.l -16(%fp),-(%sp)
-	jsr printInt
-	addq.l #4,%sp
-	pea .LC5
-	jsr printString
-	addq.l #4,%sp
 	move.l -16(%fp),%d0
 	cmp.l -12(%fp),%d0
 	jle .L54
-	pea .LC7
+	pea .LC6
 	jsr printString
 	addq.l #4,%sp
 	jra .L55
@@ -528,18 +517,18 @@ playGame:
 	move.l -16(%fp),%d0
 	cmp.l -12(%fp),%d0
 	jge .L56
-	pea .LC8
+	pea .LC7
 	jsr printString
 	addq.l #4,%sp
 	jra .L55
 .L56:
-	pea .LC9
+	pea .LC8
 	jsr printString
 	addq.l #4,%sp
 	move.l -4(%fp),-(%sp)
 	jsr printInt
 	addq.l #4,%sp
-	pea .LC10
+	pea .LC9
 	jsr printString
 	addq.l #4,%sp
 	moveq #0,%d0
