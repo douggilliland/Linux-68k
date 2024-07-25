@@ -31,16 +31,18 @@ int playGame(void)
 	randomNumber = randomSeed % 100;
 	printString("Random number : ");
 	printInt(randomNumber);
-	printString("\n\r");
+	printString(" (DEBUG)\n\r");
 	while (1)
 	{
 		printString("Guess #");
-		intToStr(guessCt, inStr);
-		printString(inStr);
+		printInt(guessCt);
 		printString("\n\r");
 		getString(inStr);
 		printString("\n\r");
 		iRtn = strToNum(inStr);
+		printString("You guessed : ");
+		printInt(iRtn);
+		printString("\n\r");
 		if (iRtn > randomNumber)
 			printString("Number is too high\n\r");
 		else if (iRtn < randomNumber)
@@ -48,8 +50,7 @@ int playGame(void)
 		else
 		{
 			printString("Good job, you got it in ");
-			intToStr(guessCt, inStr);
-			printString(inStr);
+			printInt(guessCt);
 			printString(" tries\n\r");
 			return 0;
 		}
