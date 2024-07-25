@@ -343,7 +343,6 @@ getString:
 	move.b %d0,-9(%fp)
 	move.l 8(%fp),%a0
 	move.b -9(%fp),(%a0)
-	addq.l #1,8(%fp)
 	addq.l #1,-4(%fp)
 	clr.l -8(%fp)
 	moveq #78,%d0
@@ -351,25 +350,31 @@ getString:
 	jge .L41
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-	jra .L42
+	jra .L40
 .L41:
 	cmp.b #10,-9(%fp)
-	jne .L43
-	moveq #1,%d0
-	move.l %d0,-8(%fp)
-	jra .L42
-.L43:
-	cmp.b #13,-9(%fp)
 	jne .L42
+	move.l 8(%fp),%a0
+	clr.b (%a0)
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
+	jra .L40
 .L42:
+	cmp.b #13,-9(%fp)
+	jne .L43
+	move.l 8(%fp),%a0
+	clr.b (%a0)
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
+	jra .L40
+.L43:
 	move.b -9(%fp),%d0
 	ext.w %d0
 	move.w %d0,%a0
 	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
+	addq.l #1,8(%fp)
 .L40:
 	tst.l -8(%fp)
 	jeq .L44
