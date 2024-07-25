@@ -29,9 +29,9 @@ int playGame(void)
 	printString("Hit a key to create random number\n\r");
 	randomSeed = makeSeedFromKeyWait();
 	randomNumber = randomSeed % 100;
-	printString("Random number : ");
+/* 	printString("Random number : ");
 	printInt(randomNumber);
-	printString(" (DEBUG)\n\r");
+	printString(" (DEBUG)\n\r"); */
 	while (1)
 	{
 		printString("Guess #");
@@ -40,9 +40,9 @@ int playGame(void)
 		getString(inStr);
 		printString("\n\r");
 		iRtn = strToNum(inStr);
-/* 		printString("You guessed : ");
+		printString("You guessed : ");
 		printInt(iRtn);
-		printString("\n\r"); */
+		printString("\n\r");
 		if (iRtn > randomNumber)
 			printString("Number is too high\n\r");
 		else if (iRtn < randomNumber)
