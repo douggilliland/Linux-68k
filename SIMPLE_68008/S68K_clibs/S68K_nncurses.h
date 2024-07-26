@@ -20,8 +20,8 @@ void charToScreen(int x, int y, char sendChar);
 
 /* Globals go here */
 
-char screenBuffer[128][32];
-char fromBuffer[128][32];
+char screenBuffer[32][128]; /* [row][col]	*/
+char fromBuffer[32][128];
 
 int screenWidth;
 int screenHeight;
@@ -31,8 +31,8 @@ int screenHeight;
 /*
 int screenWidth;
 int screenHeight;
-char screenBuffer[128][32];
-char fromBuffer[128][32];
+char screenBuffer[32][128];
+char fromBuffer[32][128];
 */
 void init_nncurses(void)
 {
