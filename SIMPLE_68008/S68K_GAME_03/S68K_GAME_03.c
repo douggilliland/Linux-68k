@@ -33,11 +33,11 @@ int playGame(void)
 	int xCurr, yCurr;
 	char charCurr;
 	init_nncurses();
-	for (yCurr = 0; yCurr < 80; yCurr++)
-		for (xCurr = 0; xCurr < 80; xCurr++)
+	for (yCurr = 1; yCurr <= 25; yCurr++)
+		for (xCurr = 1; xCurr <= 80; xCurr++)
 			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
 			{
-				fromBuffer[yCurr][xCurr] = charCurr;
+				fromBuffer[xCurr][yCurr] = charCurr;
 				copy_ScreenBuffer_Deltas_to_Screen();
 			}
 	getCharA();
