@@ -25,40 +25,5 @@ int main(void)
 
 int playGame(void)
 {
-	char inStr[80];
-	int iRtn;
-	int guessCt = 1;
-	printString("Guess a number from 1 to 99\n\r");
-	int randomSeed;
-	int randomNumber;
-	printString("Hit a key to create random number\n\r");
-	randomSeed = makeSeedFromKeyWait();
-	randomNumber = randomSeed % 100;
-/* 	printString("Random number : ");
-	printInt(randomNumber);
-	printString(" (DEBUG)\n\r"); */
-	while (1)
-	{
-		printString("Guess #");
-		printInt(guessCt);
-		printString("\n\r");
-		getString(inStr);
-		printString("\n\r");
-		iRtn = strToNum(inStr);
-		printString("You guessed : ");
-		printInt(iRtn);
-		printString("\n\r");
-		if (iRtn > randomNumber)
-			printString("Number is too high\n\r");
-		else if (iRtn < randomNumber)
-			printString("Number is too low\n\r");
-		else
-		{
-			printString("Good job, you got it in ");
-			printInt(guessCt);
-			printString(" tries\n\r");
-			return 0;
-		}
-		guessCt += 1;
-	}
+	init_nncurses();
 }
