@@ -30,9 +30,16 @@ char fromBuffer[128][32];
 
 int playGame(void)
 {
+	int xCurr, yCurr;
+	char charCurr;
 	init_nncurses();
-	fromBuffer[10][10] = 'A';
-	copy_ScreenBuffer_Deltas_to_Screen();
+	for (yCurr = 0; yCurr < 80; yCurr++)
+		for (xCurr = 0; xCurr < 80; xCurr++)
+			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
+			{
+				fromBuffer[yCurr][xCurr] = charCurr;
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
 	getCharA();
 	return 1;
 }
