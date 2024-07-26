@@ -465,7 +465,7 @@ init_nncurses:
 	move.b #32,(%a0)
 	addq.l #1,-4(%fp)
 .L55:
-	move.l screenHeight,%d0
+	move.l screenWidth,%d0
 	cmp.l -4(%fp),%d0
 	jgt .L56
 	addq.l #1,-8(%fp)
