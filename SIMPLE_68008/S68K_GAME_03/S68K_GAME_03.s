@@ -597,8 +597,19 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	clr.l -4(%fp)
 	jra .L66
 .L68:
-	move.l #fromBuffer,%d0
-	cmp.l #screenBuffer,%d0
+	move.l -8(%fp),%d0
+	lsl.l #5,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b (%a0),%d1
+	move.l -8(%fp),%d0
+	lsl.l #5,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #screenBuffer,%a0
+	move.b (%a0),%d0
+	cmp.b %d1,%d0
 	jeq .L67
 	move.l -8(%fp),%d0
 	lsl.l #5,%d0
