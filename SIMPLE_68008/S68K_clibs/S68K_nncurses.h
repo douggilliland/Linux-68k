@@ -121,7 +121,7 @@ void copy_ScreenBuffer_Deltas_to_Screen(void)
 			if (fromBuffer != screenBuffer)
 			{
 				charToScreen(xPos, yPos, fromBuffer[yPos][xPos]);
-				screenBuffer = fromBuffer[yPos][xPos]);
+				screenBuffer[yPos][xPos] = fromBuffer[yPos][xPos];
 			}
 		}
 }
