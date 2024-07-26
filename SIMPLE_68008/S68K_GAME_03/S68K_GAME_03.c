@@ -8,6 +8,10 @@
 /* Putting main() here before defines 
 to make sure we know that main() is at first address */
 
+/* Function prototypes		*/
+
+int playGame(void);
+
 int main(void)
 {
 	return(playGame());
