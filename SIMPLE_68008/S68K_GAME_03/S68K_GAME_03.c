@@ -24,8 +24,8 @@ int main(void)
 #include "../S68K_clibs/S68K_nncurses.h"
 
 /*
-char screenBuffer[128][32];
-char fromBuffer[128][32];
+char screenBuffer[32][128];
+char fromBuffer[32][128];
 */
 
 int playGame(void)
@@ -33,11 +33,11 @@ int playGame(void)
 	int xCurr, yCurr;
 	char charCurr;
 	init_nncurses();
-	for (xCurr = 1; xCurr <= 80; xCurr++)
-		for (yCurr = 1; yCurr <= 25; yCurr++)
+	for (yCurr = 1; yCurr <= 25; yCurr++)
+		for (xCurr = 1; xCurr <= 80; xCurr++)
 			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
 			{
-				fromBuffer[xCurr][yCurr] = charCurr;
+				fromBuffer[yCurr][xCurr] = charCurr;
 				copy_ScreenBuffer_Deltas_to_Screen();
 			}
 	getCharA();
