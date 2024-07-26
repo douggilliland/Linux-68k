@@ -43,7 +43,7 @@ void init_nncurses(void)
 	int xPos, yPos;
 	/* Fill the buffers with spaces					*/
 	for (yPos = 0; yPos < screenHeight; yPos++)
-		for (xPos = 0; xPos < screenHeight; xPos++)
+		for (xPos = 0; xPos < screenWidth; xPos++)
 		{
 			screenBuffer[yPos][xPos] = ' ';
 			fromBuffer[yPos][xPos] = ' ';
