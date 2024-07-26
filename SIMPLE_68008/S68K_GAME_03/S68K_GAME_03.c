@@ -23,8 +23,15 @@ int main(void)
 #include "../S68K_clibs/S68K_Strings.h"
 #include "../S68K_clibs/S68K_nncurses.h"
 
+/*
+char screenBuffer[128][32];
+char fromBuffer[128][32];
+*/
+
 int playGame(void)
 {
 	init_nncurses();
+	fromBuffer[10][10] = 'A';
+	copy_ScreenBuffer_Deltas_to_Screen();
 	return 1;
 }
