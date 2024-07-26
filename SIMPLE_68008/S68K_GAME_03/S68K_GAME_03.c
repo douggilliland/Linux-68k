@@ -1,4 +1,4 @@
-/* S68K_GAME_02.c 									*/
+/* S68K_GAME_03.c 									*/
 /* First Game for the SIMPLE-68008					*/
 /* Number guessing game								*/
 
@@ -17,6 +17,7 @@ int main(void)
 /* Make some standardized library calls				*/
 #include "../S68K_clibs/S68K_Serial.h"
 #include "../S68K_clibs/S68K_Strings.h"
+#include "../S68K_clibs/S68K_nncurses.h"
 
 int playGame(void)
 {
