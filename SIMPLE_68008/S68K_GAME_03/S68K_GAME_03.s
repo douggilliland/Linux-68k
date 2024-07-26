@@ -639,7 +639,7 @@ copy_ScreenBuffer_Deltas_to_Screen:
 .L67:
 	addq.l #1,-4(%fp)
 .L66:
-	move.l screenHeight,%d0
+	move.l screenWidth,%d0
 	cmp.l -4(%fp),%d0
 	jgt .L68
 	addq.l #1,-8(%fp)
