@@ -9,7 +9,7 @@ Not ncurses but similar */
 void cls(void);
 void cursorOnOff(int);
 void positionCursor(int, int);
-void init_nncurses(void)
+void init_nncurses(void);
 void cursorOnOff(int curFlag);
 void positionCursorScreen(int x, int y);
 void copy_ScreenBuffer_Deltas_to_Screen(void);
