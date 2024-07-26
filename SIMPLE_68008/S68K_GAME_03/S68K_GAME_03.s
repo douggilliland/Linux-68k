@@ -678,10 +678,40 @@ charToScreen:
 	.globl	playGame
 	.type	playGame, @function
 playGame:
-	link.w %fp,#0
+	link.w %fp,#-12
 	jsr init_nncurses
-	move.b #65,fromBuffer+330
+	clr.l -8(%fp)
+	jra .L72
+.L77:
+	clr.l -4(%fp)
+	jra .L73
+.L76:
+	move.b #65,-9(%fp)
+	jra .L74
+.L75:
+	move.l -8(%fp),%d0
+	lsl.l #5,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b -9(%fp),(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
+	move.b -9(%fp),%d0
+	addq.b #1,%d0
+	move.b %d0,-9(%fp)
+.L74:
+	cmp.b #90,-9(%fp)
+	jle .L75
+	addq.l #1,-4(%fp)
+.L73:
+	moveq #79,%d0
+	cmp.l -4(%fp),%d0
+	jge .L76
+	addq.l #1,-8(%fp)
+.L72:
+	moveq #79,%d0
+	cmp.l -8(%fp),%d0
+	jge .L77
 	jsr getCharA
 	moveq #1,%d0
 	unlk %fp
