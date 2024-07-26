@@ -39,6 +39,7 @@ void init_nncurses(void)
 	/* For now just assume 80x25					*/
 	screenWidth = 80;
 	screenHeight = 25;
+	int xPos, yPos;
 	/* Fill the buffers with spaces					*/
 	for (yPos = 0; yPos < screenHeight; yPos++)
 		for (xPos = 0; xPos < screenHeight; xPos++)
