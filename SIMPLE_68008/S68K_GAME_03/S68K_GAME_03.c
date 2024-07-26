@@ -33,8 +33,8 @@ int playGame(void)
 	int xCurr, yCurr;
 	char charCurr;
 	init_nncurses();
-	for (yCurr = 1; yCurr <= 25; yCurr++)
-		for (xCurr = 1; xCurr <= 80; xCurr++)
+	for (xCurr = 1; xCurr <= 80; xCurr++)
+		for (yCurr = 1; yCurr <= 25; yCurr++)
 			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
 			{
 				fromBuffer[xCurr][yCurr] = charCurr;
