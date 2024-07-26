@@ -452,13 +452,13 @@ init_nncurses:
 	jra .L55
 .L56:
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #screenBuffer,%a0
 	move.b #32,(%a0)
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
@@ -598,13 +598,13 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	jra .L66
 .L68:
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b (%a0),%d1
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #screenBuffer,%a0
@@ -612,7 +612,7 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	cmp.b %d1,%d0
 	jeq .L67
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
@@ -625,13 +625,13 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	jsr charToScreen
 	lea (12,%sp),%sp
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b (%a0),%d1
 	move.l -8(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #screenBuffer,%a0
@@ -681,18 +681,18 @@ playGame:
 	link.w %fp,#-12
 	jsr init_nncurses
 	moveq #1,%d0
-	move.l %d0,-8(%fp)
+	move.l %d0,-4(%fp)
 	jra .L72
 .L77:
 	moveq #1,%d0
-	move.l %d0,-4(%fp)
+	move.l %d0,-8(%fp)
 	jra .L73
 .L76:
 	move.b #65,-9(%fp)
 	jra .L74
 .L75:
 	move.l -4(%fp),%d0
-	lsl.l #5,%d0
+	lsl.l #7,%d0
 	add.l -8(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
@@ -704,15 +704,15 @@ playGame:
 .L74:
 	cmp.b #90,-9(%fp)
 	jle .L75
-	addq.l #1,-4(%fp)
-.L73:
-	moveq #80,%d0
-	cmp.l -4(%fp),%d0
-	jge .L76
 	addq.l #1,-8(%fp)
-.L72:
+.L73:
 	moveq #25,%d0
 	cmp.l -8(%fp),%d0
+	jge .L76
+	addq.l #1,-4(%fp)
+.L72:
+	moveq #80,%d0
+	cmp.l -4(%fp),%d0
 	jge .L77
 	jsr getCharA
 	moveq #1,%d0
