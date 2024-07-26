@@ -119,7 +119,7 @@ void copy_ScreenBuffer_Deltas_to_Screen(void)
 	for (yPos = 0; yPos < screenHeight; yPos++)
 		for (xPos = 0; xPos < screenHeight; xPos++)
 		{
-			if (fromBuffer != screenBuffer)
+			if (fromBuffer[yPos][xPos] != screenBuffer[yPos][xPos])
 			{
 				charToScreen(xPos, yPos, fromBuffer[yPos][xPos]);
 				screenBuffer[yPos][xPos] = fromBuffer[yPos][xPos];
