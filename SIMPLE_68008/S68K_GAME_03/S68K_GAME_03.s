@@ -474,9 +474,6 @@ init_nncurses:
 	cmp.l -8(%fp),%d0
 	jgt .L57
 	jsr cls
-	clr.l -(%sp)
-	jsr cursorOnOff
-	addq.l #4,%sp
 	nop
 	unlk %fp
 	rts
@@ -672,6 +669,8 @@ charToScreen:
 playGame:
 	link.w %fp,#0
 	jsr init_nncurses
+	move.b #65,fromBuffer+330
+	jsr copy_ScreenBuffer_Deltas_to_Screen
 	moveq #1,%d0
 	unlk %fp
 	rts
