@@ -128,7 +128,7 @@ void copy_ScreenBuffer_Deltas_to_Screen(void)
 
 void charToScreen(int x, int y, char sendChar)
 {
-	positionCursorScreen(x, y)
+	positionCursorScreen(x, y);
 	putCharA(sendChar);
 }
 
