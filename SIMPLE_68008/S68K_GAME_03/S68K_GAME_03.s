@@ -680,18 +680,20 @@ charToScreen:
 playGame:
 	link.w %fp,#-12
 	jsr init_nncurses
-	clr.l -8(%fp)
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
 	jra .L72
 .L77:
-	clr.l -4(%fp)
+	moveq #1,%d0
+	move.l %d0,-4(%fp)
 	jra .L73
 .L76:
 	move.b #65,-9(%fp)
 	jra .L74
 .L75:
-	move.l -8(%fp),%d0
+	move.l -4(%fp),%d0
 	lsl.l #5,%d0
-	add.l -4(%fp),%d0
+	add.l -8(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b -9(%fp),(%a0)
@@ -704,12 +706,12 @@ playGame:
 	jle .L75
 	addq.l #1,-4(%fp)
 .L73:
-	moveq #79,%d0
+	moveq #80,%d0
 	cmp.l -4(%fp),%d0
 	jge .L76
 	addq.l #1,-8(%fp)
 .L72:
-	moveq #79,%d0
+	moveq #25,%d0
 	cmp.l -8(%fp),%d0
 	jge .L77
 	jsr getCharA
