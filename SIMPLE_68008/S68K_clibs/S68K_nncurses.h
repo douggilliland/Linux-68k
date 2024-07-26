@@ -13,7 +13,7 @@ void init_nncurses(void)
 void cursorOnOff(int curFlag);
 void positionCursorScreen(int x, int y);
 void copy_ScreenBuffer_Deltas_to_Screen(void);
-void charToScreen(int x, int y, char sendChar)
+void charToScreen(int x, int y, char sendChar);
 
 #define ESC 0x1B
 
