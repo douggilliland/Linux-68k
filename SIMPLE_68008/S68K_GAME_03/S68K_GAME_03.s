@@ -682,6 +682,7 @@ playGame:
 	jsr init_nncurses
 	move.b #65,fromBuffer+330
 	jsr copy_ScreenBuffer_Deltas_to_Screen
+	jsr getCharA
 	moveq #1,%d0
 	unlk %fp
 	rts
