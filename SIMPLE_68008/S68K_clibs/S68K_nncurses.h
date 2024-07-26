@@ -1,5 +1,6 @@
 /* S68K_nncurses.h
-Not ncurses but similar */
+Not ncurses but similar
+https://raw.githubusercontent.com/mirror/ncurses/master/doc/ncurses-intro.doc */
 
 #ifndef S68K_NNCURSES_h
 #include "SIMPLE_68008.h"
@@ -8,7 +9,7 @@ Not ncurses but similar */
 
 void cls(void);
 void cursorOnOff(int);
-void positionCursor(int, int);
+/* void positionCursor(int, int); */
 void init_nncurses(void);
 void cursorOnOff(int curFlag);
 void positionCursorScreen(int x, int y);
@@ -48,7 +49,7 @@ void init_nncurses(void)
 			fromBuffer[yPos][xPos] = ' ';
 		}
 	cls();
-	cursorOnOff(0);
+	/* cursorOnOff(0); */
 }
 
 /* Screen access functions follow	*/
