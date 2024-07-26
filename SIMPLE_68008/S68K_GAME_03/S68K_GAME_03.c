@@ -26,4 +26,5 @@ int main(void)
 int playGame(void)
 {
 	init_nncurses();
+	return 1;
 }
