@@ -33,5 +33,6 @@ int playGame(void)
 	init_nncurses();
 	fromBuffer[10][10] = 'A';
 	copy_ScreenBuffer_Deltas_to_Screen();
+	getCharA();
 	return 1;
 }
