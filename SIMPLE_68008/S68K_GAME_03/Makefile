@@ -7,7 +7,7 @@ CP      = $(BASE)-objcopy
 DUMP    = $(BASE)-objdump
 VASM	= ../../../vasm/vasmm68k_mot
 
-CFLAGS  = -m$(ARCH) -Wall -msoft-float
+CFLAGS  = -m$(ARCH) -Wall -msoft-float --help
 
 LFLAGS  = -m$(ARCH) -nostartfiles -nostdlib -Wl,--relax -O2
 
