@@ -1,7 +1,7 @@
 ARCH	= 68000
 BASE	= /opt/m68k-elf/bin/m68k-elf
 CC      = $(BASE)-gcc
-LD      = $(BASE)-gcc
+LD      = $(BASE)-ld
 AS      = $(BASE)-as
 CP      = $(BASE)-objcopy
 DUMP    = $(BASE)-objdump
