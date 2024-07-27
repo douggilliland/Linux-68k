@@ -33,6 +33,7 @@ int playGame(void)
 	int xCurr, yCurr;
 	char charCurr;
 	init_nncurses();
+/*	init_Timer();*/
 	for (yCurr = 1; yCurr <= 25; yCurr++)
 		for (xCurr = 1; xCurr <= 80; xCurr++)
 			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
