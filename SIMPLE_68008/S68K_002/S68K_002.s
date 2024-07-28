@@ -196,8 +196,8 @@ monitorStart:					| Warm start
 	| Set DUART interrupt mask to enable Counter/Timer interrupt
 	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
 	andi.w	#0xF8FF, %sr		| Enable interrupts
- |   movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-	rts
+|   movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+|	rts
 
 |
 | Interpreter Loop
