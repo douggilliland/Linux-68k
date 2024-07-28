@@ -175,7 +175,7 @@ monitorStart:					| Warm start
 	jsr		printString1
 
 | Set up the Timer Interrupt routine
-    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
+|    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
 	ori.w	#0x0700, %sr		| Disable interrupts
 	move.l	#0x0, BIG_CTR		| Clear the big counter
 	| Fill the interrupt vector table entry for DUART interrupt
@@ -196,7 +196,7 @@ monitorStart:					| Warm start
 	| Set DUART interrupt mask to enable Counter/Timer interrupt
 	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
 	andi.w	#0xF8FF, %sr		| Enable interrupts
-    movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+ |   movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
 	rts
 
 |
