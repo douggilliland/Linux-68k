@@ -174,9 +174,7 @@ monitorStart:					| Warm start
 	lea		RAM_PASS_MSG, %a0
 	jsr		printString1
 
-| Set up the Interrupt routine
-
-	.ORG	CODE_START
+| Set up the Timer Interrupt routine
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
 	ori.w	#0x0700, %sr		| Disable interrupts
 	move.l	#0x0, BIG_CTR		| Clear the big counter
