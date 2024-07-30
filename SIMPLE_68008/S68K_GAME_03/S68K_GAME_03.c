@@ -1,6 +1,4 @@
 /* S68K_GAME_03.c 									*/
-/* First Game for the SIMPLE-68008					*/
-/* Number guessing game								*/
 
 #include "../S68K_clibs/SIMPLE_68008.h"
 #include "main.h"
@@ -18,7 +16,7 @@ int main(void)
 }
 
 /* These includes have card specific code			*/
-/* Make some standardized library calls				*/
+/* YBD = Make some standardized library calls		*/
 #include "../S68K_clibs/S68K_Serial.h"
 #include "../S68K_clibs/S68K_Strings.h"
 #include "../S68K_clibs/S68K_nncurses.h"
@@ -33,7 +31,6 @@ int playGame(void)
 	int xCurr, yCurr;
 	char charCurr;
 	init_nncurses();
-/*	init_Timer();*/
 	for (yCurr = 1; yCurr <= 25; yCurr++)
 		for (xCurr = 1; xCurr <= 80; xCurr++)
 			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
@@ -41,6 +38,7 @@ int playGame(void)
 				fromBuffer[yCurr][xCurr] = charCurr;
 				copy_ScreenBuffer_Deltas_to_Screen();
 			}
+	while (rxStatPortA() == 0);
 	getCharA();
 	return 1;
 }
