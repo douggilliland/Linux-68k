@@ -111,8 +111,8 @@ If the characters are different send the character to the terminal
 
 int screenWidth;
 int screenHeight;
-char screenBuffer[32][128];
-char fromBuffer[32][128];
+char screenBuffer[32][128] - Current screen
+char fromBuffer[32][128] - write here
 */
 void copy_ScreenBuffer_Deltas_to_Screen(void)
 {
