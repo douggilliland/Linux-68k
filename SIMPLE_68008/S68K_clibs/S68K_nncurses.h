@@ -2,6 +2,8 @@
 Not ncurses but similar
 https://raw.githubusercontent.com/mirror/ncurses/master/doc/ncurses-intro.doc */
 
+/* Always need to call init_nncurses()		*/
+
 #ifndef S68K_NNCURSES_h
 #include "SIMPLE_68008.h"
 
@@ -116,8 +118,8 @@ void copy_ScreenBuffer_Deltas_to_Screen(void)
 {
 	int xPos;
 	int yPos;
-	for (yPos = 0; yPos < screenHeight; yPos++)
-		for (xPos = 0; xPos < screenWidth; xPos++)
+	for (yPos = 0; yPos <= screenHeight; yPos++)
+		for (xPos = 0; xPos <= screenWidth; xPos++)
 		{
 			if (fromBuffer[yPos][xPos] != screenBuffer[yPos][xPos])
 			{
