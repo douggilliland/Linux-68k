@@ -22,8 +22,8 @@ void charToScreen(int x, int y, char sendChar);
 
 /* Globals go here */
 
-char screenBuffer[32][128]; /* [row][col]	*/
-char fromBuffer[32][128];
+char screenBuffer[32+1][128+1]; /* [row][col]	*/
+char fromBuffer[32+1][128+1];
 
 int screenWidth;
 int screenHeight;
@@ -44,8 +44,8 @@ void init_nncurses(void)
 	screenHeight = 25;
 	int xPos, yPos;
 	/* Fill the buffers with spaces					*/
-	for (yPos = 0; yPos < screenHeight; yPos++)
-		for (xPos = 0; xPos < screenWidth; xPos++)
+	for (yPos = 0; yPos <= screenHeight; yPos++)
+		for (xPos = 0; xPos <= screenWidth; xPos++)
 		{
 			screenBuffer[yPos][xPos] = ' ';
 			fromBuffer[yPos][xPos] = ' ';
@@ -111,15 +111,15 @@ If the characters are different send the character to the terminal
 
 int screenWidth;
 int screenHeight;
-char screenBuffer[32][128] - Current screen
-char fromBuffer[32][128] - write here
+char screenBuffer[32+1][128+1] - Current screen
+char fromBuffer[32+1][128+1] - write here
 */
 void copy_ScreenBuffer_Deltas_to_Screen(void)
 {
 	int xPos;
 	int yPos;
-	for (yPos = 0; yPos <= screenHeight; yPos++)
-		for (xPos = 0; xPos <= screenWidth; xPos++)
+	for (yPos = 1; yPos <= screenHeight; yPos++)
+		for (xPos = 1; xPos <= screenWidth; xPos++)
 		{
 			if (fromBuffer[yPos][xPos] != screenBuffer[yPos][xPos])
 			{
