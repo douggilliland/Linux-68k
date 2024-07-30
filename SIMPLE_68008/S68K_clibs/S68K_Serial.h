@@ -38,6 +38,16 @@ char rxStatPortA(void)
 	return(stat);
 }
 
+/* char rxStatPortB(void) - returns status of port B Rx in DUART	*/
+/* Returns 1 if there is a character in the receiver				*/
+char rxStatPortB(void)
+{
+	unsigned char * DUART_SRB = (unsigned char *) DUART_SRB_ADR;
+	unsigned char stat = *DUART_SRB;
+	stat &= 0x1;
+	return(stat);
+}
+
 char getCharA(void)
 {
 	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
