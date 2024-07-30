@@ -740,12 +740,6 @@ playGame:
 	moveq #25,%d0
 	cmp.l -8(%fp),%d0
 	jge .L81
-	nop
-.L82:
-	jsr rxStatPortA
-	tst.b %d0
-	jeq .L82
-	jsr getCharA
 	moveq #1,%d0
 	unlk %fp
 	rts
