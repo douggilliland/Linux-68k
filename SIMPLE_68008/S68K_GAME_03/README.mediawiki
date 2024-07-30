@@ -1,6 +1,6 @@
 = Sample Game =
 
-* ANSI driver
+* ANSI driver [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_clibs/S68K_nncurses.h nncurses]
 ** Similar to ncurses
 * Move an object around the screen using arrow keys
 
