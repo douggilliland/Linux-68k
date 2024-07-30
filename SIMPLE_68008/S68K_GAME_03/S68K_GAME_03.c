@@ -50,25 +50,29 @@ int playGame(void)
 		else if (gotKBVal == 1)		/* UP	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			fromBuffer[yCurr+1][xCurr] = '*';
+			yCurr += 1;
+			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 		else if (gotKBVal == 2)		/* DN	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			fromBuffer[yCurr-1][xCurr] = '*';
+			yCurr -= 1;
+			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 		else if (gotKBVal == 3)		/* RT	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			fromBuffer[yCurr][xCurr+1] = '*';
+			xCurr += 1;
+			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 		else if (gotKBVal == 4)		/* LT	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			fromBuffer[yCurr][xCurr-1] = '*';
+			xCurr -= 1;
+			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 	}
