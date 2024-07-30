@@ -1,8 +1,14 @@
 = Sample Game =
 
-* ANSI driver
-** Similar to ncurses
 * Move an object around the screen using arrow keys
+
+== ANSI driver ==
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_clibs/S68K_nncurses.h nncurses]
+** Similar to ncurses
+* Double buffered
+** Write to fromBuffer[][]
+** Copy to screenBuffer[][]
+** Send out delta as ANSI sequences to the Serial Terminal
 
 == Build ==
 
