@@ -482,7 +482,9 @@ skipBasic:
 |
 
 loadSRec:
-    lea     ldSRecMsg, %a0					| "Load S-Record"
+	movea.l	#DUART, %a0			| DUART base address
+	move.b	28(%a0), %d0		| Stop Counter with dummy read clears int
+    lea     ldSRecMsg, %a0		| "Load S-Record"
     bsr.w   printString
 loadSRecLoop:
 	bsr		setRecType
@@ -513,6 +515,8 @@ sRecDataDone:
 	beq		loadSRecLoop
 	cmp.b	#3, srecType
 	beq		loadSRecLoop
+	movea.l	#DUART, %a0			| DUART base address
+	move.b	30(%a0), %d0		| Start Counter with dummy read clears int
 	bra.w   .exit
 
 |||||||||||||||||||||||||||||
