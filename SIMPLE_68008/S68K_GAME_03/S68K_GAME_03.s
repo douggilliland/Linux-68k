@@ -758,7 +758,7 @@ playGame:
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	addq.l #1,-8(%fp)
+	subq.l #1,-8(%fp)
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -780,7 +780,7 @@ playGame:
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	subq.l #1,-8(%fp)
+	addq.l #1,-8(%fp)
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
