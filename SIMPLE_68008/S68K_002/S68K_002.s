@@ -98,13 +98,13 @@ srecAddr	=		0x000404	| S Record current byte address
 | Test the first two SRAM location
 |
 	move.l	#0xDEADBEEF, %d0		| Test Pattern #1
-	move		#0x00000000, %a0	| First address of SRAM
+	move	#0x00000000, %a0		| First address of SRAM
 	move.l	%d0, (%a0)				| Write out test pattern to SRAM
 	move.l	(%a0), %d2				| Read first SRAM pattern into d2
-	cmp			%d2, %d0
-	bne			FERVR2						
-	move.l	#0x5555AAAA, %d1	| Test Pattern #2
-	move		#0x00000004, %a1	| Second long address of SRAM
+	cmp		%d2, %d0
+	bne		FERVR2						
+	move.l	#0x5555AAAA, %d1		| Test Pattern #2
+	move	#0x00000004, %a1		| Second long address of SRAM
 	move.l	%d1, (%a1)				| Write out test pattern to SRAM
 	move.l	(%a1), %d3				| Read back
 	cmp			%d3, %d1
@@ -173,31 +173,6 @@ monitorStart:					| Warm start
 	jsr		printString1
 	lea		RAM_PASS_MSG, %a0
 	jsr		printString1
-
-| Set up the Timer Interrupt routine
-|    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
-	ori.w	#0x0700, %sr		| Disable interrupts
-	move.l	#0x0, BIG_CTR		| Clear the big counter
-	| Fill the interrupt vector table entry for DUART interrupt
-	movea.l	#DUART_Vect, %a0
-	move.l	#INTRTN, %d0
-	move.l	%d0, (%a0)
-	move.b 	#DUART_VR, %d0
-	| Set DUART interrupt vector
-	movea.l	#DUART, %a0			| DUART base address
-	move.b	%d0, 24(%a0)		| Interrupt Vector Register
-	move.b	8(%a0), %d0			| Read ACR
-	andi.b	#0x8f, %d0			| Mask ACR bits
-	ori.b	#0x70, %d0			| Timer mode using XTAL X1, X2 dive by 16
-	move.b	%d0, 8(%a0)			| Write back ACR
-	move.b	#UP60HZ, 12(%a0)	| Write Timer Upper
-	move.b	#LO60HZ, 14(%a0)	| Write Timer Lower
-	move.b	28(%a0), %d0		| Start Counter
-	| Set DUART interrupt mask to enable Counter/Timer interrupt
-	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
-	andi.w	#0xF8FF, %sr		| Enable interrupts
-|   movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-|	rts
 
 |
 | Interpreter Loop
@@ -340,6 +315,32 @@ lineToUpper:
     bne.s   LUloop             | Keep going till we hit a null terminator
     rts
 
+startTimer:
+| Set up the Timer Interrupt routine
+    movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
+	ori.w	#0x0700, %sr		| Disable interrupts
+	move.l	#0x0, BIG_CTR		| Clear the big counter
+	| Fill the interrupt vector table entry for DUART interrupt
+	movea.l	#DUART_Vect, %a0
+	move.l	#INTRTN, %d0
+	move.l	%d0, (%a0)
+	move.b 	#DUART_VR, %d0
+	| Set DUART interrupt vector
+	movea.l	#DUART, %a0			| DUART base address
+	move.b	%d0, 24(%a0)		| Interrupt Vector Register
+	move.b	8(%a0), %d0			| Read ACR
+	andi.b	#0x8f, %d0			| Mask ACR bits
+	ori.b	#0x70, %d0			| Timer mode using XTAL X1, X2 dive by 16
+	move.b	%d0, 8(%a0)			| Write back ACR
+	move.b	#UP60HZ, 12(%a0)	| Write Timer Upper
+	move.b	#LO60HZ, 14(%a0)	| Write Timer Lower
+	move.b	28(%a0), %d0		| Start Counter
+	| Set DUART interrupt mask to enable Counter/Timer interrupt
+	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
+	andi.w	#0xF8FF, %sr		| Enable interrupts
+   movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
+	rts
+
 |
 | Parse Line
 |
@@ -362,6 +363,8 @@ parseLine:
     beq.w   loadSRec
 	cmp.b	#'B', %d0           | BASIC
 	beq		.runBASIC
+	cmp.b	#'T', %d0           | Start timer
+	beq		startTimer
     cmp.b   #0, %d0             | Ignore blank lines
     beq.s   .exit               
  .invalid:   
@@ -516,7 +519,7 @@ sRecDataDone:
 	cmp.b	#3, srecType
 	beq		loadSRecLoop
 	movea.l	#DUART, %a0			| DUART base address
-	move.b	30(%a0), %d0		| Start Counter with dummy read clears int
+	move.b	30(%a0), %d0		| Stop Counter with dummy read enables int
 	bra.w   .exit
 
 |||||||||||||||||||||||||||||
@@ -984,7 +987,7 @@ CRLF_MSG:
 msgHelp:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
-    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (H)elp"
+    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (T)Timer  (H)elp"
 	dc.b	CR,LF,EOT
 ldSRecMsg:
     .ascii	"Load S-Record"
