@@ -9,6 +9,7 @@ to make sure we know that main() is at first address */
 /* Function prototypes		*/
 
 int playGame(void);
+int getKeyboard(void);
 
 int main(void)
 {
@@ -30,15 +31,74 @@ int playGame(void)
 {
 	int xCurr, yCurr;
 	char charCurr;
+	char gotKBVal;
+	int exitCode = 0;
 	init_nncurses();
-	for (yCurr = 1; yCurr <= 25; yCurr++)
-		for (xCurr = 1; xCurr <= 80; xCurr++)
-			for (charCurr = 'A'; charCurr <= 'Z'; charCurr++)
-			{
-				fromBuffer[yCurr][xCurr] = charCurr;
-				copy_ScreenBuffer_Deltas_to_Screen();
-			}
-/* 	while (rxStatPortA() == 0);
-	getCharA(); */
+	
+	xCurr = 40;
+	yCurr = 12;
+	fromBuffer[yCurr][xCurr] = '*';
+	copy_ScreenBuffer_Deltas_to_Screen();
+	
+	while (exitCode == 0)
+	{
+		gotKBVal = getKeyboard();
+		if (gotKBVal == 0)
+		{
+			exitCode = 1;
+		}
+		else if (gotKBVal == 1)		/* UP	*/
+		{
+			fromBuffer[yCurr][xCurr] = ' ';
+			fromBuffer[yCurr+1][xCurr] = '*';
+			copy_ScreenBuffer_Deltas_to_Screen();
+		}
+		else if (gotKBVal == 2)		/* DN	*/
+		{
+			fromBuffer[yCurr][xCurr] = ' ';
+			fromBuffer[yCurr-1][xCurr] = '*';
+			copy_ScreenBuffer_Deltas_to_Screen();
+		}
+		else if (gotKBVal == 3)		/* RT	*/
+		{
+			fromBuffer[yCurr][xCurr] = ' ';
+			fromBuffer[yCurr][xCurr+1] = '*';
+			copy_ScreenBuffer_Deltas_to_Screen();
+		}
+		else if (gotKBVal == 4)		/* LT	*/
+		{
+			fromBuffer[yCurr][xCurr] = ' ';
+			fromBuffer[yCurr][xCurr-1] = '*';
+			copy_ScreenBuffer_Deltas_to_Screen();
+		}
+	}
 	return 1;
+}
+
+int getKeyboard(void)
+{
+	char kbChar;
+	int gotEsc = 0;
+	kbChar = getCharA();
+	if (kbChar == 'q')
+		return 0;
+	if (kbChar == 'Q')
+		return 0;
+	if (kbChar == 0x1B)
+	{
+		kbChar = getCharA();
+		if (kbChar == '[')
+		{
+			kbChar = getCharA();
+			if (kbChar == 'A')		/* UP		*/
+				return 1;
+			if (kbChar == 'B')		/* DN		*/
+				return 2;
+			if (kbChar == 'C')		/* RT		*/
+				return 3;
+			if (kbChar == 'D')		/* LT		*/
+				return 4;
+		}
+	}
+	return 5;
 }
