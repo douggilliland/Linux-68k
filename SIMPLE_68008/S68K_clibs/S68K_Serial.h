@@ -5,6 +5,7 @@
 
 /* Function Prototypes go here for compiler warning purposes */
 
+char rxStatPortA(void);
 char getCharA(void);
 char getCharB(void);
 void putCharA(char);
@@ -25,6 +26,16 @@ int makeSeedFromKeyWait(void)
 	}
 	seedCount += *DUART_RBA;
 	return(seedCount);
+}
+
+/* char rxStatPortA(void) - returns status of port A Rx in DUART	*/
+/* Returns 1 if there is a character in the receiver				*/
+char rxStatPortA(void)
+{
+	unsigned char * DUART_SRA = (unsigned char *) DUART_SRA_ADR;
+	unsigned char stat = *DUART_SRA;
+	stat &= 0x1;
+	return(stat);
 }
 
 char getCharA(void)
