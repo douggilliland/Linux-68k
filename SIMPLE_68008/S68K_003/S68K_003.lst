@@ -1,62 +1,60 @@
 68K GAS  S68K_003.s 			page 1
 
 
-   1               	| S68K_002.s - 68K Monitor with extensions
-   2               	|	Adds S Record loader
-   3               	| Borrowed init code from 
-   4               	|  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
-   5               	
-   6               	CODE_START	= 0x001000	| Start of code
-   7               	RAM_END		= 0x07FFFF	| 512KB SRAM
-   8               	
-   9               	|||||||||||||||||||||||||||||||||
-  10               	| 68681 Duart Register Addresses
-  11               	
-  12               	DUART = 0x0F0000	  | Base Addr of DUART
-  13               	OPC   = DUART+26      | Output port config        (W)
-  14               	OPS   = DUART+28      | Output port Set           (W)
-  15               	OPR   = DUART+30      | Output port Clear         (W)
+   1               	| S68K_004.s - Assembly language example code
+   2               	|	Uses S Record loader
+   3               	
+   4               	CODE_START	= 0x001000	| Start of code
+   5               	RAM_END		= 0x07FFFF	| 512KB SRAM
+   6               	
+   7               	|||||||||||||||||||||||||||||||||
+   8               	| 68681 Duart Register Addresses
+   9               	
+  10               	DUART = 0x0F0000	  | Base Addr of DUART
+  11               	OPC   = DUART+26      | Output port config        (W)
+  12               	OPS   = DUART+28      | Output port Set           (W)
+  13               	OPR   = DUART+30      | Output port Clear         (W)
+  14               	
+  15 0000 0000 0000 		.ORG	CODE_START
+  15      0000 0000 
+  15      0000 0000 
+  15      0000 0000 
+  15      0000 0000 
   16               	
-  17 0000 0000 0000 		.ORG	CODE_START
-  17      0000 0000 
-  17      0000 0000 
-  17      0000 0000 
-  17      0000 0000 
-  18               	
-  19 1000 13FC 0000 		move.b	#0x00, OPC		| Output port configuration (all bit are outs)
-  19      000F 001A 
-  20 1008 13FC 00FC 		move.b	#0xFC, OPR		| Clear all outputs
-  20      000F 001E 
-  21 1010 13FC 0004 		move.b	#0x04, OPS		| Turn off LED on DUART O2
-  21      000F 001C 
-  22               	loopLEDs:
-  23 1018 13FC 0004 		move.b	#0x04, OPR		| Turn on LED
-  23      000F 001E 
-  24 1020 203C 0001 		move.l 	#100000, %d0
-  24      86A0 
-  25               	wait1:
-  26 1026 5380      		sub.l 	#1, %d0
-  27 1028 6600 FFFC 		bne		wait1
-  28 102c 13FC 0004 		move.b	#0x04, OPS		| Turn off LED
-  28      000F 001C 
-  29 1034 203C 0001 		move.l 	#100000, %d0
-  29      86A0 
-  30               	wait2:
-  31 103a 5380      		sub.l 	#1, %d0
-  32 103c 6600 FFFC 		bne		wait2
-  33 1040 6000 FFD6 		bra		loopLEDs
+  17 1000 13FC 0000 		move.b	#0x00, OPC		| Output port configuration (all bit are outs)
+  17      000F 001A 
+  18 1008 13FC 00FC 		move.b	#0xFC, OPR		| Clear all outputs
+  18      000F 001E 
+  19 1010 13FC 0004 		move.b	#0x04, OPS		| Turn off LED on DUART O2
+  19      000F 001C 
+  20               	loopLEDs:
+  21 1018 13FC 0004 		move.b	#0x04, OPR		| Turn on LED
+  21      000F 001E 
+  22 1020 203C 0001 		move.l 	#100000, %d0
+  22      86A0 
+  23               	wait1:
+  24 1026 5380      		sub.l 	#1, %d0
+  25 1028 6600 FFFC 		bne		wait1
+  26 102c 13FC 0004 		move.b	#0x04, OPS		| Turn off LED
+  26      000F 001C 
+  27 1034 203C 0001 		move.l 	#100000, %d0
+  27      86A0 
+  28               	wait2:
+  29 103a 5380      		sub.l 	#1, %d0
+  30 103c 6600 FFFC 		bne		wait2
+  31 1040 6000 FFD6 		bra		loopLEDs
 68K GAS  S68K_003.s 			page 2
 
 
 DEFINED SYMBOLS
-          S68K_003.s:6      *ABS*:0000000000001000 CODE_START
-          S68K_003.s:7      *ABS*:000000000007ffff RAM_END
-          S68K_003.s:12     *ABS*:00000000000f0000 DUART
-          S68K_003.s:13     *ABS*:00000000000f001a OPC
-          S68K_003.s:14     *ABS*:00000000000f001c OPS
-          S68K_003.s:15     *ABS*:00000000000f001e OPR
-          S68K_003.s:22     .text:0000000000001018 loopLEDs
-          S68K_003.s:25     .text:0000000000001026 wait1
-          S68K_003.s:30     .text:000000000000103a wait2
+          S68K_003.s:4      *ABS*:0000000000001000 CODE_START
+          S68K_003.s:5      *ABS*:000000000007ffff RAM_END
+          S68K_003.s:10     *ABS*:00000000000f0000 DUART
+          S68K_003.s:11     *ABS*:00000000000f001a OPC
+          S68K_003.s:12     *ABS*:00000000000f001c OPS
+          S68K_003.s:13     *ABS*:00000000000f001e OPR
+          S68K_003.s:20     .text:0000000000001018 loopLEDs
+          S68K_003.s:23     .text:0000000000001026 wait1
+          S68K_003.s:28     .text:000000000000103a wait2
 
 NO UNDEFINED SYMBOLS
