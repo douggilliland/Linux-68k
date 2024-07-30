@@ -51,6 +51,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			yCurr -= 1;
+			if (yCurr == 0)
+				yCurr = 0;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
@@ -58,6 +60,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			yCurr += 1;
+			if (yCurr == 26)
+				yCurr = 25;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
@@ -65,6 +69,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			xCurr += 1;
+			if (xCurr == 81)
+				xCurr = 80;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
@@ -72,6 +78,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			xCurr -= 1;
+			if (xCurr == 0)
+				xCurr = 1;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
