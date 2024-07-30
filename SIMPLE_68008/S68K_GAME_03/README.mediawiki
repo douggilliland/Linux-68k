@@ -5,6 +5,9 @@
 == ANSI driver ==
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_clibs/S68K_nncurses.h nncurses]
 ** Similar to ncurses
+* Double buffered
+** Write to fromBuffer[][]
+* Copy to screenBuffer[][]
 
 == Build ==
 
