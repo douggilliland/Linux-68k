@@ -1,8 +1,8 @@
 = Sample Game =
 
-* This is an example of a C program that runs on the SIMPLE-68008 card
-* Guess a number from 1 to 100
-* Adds random number generator code
+* ANSI driver
+** Similar to ncurses
+* Move an object around the screen using arrow keys
 
 == Build ==
 
