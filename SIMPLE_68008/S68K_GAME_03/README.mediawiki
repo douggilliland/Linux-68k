@@ -7,7 +7,7 @@
 ** Similar to ncurses
 * Double buffered
 ** Write to fromBuffer[][]
-* Copy to screenBuffer[][]
+** Copy to screenBuffer[][]
 
 == Build ==
 
