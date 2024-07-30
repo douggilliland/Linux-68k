@@ -723,17 +723,17 @@ charToScreen:
 	.type	playGame, @function
 playGame:
 	link.w %fp,#-16
-	clr.l -4(%fp)
+	clr.l -12(%fp)
 	jsr init_nncurses
 	moveq #40,%d0
-	move.l %d0,-8(%fp)
+	move.l %d0,-4(%fp)
 	moveq #12,%d0
-	move.l %d0,-12(%fp)
-	move.l -12(%fp),%d1
+	move.l %d0,-8(%fp)
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
@@ -745,25 +745,25 @@ playGame:
 	tst.b -13(%fp)
 	jne .L77
 	moveq #1,%d0
-	move.l %d0,-4(%fp)
+	move.l %d0,-12(%fp)
 	jra .L76
 .L77:
 	cmp.b #1,-13(%fp)
 	jne .L78
-	move.l -12(%fp),%d1
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	move.l -12(%fp),%d1
-	addq.l #1,%d1
+	addq.l #1,-8(%fp)
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
@@ -772,20 +772,20 @@ playGame:
 .L78:
 	cmp.b #2,-13(%fp)
 	jne .L79
-	move.l -12(%fp),%d1
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	move.l -12(%fp),%d1
-	subq.l #1,%d1
+	subq.l #1,-8(%fp)
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
@@ -794,21 +794,20 @@ playGame:
 .L79:
 	cmp.b #3,-13(%fp)
 	jne .L80
-	move.l -12(%fp),%d1
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	move.l -8(%fp),%a0
-	addq.l #1,%a0
-	move.l -12(%fp),%d1
+	addq.l #1,-4(%fp)
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l %a0,%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
@@ -817,27 +816,26 @@ playGame:
 .L80:
 	cmp.b #4,-13(%fp)
 	jne .L76
-	move.l -12(%fp),%d1
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l -8(%fp),%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
-	move.l -8(%fp),%a0
-	subq.l #1,%a0
-	move.l -12(%fp),%d1
+	subq.l #1,-4(%fp)
+	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
 	add.l %d1,%d0
-	add.l %a0,%d0
+	add.l -4(%fp),%d0
 	move.l %d0,%a0
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
 .L76:
-	tst.l -4(%fp)
+	tst.l -12(%fp)
 	jeq .L81
 	moveq #1,%d0
 	unlk %fp
