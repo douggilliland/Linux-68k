@@ -50,14 +50,14 @@ int playGame(void)
 		else if (gotKBVal == 1)		/* UP	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			yCurr += 1;
+			yCurr -= 1;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 		else if (gotKBVal == 2)		/* DN	*/
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
-			yCurr -= 1;
+			yCurr += 1;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
