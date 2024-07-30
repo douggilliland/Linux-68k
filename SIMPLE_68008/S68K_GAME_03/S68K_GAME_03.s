@@ -761,7 +761,8 @@ playGame:
 	subq.l #1,-8(%fp)
 	tst.l -8(%fp)
 	jne .L79
-	clr.l -8(%fp)
+	moveq #1,%d0
+	move.l %d0,-8(%fp)
 .L79:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
@@ -785,10 +786,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
 	addq.l #1,-8(%fp)
-	moveq #26,%d0
+	moveq #24,%d0
 	cmp.l -8(%fp),%d0
-	jne .L81
-	moveq #25,%d0
+	jge .L81
+	moveq #24,%d0
 	move.l %d0,-8(%fp)
 .L81:
 	move.l -8(%fp),%d1
