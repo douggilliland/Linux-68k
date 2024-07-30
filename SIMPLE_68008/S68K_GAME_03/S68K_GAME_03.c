@@ -38,7 +38,7 @@ int playGame(void)
 				fromBuffer[yCurr][xCurr] = charCurr;
 				copy_ScreenBuffer_Deltas_to_Screen();
 			}
-	while (rxStatPortA() == 0);
-	getCharA();
+/* 	while (rxStatPortA() == 0);
+	getCharA(); */
 	return 1;
 }
