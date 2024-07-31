@@ -1,21 +1,24 @@
 | S68K_002.s - 68K Monitor with extensions
+|	Started from monitor code from 
+|		https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 |	Adds S Record loader
+|		Uses SRAM from 0x400-0x407 for variable storage during loading
+|	Adds 60 Hz Timer - count stored in 0x408-0x40B
+|	Application code can be from 0x40C-bottom of stack
+|	Stack is at the top of 512 KB SRAM and grows down in memory
+|	Code can be standalone or combined with the Enhanced BASIC ROM code
+|		
 | Land Boards, LLC
 |	(c) 2024
-| Use it however you want
-| Borrowed init code from 
-|  https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
-|
-| Added S-Record load code
-|	Uses SRAM from 0x400-0x407
+|	Use it however you want
 
-RAM_START	= 0x00000	| Beginning of the SRAM
-STACK_END	= 0x7FFFC	| Has to be on a word boundary
-RAM_END		= 0x7FFFF	| 512KB SRAM
-ROM_START	= 0x80000	| ROM start
-ROM_CODE	= ROM_START+1024| Skip vector table
-|ROM_END	= 0x87FFF	| End of 32KB EPROM
-ROM_END		= 0x8FFFF	| End of 64KB EPROM
+RAM_START	= 0x00000			| Beginning of the SRAM
+STACK_END	= 0x7FFFC			| Has to be on a word boundary
+RAM_END		= 0x7FFFF			| 512KB SRAM
+ROM_START	= 0x80000			| ROM start
+ROM_CODE	= ROM_START+1024	| Skip vector table
+|ROM_END	= 0x87FFF			| End of 32KB EPROM
+ROM_END		= 0x8FFFF			| End of 64KB EPROM
 
 DUART_Vect = 0x100
 DUART_VR = DUART_Vect / 4
