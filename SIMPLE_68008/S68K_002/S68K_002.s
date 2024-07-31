@@ -168,12 +168,13 @@ fillSRAMLoop:
 | Done with address test of SRAM
 |
 	jsr     initDuart       	| Setup the serial port
+	jsr		initTimer
 monitorStart:					| Warm start
 	lea		BANNER_MSG, %a0
 	jsr		printString1
 	lea		RAM_PASS_MSG, %a0
 	jsr		printString1
-
+warmStart:
 |
 | Interpreter Loop
 |
@@ -315,7 +316,8 @@ lineToUpper:
     bne.s   LUloop             | Keep going till we hit a null terminator
     rts
 
-startTimer:
+initTimer:
+|startTimer:
 | Set up the Timer Interrupt routine
     movem.l %d0/%a0-%a1, -(%SP)	| Save changed registers
 	ori.w	#0x0700, %sr		| Disable interrupts
@@ -339,7 +341,8 @@ startTimer:
 	move.b	#0x08, 10(%a0)		| Interrupt Mask Register
 	andi.w	#0xF8FF, %sr		| Enable interrupts
 	movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
-    bra.w   .exit
+	rts
+|    bra.w   .exit
 
 |
 | Parse Line
@@ -363,8 +366,8 @@ parseLine:
     beq.w   loadSRec
 	cmp.b	#'B', %d0           | BASIC
 	beq		.runBASIC
-	cmp.b	#'T', %d0           | Start timer
-	beq		startTimer
+|	cmp.b	#'T', %d0           | Start timer
+|	beq		startTimer
     cmp.b   #0, %d0             | Ignore blank lines
     beq.s   .exit               
  .invalid:   
@@ -987,7 +990,8 @@ CRLF_MSG:
 msgHelp:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
-    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (T)Timer  (H)elp"
+|    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (T)Timer  (H)elp"
+    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (H)elp"
 	dc.b	CR,LF,EOT
 ldSRecMsg:
     .ascii	"Load S-Record"
