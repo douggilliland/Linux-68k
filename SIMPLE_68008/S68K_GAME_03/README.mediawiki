@@ -32,3 +32,6 @@ Load S-Record
 
  > r2000
 </pre>
+* Scrren should clear and a '*' will be at the center
+* Arrow keys to move around the '*'
+* Q to quit
