@@ -21,6 +21,7 @@
 *** Copy paste S records code to terminal
 ** (B)ASIC - Run Lee Davidson's Enhanced BASIC
 ** (H)elp - Display these commands
+* Examples
 <pre>
 > d1000 aa 44
 > e1000-1010
