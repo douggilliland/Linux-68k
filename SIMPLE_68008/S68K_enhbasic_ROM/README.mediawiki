@@ -7,6 +7,7 @@
 
 == Build ==
 
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]
 * Assembled using the [https://github.com/douggilliland/Linux-68k/tree/master/vasm VASM retargetable assembler]
 * First, build the [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM]
 * Run make for the Enhanced BASIC which pulls in the S68K_002 code
