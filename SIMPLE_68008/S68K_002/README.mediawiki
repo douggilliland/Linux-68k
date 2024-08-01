@@ -5,7 +5,7 @@
 ** 68008 CPU at 10 MHz
 ** EPROM
 ** 512KB SRAM
-** 68681 DUART
+** 68681 DUART (Dual Serial UART) at 38,400 baud
 
 == Commands ==
 
