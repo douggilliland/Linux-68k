@@ -9,6 +9,8 @@
 ** Runs at 9600 baud with no waits/handshakes on transmit from Host Side
 * Added improved SRAM test code
 * Added SRAM fill
+* Added 60 Hz Timer
+* Cab be built together with [Lee Davidson's Enhanced BASIC] and loaded into ROM
 
 = Build Environment of 68K Code =
 
