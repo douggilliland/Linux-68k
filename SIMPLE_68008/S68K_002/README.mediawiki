@@ -2,6 +2,16 @@
 
 * Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor] by [https://github.com/ChartreuseK ChartreuseK]
 * 'H' for Help lists commands
+** (E)xamine memory
+*** E100-104 Dumps memory from 0x100 to 0x103
+** (D)eposit
+*** D1000,AA - Writes 0xAA to address 0x1000
+** (R)un
+*** R2000 runs downloaded code starting at address 0x2000
+** (L)oad
+*** Copy paste S records code to terminal
+** (B)ASIC - Run Lee Davidson's Enhanced BASIC
+** (H)elp - Display these commands
 
 == Improvements/New Features ==
 
