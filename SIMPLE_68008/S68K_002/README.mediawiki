@@ -20,6 +20,11 @@
 *** Copy paste S records code to terminal
 ** (B)ASIC - Run Lee Davidson's Enhanced BASIC
 ** (H)elp - Display these commands
+<pre>
+> d1000 aa 44
+> e1000-1010
+001000: AA 44 00 00 00 00 00 00 00 00 00 00 00 00 00 00 .D..............
+</pre>
 
 == Improvements/New Features ==
 
