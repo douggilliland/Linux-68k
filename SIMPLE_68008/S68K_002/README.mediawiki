@@ -1,6 +1,14 @@
 = 68K Monitor =
 
 * Based on [https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68 Simple 68K Monitor] by [https://github.com/ChartreuseK ChartreuseK]
+* Built for [http://land-boards.com/blwiki/index.php?title=SIMPLE-68008 SIMPLE-68000 Card]
+** 68008 CPU at 10 MHz
+** EPROM
+** 512KB SRAM
+** 68681 DUART
+
+== Commands ==
+
 * 'H' for Help lists commands
 ** (E)xamine memory
 *** E100-104 Dumps memory from 0x100 to 0x103
