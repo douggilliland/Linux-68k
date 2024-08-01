@@ -1,9 +1,11 @@
 | S68K_002.s - 68K Monitor with extensions
-|	Started from monitor code from 
+|	Very basic monitor with necessary functions for code development
+|	Seeded with monitor code from 
 |		https://raw.githubusercontent.com/ChartreuseK/68k-Monitor/master/Monitor-Simple.x68
 |	Adds S Record loader
 |		Uses SRAM from 0x400-0x407 for variable storage during loading
-|	Adds 60 Hz Timer - count stored in 0x408-0x40B
+|		Runs at 38.4kb with no delays in host transmission
+|	Adds 60 Hz Timer - count stored in 0x408-0x40B - available to application code
 |	Application code can be from 0x40C-bottom of stack
 |	Stack is at the top of 512 KB SRAM and grows down in memory
 |	Code can be standalone or combined with the Enhanced BASIC ROM code
