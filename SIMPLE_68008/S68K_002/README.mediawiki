@@ -10,7 +10,7 @@
 * Added improved SRAM test code
 * Added SRAM fill
 * Added 60 Hz Timer
-* Cab be built together with [Lee Davidson's Enhanced BASIC] and loaded into ROM
+* Cab be built together with [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_enhbasic_ROM Lee Davidson's Enhanced BASIC] and loaded into ROM
 
 = Build Environment of 68K Code =
 
