@@ -13,3 +13,4 @@
 * 60 Hz is 0x780 divisor
 * Stop timer to clear timer
 * Restart timer to set up interrupt on next timer edge
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]
