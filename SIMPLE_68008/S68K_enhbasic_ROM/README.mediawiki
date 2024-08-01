@@ -1,4 +1,4 @@
-== Enhanced BASIC integrated into S68K_002 ROM Monitor ==
+== Enhanced BASIC integrated with S68K_002 ROM Monitor ==
 
 * Lee Davison's Enhanced Basic for 68000
 ** Ported by Jeff Tranter for his TS2 single board computer
