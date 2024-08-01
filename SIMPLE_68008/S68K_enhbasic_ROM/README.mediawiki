@@ -3,8 +3,12 @@
 * Lee Davison's Enhanced Basic for 68000
 ** Ported by Jeff Tranter for his TS2 single board computer
 * Runs on SIMPLE-68008 card
-* Assembled using the [https://github.com/douggilliland/Linux-68k/tree/master/vasm VASM retargetable assembler]
 * This build is specifically made to be combined with [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM] and programmed into ROM
+
+== Build ==
+
+* Assembled using the [https://github.com/douggilliland/Linux-68k/tree/master/vasm VASM retargetable assembler]
+* First, build the [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM]
 
 == References ==
 
