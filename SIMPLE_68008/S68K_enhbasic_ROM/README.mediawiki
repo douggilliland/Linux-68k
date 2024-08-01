@@ -11,11 +11,18 @@
 * First, build the [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM]
 * Run make for the Enhanced BASIC which pulls in the S68K_002 code
 ** Result is a .hex file
+* Program using PROM programmer
+
+== Memory Map ==
+
 * EPROM base address = 0x80000
 ** 0x80000-0x83FFF - First 16KB reserved addresses for monitor (plenty of room for expansion)
 *** Code is from 0x80400-0x80caf (Less than 4KB)
 ** 0x84000-0x87FFF - Second 16KB reserves addresses for BASIC (plenty of room for expansion)
 *** Code is from 0x84800-0x87D1F (Less than 16KB)
+
+== Running ==
+
 * Boots into the monitor
 * Run BASIC with 'B' on command line
 * Runs at 38,400 baud
