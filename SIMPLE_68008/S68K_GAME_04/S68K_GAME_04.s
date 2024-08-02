@@ -808,7 +808,7 @@ playGame:
 	lea (12,%sp),%sp
 	addq.l #1,-8(%fp)
 .L83:
-	moveq #79,%d0
+	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L84
 	moveq #80,%d0
@@ -824,7 +824,7 @@ playGame:
 	lea (12,%sp),%sp
 	addq.l #1,-8(%fp)
 .L85:
-	moveq #79,%d0
+	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L86
 	pea .LC0
