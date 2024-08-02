@@ -764,7 +764,7 @@ playGame:
 	clr.l -12(%fp)
 	jsr init_nncurses
 	pea .LC0
-	pea 1.w
+	pea 25.w
 	pea 1.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
