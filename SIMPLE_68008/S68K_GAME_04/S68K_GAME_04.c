@@ -36,16 +36,16 @@ int playGame(void)
 	init_nncurses();
 	yCurr = 1;
 	for (xCurr = 1; xCurr <= 80; xCurr++)
-		charToScreen(xCurr, yCurr, '#');
+		fromBuffer[yCurr][xCurr] =  '#';
 	yCurr = 24;
 	for (xCurr = 1; xCurr <= 80; xCurr++)
-		charToScreen(xCurr, yCurr, '#');
+		fromBuffer[yCurr][xCurr] =  '#';
 	xCurr = 1;
 	for (yCurr = 2; yCurr < 25; yCurr++)
-		charToScreen(xCurr, yCurr, '#');
+		fromBuffer[yCurr][xCurr] =  '#';
 	xCurr = 80;
 	for (yCurr = 2; yCurr < 25; yCurr++)
-		charToScreen(xCurr, yCurr, '#');
+		fromBuffer[yCurr][xCurr] =  '#';
 	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 	xCurr = 40;
 	yCurr = 12;
@@ -96,6 +96,7 @@ int playGame(void)
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
 	}
+	cls();
 	return 1;
 }
 
