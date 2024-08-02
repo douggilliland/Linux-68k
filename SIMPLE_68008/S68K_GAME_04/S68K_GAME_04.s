@@ -754,7 +754,7 @@ charToScreen:
 	.size	charToScreen, .-charToScreen
 	.section	.rodata
 .LC0:
-	.string	"Arrow keys to move, q to quit"
+	.string	"Arrow keys to move, Q to quit"
 	.text
 	.align	2
 	.globl	playGame
@@ -829,10 +829,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
 	addq.l #1,-8(%fp)
-	moveq #25,%d0
+	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L84
-	moveq #25,%d0
+	moveq #24,%d0
 	move.l %d0,-8(%fp)
 .L84:
 	move.l -8(%fp),%d1
