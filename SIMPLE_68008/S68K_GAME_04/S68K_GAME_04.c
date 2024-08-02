@@ -41,10 +41,10 @@ int playGame(void)
 	for (xCurr = 1; xCurr <= 80; xCurr++)
 		charToScreen(xCurr, yCurr, '#');
 	xCurr = 1;
-	for (yCurr = 2; yCurr < 80; yCurr++)
+	for (yCurr = 2; yCurr < 25; yCurr++)
 		charToScreen(xCurr, yCurr, '#');
 	xCurr = 80;
-	for (yCurr = 2; yCurr < 80; yCurr++)
+	for (yCurr = 2; yCurr < 25; yCurr++)
 		charToScreen(xCurr, yCurr, '#');
 	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 	xCurr = 40;
