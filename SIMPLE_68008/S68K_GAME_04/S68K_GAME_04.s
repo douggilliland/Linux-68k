@@ -752,6 +752,10 @@ charToScreen:
 	unlk %fp
 	rts
 	.size	charToScreen, .-charToScreen
+	.section	.rodata
+.LC0:
+	.string	"Arrow keys to move, q to quit"
+	.text
 	.align	2
 	.globl	playGame
 	.type	playGame, @function
@@ -759,6 +763,11 @@ playGame:
 	link.w %fp,#-16
 	clr.l -12(%fp)
 	jsr init_nncurses
+	pea .LC0
+	pea 1.w
+	pea 1.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
 	moveq #40,%d0
 	move.l %d0,-4(%fp)
 	moveq #12,%d0
