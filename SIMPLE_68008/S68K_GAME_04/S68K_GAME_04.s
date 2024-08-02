@@ -950,9 +950,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #32,(%a0)
 	subq.l #1,-4(%fp)
-	tst.l -4(%fp)
-	jne .L95
 	moveq #1,%d0
+	cmp.l -4(%fp),%d0
+	jne .L95
+	moveq #2,%d0
 	move.l %d0,-4(%fp)
 .L95:
 	move.l -8(%fp),%d1
