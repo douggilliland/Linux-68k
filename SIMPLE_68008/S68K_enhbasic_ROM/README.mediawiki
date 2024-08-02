@@ -1,12 +1,43 @@
-== Enhanced BASIC ==
+== Enhanced BASIC integrated with S68K_002 ROM Monitor ==
 
 * Lee Davison's Enhanced Basic for 68000
 ** Ported by Jeff Tranter for his TS2 single board computer
 * Runs on SIMPLE-68008 card
+* This build is specifically made to be combined with [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM] and programmed into a 32KB or larger PROM
 
+== Build ==
+
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]
 * Assembled using the [https://github.com/douggilliland/Linux-68k/tree/master/vasm VASM retargetable assembler]
-* This build is loaded into SRAM from the S68K_002 monitor
-* In theory, can be built to run from EPROM
+* First, build the [https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_002 S68K_002 Monitor ROM]
+* Run make for the Enhanced BASIC which pulls in the S68K_002 code
+** Result is a .hex file
+* Program using PROM programmer
+
+== Memory Map ==
+
+* EPROM base address = 0x80000
+** 0x80000-0x83FFF - First 16KB reserved addresses for monitor (plenty of room for expansion)
+*** Code is from 0x80400-0x80caf (Less than 4KB)
+** 0x84000-0x87FFF - Second 16KB reserves addresses for BASIC (plenty of room for expansion)
+*** Code is from 0x84800-0x87D1F (Less than 16KB)
+
+== Running ==
+
+* Boots into the monitor
+* Run BASIC with 'B' on command line
+* Runs at 38,400 baud
+<PRE>
+SIMPLE-68008 CPU V1.00
+RAM Test Passed
+> b
+12
+490032 Bytes free
+
+Enhanced 68k BASIC Version 3.52
+
+Ready
+</PRE>
 
 == References ==
 

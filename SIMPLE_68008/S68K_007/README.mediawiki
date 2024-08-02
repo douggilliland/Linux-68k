@@ -7,3 +7,4 @@
 * Downloaded as S Records
 ** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
 * R1000 to run program
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]

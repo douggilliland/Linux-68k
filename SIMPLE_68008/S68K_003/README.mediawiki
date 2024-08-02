@@ -5,3 +5,4 @@
 * 4.7K resistor, red LED = less than 1 mA
 * Downloaded as S Records
 ** Loaded with L command in [https://github.com/douggilliland/Linux-68k/tree/S-Record-Load-working/S68K_002 S68K_002 monitor]
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]

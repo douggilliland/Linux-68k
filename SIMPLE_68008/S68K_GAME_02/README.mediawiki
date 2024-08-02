@@ -6,8 +6,7 @@
 
 == Build ==
 
-* You will need a version of gcc built as a cross-compiler for the 68k platform
-** I used gcc version 7.5.0
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]
 * Build the code using the provided make file
 ** It gets linked at address $2000
 * To load it into the S68K_002 monitor you can run the command "L" and then send the run (S record) file to the serial port
