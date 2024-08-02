@@ -6,6 +6,9 @@
 /* Putting main() here before defines 
 to make sure we know that main() is at first address */
 
+/* Write to fromBuffer[yCurr][xCurr]
+When done writing, use copy_ScreenBuffer_Deltas_to_Screen() to update the screen */
+
 /* Function prototypes		*/
 
 int playGame(void);
@@ -95,6 +98,7 @@ int playGame(void)
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
+		positionCursorScreen(40, 25);
 	}
 	cls();
 	return 1;
