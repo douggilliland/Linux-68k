@@ -6,9 +6,11 @@
 |		Uses SRAM from 0x400-0x407 for variable storage during loading
 |		Runs at 38.4kb with no delays in host transmission
 |	Adds 60 Hz Timer - count stored in 0x408-0x40B - available to application code
-|	Application code can be from 0x40C-bottom of stack
+|	Application code can be from 0x40C up to the bottom of stack
 |	Stack is at the top of 512 KB SRAM and grows down in memory
 |	Code can be standalone or combined with the Enhanced BASIC ROM code
+|		https://github.com/douggilliland/Linux-68k/tree/master/SIMPLE_68008/S68K_enhbasic_ROM
+|		'B' on command line invokes BASIC
 |		
 | Land Boards, LLC
 |	(c) 2024
@@ -386,13 +388,24 @@ parseLine:
 |||||||||||||||||||||||||||||||
 || HELP command
  .help:
+ 	lea		BasicStart, %a0
+	move.w	(%a0),%d0
+	cmp.w	#0x6056, %d0
+	bne.s	noBasic			| Not supported
     lea     msgHelp, %a0
     bsr.w   printString
     bra.w   .exit
+noBasic:
+    lea     msgHelpNoBasic, %a0
+    bsr.w   printString
+    bra.w   .exit
+
+
  .invalidAddr:
     lea     msgInvalidAddress, %a0
     bsr.w   printString
     bra.w   .exit
+
  .invalidVal:
     lea     msgInvalidValue, %a0
     bsr.w   printString
@@ -468,7 +481,10 @@ BasicStart = 0x84800
 	cmp.w	#0x6056, %d0
 	bne.s	skipBasic			| Not supported
 	jsr		(%a0)
+	rts
 skipBasic:
+    lea     BasicNotSupported, %a0
+    bsr.w   printString
 	rts
 
 |||||||||||||||||||||||||||||
@@ -992,10 +1008,17 @@ msgInvalidCommand:
 	dc.b CR,LF,EOT
 CRLF_MSG:	
 	dc.b CR,LF,EOT
+BasicNotSupported:
+	.ascii	"BASIC is not present in ROM"
+	dc.b	CR,LF,EOT
+msgHelpNoBasic
+    .ascii	"Available Commands: "
+	dc.b	CR,LF
+    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (H)elp"
+	dc.b	CR,LF,EOT
 msgHelp:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
-|    .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (T)Timer  (H)elp"
     .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (B)ASIC  (H)elp"
 	dc.b	CR,LF,EOT
 ldSRecMsg:
