@@ -454,7 +454,7 @@ noBasic:
  .exend:                        | Done parsing, give the parameters to dumpRAM and exit
     move.l  %a3, %a0
     bsr.w   dumpRAM
-    bra.s   .exit
+    bra	   .exit
  .exinter:                      | Interactive mode, Space shows 16 lines, enter shows 1.
     move.l  %a3, %a0            | Current Address
     move.l  #0x10, %d0          | 16 bytes
@@ -1011,7 +1011,7 @@ CRLF_MSG:
 BasicNotSupported:
 	.ascii	"BASIC is not present in ROM"
 	dc.b	CR,LF,EOT
-msgHelpNoBasic
+msgHelpNoBasic:
     .ascii	"Available Commands: "
 	dc.b	CR,LF
     .ascii	" (E)xamine  (D)eposit  (R)un  (L)oad  (H)elp"
