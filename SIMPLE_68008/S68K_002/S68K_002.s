@@ -481,11 +481,11 @@ BasicStart = 0x84800
 	cmp.w	#0x6056, %d0
 	bne.s	skipBasic			| Not supported
 	jsr		(%a0)
-	rts
+	bra.w   .exit
 skipBasic:
     lea     BasicNotSupported, %a0
     bsr.w   printString
-	rts
+	bra.w   .exit
 
 |||||||||||||||||||||||||||||
 || Load S Record
