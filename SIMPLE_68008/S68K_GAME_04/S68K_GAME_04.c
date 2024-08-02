@@ -90,8 +90,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			xCurr -= 1;
-			if (xCurr == 0)
-				xCurr = 1;
+			if (xCurr == 1)
+				xCurr = 2;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
