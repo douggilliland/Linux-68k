@@ -34,8 +34,7 @@ int playGame(void)
 	char gotKBVal;
 	int exitCode = 0;
 	init_nncurses();
-
-	stringToScreen(1,1,"Arrow keys to move, q to quit");
+	stringToScreen(1,25,"Arrow keys to move, q to quit");
 	xCurr = 40;
 	yCurr = 12;
 	fromBuffer[yCurr][xCurr] = '*';
