@@ -34,6 +34,18 @@ int playGame(void)
 	char gotKBVal;
 	int exitCode = 0;
 	init_nncurses();
+	yCurr = 1;
+	for (xCurr = 1; xCurr <= 80; xCurr++)
+		charToScreen(xCurr, yCurr, '#');
+	yCurr = 24;
+	for (xCurr = 1; xCurr <= 80; xCurr++)
+		charToScreen(xCurr, yCurr, '#');
+	xCurr = 1;
+	for (yCurr = 2; yCurr < 80; yCurr++)
+		charToScreen(xCurr, yCurr, '#');
+	xCurr = 80;
+	for (yCurr = 2; yCurr < 80; yCurr++)
+		charToScreen(xCurr, yCurr, '#');
 	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 	xCurr = 40;
 	yCurr = 12;
@@ -51,8 +63,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			yCurr -= 1;
-			if (yCurr == 0)
-				yCurr = 1;
+			if (yCurr == 1)
+				yCurr = 2;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
@@ -60,8 +72,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			yCurr += 1;
-			if (yCurr > 24)
-				yCurr = 24;
+			if (yCurr > 23)
+				yCurr = 23;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
@@ -69,8 +81,8 @@ int playGame(void)
 		{
 			fromBuffer[yCurr][xCurr] = ' ';
 			xCurr += 1;
-			if (xCurr == 81)
-				xCurr = 80;
+			if (xCurr == 80)
+				xCurr = 79;
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
