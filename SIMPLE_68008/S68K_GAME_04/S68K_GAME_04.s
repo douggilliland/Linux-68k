@@ -769,11 +769,14 @@ playGame:
 	move.l %d0,-4(%fp)
 	jra .L79
 .L80:
-	pea 35.w
-	move.l -8(%fp),-(%sp)
-	move.l -4(%fp),-(%sp)
-	jsr charToScreen
-	lea (12,%sp),%sp
+	move.l -8(%fp),%d1
+	move.l %d1,%d0
+	lsl.l #7,%d0
+	add.l %d1,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b #35,(%a0)
 	addq.l #1,-4(%fp)
 .L79:
 	moveq #80,%d0
@@ -785,11 +788,14 @@ playGame:
 	move.l %d0,-4(%fp)
 	jra .L81
 .L82:
-	pea 35.w
-	move.l -8(%fp),-(%sp)
-	move.l -4(%fp),-(%sp)
-	jsr charToScreen
-	lea (12,%sp),%sp
+	move.l -8(%fp),%d1
+	move.l %d1,%d0
+	lsl.l #7,%d0
+	add.l %d1,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b #35,(%a0)
 	addq.l #1,-4(%fp)
 .L81:
 	moveq #80,%d0
@@ -801,11 +807,14 @@ playGame:
 	move.l %d0,-8(%fp)
 	jra .L83
 .L84:
-	pea 35.w
-	move.l -8(%fp),-(%sp)
-	move.l -4(%fp),-(%sp)
-	jsr charToScreen
-	lea (12,%sp),%sp
+	move.l -8(%fp),%d1
+	move.l %d1,%d0
+	lsl.l #7,%d0
+	add.l %d1,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b #35,(%a0)
 	addq.l #1,-8(%fp)
 .L83:
 	moveq #24,%d0
@@ -817,11 +826,14 @@ playGame:
 	move.l %d0,-8(%fp)
 	jra .L85
 .L86:
-	pea 35.w
-	move.l -8(%fp),-(%sp)
-	move.l -4(%fp),-(%sp)
-	jsr charToScreen
-	lea (12,%sp),%sp
+	move.l -8(%fp),%d1
+	move.l %d1,%d0
+	lsl.l #7,%d0
+	add.l %d1,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b #35,(%a0)
 	addq.l #1,-8(%fp)
 .L85:
 	moveq #24,%d0
@@ -968,6 +980,7 @@ playGame:
 .L87:
 	tst.l -12(%fp)
 	jeq .L96
+	jsr cls
 	moveq #1,%d0
 	unlk %fp
 	rts
