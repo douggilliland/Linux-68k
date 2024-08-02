@@ -2,6 +2,9 @@
 Not ncurses but similar
 https://raw.githubusercontent.com/mirror/ncurses/master/doc/ncurses-intro.doc */
 
+/* Assumption - Performance is Serial I/O bound
+*/
+
 /* Always need to call init_nncurses()		*/
 
 #ifndef S68K_NNCURSES_h
@@ -16,7 +19,8 @@ void init_nncurses(void);
 void cursorOnOff(int curFlag);
 void positionCursorScreen(int x, int y);
 void copy_ScreenBuffer_Deltas_to_Screen(void);
-void charToScreen(int x, int y, char sendChar);
+void stringToScreen(int , int, char *);
+void charToScreen(int, int, char);
 
 #define ESC 0x1B
 
@@ -65,6 +69,18 @@ void cls(void)
 		putCharA('J');
 }
 
+void stringToScreen(int xStart, int yStart, char * strToPrint)
+{
+	int strOff = 0;
+	int xOff = xStart;
+	int yOff = yStart;
+	while (strToPrint[strOff] != 0)
+	{
+		charToScreen(xOff, yStart, strToPrint[strOff]);
+		xOff += 1;
+		strOff += 1;
+	}
+}
 /* 
 Hide the cursor: 0x9B 0x3F 0x32 0x35 0x6C
 Show the cursor: 0x9B 0x3F 0x32 0x35 0x68
