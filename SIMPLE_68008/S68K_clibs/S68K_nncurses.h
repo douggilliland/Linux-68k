@@ -73,7 +73,6 @@ void stringToScreen(int xStart, int yStart, char * strToPrint)
 {
 	int strOff = 0;
 	int xOff = xStart;
-	int yOff = yStart;
 	while (strToPrint[strOff] != 0)
 	{
 		charToScreen(xOff, yStart, strToPrint[strOff]);
