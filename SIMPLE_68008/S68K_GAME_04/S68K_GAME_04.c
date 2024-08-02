@@ -30,7 +30,7 @@ char fromBuffer[32][128];
 int playGame(void)
 {
 	int xCurr, yCurr;
-	char charCurr;
+//	char charCurr;
 	char gotKBVal;
 	int exitCode = 0;
 	init_nncurses();
@@ -90,7 +90,7 @@ int playGame(void)
 int getKeyboard(void)
 {
 	char kbChar;
-	int gotEsc = 0;
+//	int gotEsc = 0;
 	kbChar = getCharA();
 	if (kbChar == 'q')
 		return 0;
