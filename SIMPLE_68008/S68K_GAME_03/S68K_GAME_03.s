@@ -530,12 +530,46 @@ cls:
 	rts
 	.size	cls, .-cls
 	.align	2
+	.globl	stringToScreen
+	.type	stringToScreen, @function
+stringToScreen:
+	link.w %fp,#-8
+	clr.l -4(%fp)
+	move.l 8(%fp),-8(%fp)
+	jra .L64
+.L65:
+	move.l -4(%fp),%d0
+	move.l 16(%fp),%a0
+	add.l %d0,%a0
+	move.b (%a0),%d0
+	ext.w %d0
+	move.w %d0,%a0
+	move.l %a0,-(%sp)
+	move.l 12(%fp),-(%sp)
+	move.l -8(%fp),-(%sp)
+	jsr charToScreen
+	lea (12,%sp),%sp
+	addq.l #1,-8(%fp)
+	addq.l #1,-4(%fp)
+.L64:
+	move.l -4(%fp),%d0
+	move.l 16(%fp),%a0
+	add.l %d0,%a0
+	move.b (%a0),%d0
+	tst.b %d0
+	jne .L65
+	nop
+	nop
+	unlk %fp
+	rts
+	.size	stringToScreen, .-stringToScreen
+	.align	2
 	.globl	cursorOnOff
 	.type	cursorOnOff, @function
 cursorOnOff:
 	link.w %fp,#0
 	tst.l 8(%fp)
-	jne .L64
+	jne .L67
 	pea -101.w
 	jsr putCharA
 	addq.l #4,%sp
@@ -551,8 +585,8 @@ cursorOnOff:
 	pea 108.w
 	jsr putCharA
 	addq.l #4,%sp
-	jra .L66
-.L64:
+	jra .L69
+.L67:
 	pea -101.w
 	jsr putCharA
 	addq.l #4,%sp
@@ -568,7 +602,7 @@ cursorOnOff:
 	pea 107.w
 	jsr putCharA
 	addq.l #4,%sp
-.L66:
+.L69:
 	nop
 	unlk %fp
 	rts
@@ -624,12 +658,12 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	move.l %d2,-(%sp)
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-	jra .L69
-.L73:
+	jra .L72
+.L76:
 	moveq #1,%d0
 	move.l %d0,-4(%fp)
-	jra .L70
-.L72:
+	jra .L73
+.L75:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -647,7 +681,7 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	add.l #screenBuffer,%a0
 	move.b (%a0),%d0
 	cmp.b %d2,%d0
-	jeq .L71
+	jeq .L74
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -679,17 +713,17 @@ copy_ScreenBuffer_Deltas_to_Screen:
 	move.l %d0,%a0
 	add.l #screenBuffer,%a0
 	move.b %d2,(%a0)
-.L71:
+.L74:
 	addq.l #1,-4(%fp)
-.L70:
+.L73:
 	move.l screenWidth,%d0
 	cmp.l -4(%fp),%d0
-	jge .L72
+	jge .L75
 	addq.l #1,-8(%fp)
-.L69:
+.L72:
 	move.l screenHeight,%d0
 	cmp.l -8(%fp),%d0
-	jge .L73
+	jge .L76
 	nop
 	nop
 	move.l -12(%fp),%d2
@@ -738,18 +772,18 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
-	jra .L76
-.L85:
+	jra .L79
+.L88:
 	jsr getKeyboard
 	move.b %d0,-13(%fp)
 	tst.b -13(%fp)
-	jne .L77
+	jne .L80
 	moveq #1,%d0
 	move.l %d0,-12(%fp)
-	jra .L76
-.L77:
+	jra .L79
+.L80:
 	cmp.b #1,-13(%fp)
-	jne .L78
+	jne .L81
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -760,10 +794,10 @@ playGame:
 	move.b #32,(%a0)
 	subq.l #1,-8(%fp)
 	tst.l -8(%fp)
-	jne .L79
+	jne .L82
 	moveq #1,%d0
 	move.l %d0,-8(%fp)
-.L79:
+.L82:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -773,10 +807,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
-	jra .L76
-.L78:
+	jra .L79
+.L81:
 	cmp.b #2,-13(%fp)
-	jne .L80
+	jne .L83
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -788,10 +822,10 @@ playGame:
 	addq.l #1,-8(%fp)
 	moveq #25,%d0
 	cmp.l -8(%fp),%d0
-	jge .L81
+	jge .L84
 	moveq #25,%d0
 	move.l %d0,-8(%fp)
-.L81:
+.L84:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -801,10 +835,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
-	jra .L76
-.L80:
+	jra .L79
+.L83:
 	cmp.b #3,-13(%fp)
-	jne .L82
+	jne .L85
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -816,10 +850,10 @@ playGame:
 	addq.l #1,-4(%fp)
 	moveq #81,%d0
 	cmp.l -4(%fp),%d0
-	jne .L83
+	jne .L86
 	moveq #80,%d0
 	move.l %d0,-4(%fp)
-.L83:
+.L86:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -829,10 +863,10 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
-	jra .L76
-.L82:
+	jra .L79
+.L85:
 	cmp.b #4,-13(%fp)
-	jne .L76
+	jne .L79
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -843,10 +877,10 @@ playGame:
 	move.b #32,(%a0)
 	subq.l #1,-4(%fp)
 	tst.l -4(%fp)
-	jne .L84
+	jne .L87
 	moveq #1,%d0
 	move.l %d0,-4(%fp)
-.L84:
+.L87:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -856,9 +890,9 @@ playGame:
 	add.l #fromBuffer,%a0
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
-.L76:
+.L79:
 	tst.l -12(%fp)
-	jeq .L85
+	jeq .L88
 	moveq #1,%d0
 	unlk %fp
 	rts
@@ -872,45 +906,45 @@ getKeyboard:
 	jsr getCharA
 	move.b %d0,-5(%fp)
 	cmp.b #113,-5(%fp)
-	jne .L88
-	moveq #0,%d0
-	jra .L89
-.L88:
-	cmp.b #81,-5(%fp)
-	jne .L90
-	moveq #0,%d0
-	jra .L89
-.L90:
-	cmp.b #27,-5(%fp)
 	jne .L91
+	moveq #0,%d0
+	jra .L92
+.L91:
+	cmp.b #81,-5(%fp)
+	jne .L93
+	moveq #0,%d0
+	jra .L92
+.L93:
+	cmp.b #27,-5(%fp)
+	jne .L94
 	jsr getCharA
 	move.b %d0,-5(%fp)
 	cmp.b #91,-5(%fp)
-	jne .L91
+	jne .L94
 	jsr getCharA
 	move.b %d0,-5(%fp)
 	cmp.b #65,-5(%fp)
-	jne .L92
+	jne .L95
 	moveq #1,%d0
-	jra .L89
-.L92:
+	jra .L92
+.L95:
 	cmp.b #66,-5(%fp)
-	jne .L93
+	jne .L96
 	moveq #2,%d0
-	jra .L89
-.L93:
+	jra .L92
+.L96:
 	cmp.b #67,-5(%fp)
-	jne .L94
+	jne .L97
 	moveq #3,%d0
-	jra .L89
-.L94:
+	jra .L92
+.L97:
 	cmp.b #68,-5(%fp)
-	jne .L91
+	jne .L94
 	moveq #4,%d0
-	jra .L89
-.L91:
+	jra .L92
+.L94:
 	moveq #5,%d0
-.L89:
+.L92:
 	unlk %fp
 	rts
 	.size	getKeyboard, .-getKeyboard
