@@ -349,13 +349,12 @@ initTimer:
 	andi.w	#0xF8FF, %sr		| Enable interrupts
 	movem.l (%SP)+, %d0/%a0-%a1	| Restore registers
 	rts
-|    bra.w   .exit
 
 |
 | Parse Line
 |
 parseLine:
-    movem.l %a2-%a3, -(%SP)     | Save registers
+    movem.l %d0/%a0, -(%SP)     | Save registers
     lea     varLineBuf, %a0
  PLfindCommand:
     move.b  (%a0)+, %d0
@@ -381,9 +380,8 @@ parseLine:
     lea     msgInvalidCommand, %a0
     bsr.w   printString
  .exit:
-    movem.l (%SP)+, %a2-%a3     | Restore registers
+    movem.l (%SP)+, %d0/%a0     | Restore registers
     rts
-
 
 |||||||||||||||||||||||||||||||
 || HELP command
@@ -874,7 +872,7 @@ dumpRAM:
     move.l  %d0, %a0
     jsr     (%a0)             	| Jump to the code! 
                                 | Go as subroutine to allow code to return to us
-    jsr     monitorStart        | Warm start after returning so everything is in
+    bra     .exit		        | Warm start after returning so everything is in
                                 | a known state.
 
 
