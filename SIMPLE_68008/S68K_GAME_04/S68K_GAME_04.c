@@ -33,6 +33,7 @@ char fromBuffer[32][128];
 int playGame(void)
 {
 	int xCurr, yCurr;
+	int rv;
 //	char charCurr;
 	char gotKBVal;
 	int exitCode = 0;
@@ -98,7 +99,10 @@ int playGame(void)
 			fromBuffer[yCurr][xCurr] = '*';
 			copy_ScreenBuffer_Deltas_to_Screen();
 		}
-		positionCursorScreen(40, 25);
+	rv = randomNum(2,79);
+	intToStr(rv,randoStr);
+	stringToScreen(40,25,randoStr);
+		
 	}
 	cls();
 	return 1;
@@ -130,4 +134,20 @@ int getKeyboard(void)
 		}
 	}
 	return 5;
+}
+
+int randomNum(int rangeLow, int rangeHigh)
+{
+	unsigned long timerVal;
+	int retVal;
+	timerVal = readTimer();
+	retVal = timerVal % (rangeHigh - rangeLow);
+	retVal += rangeLow;
+	return (retVal);
+}
+
+unsigned long readTimer(void)
+{
+	unsigned longPtr * = 0x408;
+	return ((int)longPtr);
 }
