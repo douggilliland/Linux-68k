@@ -15,6 +15,7 @@ int playGame(void);
 int getKeyboard(void);
 int randomNum(int, int);
 int readTimer(void);
+void drawFrame(void);
 
 int main(void)
 {
