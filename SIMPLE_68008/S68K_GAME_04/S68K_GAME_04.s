@@ -760,7 +760,7 @@ charToScreen:
 	.globl	playGame
 	.type	playGame, @function
 playGame:
-	link.w %fp,#-16
+	link.w %fp,#-28
 	clr.l -12(%fp)
 	jsr init_nncurses
 	moveq #1,%d0
@@ -978,10 +978,22 @@ playGame:
 	move.b #42,(%a0)
 	jsr copy_ScreenBuffer_Deltas_to_Screen
 .L89:
+	pea 79.w
+	pea 2.w
+	jsr randomNum
+	addq.l #8,%sp
+	move.l %d0,-18(%fp)
+	lea (-27,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -18(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-27,%fp),%a0
+	move.l %a0,-(%sp)
 	pea 25.w
 	pea 40.w
-	jsr positionCursorScreen
-	addq.l #8,%sp
+	jsr stringToScreen
+	lea (12,%sp),%sp
 .L87:
 	tst.l -12(%fp)
 	jeq .L97
@@ -1040,4 +1052,39 @@ getKeyboard:
 	unlk %fp
 	rts
 	.size	getKeyboard, .-getKeyboard
+	.globl	__umodsi3
+	.align	2
+	.globl	randomNum
+	.type	randomNum, @function
+randomNum:
+	link.w %fp,#-8
+	jsr readTimer
+	move.l %d0,-4(%fp)
+	move.l 12(%fp),%d0
+	sub.l 8(%fp),%d0
+	move.l %d0,%d1
+	move.l -4(%fp),%d0
+	move.l %d1,-(%sp)
+	move.l %d0,-(%sp)
+	jsr __umodsi3
+	addq.l #8,%sp
+	move.l %d0,-8(%fp)
+	move.l 8(%fp),%d0
+	add.l %d0,-8(%fp)
+	move.l -8(%fp),%d0
+	unlk %fp
+	rts
+	.size	randomNum, .-randomNum
+	.align	2
+	.globl	readTimer
+	.type	readTimer, @function
+readTimer:
+	link.w %fp,#-8
+	move.l #1032,-4(%fp)
+	move.l -4(%fp),%a0
+	move.l (%a0),-8(%fp)
+	move.l -8(%fp),%d0
+	unlk %fp
+	rts
+	.size	readTimer, .-readTimer
 	.ident	"GCC: (GNU) 9.3.1 20200817"
