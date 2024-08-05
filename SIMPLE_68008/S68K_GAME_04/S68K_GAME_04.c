@@ -34,6 +34,7 @@ int playGame(void)
 {
 	int xCurr, yCurr;
 	int rv;
+	char randoStr[9];
 //	char charCurr;
 	char gotKBVal;
 	int exitCode = 0;
