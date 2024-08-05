@@ -759,6 +759,7 @@ playGame:
 	link.w %fp,#-28
 	clr.l -12(%fp)
 	jsr init_nncurses
+	jsr drawFrame
 	moveq #40,%d0
 	move.l %d0,-4(%fp)
 	moveq #12,%d0
