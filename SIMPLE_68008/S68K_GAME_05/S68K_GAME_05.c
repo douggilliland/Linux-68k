@@ -42,7 +42,8 @@ int playGame(void)
 	init_nncurses();
 	while (exitCode == 0)
 	{
-		gotKBVal = getKeyboard();
+		if (rxStatPortA() == 1)
+			gotKBVal = getKeyboard();
 		if (gotKBVal == 0)
 		{
 			exitCode = 1;
