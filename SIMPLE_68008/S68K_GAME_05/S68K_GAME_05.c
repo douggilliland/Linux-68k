@@ -53,8 +53,9 @@ int playGame(void)
 		xCurr = randomNum(1,80);
 		yCurr = randomNum(1,24);
 		randChar = randomNum('A','z');
-		fromBuffer[yCurr][xCurr] = randChar;
-		copy_ScreenBuffer_Deltas_to_Screen();
+		positionCursorScreen(xCurr, yCurr);
+		putCharA(randChar);
+//		copy_ScreenBuffer_Deltas_to_Screen();
 	}
 	cls();
 	return 1;
