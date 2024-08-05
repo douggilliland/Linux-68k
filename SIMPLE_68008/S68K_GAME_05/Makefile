@@ -17,15 +17,15 @@ CFLAGS  = -m$(ARCH) -Wall -msoft-float
 # -Wl,--relax = Relax linker stub generation
 LFLAGS  = --defsym=_start=main -Ttext=0x2000 -Tdata=0x8000 -Tbss=0x9000 --section-start=.rodata=0x5000
 
-all:	S68K_GAME_04.run S68K_GAME_04.s
+all:	S68K_GAME_05.run S68K_GAME_05.s
 
-S68K_GAME_04.run: S68K_GAME_04.c
-	$(CC) $(CFLAGS) -c S68K_GAME_04.c
-	$(LD) $(LFLAGS) S68K_GAME_04.o `/opt/m68k-elf/bin/m68k-elf-gcc -m68000 -print-libgcc-file-name`
-	$(CP) -O srec a.out S68K_GAME_04.run
+S68K_GAME_05.run: S68K_GAME_05.c
+	$(CC) $(CFLAGS) -c S68K_GAME_05.c
+	$(LD) $(LFLAGS) S68K_GAME_05.o `/opt/m68k-elf/bin/m68k-elf-gcc -m68000 -print-libgcc-file-name`
+	$(CP) -O srec a.out S68K_GAME_05.run
 
-S68K_GAME_04.s: S68K_GAME_04.c
-	$(CC) -m$(ARCH) -Wall -nostdlib -nodefaultlibs -S S68K_GAME_04.c
+S68K_GAME_05.s: S68K_GAME_05.c
+	$(CC) -m$(ARCH) -Wall -nostdlib -nodefaultlibs -S S68K_GAME_05.c
 
 clean:
-	$(RM) a.out S68K_GAME_04.o S68K_GAME_04.run S68K_GAME_04.s
+	$(RM) a.out S68K_GAME_05.o S68K_GAME_05.run S68K_GAME_05.s
