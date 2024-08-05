@@ -13,6 +13,8 @@ When done writing, use copy_ScreenBuffer_Deltas_to_Screen() to update the screen
 
 int playGame(void);
 int getKeyboard(void);
+int randomNum(int, int);
+int readTimer(void);
 
 int main(void)
 {
