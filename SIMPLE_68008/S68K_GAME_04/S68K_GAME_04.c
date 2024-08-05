@@ -153,7 +153,7 @@ int readTimer(void)
 {
 	unsigned long * longPtr;
 	unsigned long timerVal;
-	longPtr = 0x408;
+	longPtr = (unsigned long *) 0x408;
 	timerVal = *longPtr;
 	return ((int)timerVal);
 }
