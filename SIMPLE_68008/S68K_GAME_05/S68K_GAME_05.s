@@ -758,20 +758,20 @@ charToScreen:
 playGame:
 	link.w %fp,#-16
 	clr.l -4(%fp)
+	move.b #1,-5(%fp)
 	jsr init_nncurses
 	jra .L79
-.L82:
+.L81:
 	jsr rxStatPortA
 	cmp.b #1,%d0
 	jne .L80
 	jsr getKeyboard
 	move.b %d0,-5(%fp)
-.L80:
 	tst.b -5(%fp)
-	jne .L81
+	jne .L80
 	moveq #1,%d0
 	move.l %d0,-4(%fp)
-.L81:
+.L80:
 	pea 80.w
 	pea 1.w
 	jsr randomNum
@@ -798,7 +798,7 @@ playGame:
 	jsr copy_ScreenBuffer_Deltas_to_Screen
 .L79:
 	tst.l -4(%fp)
-	jeq .L82
+	jeq .L81
 	jsr cls
 	moveq #1,%d0
 	unlk %fp
@@ -817,27 +817,8 @@ drawFrame:
 	move.l %d0,-8(%fp)
 	moveq #1,%d0
 	move.l %d0,-4(%fp)
-	jra .L85
-.L86:
-	move.l -8(%fp),%d1
-	move.l %d1,%d0
-	lsl.l #7,%d0
-	add.l %d1,%d0
-	add.l -4(%fp),%d0
-	move.l %d0,%a0
-	add.l #fromBuffer,%a0
-	move.b #35,(%a0)
-	addq.l #1,-4(%fp)
+	jra .L84
 .L85:
-	moveq #80,%d0
-	cmp.l -4(%fp),%d0
-	jge .L86
-	moveq #24,%d0
-	move.l %d0,-8(%fp)
-	moveq #1,%d0
-	move.l %d0,-4(%fp)
-	jra .L87
-.L88:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -847,16 +828,35 @@ drawFrame:
 	add.l #fromBuffer,%a0
 	move.b #35,(%a0)
 	addq.l #1,-4(%fp)
-.L87:
+.L84:
 	moveq #80,%d0
 	cmp.l -4(%fp),%d0
-	jge .L88
+	jge .L85
+	moveq #24,%d0
+	move.l %d0,-8(%fp)
+	moveq #1,%d0
+	move.l %d0,-4(%fp)
+	jra .L86
+.L87:
+	move.l -8(%fp),%d1
+	move.l %d1,%d0
+	lsl.l #7,%d0
+	add.l %d1,%d0
+	add.l -4(%fp),%d0
+	move.l %d0,%a0
+	add.l #fromBuffer,%a0
+	move.b #35,(%a0)
+	addq.l #1,-4(%fp)
+.L86:
+	moveq #80,%d0
+	cmp.l -4(%fp),%d0
+	jge .L87
 	moveq #1,%d0
 	move.l %d0,-4(%fp)
 	moveq #2,%d0
 	move.l %d0,-8(%fp)
-	jra .L89
-.L90:
+	jra .L88
+.L89:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -866,16 +866,16 @@ drawFrame:
 	add.l #fromBuffer,%a0
 	move.b #35,(%a0)
 	addq.l #1,-8(%fp)
-.L89:
+.L88:
 	moveq #24,%d0
 	cmp.l -8(%fp),%d0
-	jge .L90
+	jge .L89
 	moveq #80,%d0
 	move.l %d0,-4(%fp)
 	moveq #2,%d0
 	move.l %d0,-8(%fp)
-	jra .L91
-.L92:
+	jra .L90
+.L91:
 	move.l -8(%fp),%d1
 	move.l %d1,%d0
 	lsl.l #7,%d0
@@ -885,10 +885,10 @@ drawFrame:
 	add.l #fromBuffer,%a0
 	move.b #35,(%a0)
 	addq.l #1,-8(%fp)
-.L91:
+.L90:
 	moveq #24,%d0
 	cmp.l -8(%fp),%d0
-	jge .L92
+	jge .L91
 	pea .LC0
 	pea 25.w
 	pea 1.w
@@ -906,45 +906,45 @@ getKeyboard:
 	jsr getCharA
 	move.b %d0,-1(%fp)
 	cmp.b #113,-1(%fp)
-	jne .L94
+	jne .L93
 	moveq #0,%d0
-	jra .L95
-.L94:
+	jra .L94
+.L93:
 	cmp.b #81,-1(%fp)
-	jne .L96
+	jne .L95
 	moveq #0,%d0
-	jra .L95
-.L96:
+	jra .L94
+.L95:
 	cmp.b #27,-1(%fp)
-	jne .L97
+	jne .L96
 	jsr getCharA
 	move.b %d0,-1(%fp)
 	cmp.b #91,-1(%fp)
-	jne .L97
+	jne .L96
 	jsr getCharA
 	move.b %d0,-1(%fp)
 	cmp.b #65,-1(%fp)
-	jne .L98
-	moveq #1,%d0
-	jra .L95
-.L98:
-	cmp.b #66,-1(%fp)
-	jne .L99
-	moveq #2,%d0
-	jra .L95
-.L99:
-	cmp.b #67,-1(%fp)
-	jne .L100
-	moveq #3,%d0
-	jra .L95
-.L100:
-	cmp.b #68,-1(%fp)
 	jne .L97
-	moveq #4,%d0
-	jra .L95
+	moveq #1,%d0
+	jra .L94
 .L97:
+	cmp.b #66,-1(%fp)
+	jne .L98
+	moveq #2,%d0
+	jra .L94
+.L98:
+	cmp.b #67,-1(%fp)
+	jne .L99
+	moveq #3,%d0
+	jra .L94
+.L99:
+	cmp.b #68,-1(%fp)
+	jne .L96
+	moveq #4,%d0
+	jra .L94
+.L96:
 	moveq #5,%d0
-.L95:
+.L94:
 	unlk %fp
 	rts
 	.size	getKeyboard, .-getKeyboard
