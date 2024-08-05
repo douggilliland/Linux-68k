@@ -787,15 +787,16 @@ playGame:
 	jsr randomNum
 	addq.l #8,%sp
 	move.b %d0,-15(%fp)
-	move.l -14(%fp),%d1
-	move.l %d1,%d0
-	lsl.l #7,%d0
-	add.l %d1,%d0
-	add.l -10(%fp),%d0
-	move.l %d0,%a0
-	add.l #fromBuffer,%a0
-	move.b -15(%fp),(%a0)
-	jsr copy_ScreenBuffer_Deltas_to_Screen
+	move.l -14(%fp),-(%sp)
+	move.l -10(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	move.b -15(%fp),%d0
+	ext.w %d0
+	move.w %d0,%a0
+	move.l %a0,-(%sp)
+	jsr putCharA
+	addq.l #4,%sp
 .L79:
 	tst.l -4(%fp)
 	jeq .L81
