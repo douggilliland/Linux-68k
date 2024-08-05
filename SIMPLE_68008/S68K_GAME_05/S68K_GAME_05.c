@@ -38,6 +38,7 @@ int playGame(void)
 	int xCurr, yCurr;
 	char randChar;
 	int exitCode = 0;
+	char = gotKBVal;
 	init_nncurses();
 	while (exitCode == 0)
 	{
