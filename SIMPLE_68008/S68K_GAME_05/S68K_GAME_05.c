@@ -36,18 +36,14 @@ char fromBuffer[32][128];
 int playGame(void)
 {
 	int xCurr, yCurr;
-	int rv;
-	char randoStr[9];
+	char randChar;
+//	int rv;
+//	char randoStr[9];
 //	char charCurr;
-	char gotKBVal;
+/* 	char gotKBVal;
 	int exitCode = 0;
+*/
 	init_nncurses();
-	drawFrame();
-	xCurr = 40;
-	yCurr = 12;
-	fromBuffer[yCurr][xCurr] = '*';
-	copy_ScreenBuffer_Deltas_to_Screen();
-	
 	while (exitCode == 0)
 	{
 		gotKBVal = getKeyboard();
@@ -55,46 +51,11 @@ int playGame(void)
 		{
 			exitCode = 1;
 		}
-		else if (gotKBVal == 1)		/* UP	*/
-		{
-			fromBuffer[yCurr][xCurr] = ' ';
-			yCurr -= 1;
-			if (yCurr == 1)
-				yCurr = 2;
-			fromBuffer[yCurr][xCurr] = '*';
-			copy_ScreenBuffer_Deltas_to_Screen();
-		}
-		else if (gotKBVal == 2)		/* DN	*/
-		{
-			fromBuffer[yCurr][xCurr] = ' ';
-			yCurr += 1;
-			if (yCurr > 23)
-				yCurr = 23;
-			fromBuffer[yCurr][xCurr] = '*';
-			copy_ScreenBuffer_Deltas_to_Screen();
-		}
-		else if (gotKBVal == 3)		/* RT	*/
-		{
-			fromBuffer[yCurr][xCurr] = ' ';
-			xCurr += 1;
-			if (xCurr == 80)
-				xCurr = 79;
-			fromBuffer[yCurr][xCurr] = '*';
-			copy_ScreenBuffer_Deltas_to_Screen();
-		}
-		else if (gotKBVal == 4)		/* LT	*/
-		{
-			fromBuffer[yCurr][xCurr] = ' ';
-			xCurr -= 1;
-			if (xCurr == 1)
-				xCurr = 2;
-			fromBuffer[yCurr][xCurr] = '*';
-			copy_ScreenBuffer_Deltas_to_Screen();
-		}
-	rv = randomNum(2,79);
-	intToStr(rv,randoStr);
-	stringToScreen(40,25,randoStr);
-		
+		xCurr = randomNum(1,80);
+		yCurr = randomNum(1,24);
+		randChar = randomNum('A','z');
+		fromBuffer[yCurr][xCurr] = randChar;
+		copy_ScreenBuffer_Deltas_to_Screen();
 	}
 	cls();
 	return 1;
