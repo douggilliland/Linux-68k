@@ -38,15 +38,17 @@ int playGame(void)
 	int xCurr, yCurr;
 	char randChar;
 	int exitCode = 0;
-	char gotKBVal;
+	char gotKBVal = 1;
 	init_nncurses();
 	while (exitCode == 0)
 	{
 		if (rxStatPortA() == 1)
-			gotKBVal = getKeyboard();
-		if (gotKBVal == 0)
 		{
-			exitCode = 1;
+			gotKBVal = getKeyboard();
+			if (gotKBVal == 0)
+			{
+				exitCode = 1;
+			}
 		}
 		xCurr = randomNum(1,80);
 		yCurr = randomNum(1,24);
