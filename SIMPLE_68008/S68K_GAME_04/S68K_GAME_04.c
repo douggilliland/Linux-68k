@@ -41,19 +41,6 @@ int playGame(void)
 	char gotKBVal;
 	int exitCode = 0;
 	init_nncurses();
-	yCurr = 1;
-	for (xCurr = 1; xCurr <= 80; xCurr++)
-		fromBuffer[yCurr][xCurr] =  '#';
-	yCurr = 24;
-	for (xCurr = 1; xCurr <= 80; xCurr++)
-		fromBuffer[yCurr][xCurr] =  '#';
-	xCurr = 1;
-	for (yCurr = 2; yCurr < 25; yCurr++)
-		fromBuffer[yCurr][xCurr] =  '#';
-	xCurr = 80;
-	for (yCurr = 2; yCurr < 25; yCurr++)
-		fromBuffer[yCurr][xCurr] =  '#';
-	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 	xCurr = 40;
 	yCurr = 12;
 	fromBuffer[yCurr][xCurr] = '*';
@@ -109,6 +96,24 @@ int playGame(void)
 	}
 	cls();
 	return 1;
+}
+
+void drawFrame(void)
+{
+	int xCurr, yCurr;
+	yCurr = 1;
+	for (xCurr = 1; xCurr <= 80; xCurr++)
+		fromBuffer[yCurr][xCurr] =  '#';
+	yCurr = 24;
+	for (xCurr = 1; xCurr <= 80; xCurr++)
+		fromBuffer[yCurr][xCurr] =  '#';
+	xCurr = 1;
+	for (yCurr = 2; yCurr < 25; yCurr++)
+		fromBuffer[yCurr][xCurr] =  '#';
+	xCurr = 80;
+	for (yCurr = 2; yCurr < 25; yCurr++)
+		fromBuffer[yCurr][xCurr] =  '#';
+	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 }
 
 int getKeyboard(void)
