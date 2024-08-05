@@ -146,7 +146,7 @@ int randomNum(int rangeLow, int rangeHigh)
 	return (retVal);
 }
 
-unsigned long readTimer(void)
+int readTimer(void)
 {
 	unsigned longPtr * = 0x408;
 	return ((int)longPtr);
