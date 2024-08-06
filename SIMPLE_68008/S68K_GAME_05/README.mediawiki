@@ -1,6 +1,6 @@
 = Sample Game =
 
-* Move an object around the screen using arrow keys
+* Demonstrates semi-random numbers uring 68681 Timer to put random characters on the ANSI screen at random locations
 
 == ANSI driver ==
 * [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_clibs/S68K_nncurses.h nncurses]
@@ -8,7 +8,7 @@
 * Double buffered
 ** Write to fromBuffer[][]
 ** Copy to screenBuffer[][]
-** Send out delta as ANSI sequences to the Serial Terminal
+** Send out deltas as ANSI sequences to the Serial Terminal
 
 == Build ==
 
