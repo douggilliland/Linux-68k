@@ -1,7 +1,7 @@
 68K GAS  S68K_006.s 			page 1
 
 
-   1               	| S68K_002.s - Interrupt test code
+   1               	| S68K_006.s - Interrupt test code
    2               	| Interrupt on transmit empty
    3               	| Send out a character with every interrupt
    4               	
