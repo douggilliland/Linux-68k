@@ -1,4 +1,4 @@
-/* S68K_GAME_05.c 									*/
+/* S68K_GAME_06.c 									*/
 
 #include "../S68K_clibs/SIMPLE_68008.h"
 #include "main.h"
