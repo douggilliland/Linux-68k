@@ -1,0 +1,33 @@
+= Sample Game =
+
+* Demonstrates semi-random numbers uring 68681 Timer to put random characters on the ANSI screen at random locations
+
+== ANSI driver ==
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/S68K_clibs/S68K_nncurses.h nncurses]
+** Similar to ncurses
+* Double buffered
+** Write to fromBuffer[][]
+** Copy to screenBuffer[][]
+** Send out deltas as ANSI sequences to the Serial Terminal
+
+== Build ==
+
+* [https://github.com/douggilliland/Linux-68k/blob/master/SIMPLE_68008/README.wiki 68K Code Build Environment]
+* Build the code using the provided make file
+** It gets linked at address $2000
+* To load it into the S68K_002 monitor you can run the command "L" and then send the run (S record) file to the serial port
+* Run the program from the S68K_002 monitor using R2000
+** Output should look like the following:
+<pre>
+SIMPLE-68008 CPU
+
+RAM Test Passed
+
+ > l
+
+Load S-Record
+
+++++++++++++++++++++++++++++>
+
+ > r2000
+</pre>
