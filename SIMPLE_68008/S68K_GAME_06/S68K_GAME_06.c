@@ -54,9 +54,9 @@ int playGame(void)
 	int yTargetMax = 23;
 	int bulletX = 6;
 	int bulletY = 12;
-	int bulletActive
+	int bulletActive = 0;
 	int exitCode = 0;
-	KBVALS gotKBVal;
+	enum KBVALS gotKBVal;
 	init_nncurses();
 	while (exitCode == 0)
 	{
