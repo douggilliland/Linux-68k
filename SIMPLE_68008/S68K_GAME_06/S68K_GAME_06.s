@@ -942,6 +942,13 @@ playGame:
 	moveq #1,%d0
 	move.l %d0,-64(%fp)
 .L80:
+	move.l -16(%fp),-(%sp)
+	move.l -12(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	pea 32.w
+	jsr putCharA
+	addq.l #4,%sp
 	pea 1.w
 	pea -1.w
 	jsr randomNum
