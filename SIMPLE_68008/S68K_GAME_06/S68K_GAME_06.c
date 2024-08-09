@@ -128,6 +128,8 @@ int playGame(void)
 				bulletActive = 1;
 			}
 		}
+		positionCursorScreen(xTarget, yTarget);
+		putCharA(' ');
 		xTarget += randomNum(-1,1);
 		if (xTarget < xTargetMin)
 			xTarget = xTargetMin;
