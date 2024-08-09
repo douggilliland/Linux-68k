@@ -788,6 +788,21 @@ playGame:
 	clr.l -64(%fp)
 	clr.l -4(%fp)
 	jsr init_nncurses
+	move.l -12(%fp),-(%sp)
+	move.l -8(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	pea 93.w
+	jsr putCharA
+	addq.l #4,%sp
+	move.l -36(%fp),-(%sp)
+	move.l -32(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	pea 64.w
+	jsr putCharA
+	addq.l #4,%sp
+	jsr copy_ScreenBuffer_Deltas_to_Screen
 	jra .L79
 .L80:
 	jsr rxStatPortA
