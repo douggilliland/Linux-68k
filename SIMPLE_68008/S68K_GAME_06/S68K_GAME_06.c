@@ -33,10 +33,10 @@ char screenBuffer[32][128];
 char fromBuffer[32][128];
 */
 
-enum
+enum KBVALS
 {
-	QUIT,UP,DOWN,RIGHT,LEFT,FIRE
-} KBVALS;
+	QUIT,UP,DOWN,RIGHT,LEFT,FIRE,UNKN_KEY
+} ;
 
 int playGame(void)
 {
@@ -125,7 +125,7 @@ KBVALS getKeyboard(void)
 				return LEFT;
 		}
 	}
-	return 5;
+	return UNKN_KEY;
 }
 
 int randomNum(int rangeLow, int rangeHigh)
