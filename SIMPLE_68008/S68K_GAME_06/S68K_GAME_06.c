@@ -128,6 +128,20 @@ int playGame(void)
 				bulletActive = 1;
 			}
 		}
+		xTarget += randomNum(-1,1);
+		if (xTarget < xTargetMin)
+			xTarget = xTargetMin;
+		else if (xTarget > xTargetMax)
+			xTarget = xTargetMax;
+		yTarget += randomNum(-1,1);
+		if (yTarget < yTargetMin)
+			yTarget = yTargetMin;
+		else if (yTarget > yTargetMax)
+			yTarget = yTargetMax;
+		positionCursorScreen(xTarget, yTarget);
+		putCharA('@');
+		positionCursorScreen(40, 25);
+		copy_ScreenBuffer_Deltas_to_Screen();
 //		xCurr = randomNum(1,80);
 //		yCurr = randomNum(1,24);
 //		randChar = randomNum('A','z');
