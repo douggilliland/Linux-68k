@@ -9,10 +9,15 @@ to make sure we know that main() is at first address */
 /* Write to fromBuffer[yCurr][xCurr]
 When done writing, use copy_ScreenBuffer_Deltas_to_Screen() to update the screen */
 
+enum KBVALS
+{
+	QUIT,UP,DOWN,RIGHT,LEFT,FIRE,UNKN_KEY
+} ;
+
 /* Function prototypes		*/
 
 int playGame(void);
-int getKeyboard(void);
+enum KBVALS getKeyboard(void);
 int randomNum(int, int);
 int readTimer(void);
 void drawFrame(void);
@@ -32,11 +37,6 @@ int main(void)
 char screenBuffer[32][128];
 char fromBuffer[32][128];
 */
-
-enum KBVALS
-{
-	QUIT,UP,DOWN,RIGHT,LEFT,FIRE,UNKN_KEY
-} ;
 
 int playGame(void)
 {
