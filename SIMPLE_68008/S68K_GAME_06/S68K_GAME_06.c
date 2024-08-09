@@ -33,10 +33,10 @@ char screenBuffer[32][128];
 char fromBuffer[32][128];
 */
 
-enum KBVALS
+enum
 {
 	QUIT,UP,DOWN,RIGHT,LEFT,FIRE
-};
+} KBVALS;
 
 int playGame(void)
 {
