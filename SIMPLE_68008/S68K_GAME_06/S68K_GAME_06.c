@@ -33,22 +33,41 @@ char screenBuffer[32][128];
 char fromBuffer[32][128];
 */
 
+enum KBVALS
+{
+	QUIT,UP,DOWN,RIGHT,LEFT,FIRE
+};
+
 int playGame(void)
 {
-	int xCurr, yCurr;
-	char randChar;
+	int xShooter = 5;
+	int	yShooter = 12;
+	int xShooterMin = 2;
+	int xShooterMax = 10;
+	int yShooterMin = 2;
+	int yShooterMax = 23;
+	int xTarget = 60;
+	int yTarget = 12;
+	int xTargetMin = 30;
+	int xTargetMax = 78;
+	int yTargetMin = 2;
+	int yTargetMax = 23;
+	int bulletX = 6;
+	int bulletY = 12;
+	int bulletActive
 	int exitCode = 0;
-	char gotKBVal = 1;
+	KBVALS gotKBVal;
 	init_nncurses();
 	while (exitCode == 0)
 	{
 		if (rxStatPortA() == 1)
 		{
 			gotKBVal = getKeyboard();
-			if (gotKBVal == 0)
+			if (gotKBVal == QUIT)
 			{
 				exitCode = 1;
 			}
+			
 		}
 		xCurr = randomNum(1,80);
 		yCurr = randomNum(1,24);
@@ -79,15 +98,17 @@ void drawFrame(void)
 	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 }
 
-int getKeyboard(void)
+KBVALS getKeyboard(void)
 {
 	char kbChar;
 //	int gotEsc = 0;
 	kbChar = getCharA();
 	if (kbChar == 'q')
-		return 0;
+		return QUIT;
 	if (kbChar == 'Q')
-		return 0;
+		return QUIT;
+	if (kbChar == ' ')
+		return FIRE;
 	if (kbChar == 0x1B)
 	{
 		kbChar = getCharA();
@@ -95,13 +116,13 @@ int getKeyboard(void)
 		{
 			kbChar = getCharA();
 			if (kbChar == 'A')		/* UP		*/
-				return 1;
+				return UP;
 			if (kbChar == 'B')		/* DN		*/
-				return 2;
+				return DOWN;
 			if (kbChar == 'C')		/* RT		*/
-				return 3;
+				return RIGHT;
 			if (kbChar == 'D')		/* LT		*/
-				return 4;
+				return LEFT;
 		}
 	}
 	return 5;
