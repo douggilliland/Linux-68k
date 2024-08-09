@@ -120,7 +120,9 @@ int playGame(void)
 			}
 			else if (gotKBVal == FIRE)
 			{
-				positionCursorScreen(xShooter+1, yShooter);
+				bulletX = xShooter+1;
+				bulletY = yShooter;
+				positionCursorScreen(bulletX, bulletY);
 				putCharA('-');
 				copy_ScreenBuffer_Deltas_to_Screen();
 				bulletActive = 1;
