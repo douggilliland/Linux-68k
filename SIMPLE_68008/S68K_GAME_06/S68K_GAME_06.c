@@ -98,7 +98,7 @@ void drawFrame(void)
 	stringToScreen(1,25,"Arrow keys to move, Q to quit");
 }
 
-KBVALS getKeyboard(void)
+enum KBVALS getKeyboard(void)
 {
 	char kbChar;
 //	int gotEsc = 0;
