@@ -79,6 +79,8 @@ int playGame(void)
 				positionCursorScreen(xShooter, yShooter);
 				putCharA(' ');
 				yShooter -= 1;
+				if (yShooter < yShooterMin)
+					yShooter = yShooterMin;
 				positionCursorScreen(xShooter, yShooter);
 				putCharA('}');
 				copy_ScreenBuffer_Deltas_to_Screen();
@@ -88,6 +90,8 @@ int playGame(void)
 				positionCursorScreen(xShooter, yShooter);
 				putCharA(' ');
 				yShooter += 1;
+				if (yShooter > yShooterMax)
+					yShooter = yShooterMax;
 				positionCursorScreen(xShooter, yShooter);
 				putCharA('}');
 				copy_ScreenBuffer_Deltas_to_Screen();
@@ -97,6 +101,8 @@ int playGame(void)
 				positionCursorScreen(xShooter, yShooter);
 				putCharA(' ');
 				xShooter += 1;
+				if (xShooter > xShooterMax)
+					xShooter = xShooterMax;
 				positionCursorScreen(xShooter, yShooter);
 				putCharA('}');
 				copy_ScreenBuffer_Deltas_to_Screen();
@@ -106,6 +112,8 @@ int playGame(void)
 				positionCursorScreen(xShooter, yShooter);
 				putCharA(' ');
 				xShooter -= 1;
+				if (xShooter < xShooterMin)
+					xShooter = xShooterMin;
 				positionCursorScreen(xShooter, yShooter);
 				putCharA('}');
 				copy_ScreenBuffer_Deltas_to_Screen();
@@ -115,6 +123,7 @@ int playGame(void)
 				positionCursorScreen(xShooter+1, yShooter);
 				putCharA('-');
 				copy_ScreenBuffer_Deltas_to_Screen();
+				bulletActive = 1;
 			}
 		}
 //		xCurr = randomNum(1,80);
