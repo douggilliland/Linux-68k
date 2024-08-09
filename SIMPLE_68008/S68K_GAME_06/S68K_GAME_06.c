@@ -59,9 +59,10 @@ int playGame(void)
 	enum KBVALS gotKBVal;
 	init_nncurses();
 	positionCursorScreen(xShooter, yShooter);
-	putCharA(']');
+	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
 	putCharA('@');
+	positionCursorScreen(40, 25);
 	copy_ScreenBuffer_Deltas_to_Screen();
 	
 	while (exitCode == 0)
@@ -73,7 +74,48 @@ int playGame(void)
 			{
 				exitCode = 1;
 			}
-			
+			else if (gotKBVal == UP)
+			{
+				positionCursorScreen(xShooter, yShooter);
+				putCharA(' ');
+				yShooter -= 1;
+				positionCursorScreen(xShooter, yShooter);
+				putCharA('}');
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
+			else if (gotKBVal == DOWN)
+			{
+				positionCursorScreen(xShooter, yShooter);
+				putCharA(' ');
+				yShooter += 1;
+				positionCursorScreen(xShooter, yShooter);
+				putCharA('}');
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
+			else if (gotKBVal == RIGHT)
+			{
+				positionCursorScreen(xShooter, yShooter);
+				putCharA(' ');
+				xShooter += 1;
+				positionCursorScreen(xShooter, yShooter);
+				putCharA('}');
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
+			else if (gotKBVal == LEFT)
+			{
+				positionCursorScreen(xShooter, yShooter);
+				putCharA(' ');
+				xShooter -= 1;
+				positionCursorScreen(xShooter, yShooter);
+				putCharA('}');
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
+			else if (gotKBVal == FIRE)
+			{
+				positionCursorScreen(xShooter+1, yShooter);
+				putCharA('-');
+				copy_ScreenBuffer_Deltas_to_Screen();
+			}
 		}
 //		xCurr = randomNum(1,80);
 //		yCurr = randomNum(1,24);
