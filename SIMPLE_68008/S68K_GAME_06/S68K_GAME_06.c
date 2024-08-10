@@ -58,6 +58,7 @@ int playGame(void)
 	int exitCode = 0;
 	enum KBVALS gotKBVal;
 	init_nncurses();
+	drawFrame();
 	positionCursorScreen(xShooter, yShooter);
 	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
@@ -149,6 +150,8 @@ int playGame(void)
 //		randChar = randomNum('A','z');
 	}
 	cls();
+	positionCursorScreen(1, 1);
+	copy_ScreenBuffer_Deltas_to_Screen();
 	return 1;
 }
 
@@ -205,7 +208,7 @@ int randomNum(int rangeLow, int rangeHigh)
 	unsigned long timerVal;
 	int retVal;
 	timerVal = readTimer();
-	retVal = timerVal % (rangeHigh - rangeLow);
+	retVal = timerVal % (rangeHigh - rangeLow + 1);
 	retVal += rangeLow;
 	return (retVal);
 }
