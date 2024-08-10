@@ -788,6 +788,7 @@ playGame:
 	clr.l -64(%fp)
 	clr.l -20(%fp)
 	jsr init_nncurses
+	jsr drawFrame
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
 	jsr positionCursorScreen
@@ -997,6 +998,11 @@ playGame:
 	tst.l -20(%fp)
 	jeq .L94
 	jsr cls
+	pea 1.w
+	pea 1.w
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	jsr copy_ScreenBuffer_Deltas_to_Screen
 	moveq #1,%d0
 	unlk %fp
 	rts
@@ -1160,6 +1166,7 @@ randomNum:
 	move.l %d0,-4(%fp)
 	move.l 12(%fp),%d0
 	sub.l 8(%fp),%d0
+	addq.l #1,%d0
 	move.l %d0,%d1
 	move.l -4(%fp),%d0
 	move.l %d1,-(%sp)
