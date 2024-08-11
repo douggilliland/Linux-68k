@@ -119,7 +119,7 @@ int playGame(void)
 				putCharA('}');
 				copy_ScreenBuffer_Deltas_to_Screen();
 			}
-			else if (gotKBVal == FIRE)
+			else if ((gotKBVal == FIRE) && (bulletActive == 0))
 			{
 				bulletX = xShooter+1;
 				bulletY = yShooter;
