@@ -14,7 +14,6 @@ https://raw.githubusercontent.com/mirror/ncurses/master/doc/ncurses-intro.doc */
 
 void cls(void);
 void cursorOnOff(int);
-/* void positionCursor(int, int); */
 void init_nncurses(void);
 void cursorOnOff(int curFlag);
 void positionCursorScreen(int x, int y);
@@ -35,12 +34,6 @@ int screenHeight;
 
 /* Functions go here */
 
-/*
-int screenWidth;
-int screenHeight;
-char screenBuffer[32][128];
-char fromBuffer[32][128];
-*/
 void init_nncurses(void)
 {
 	/* TBD - add code to interrogate screen size	*/
@@ -59,6 +52,7 @@ void init_nncurses(void)
 	/* cursorOnOff(0); */
 }
 
+/*	Get the value at a location */
 char getCharAtXY(int xPos, int yPos)
 {
 	return (screenBuffer[yPos][xPos]);
@@ -79,10 +73,10 @@ void stringToScreen(int xStart, int yStart, char * strToPrint)
 {
 	int strOff = 0;
 	int xOff = xStart;
+	positionCursorScreen(xStart, yStart);
 	while (strToPrint[strOff] != 0)
 	{
-		charToScreen(xOff, yStart, strToPrint[strOff]);
-		xOff += 1;
+		putCharA(strToPrint[strOff]);
 		strOff += 1;
 	}
 }
@@ -129,11 +123,6 @@ Iterate over the screen buffers.
 Compare the fromBuffer to the screenBuffer
 If the characters are different send the character to the terminal 
 	and update the screenBuffer
-
-int screenWidth;
-int screenHeight;
-char screenBuffer[32+1][128+1] - Current screen
-char fromBuffer[32+1][128+1] - write here
 */
 void copy_ScreenBuffer_Deltas_to_Screen(void)
 {
