@@ -151,13 +151,15 @@ int playGame(void)
 			bulletX += 1;
 			if (bulletX<80)
 			{
-				positionCursorScreen(bulletX, bulletY);
 				if (getCharAtXY(bulletX, bulletY) == '@')
 				{
 					stringToScreen(40,25,"HIT!!!   ");
 				}
 				else
+				{
+					positionCursorScreen(bulletX, bulletY);
 					putCharA('-');				
+				}
 			}
 			else
 			{
