@@ -144,8 +144,6 @@ int playGame(void)
 			yTarget = yTargetMax;
 		positionCursorScreen(xTarget, yTarget);
 		putCharA('@');
-		// Move cursor off playfield
-		positionCursorScreen(40, 25);
 		if (bulletActive == 1)
 		{
 			positionCursorScreen(bulletX, bulletY);
@@ -154,13 +152,21 @@ int playGame(void)
 			if (bulletX<80)
 			{
 				positionCursorScreen(bulletX, bulletY);
-				putCharA('-');				
+				if (getCharAtXY(bulletX, bulletY) == '@')
+				{
+					stringToScreen(40,25,"HIT!!!   ");
+				}
+				else
+					putCharA('-');				
 			}
 			else
 			{
 				bulletActive = 0;
+				stringToScreen(40,25,"Miss (:   ");
 			}			
 		}
+		// Move cursor off playfield
+		positionCursorScreen(40, 25);
 		copy_ScreenBuffer_Deltas_to_Screen();
 	}
 	cls();
