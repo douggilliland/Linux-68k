@@ -58,6 +58,11 @@ void init_nncurses(void)
 	/* cursorOnOff(0); */
 }
 
+char getCharAtXY(int xPos, int yPos)
+{
+	return (fromBuffer[yPos][xPos]);
+}
+
 /* Screen access functions follow	*/
 
 /* \033[2J - clear the entire screen	*/
