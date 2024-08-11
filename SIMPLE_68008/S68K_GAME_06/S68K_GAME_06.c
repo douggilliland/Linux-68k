@@ -129,6 +129,7 @@ int playGame(void)
 				bulletActive = 1;
 			}
 		}
+		// Animate target
 		positionCursorScreen(xTarget, yTarget);
 		putCharA(' ');
 		xTarget += randomNum(-1,1);
@@ -143,11 +144,24 @@ int playGame(void)
 			yTarget = yTargetMax;
 		positionCursorScreen(xTarget, yTarget);
 		putCharA('@');
+		// Move cursor off playfield
 		positionCursorScreen(40, 25);
+		if (bulletActive == 1)
+		{
+			positionCursorScreen(bulletX, bulletY);
+			putCharA(' ');
+			bulletX += 1;
+			if (bulletX<80)
+			{
+				positionCursorScreen(bulletX, bulletY);
+				putCharA('-');				
+			}
+			else
+			{
+				bulletActive = 0;
+			}			
+		}
 		copy_ScreenBuffer_Deltas_to_Screen();
-//		xCurr = randomNum(1,80);
-//		yCurr = randomNum(1,24);
-//		randChar = randomNum('A','z');
 	}
 	cls();
 	positionCursorScreen(1, 1);
@@ -170,13 +184,12 @@ void drawFrame(void)
 	xCurr = 80;
 	for (yCurr = 2; yCurr < 25; yCurr++)
 		fromBuffer[yCurr][xCurr] =  '#';
-	stringToScreen(1,25,"Arrow keys to move, Q to quit");
+	stringToScreen(1,25,"Arrows=move, Space=fire, (Q)uit");
 }
 
 enum KBVALS getKeyboard(void)
 {
 	char kbChar;
-//	int gotEsc = 0;
 	kbChar = getCharA();
 	if (kbChar == 'q')
 		return QUIT;
