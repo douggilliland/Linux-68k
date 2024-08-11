@@ -21,6 +21,7 @@ void positionCursorScreen(int x, int y);
 void copy_ScreenBuffer_Deltas_to_Screen(void);
 void stringToScreen(int , int, char *);
 void charToScreen(int, int, char);
+char getCharAtXY(int, int);
 
 #define ESC 0x1B
 
@@ -60,7 +61,7 @@ void init_nncurses(void)
 
 char getCharAtXY(int xPos, int yPos)
 {
-	return (fromBuffer[yPos][xPos]);
+	return (screenBuffer[yPos][xPos]);
 }
 
 /* Screen access functions follow	*/
