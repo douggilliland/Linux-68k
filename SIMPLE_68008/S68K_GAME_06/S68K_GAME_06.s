@@ -928,6 +928,8 @@ playGame:
 	moveq #5,%d0
 	cmp.l -68(%fp),%d0
 	jne .L80
+	tst.l -28(%fp)
+	jne .L80
 	move.l -4(%fp),%d0
 	addq.l #1,%d0
 	move.l %d0,-20(%fp)
