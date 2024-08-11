@@ -552,6 +552,10 @@ stringToScreen:
 	link.w %fp,#-8
 	clr.l -4(%fp)
 	move.l 8(%fp),-8(%fp)
+	move.l 12(%fp),-(%sp)
+	move.l 8(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
 	jra .L66
 .L67:
 	move.l -4(%fp),%d0
@@ -561,11 +565,8 @@ stringToScreen:
 	ext.w %d0
 	move.w %d0,%a0
 	move.l %a0,-(%sp)
-	move.l 12(%fp),-(%sp)
-	move.l -8(%fp),-(%sp)
-	jsr charToScreen
-	lea (12,%sp),%sp
-	addq.l #1,-8(%fp)
+	jsr putCharA
+	addq.l #4,%sp
 	addq.l #1,-4(%fp)
 .L66:
 	move.l -4(%fp),%d0
