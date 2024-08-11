@@ -519,7 +519,7 @@ getCharAtXY:
 	add.l %d1,%d0
 	add.l 8(%fp),%d0
 	move.l %d0,%a0
-	add.l #fromBuffer,%a0
+	add.l #screenBuffer,%a0
 	move.b (%a0),%d0
 	unlk %fp
 	rts
@@ -983,10 +983,6 @@ playGame:
 	jlt .L93
 	move.l -16(%fp),-(%sp)
 	move.l -12(%fp),-(%sp)
-	jsr positionCursorScreen
-	addq.l #8,%sp
-	move.l -16(%fp),-(%sp)
-	move.l -12(%fp),-(%sp)
 	jsr getCharAtXY
 	addq.l #8,%sp
 	cmp.b #64,%d0
@@ -998,6 +994,10 @@ playGame:
 	lea (12,%sp),%sp
 	jra .L92
 .L94:
+	move.l -16(%fp),-(%sp)
+	move.l -12(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
 	pea 45.w
 	jsr putCharA
 	addq.l #4,%sp
