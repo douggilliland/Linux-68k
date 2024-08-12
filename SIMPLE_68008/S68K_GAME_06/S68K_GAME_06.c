@@ -151,7 +151,7 @@ int playGame(void)
 			bulletX += 1;
 			if (bulletX<80)
 			{
-				if ((bulletX == xTarget) && (bulletY == yTarget)
+				if ((bulletX == xTarget) && (bulletY == yTarget))
 				{
 					stringToScreen(40,25,"HIT!!!   ");
 				}
