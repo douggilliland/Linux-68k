@@ -773,10 +773,6 @@ charToScreen:
 	.string	"HITs:"
 .LC1:
 	.string	"MISSs:"
-.LC2:
-	.string	"HIT!!!   "
-.LC3:
-	.string	"Miss (:   "
 	.text
 	.align	2
 	.globl	playGame
@@ -1027,9 +1023,15 @@ playGame:
 	jne .L94
 	addq.l #1,-28(%fp)
 	clr.l -20(%fp)
-	pea .LC2
+	lea (-86,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -28(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-86,%fp),%a0
+	move.l %a0,-(%sp)
 	pea 25.w
-	pea 40.w
+	pea 46.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	move.l -16(%fp),-(%sp)
@@ -1049,9 +1051,15 @@ playGame:
 .L93:
 	addq.l #1,-32(%fp)
 	clr.l -20(%fp)
-	pea .LC3
+	lea (-96,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -32(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-96,%fp),%a0
+	move.l %a0,-(%sp)
 	pea 25.w
-	pea 40.w
+	pea 68.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 .L92:
@@ -1114,7 +1122,7 @@ explosion:
 	rts
 	.size	explosion, .-explosion
 	.section	.rodata
-.LC4:
+.LC2:
 	.string	"Arrows=move, Space=fire, (Q)uit"
 	.text
 	.align	2
@@ -1198,7 +1206,7 @@ drawFrame:
 	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L109
-	pea .LC4
+	pea .LC2
 	pea 25.w
 	pea 1.w
 	jsr stringToScreen
