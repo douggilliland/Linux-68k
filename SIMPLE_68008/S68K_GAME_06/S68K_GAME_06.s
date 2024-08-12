@@ -988,6 +988,7 @@ playGame:
 	move.l -16(%fp),%d0
 	cmp.l -48(%fp),%d0
 	jne .L94
+	clr.l -20(%fp)
 	pea .LC0
 	pea 25.w
 	pea 40.w
