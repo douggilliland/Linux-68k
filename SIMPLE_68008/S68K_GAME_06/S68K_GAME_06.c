@@ -67,7 +67,7 @@ int playGame(void)
 	stringToScreen(40,25,"HITs:");
 	intToStr(hitCnt, hitStr);
 	stringToScreen(46,25,hitStr);
-	stringToScreen(60,25,"MISSs:");
+	stringToScreen(60,25,"MISSes:");
 	intToStr(missCnt, missStr);
 	stringToScreen(68,25,missStr);
 	positionCursorScreen(xShooter, yShooter);
