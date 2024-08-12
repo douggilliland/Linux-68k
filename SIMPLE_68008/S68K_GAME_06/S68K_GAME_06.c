@@ -187,9 +187,12 @@ void explosion(int bulletX, int bulletY)
 	{
 		positionCursorScreen(bulletX, bulletY);
 		putCharA(expl);
+		positionCursorScreen(79,25);
 		copy_ScreenBuffer_Deltas_to_Screen();
 		expl += 1;
 	}
+	positionCursorScreen(bulletX, bulletY);
+	putCharA(' ');
 }
 
 void drawFrame(void)
