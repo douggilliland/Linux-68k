@@ -1066,7 +1066,7 @@ explosion:
 	move.l 8(%fp),-(%sp)
 	jsr positionCursorScreen
 	addq.l #8,%sp
-	pea 32.w
+	pea 42.w
 	jsr putCharA
 	addq.l #4,%sp
 	nop
