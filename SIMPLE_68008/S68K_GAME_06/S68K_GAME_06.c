@@ -192,7 +192,7 @@ void explosion(int bulletX, int bulletY)
 		expl += 1;
 	}
 	positionCursorScreen(bulletX, bulletY);
-	putCharA(' ');
+	putCharA('*');
 }
 
 void drawFrame(void)
