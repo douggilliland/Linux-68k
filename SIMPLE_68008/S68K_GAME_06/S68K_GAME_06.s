@@ -1052,6 +1052,9 @@ explosion:
 	jsr putCharA
 	addq.l #4,%sp
 	jsr copy_ScreenBuffer_Deltas_to_Screen
+	move.b -1(%fp),%d0
+	addq.b #1,%d0
+	move.b %d0,-1(%fp)
 .L99:
 	cmp.b #46,-1(%fp)
 	jle .L100
