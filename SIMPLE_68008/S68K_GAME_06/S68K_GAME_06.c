@@ -155,6 +155,7 @@ int playGame(void)
 				{
 					bulletActive = 0;
 					stringToScreen(40,25,"HIT!!!   ");
+					explosion(bulletX, bulletY);
 				}
 				else
 				{
@@ -176,6 +177,17 @@ int playGame(void)
 	positionCursorScreen(1, 1);
 	copy_ScreenBuffer_Deltas_to_Screen();
 	return 1;
+}
+
+void explosion(bulletX, bulletY)
+{
+	char expl = '!';
+	while (expl <= '.')
+	{
+		positionCursorScreen(bulletX, bulletY);
+		putCharA(expl);
+		copy_ScreenBuffer_Deltas_to_Screen();
+	}
 }
 
 void drawFrame(void)
