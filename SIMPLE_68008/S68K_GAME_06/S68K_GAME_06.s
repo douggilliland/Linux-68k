@@ -770,47 +770,85 @@ charToScreen:
 	.size	charToScreen, .-charToScreen
 	.section	.rodata
 .LC0:
-	.string	"HIT!!!   "
+	.string	"HITs:"
 .LC1:
+	.string	"MISSs:"
+.LC2:
+	.string	"HIT!!!   "
+.LC3:
 	.string	"Miss (:   "
 	.text
 	.align	2
 	.globl	playGame
 	.type	playGame, @function
 playGame:
-	link.w %fp,#-68
+	link.w %fp,#-96
 	moveq #5,%d0
 	move.l %d0,-4(%fp)
 	moveq #12,%d0
 	move.l %d0,-8(%fp)
 	moveq #2,%d0
-	move.l %d0,-28(%fp)
-	moveq #10,%d0
-	move.l %d0,-32(%fp)
-	moveq #2,%d0
 	move.l %d0,-36(%fp)
-	moveq #23,%d0
+	moveq #10,%d0
 	move.l %d0,-40(%fp)
-	moveq #60,%d0
-	move.l %d0,-44(%fp)
-	moveq #12,%d0
-	move.l %d0,-48(%fp)
-	moveq #30,%d0
-	move.l %d0,-52(%fp)
-	moveq #78,%d0
-	move.l %d0,-56(%fp)
 	moveq #2,%d0
-	move.l %d0,-60(%fp)
+	move.l %d0,-44(%fp)
 	moveq #23,%d0
+	move.l %d0,-48(%fp)
+	moveq #60,%d0
+	move.l %d0,-52(%fp)
+	moveq #12,%d0
+	move.l %d0,-56(%fp)
+	moveq #30,%d0
+	move.l %d0,-60(%fp)
+	moveq #78,%d0
 	move.l %d0,-64(%fp)
+	moveq #2,%d0
+	move.l %d0,-68(%fp)
+	moveq #23,%d0
+	move.l %d0,-72(%fp)
 	moveq #6,%d0
 	move.l %d0,-12(%fp)
 	moveq #12,%d0
 	move.l %d0,-16(%fp)
 	clr.l -20(%fp)
 	clr.l -24(%fp)
+	clr.l -28(%fp)
+	clr.l -32(%fp)
 	jsr init_nncurses
 	jsr drawFrame
+	pea .LC0
+	pea 25.w
+	pea 40.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
+	lea (-86,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -28(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-86,%fp),%a0
+	move.l %a0,-(%sp)
+	pea 25.w
+	pea 46.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
+	pea .LC1
+	pea 25.w
+	pea 60.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
+	lea (-96,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l -32(%fp),-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-96,%fp),%a0
+	move.l %a0,-(%sp)
+	pea 25.w
+	pea 68.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
 	jsr positionCursorScreen
@@ -818,8 +856,8 @@ playGame:
 	pea 125.w
 	jsr putCharA
 	addq.l #4,%sp
-	move.l -48(%fp),-(%sp)
-	move.l -44(%fp),-(%sp)
+	move.l -56(%fp),-(%sp)
+	move.l -52(%fp),-(%sp)
 	jsr positionCursorScreen
 	addq.l #8,%sp
 	pea 64.w
@@ -836,15 +874,15 @@ playGame:
 	cmp.b #1,%d0
 	jne .L82
 	jsr getKeyboard
-	move.l %d0,-68(%fp)
-	tst.l -68(%fp)
+	move.l %d0,-76(%fp)
+	tst.l -76(%fp)
 	jne .L83
 	moveq #1,%d0
 	move.l %d0,-24(%fp)
 	jra .L82
 .L83:
 	moveq #1,%d0
-	cmp.l -68(%fp),%d0
+	cmp.l -76(%fp),%d0
 	jne .L84
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -855,9 +893,9 @@ playGame:
 	addq.l #4,%sp
 	subq.l #1,-8(%fp)
 	move.l -8(%fp),%d0
-	cmp.l -36(%fp),%d0
+	cmp.l -44(%fp),%d0
 	jge .L85
-	move.l -36(%fp),-8(%fp)
+	move.l -44(%fp),-8(%fp)
 .L85:
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -870,7 +908,7 @@ playGame:
 	jra .L82
 .L84:
 	moveq #2,%d0
-	cmp.l -68(%fp),%d0
+	cmp.l -76(%fp),%d0
 	jne .L86
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -881,9 +919,9 @@ playGame:
 	addq.l #4,%sp
 	addq.l #1,-8(%fp)
 	move.l -8(%fp),%d0
-	cmp.l -40(%fp),%d0
+	cmp.l -48(%fp),%d0
 	jle .L87
-	move.l -40(%fp),-8(%fp)
+	move.l -48(%fp),-8(%fp)
 .L87:
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -896,7 +934,7 @@ playGame:
 	jra .L82
 .L86:
 	moveq #3,%d0
-	cmp.l -68(%fp),%d0
+	cmp.l -76(%fp),%d0
 	jne .L88
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -907,9 +945,9 @@ playGame:
 	addq.l #4,%sp
 	addq.l #1,-4(%fp)
 	move.l -4(%fp),%d0
-	cmp.l -32(%fp),%d0
+	cmp.l -40(%fp),%d0
 	jle .L89
-	move.l -32(%fp),-4(%fp)
+	move.l -40(%fp),-4(%fp)
 .L89:
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -922,7 +960,7 @@ playGame:
 	jra .L82
 .L88:
 	moveq #4,%d0
-	cmp.l -68(%fp),%d0
+	cmp.l -76(%fp),%d0
 	jne .L90
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -933,9 +971,9 @@ playGame:
 	addq.l #4,%sp
 	subq.l #1,-4(%fp)
 	move.l -4(%fp),%d0
-	cmp.l -28(%fp),%d0
+	cmp.l -36(%fp),%d0
 	jge .L91
-	move.l -28(%fp),-4(%fp)
+	move.l -36(%fp),-4(%fp)
 .L91:
 	move.l -8(%fp),-(%sp)
 	move.l -4(%fp),-(%sp)
@@ -948,7 +986,7 @@ playGame:
 	jra .L82
 .L90:
 	moveq #5,%d0
-	cmp.l -68(%fp),%d0
+	cmp.l -76(%fp),%d0
 	jne .L82
 	tst.l -20(%fp)
 	jne .L82
@@ -982,13 +1020,14 @@ playGame:
 	cmp.l -12(%fp),%d0
 	jlt .L93
 	move.l -12(%fp),%d0
-	cmp.l -44(%fp),%d0
+	cmp.l -52(%fp),%d0
 	jne .L94
 	move.l -16(%fp),%d0
-	cmp.l -48(%fp),%d0
+	cmp.l -56(%fp),%d0
 	jne .L94
+	addq.l #1,-28(%fp)
 	clr.l -20(%fp)
-	pea .LC0
+	pea .LC2
 	pea 25.w
 	pea 40.w
 	jsr stringToScreen
@@ -1008,8 +1047,9 @@ playGame:
 	addq.l #4,%sp
 	jra .L92
 .L93:
+	addq.l #1,-32(%fp)
 	clr.l -20(%fp)
-	pea .LC1
+	pea .LC3
 	pea 25.w
 	pea 40.w
 	jsr stringToScreen
@@ -1074,7 +1114,7 @@ explosion:
 	rts
 	.size	explosion, .-explosion
 	.section	.rodata
-.LC2:
+.LC4:
 	.string	"Arrows=move, Space=fire, (Q)uit"
 	.text
 	.align	2
@@ -1158,7 +1198,7 @@ drawFrame:
 	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L109
-	pea .LC2
+	pea .LC4
 	pea 25.w
 	pea 1.w
 	jsr stringToScreen
