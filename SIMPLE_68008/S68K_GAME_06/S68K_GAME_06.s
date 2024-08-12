@@ -773,12 +773,14 @@ charToScreen:
 	.string	"HITs:"
 .LC1:
 	.string	"MISSes:"
+.LC2:
+	.string	"Time:"
 	.text
 	.align	2
 	.globl	playGame
 	.type	playGame, @function
 playGame:
-	link.w %fp,#-96
+	link.w %fp,#-108
 	moveq #5,%d0
 	move.l %d0,-4(%fp)
 	moveq #12,%d0
@@ -843,6 +845,27 @@ playGame:
 	move.l %a0,-(%sp)
 	pea 25.w
 	pea 58.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
+	pea .LC2
+	pea 25.w
+	pea 65.w
+	jsr stringToScreen
+	lea (12,%sp),%sp
+	jsr readTimer
+	pea 60.w
+	move.l %d0,-(%sp)
+	jsr __divsi3
+	addq.l #8,%sp
+	lea (-106,%fp),%a0
+	move.l %a0,-(%sp)
+	move.l %d0,-(%sp)
+	jsr intToStr
+	addq.l #8,%sp
+	lea (-106,%fp),%a0
+	move.l %a0,-(%sp)
+	pea 25.w
+	pea 72.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	move.l -8(%fp),-(%sp)
@@ -1168,7 +1191,7 @@ explosion:
 	rts
 	.size	explosion, .-explosion
 	.section	.rodata
-.LC2:
+.LC3:
 	.string	"Arrows=move, Space=fire, (Q)uit"
 	.text
 	.align	2
@@ -1252,7 +1275,7 @@ drawFrame:
 	moveq #24,%d0
 	cmp.l -8(%fp),%d0
 	jge .L113
-	pea .LC2
+	pea .LC3
 	pea 25.w
 	pea 1.w
 	jsr stringToScreen
