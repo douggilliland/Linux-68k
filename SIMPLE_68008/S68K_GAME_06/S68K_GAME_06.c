@@ -131,7 +131,7 @@ int playGame(void)
 			}
 		}
 		// Animate target
-		positionCursorScreen(xTarget, yTarget);
+/* 		positionCursorScreen(xTarget, yTarget);
 		putCharA(' ');
 		xTarget += randomNum(-1,1);
 		if (xTarget < xTargetMin)
@@ -144,7 +144,7 @@ int playGame(void)
 		else if (yTarget > yTargetMax)
 			yTarget = yTargetMax;
 		positionCursorScreen(xTarget, yTarget);
-		putCharA('@');
+		putCharA('@'); */
 		if (bulletActive == 1)
 		{
 			positionCursorScreen(bulletX, bulletY);
