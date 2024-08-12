@@ -64,12 +64,12 @@ int playGame(void)
 	enum KBVALS gotKBVal;
 	init_nncurses();
 	drawFrame();
-	stringToScreen(40,25,"HITs:");
+	stringToScreen(35,25,"HITs:");
 	intToStr(hitCnt, hitStr);
-	stringToScreen(46,25,hitStr);
-	stringToScreen(60,25,"MISSes:");
+	stringToScreen(41,25,hitStr);
+	stringToScreen(50,25,"MISSes:");
 	intToStr(missCnt, missStr);
-	stringToScreen(68,25,missStr);
+	stringToScreen(58,25,missStr);
 	positionCursorScreen(xShooter, yShooter);
 	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
@@ -167,7 +167,7 @@ int playGame(void)
 					hitCnt += 1;
 					bulletActive = 0;
 					intToStr(hitCnt, hitStr);
-					stringToScreen(46,25,hitStr);
+					stringToScreen(41,25,hitStr);
 					explosion(bulletX, bulletY);
 				}
 				else
@@ -181,7 +181,7 @@ int playGame(void)
 				missCnt += 1;
 				bulletActive = 0;
 				intToStr(missCnt, missStr);
-				stringToScreen(68,25,missStr);
+				stringToScreen(58,25,missStr);
 			}			
 		}
 		// Move cursor off playfield
