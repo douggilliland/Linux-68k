@@ -872,7 +872,7 @@ playGame:
 	lea (-110,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 72.w
+	pea 71.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	move.l -8(%fp),-(%sp)
@@ -1153,7 +1153,7 @@ playGame:
 	lea (-110,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 72.w
+	pea 71.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	jsr copy_ScreenBuffer_Deltas_to_Screen
