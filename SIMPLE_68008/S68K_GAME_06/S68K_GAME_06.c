@@ -62,16 +62,14 @@ int playGame(void)
 	char hitStr[10];
 	char missStr[10];
 	enum KBVALS gotKBVal;
-	intToStr(hitCnt, hitStr);
-	intToStr(missCnt, missStr);
 	init_nncurses();
 	drawFrame();
 	stringToScreen(40,25,"HITs:");
+	intToStr(hitCnt, hitStr);
 	stringToScreen(46,25,hitStr);
 	stringToScreen(60,25,"MISSs:");
+	intToStr(missCnt, missStr);
 	stringToScreen(68,25,missStr);
-	
-	positionCursorScreen();
 	positionCursorScreen(xShooter, yShooter);
 	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
