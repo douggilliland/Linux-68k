@@ -151,7 +151,7 @@ int playGame(void)
 			bulletX += 1;
 			if (bulletX<80)
 			{
-				if (getCharAtXY(bulletX, bulletY) == '@')
+				if ((bulletX == xTarget) && (bulletY == yTarget)
 				{
 					stringToScreen(40,25,"HIT!!!   ");
 				}
@@ -168,7 +168,7 @@ int playGame(void)
 			}			
 		}
 		// Move cursor off playfield
-		positionCursorScreen(40, 25);
+		positionCursorScreen(75, 25);
 		copy_ScreenBuffer_Deltas_to_Screen();
 	}
 	cls();
