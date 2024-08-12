@@ -57,9 +57,21 @@ int playGame(void)
 	int bulletY = 12;
 	int bulletActive = 0;
 	int exitCode = 0;
+	int hitCnt = 0;
+	int missCnt = 0;
+	char hitStr[10];
+	char missStr[10];
 	enum KBVALS gotKBVal;
+	intToStr(hitCnt, hitStr);
+	intToStr(missCnt, missStr);
 	init_nncurses();
 	drawFrame();
+	stringToScreen(40,25,"HITs:");
+	stringToScreen(46,25,hitStr);
+	stringToScreen(60,25,"MISSs:");
+	stringToScreen(68,25,missStr);
+	
+	positionCursorScreen();
 	positionCursorScreen(xShooter, yShooter);
 	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
@@ -154,6 +166,7 @@ int playGame(void)
 			{
 				if ((bulletX == xTarget) && (bulletY == yTarget))
 				{
+					hitCnt += 1;
 					bulletActive = 0;
 					stringToScreen(40,25,"HIT!!!   ");
 					explosion(bulletX, bulletY);
@@ -166,6 +179,7 @@ int playGame(void)
 			}
 			else
 			{
+				missCnt += 1;
 				bulletActive = 0;
 				stringToScreen(40,25,"Miss (:   ");
 			}			
