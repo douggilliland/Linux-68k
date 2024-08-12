@@ -54,6 +54,7 @@ int playGame(void)
 	int exitCode = 0;
 	int hitCnt = 0;
 	int missCnt = 0;
+	int startTimer = readTimer()/60;
 	char hitStr[10];
 	char missStr[10];
 	char timerStr[10];
@@ -68,7 +69,7 @@ int playGame(void)
 	intToStr(missCnt, missStr);
 	stringToScreen(58,25,missStr);
 	stringToScreen(65,25,"Time:");
-	intToStr(readTimer()/60, timerStr);
+	intToStr(((readTimer()/60)-startTimer), timerStr);
 	stringToScreen(72,25,timerStr);
 	
 	positionCursorScreen(xShooter, yShooter);
@@ -186,7 +187,9 @@ int playGame(void)
 			}			
 		}
 		// Move cursor off playfield
-		positionCursorScreen(75, 25);
+		intToStr(((readTimer()/60)-startTimer), timerStr);
+		stringToScreen(72,25,timerStr);
+//		positionCursorScreen(79, 25);
 		copy_ScreenBuffer_Deltas_to_Screen();
 	}
 	cls();
