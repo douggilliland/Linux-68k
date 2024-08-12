@@ -153,6 +153,7 @@ int playGame(void)
 			{
 				if ((bulletX == xTarget) && (bulletY == yTarget))
 				{
+					bulletActive = 0;
 					stringToScreen(40,25,"HIT!!!   ");
 				}
 				else
