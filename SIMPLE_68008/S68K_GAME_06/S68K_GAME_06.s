@@ -815,7 +815,7 @@ playGame:
 	jsr drawFrame
 	pea .LC0
 	pea 25.w
-	pea 40.w
+	pea 35.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	lea (-86,%fp),%a0
@@ -826,12 +826,12 @@ playGame:
 	lea (-86,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 46.w
+	pea 41.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	pea .LC1
 	pea 25.w
-	pea 60.w
+	pea 50.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	lea (-96,%fp),%a0
@@ -842,7 +842,7 @@ playGame:
 	lea (-96,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 68.w
+	pea 58.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	move.l -8(%fp),-(%sp)
@@ -1077,7 +1077,7 @@ playGame:
 	lea (-86,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 46.w
+	pea 41.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 	move.l -24(%fp),-(%sp)
@@ -1105,7 +1105,7 @@ playGame:
 	lea (-96,%fp),%a0
 	move.l %a0,-(%sp)
 	pea 25.w
-	pea 68.w
+	pea 58.w
 	jsr stringToScreen
 	lea (12,%sp),%sp
 .L96:
