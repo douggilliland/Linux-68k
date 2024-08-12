@@ -54,12 +54,13 @@ int playGame(void)
 	int exitCode = 0;
 	int hitCnt = 0;
 	int missCnt = 0;
-	int startTimer = readTimer()/60;
+	int startTimer;
 	char hitStr[10];
 	char missStr[10];
 	char timerStr[10];
 	
 	enum KBVALS gotKBVal;
+	
 	init_nncurses();
 	drawFrame();
 	stringToScreen(35,25,"HITs:");
@@ -68,6 +69,7 @@ int playGame(void)
 	stringToScreen(50,25,"MISSes:");
 	intToStr(missCnt, missStr);
 	stringToScreen(58,25,missStr);
+	startTimer = readTimer()/60;
 	stringToScreen(65,25,"Time:");
 	intToStr(((readTimer()/60)-startTimer), timerStr);
 	stringToScreen(72,25,timerStr);
