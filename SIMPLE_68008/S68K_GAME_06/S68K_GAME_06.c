@@ -21,6 +21,7 @@ enum KBVALS getKeyboard(void);
 int randomNum(int, int);
 int readTimer(void);
 void drawFrame(void);
+void explosion(int, int);
 
 int main(void)
 {
@@ -179,7 +180,7 @@ int playGame(void)
 	return 1;
 }
 
-void explosion(bulletX, bulletY)
+void explosion(int bulletX, int bulletY)
 {
 	char expl = '!';
 	while (expl <= '.')
