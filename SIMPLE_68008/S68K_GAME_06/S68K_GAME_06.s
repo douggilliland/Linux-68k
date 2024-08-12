@@ -1051,6 +1051,10 @@ explosion:
 	move.l %a0,-(%sp)
 	jsr putCharA
 	addq.l #4,%sp
+	pea 25.w
+	pea 79.w
+	jsr positionCursorScreen
+	addq.l #8,%sp
 	jsr copy_ScreenBuffer_Deltas_to_Screen
 	move.b -1(%fp),%d0
 	addq.b #1,%d0
@@ -1058,7 +1062,13 @@ explosion:
 .L99:
 	cmp.b #46,-1(%fp)
 	jle .L100
-	nop
+	move.l 12(%fp),-(%sp)
+	move.l 8(%fp),-(%sp)
+	jsr positionCursorScreen
+	addq.l #8,%sp
+	pea 32.w
+	jsr putCharA
+	addq.l #4,%sp
 	nop
 	unlk %fp
 	rts
