@@ -166,7 +166,8 @@ int playGame(void)
 				{
 					hitCnt += 1;
 					bulletActive = 0;
-					stringToScreen(40,25,"HIT!!!   ");
+					intToStr(hitCnt, hitStr);
+					stringToScreen(46,25,hitStr);
 					explosion(bulletX, bulletY);
 				}
 				else
@@ -179,7 +180,8 @@ int playGame(void)
 			{
 				missCnt += 1;
 				bulletActive = 0;
-				stringToScreen(40,25,"Miss (:   ");
+				intToStr(missCnt, missStr);
+				stringToScreen(68,25,missStr);
 			}			
 		}
 		// Move cursor off playfield
