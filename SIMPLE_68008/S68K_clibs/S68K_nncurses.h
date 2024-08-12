@@ -72,7 +72,6 @@ void cls(void)
 void stringToScreen(int xStart, int yStart, char * strToPrint)
 {
 	int strOff = 0;
-	int xOff = xStart;
 	positionCursorScreen(xStart, yStart);
 	while (strToPrint[strOff] != 0)
 	{
