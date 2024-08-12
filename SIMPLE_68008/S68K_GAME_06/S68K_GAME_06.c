@@ -34,11 +34,6 @@ int main(void)
 #include "../S68K_clibs/S68K_Strings.h"
 #include "../S68K_clibs/S68K_nncurses.h"
 
-/*
-char screenBuffer[32][128];
-char fromBuffer[32][128];
-*/
-
 int playGame(void)
 {
 	int xShooter = 5;
@@ -61,6 +56,8 @@ int playGame(void)
 	int missCnt = 0;
 	char hitStr[10];
 	char missStr[10];
+	char timerStr[10];
+	
 	enum KBVALS gotKBVal;
 	init_nncurses();
 	drawFrame();
@@ -70,6 +67,10 @@ int playGame(void)
 	stringToScreen(50,25,"MISSes:");
 	intToStr(missCnt, missStr);
 	stringToScreen(58,25,missStr);
+	stringToScreen(65,25,"Time:");
+	intToStr(readTimer()/60, timerStr);
+	stringToScreen(72,25,timerStr);
+	
 	positionCursorScreen(xShooter, yShooter);
 	putCharA('}');
 	positionCursorScreen(xTarget, yTarget);
@@ -255,6 +256,8 @@ enum KBVALS getKeyboard(void)
 	}
 	return UNKN_KEY;
 }
+
+
 
 int randomNum(int rangeLow, int rangeHigh)
 {
