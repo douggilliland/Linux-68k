@@ -1091,7 +1091,7 @@
  958      000F 0002 
  959 80b50 13FC 0093 	    move.b  #0x93, MRA       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
  959      000F 0000 
- 960 80b58 13FC 0007 	    move.b  #0x07, MRA       | Normal Mode, CTS/RTS, 1 stop bit
+ 960 80b58 13FC 0037 	    move.b  #0x37, MRA       | Normal Mode, CTS/RTS, 1 stop bit
  960      000F 0000 
  961               	    
  962 80b60 13FC 0005 	    move.b  #0x05, CRA       | Enable Transmit/Recieve
@@ -1104,12 +1104,12 @@
  966 80b78 13FC 0010 	    move.b  #0x10, CRB       | Reset Mode Register Pointer
  966      000F 0014 
  967               	    
- 968               	|    move.b  #0xBB, CSRB      | Set Tx and Rx rates to 9600
+ 968               	|    move.b  #0xBB, CSRB     | Set Tx and Rx rates to 9600
  969 80b80 13FC 00CC 	    move.b  #0xcc, CSRB      | Set Tx and Rx rates to 38400
  969      000F 0012 
  970 80b88 13FC 0093 	    move.b  #0x93, MRB       | 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
  970      000F 0010 
- 971 80b90 13FC 0007 	    move.b  #0x07, MRB       | Normal Mode, CTS/RTS, 1 stop bit
+ 971 80b90 13FC 0037 	    move.b  #0x37, MRB       | Normal Mode, CTS/RTS, 1 stop bit
  971      000F 0010 
  972               	    
  973 80b98 13FC 0005 	    move.b  #0x05, CRB       | Enable Transmit/Recieve
