@@ -949,31 +949,37 @@ PHBend:
 |||||
 | Initializes the 68681 DUART port A as 9600 8N1 
 initDuart:
-    move.b  #0x30, CRA       | Reset Transmitter
-    move.b  #0x20, CRA       | Reset Receiver
-    move.b  #0x10, CRA       | Reset Mode Register Pointer
+    move.b  #0x30, CRA      | Reset Transmitter
+    move.b  #0x20, CRA      | Reset Receiver
+    move.b  #0x10, CRA      | Reset Mode Register Pointer
     
-    move.b  #0x00, ACR       | Baud Rate Set #2
-    move.b  #0xCC, CSRA      | Set Tx and Rx rates to 38400
-    move.b  #0x93, MRA       | MRA1 - No Parity, 8-bit
-    move.b  #0x27, MRA       | MRA2 - Normal Mode, CTS/RTS, 1 stop bit
+    move.b  #0x00, ACR      | Baud Rate Set #2
+    move.b  #0xCC, CSRA     | Set Tx and Rx rates to 38400
+    move.b  #0x93, MRA      | MRA1 - No Parity, 8-bit
+    move.b  #0x27, MRA      | MRA2 - Normal Mode, CTS/RTS, 1 stop bit
     
-    move.b  #0x05, CRA       | Enable Transmit/Recieve
+    move.b  #0x05, CRA      | Enable Transmit/Recieve
 
-    move.b  #0x30, CRB       | Reset Transmitter
-    move.b  #0x20, CRB       | Reset Receiver
-    move.b  #0x10, CRB       | Reset Mode Register Pointer
+    move.b  #0x30, CRB      | Reset Transmitter
+    move.b  #0x20, CRB      | Reset Receiver
+    move.b  #0x10, CRB      | Reset Mode Register Pointer
     
-    move.b  #0xcc, CSRB      | Set Tx and Rx rates to 38400
-    move.b  #0x93, MRB       | MRB1 - No Parity, 8-bit
-    move.b  #0x27, MRB       | MRB2 - Normal Mode, CTS/RTS, 1 stop bit
+    move.b  #0xcc, CSRB     | Set Tx and Rx rates to 38400
+    move.b  #0x93, MRB      | MRB1 - No Parity, 8-bit
+    move.b  #0x27, MRB      | MRB2 - Normal Mode, CTS/RTS, 1 stop bit
     
-    move.b  #0x05, CRB       | Enable Transmit/Recieve
+    move.b  #0x05, CRB      | Enable Transmit/Recieve
 	
-	move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
-	move.b	#0xFC, OPR		 | Clear all outputs
-	move.b	#0x03, OPS		 | Drive handshake low
-    rts    
+	move.b	#0x00, OPC		| Output port configuration (all bit are outs)
+	move.b	#0xFC, OPR		| Clear all outputs
+	move.b	#0x03, OPS		 | Drive handshake outs low (active)
+		| Note that RTS* must be asserted initially manually - after that
+		| RTS* is asserted auomatically whenever the receiver is ready to
+		| receive more data. Note also that the contents of the DUARTs
+		| output port register are inverted before they are fed to the output
+		| pins. That is, to assert RTS* low, it is necessary to load a one
+		| into the appropriate bit of the OPR.
+    rts
 
 delay1Sec:
 	move.l	#200000, %d0	| rough count
