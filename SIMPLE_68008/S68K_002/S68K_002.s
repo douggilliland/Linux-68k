@@ -972,6 +972,7 @@ initDuart:
 	
 	move.b	#0x00, OPC		 | Output port configuration (all bit are outs)
 	move.b	#0xFC, OPR		 | Clear all outputs
+	move.b	#0x03, OPS		 | Drive handshake low
     rts    
 
 delay1Sec:
