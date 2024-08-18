@@ -947,11 +947,11 @@ PHBend:
 	
 
 |||||
-| Initializes the 68681 DUART port A as 9600 8N1 
+| Initializes the 68681 DUART port A as 38400,N,8,1
 initDuart:
-    move.b  #0x30, CRA      | Reset Transmitter
-    move.b  #0x20, CRA      | Reset Receiver
-    move.b  #0x10, CRA      | Reset Mode Register Pointer
+    move.b  #0x30, CRA      | Reset Transmitter A
+    move.b  #0x20, CRA      | Reset Receiver A
+    move.b  #0x10, CRA      | Reset Mode Register Pointer A
     
     move.b  #0x00, ACR      | Baud Rate Set #2
     move.b  #0xCC, CSRA     | Set Tx and Rx rates to 38400
@@ -960,9 +960,9 @@ initDuart:
     
     move.b  #0x05, CRA      | Enable Transmit/Recieve
 
-    move.b  #0x30, CRB      | Reset Transmitter
-    move.b  #0x20, CRB      | Reset Receiver
-    move.b  #0x10, CRB      | Reset Mode Register Pointer
+    move.b  #0x30, CRB      | Reset Transmitter B
+    move.b  #0x20, CRB      | Reset Receiver B
+    move.b  #0x10, CRB      | Reset Mode Register Pointer B
     
     move.b  #0xcc, CSRB     | Set Tx and Rx rates to 38400
     move.b  #0x93, MRB      | MRB1 - No Parity, 8-bit
@@ -972,7 +972,7 @@ initDuart:
 	
 	move.b	#0x00, OPC		| Output port configuration (all bit are outs)
 	move.b	#0xFC, OPR		| Clear all outputs
-	move.b	#0x03, OPS		 | Drive handshake outs low (active)
+	move.b	#0x03, OPS		| Drive handshake outs low (active)
 		| Note that RTS* must be asserted initially manually - after that
 		| RTS* is asserted auomatically whenever the receiver is ready to
 		| receive more data. Note also that the contents of the DUARTs
