@@ -170,7 +170,7 @@ code_start
 *    MOVE.b  #$00,ACR       * Baud Rate Set #2
 *    MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
 *    MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-*    MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
+*    MOVE.b  #$27,MRA       * Normal Mode, Using CTS/RTS, 1 stop bit
     
 *    MOVE.b  #$05,CRA       * Enable Transmit/Recieve
 
@@ -180,13 +180,20 @@ code_start
     
 *    MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
 *    MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-*    MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
+*    MOVE.b  #$27,MRB       * Normal Mode, Using CTS/RTS, 1 stop bit
     
 *    MOVE.b  #$05,CRB       * Enable Transmit/Recieve
 	
 *	MOVE.b	#$00,OPC		* Output port configuration (all bit are outs)
 *	MOVE.b	#$FC,OPR		* Clear all outputs
-	
+	move.b	#$03,OPS		* Drive handshake outs low (active)
+* Note that RTS* must be asserted initially manually - after that
+* RTS* is asserted auomatically whenever the receiver is ready to
+* receive more data. Note also that the contents of the DUARTs
+* output port register are inverted before they are fed to the output
+* pins. That is, to assert RTS* low, it is necessary to load a one
+* into the appropriate bit of the OPR.
+
 	MOVE.b	#'1',d0			* Got here
 	bsr		VEC_OUT
 
