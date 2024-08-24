@@ -1072,16 +1072,16 @@
  947               		
  948               	
  949               	|||||
- 950               	| Initializes the 68681 DUART port A as 9600 8N1 
+ 950               	| Initializes the 68681 DUART port A as 38400,N,8,1
  951               	initDuart:
- 952 80b28 13FC 0030 	    move.b  #0x30, CRA      | Reset Transmitter
+ 952 80b28 13FC 0030 	    move.b  #0x30, CRA      | Reset Transmitter A
  952      000F 0004 
- 953 80b30 13FC 0020 	    move.b  #0x20, CRA      | Reset Receiver
+ 953 80b30 13FC 0020 	    move.b  #0x20, CRA      | Reset Receiver A
  953      000F 0004 
 68K GAS  S68K_002.s 			page 19
 
 
- 954 80b38 13FC 0010 	    move.b  #0x10, CRA      | Reset Mode Register Pointer
+ 954 80b38 13FC 0010 	    move.b  #0x10, CRA      | Reset Mode Register Pointer A
  954      000F 0004 
  955               	    
  956 80b40 13FC 0000 	    move.b  #0x00, ACR      | Baud Rate Set #2
@@ -1096,11 +1096,11 @@
  961 80b60 13FC 0005 	    move.b  #0x05, CRA      | Enable Transmit/Recieve
  961      000F 0004 
  962               	
- 963 80b68 13FC 0030 	    move.b  #0x30, CRB      | Reset Transmitter
+ 963 80b68 13FC 0030 	    move.b  #0x30, CRB      | Reset Transmitter B
  963      000F 0014 
- 964 80b70 13FC 0020 	    move.b  #0x20, CRB      | Reset Receiver
+ 964 80b70 13FC 0020 	    move.b  #0x20, CRB      | Reset Receiver B
  964      000F 0014 
- 965 80b78 13FC 0010 	    move.b  #0x10, CRB      | Reset Mode Register Pointer
+ 965 80b78 13FC 0010 	    move.b  #0x10, CRB      | Reset Mode Register Pointer B
  965      000F 0014 
  966               	    
  967 80b80 13FC 00CC 	    move.b  #0xcc, CSRB     | Set Tx and Rx rates to 38400
@@ -1117,7 +1117,7 @@
  973      000F 001A 
  974 80ba8 13FC 00FC 		move.b	#0xFC, OPR		| Clear all outputs
  974      000F 001E 
- 975 80bb0 13FC 0003 		move.b	#0x03, OPS		 | Drive handshake outs low (active)
+ 975 80bb0 13FC 0003 		move.b	#0x03, OPS		| Drive handshake outs low (active)
  975      000F 001C 
  976               			| Note that RTS* must be asserted initially manually - after that
  977               			| RTS* is asserted auomatically whenever the receiver is ready to
