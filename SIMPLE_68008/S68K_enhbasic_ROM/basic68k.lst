@@ -402,7 +402,7 @@ F00:0169
 F00:0170       *    MOVE.b  #$00,ACR       * Baud Rate Set #2
 F00:0171       *    MOVE.b  #$CC,CSRA      * Set Tx and Rx rates to 38400
 F00:0172       *    MOVE.b  #$93,MRA       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-F00:0173       *    MOVE.b  #$07,MRA       * Normal Mode, Not CTS/RTS, 1 stop bit
+F00:0173       *    MOVE.b  #$27,MRA       * Normal Mode, With CTS/RTS, 1 stop bit
 F00:0174           
 F00:0175       *    MOVE.b  #$05,CRA       * Enable Transmit/Recieve
 F00:0176       
@@ -412,7 +412,7 @@ F00:0179       *    MOVE.b  #$10,CRB       * Reset Mode Register Pointer
 F00:0180           
 F00:0181       *    MOVE.b  #$CC,CSRB      * Set Tx and Rx rates to 38400
 F00:0182       *    MOVE.b  #$93,MRB       * 7-bit, No Parity (0x93 for 8-bit, 0x92 for 7-bit)
-F00:0183       *    MOVE.b  #$07,MRB       * Normal Mode, Not CTS/RTS, 1 stop bit
+F00:0183       *    MOVE.b  #$27,MRB       * Normal Mode, With CTS/RTS, 1 stop bit
 F00:0184           
 F00:0185       *    MOVE.b  #$05,CRB       * Enable Transmit/Recieve
 F00:0186       	
