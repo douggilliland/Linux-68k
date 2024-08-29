@@ -186,7 +186,7 @@ code_start
 	
 *	MOVE.b	#$00,OPC		* Output port configuration (all bit are outs)
 *	MOVE.b	#$FC,OPR		* Clear all outputs
-	move.b	#$03,OPS		* Drive handshake outs low (active)
+*	move.b	#$03,OPS		* Drive handshake outs low (active)
 * Note that RTS* must be asserted initially manually - after that
 * RTS* is asserted auomatically whenever the receiver is ready to
 * receive more data. Note also that the contents of the DUARTs
